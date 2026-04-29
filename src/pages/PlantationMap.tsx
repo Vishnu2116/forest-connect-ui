@@ -16,7 +16,7 @@ export default function PlantationMap() {
 
   return (
     <PageLayout>
-      <PageHeader title="Plantation Locations" subtitle="Interactive map of plantation sites across Assam" breadcrumb={["Home", "Plantation Map"]} />
+      <PageHeader title="Plantation Locations" subtitle="Interactive map of plantation sites across Tripura" breadcrumb={["Home", "Plantation Map"]} />
       <section className="py-8">
         <div className="gov-container grid lg:grid-cols-4 gap-6">
           {/* Filters & list */}
@@ -66,13 +66,13 @@ export default function PlantationMap() {
 
           {/* Map + details */}
           <div className="lg:col-span-3 space-y-4">
-            <MapPreview title="Assam Plantation Sites" interactive />
+            <MapPreview title="Tripura Plantation Sites" interactive />
             <div className="bg-card border border-border rounded-md p-6 shadow-card">
               <div className="flex items-start justify-between gap-3">
                 <div>
                   <span className="text-[10px] font-semibold uppercase px-2 py-0.5 rounded bg-accent/10 text-accent">{selected.year}</span>
                   <h3 className="mt-1 text-xl font-semibold text-primary">{selected.name}</h3>
-                  <p className="text-sm text-muted-foreground">{selected.district} District, Assam</p>
+                  <p className="text-sm text-muted-foreground">{selected.district} District, Tripura</p>
                 </div>
                 <button className="bg-accent hover:bg-accent-hover text-accent-foreground px-4 py-2 rounded text-sm font-semibold">View Details</button>
               </div>

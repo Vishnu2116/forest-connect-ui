@@ -5,7 +5,7 @@ import { Phone, Mail, User } from "lucide-react";
 export default function WhosWho() {
   return (
     <PageLayout>
-      <PageHeader title="Who's Who" subtitle="Senior officials of the Assam Forest Department" breadcrumb={["Home", "Who's Who"]} />
+      <PageHeader title="Who's Who" subtitle="Senior officials of the Tripura Forest Department" breadcrumb={["Home", "Who's Who"]} />
       <section className="py-10">
         <div className="gov-container grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {officials.map(o => (
@@ -17,7 +17,7 @@ export default function WhosWho() {
               <p className="text-xs text-muted-foreground mt-1 min-h-[32px]">{o.designation}</p>
               <div className="mt-3 pt-3 border-t border-border space-y-1.5 text-xs text-muted-foreground">
                 <div className="flex items-center justify-center gap-1.5"><Phone className="h-3 w-3" /> {o.phone}</div>
-                <div className="flex items-center justify-center gap-1.5"><Mail className="h-3 w-3" /> contact@assamforest.gov.in</div>
+                <div className="flex items-center justify-center gap-1.5"><Mail className="h-3 w-3" /> contact@tripuraforest.gov.in</div>
               </div>
             </article>
           ))}

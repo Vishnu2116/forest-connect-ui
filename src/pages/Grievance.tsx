@@ -14,7 +14,7 @@ export default function Grievance() {
               <Field label="Email *"><input type="email" className="form-input" placeholder="you@example.com" /></Field>
               <Field label="Mobile Number"><input className="form-input" placeholder="+91" /></Field>
               <Field label="District">
-                <select className="form-input"><option>Select district</option><option>Kamrup (M)</option><option>Sonitpur</option><option>Golaghat</option></select>
+                <select className="form-input"><option>Select district</option><option>West Tripura</option><option>Sepahijala</option><option>Khowai</option><option>Gomati</option><option>South Tripura</option><option>Dhalai</option><option>Unakoti</option><option>North Tripura</option></select>
               </Field>
               <Field label="Category" full>
                 <select className="form-input"><option>Forest Encroachment</option><option>Wildlife Issue</option><option>Plantation Concern</option><option>Service Matter</option><option>Other</option></select>

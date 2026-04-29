@@ -5,7 +5,7 @@ import { Trees, Pencil, Plus } from "lucide-react";
 export default function Projects() {
   return (
     <PageLayout>
-      <PageHeader title="Projects" subtitle="Major initiatives undertaken by the Assam Forest Department" breadcrumb={["Home", "Projects"]} />
+      <PageHeader title="Projects" subtitle="Major initiatives undertaken by the Tripura Forest Department" breadcrumb={["Home", "Projects"]} />
       <section className="py-10">
         <div className="gov-container">
           <div className="flex items-center justify-between mb-6">
