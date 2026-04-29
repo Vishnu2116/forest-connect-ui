@@ -33,7 +33,7 @@ export default function Navbar() {
             <button className="hover:underline" aria-label="Increase font">A+</button>
             <span className="opacity-70">|</span>
             <Link to="/admin/login" className="hover:underline flex items-center gap-1">
-              <Lock className="h-3 w-3" /> Admin Login
+              <Lock className="h-3 w-3" /> {t("common.adminLogin")}
             </Link>
             <span className="opacity-70">|</span>
             <div className="relative">
@@ -93,8 +93,8 @@ export default function Navbar() {
             <div className="hidden md:flex items-center gap-2 md:gap-3 shrink-0">
               <img src={logoWorldBank} alt="The World Bank logo" className="h-14 md:h-20 w-auto" width={80} height={80} />
               <div className="leading-tight">
-                <div className="text-lg md:text-2xl font-extrabold text-primary tracking-tight">THE WORLD BANK</div>
-                <div className="text-[10px] md:text-xs text-muted-foreground tracking-wider">IBRD · IDA  |  WORLD BANK GROUP</div>
+                <div className="text-lg md:text-2xl font-extrabold text-primary tracking-tight">{t("site.worldbank")}</div>
+                <div className="text-[10px] md:text-xs text-muted-foreground tracking-wider">{t("site.worldbankSub")}</div>
               </div>
             </div>
 
