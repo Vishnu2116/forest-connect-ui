@@ -3,7 +3,6 @@ import { Mail, MapPin, Phone, Facebook, Twitter, Youtube } from "lucide-react";
 import { useLang } from "@/contexts/LanguageContext";
 import logoTripura from "@/assets/logo-tripura.png";
 import logoWorldBank from "@/assets/logo-worldbank.png";
-import logoElement from "@/assets/logo-element.png";
 
 export default function Footer() {
   const { t } = useLang();
@@ -11,15 +10,14 @@ export default function Footer() {
     <footer className="bg-primary-dark text-primary-foreground mt-16">
       <div className="gov-container py-12 grid gap-10 md:grid-cols-2 lg:grid-cols-4">
         <div>
-          <div className="flex items-center gap-3 mb-3">
-            <img src={logoElement} alt="ELEMENT" className="h-10 w-auto bg-white/10 rounded p-1" width={80} height={40} loading="lazy" />
-            <h3 className="text-base font-semibold text-accent">ELEMENT</h3>
-          </div>
-          <p className="text-sm opacity-90 leading-relaxed">{t("footer.about")}</p>
+          <h3 className="text-2xl font-extrabold text-accent tracking-tight">ELEMENT</h3>
+          <p className="text-sm font-medium opacity-95 mt-1">Enhancing Landscape and Ecosystem Management</p>
+          <p className="text-xs opacity-80 mt-2">Government of Tripura  |  The World Bank</p>
           <div className="mt-4 flex items-center gap-3">
-            <img src={logoTripura} alt="Government of Tripura" className="h-10 w-10 bg-white rounded p-1" width={40} height={40} loading="lazy" />
-            <img src={logoWorldBank} alt="The World Bank" className="h-10 w-10 bg-white rounded p-1" width={40} height={40} loading="lazy" />
+            <img src={logoTripura} alt="Government of Tripura" className="h-14 w-14 bg-white rounded p-1" width={56} height={56} loading="lazy" />
+            <img src={logoWorldBank} alt="The World Bank" className="h-14 w-auto bg-white rounded p-1" width={70} height={56} loading="lazy" />
           </div>
+          <p className="text-xs opacity-85 mt-4 leading-relaxed">{t("footer.about")}</p>
           <div className="mt-4 space-y-2 text-sm opacity-90">
             <div className="flex items-start gap-2"><MapPin className="h-4 w-4 mt-0.5 shrink-0" /> Aranya Bhawan, Agartala, Tripura — 799006</div>
             <div className="flex items-center gap-2"><Phone className="h-4 w-4" /> +91 381 2416403</div>

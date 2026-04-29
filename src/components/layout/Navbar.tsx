@@ -1,11 +1,10 @@
 import { useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
-import { ChevronDown, Menu, X, Search, Phone, Globe } from "lucide-react";
+import { ChevronDown, Menu, X, Phone, Globe, Lock } from "lucide-react";
 import { navItems } from "@/data/navigation";
 import { useLang, LANGUAGES } from "@/contexts/LanguageContext";
 import logoTripura from "@/assets/logo-tripura.png";
 import logoWorldBank from "@/assets/logo-worldbank.png";
-import logoElement from "@/assets/logo-element.png";
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -32,6 +31,10 @@ export default function Navbar() {
             <button className="hover:underline" aria-label="Decrease font">A-</button>
             <button className="hover:underline" aria-label="Reset font">A</button>
             <button className="hover:underline" aria-label="Increase font">A+</button>
+            <span className="opacity-70">|</span>
+            <Link to="/admin/login" className="hover:underline flex items-center gap-1">
+              <Lock className="h-3 w-3" /> Admin Login
+            </Link>
             <span className="opacity-70">|</span>
             <div className="relative">
               <button
@@ -66,12 +69,12 @@ export default function Navbar() {
 
       {/* Brand band — joint stakeholder identity */}
       <div className="bg-background border-b border-border">
-        <div className="gov-container flex items-center justify-between py-3 gap-4">
-          <Link to="/" className="flex items-center gap-3 md:gap-4">
-            <img src={logoTripura} alt="Government of Tripura emblem" className="h-12 w-12 md:h-14 md:w-14 shrink-0" width={56} height={56} />
-            <div className="border-l border-border pl-3 md:pl-4">
-              <img src={logoElement} alt="ELEMENT Project logo" className="h-8 md:h-10 w-auto -mb-1" width={120} height={40} />
-              <div className="hidden sm:block text-[11px] md:text-xs text-muted-foreground leading-tight mt-0.5">
+        <div className="gov-container flex items-center justify-between py-2.5 gap-4">
+          <Link to="/" className="flex items-center gap-3 md:gap-4 min-w-0">
+            <img src={logoTripura} alt="Government of Tripura emblem" className="h-14 w-14 md:h-16 md:w-16 shrink-0" width={64} height={64} />
+            <div className="border-l border-border pl-3 md:pl-4 min-w-0">
+              <div className="text-xl md:text-2xl font-extrabold text-primary leading-none tracking-tight">ELEMENT</div>
+              <div className="hidden sm:block text-[11px] md:text-xs text-muted-foreground leading-tight mt-1">
                 {t("site.full")}
               </div>
               <div className="text-[10px] md:text-[11px] text-primary/80 font-medium mt-0.5">
@@ -81,14 +84,11 @@ export default function Navbar() {
           </Link>
 
           <div className="hidden md:flex items-center gap-3 lg:gap-4">
-            <img src={logoWorldBank} alt="The World Bank logo" className="h-12 lg:h-14 w-auto" width={56} height={56} />
-            <div className="hidden lg:flex items-center gap-2 text-sm text-muted-foreground border-l border-border pl-4">
+            <img src={logoWorldBank} alt="The World Bank logo" className="h-14 lg:h-16 w-auto" width={64} height={64} />
+            <div className="hidden xl:flex items-center gap-2 text-sm text-muted-foreground border-l border-border pl-4">
               <Phone className="h-4 w-4 text-primary" />
               <span>{t("common.helpline")}: 1800-345-3666</span>
             </div>
-            <button className="ml-1 p-2 rounded-md border border-border hover:bg-surface focus-ring" aria-label={t("common.search")}>
-              <Search className="h-4 w-4 text-primary" />
-            </button>
           </div>
 
           <button
