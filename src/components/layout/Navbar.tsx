@@ -72,13 +72,8 @@ export default function Navbar() {
         <div className="gov-container py-3 md:py-4">
           <div className="grid grid-cols-[auto_1fr_auto] items-center gap-3 md:gap-6">
             {/* Left: Tripura emblem + label */}
-            <Link to="/" className="flex items-center gap-2 md:gap-3 min-w-0">
-              <img src={logoTripura} alt="Government of Tripura emblem" className="h-14 w-14 md:h-20 md:w-20 shrink-0" width={80} height={80} />
-              <div className="hidden sm:block leading-tight">
-                <div className="text-sm md:text-base text-foreground/80">Government of</div>
-                <div className="text-xl md:text-3xl font-extrabold text-primary tracking-tight -mt-0.5">Tripura</div>
-                <div className="text-[11px] md:text-xs text-primary/80 font-medium mt-0.5">ত্রিপুরা সরকার</div>
-              </div>
+            <Link to="/" className="flex items-center shrink-0">
+              <img src={logoTripura} alt="Government of Tripura emblem" className="h-16 w-16 md:h-24 md:w-24" width={96} height={96} />
             </Link>
 
             {/* Center: ELEMENT title */}
@@ -89,7 +84,7 @@ export default function Navbar() {
               </p>
               <div className="mx-auto mt-1 md:mt-2 max-w-md border-t border-border pt-1 md:pt-1.5">
                 <p className="text-[10px] sm:text-xs md:text-sm text-muted-foreground italic">
-                  A Joint Initiative of Government of Tripura and The World Bank
+                  {t("site.joint")}
                 </p>
               </div>
             </div>
