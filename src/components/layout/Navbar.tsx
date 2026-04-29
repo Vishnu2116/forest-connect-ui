@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
-import { ChevronDown, Menu, X, Phone, Globe, Lock } from "lucide-react";
+import { ChevronDown, Menu, X, Globe, Lock } from "lucide-react";
 import { navItems } from "@/data/navigation";
 import { useLang, LANGUAGES } from "@/contexts/LanguageContext";
 import logoTripura from "@/assets/logo-tripura.png";
@@ -69,35 +69,49 @@ export default function Navbar() {
 
       {/* Brand band — joint stakeholder identity */}
       <div className="bg-background border-b border-border">
-        <div className="gov-container flex items-center justify-between py-2.5 gap-4">
-          <Link to="/" className="flex items-center gap-3 md:gap-4 min-w-0">
-            <img src={logoTripura} alt="Government of Tripura emblem" className="h-14 w-14 md:h-16 md:w-16 shrink-0" width={64} height={64} />
-            <div className="border-l border-border pl-3 md:pl-4 min-w-0">
-              <div className="text-xl md:text-2xl font-extrabold text-primary leading-none tracking-tight">ELEMENT</div>
-              <div className="hidden sm:block text-[11px] md:text-xs text-muted-foreground leading-tight mt-1">
+        <div className="gov-container py-3 md:py-4">
+          <div className="grid grid-cols-[auto_1fr_auto] items-center gap-3 md:gap-6">
+            {/* Left: Tripura emblem + label */}
+            <Link to="/" className="flex items-center gap-2 md:gap-3 min-w-0">
+              <img src={logoTripura} alt="Government of Tripura emblem" className="h-14 w-14 md:h-20 md:w-20 shrink-0" width={80} height={80} />
+              <div className="hidden sm:block leading-tight">
+                <div className="text-sm md:text-base text-foreground/80">Government of</div>
+                <div className="text-xl md:text-3xl font-extrabold text-primary tracking-tight -mt-0.5">Tripura</div>
+                <div className="text-[11px] md:text-xs text-primary/80 font-medium mt-0.5">ত্রিপুরা সরকার</div>
+              </div>
+            </Link>
+
+            {/* Center: ELEMENT title */}
+            <div className="text-center min-w-0">
+              <h1 className="text-2xl sm:text-3xl md:text-5xl font-extrabold text-primary tracking-wide leading-none">ELEMENT</h1>
+              <p className="mt-1 md:mt-2 text-xs sm:text-sm md:text-base font-semibold text-foreground/80">
                 {t("site.full")}
-              </div>
-              <div className="text-[10px] md:text-[11px] text-primary/80 font-medium mt-0.5">
-                {t("site.implementer")}
+              </p>
+              <div className="mx-auto mt-1 md:mt-2 max-w-md border-t border-border pt-1 md:pt-1.5">
+                <p className="text-[10px] sm:text-xs md:text-sm text-muted-foreground italic">
+                  A Joint Initiative of Government of Tripura and The World Bank
+                </p>
               </div>
             </div>
-          </Link>
 
-          <div className="hidden md:flex items-center gap-3 lg:gap-4">
-            <img src={logoWorldBank} alt="The World Bank logo" className="h-14 lg:h-16 w-auto" width={64} height={64} />
-            <div className="hidden xl:flex items-center gap-2 text-sm text-muted-foreground border-l border-border pl-4">
-              <Phone className="h-4 w-4 text-primary" />
-              <span>{t("common.helpline")}: 1800-345-3666</span>
+            {/* Right: World Bank logo + label */}
+            <div className="hidden md:flex items-center gap-2 md:gap-3 shrink-0">
+              <img src={logoWorldBank} alt="The World Bank logo" className="h-14 md:h-20 w-auto" width={80} height={80} />
+              <div className="leading-tight">
+                <div className="text-lg md:text-2xl font-extrabold text-primary tracking-tight">THE WORLD BANK</div>
+                <div className="text-[10px] md:text-xs text-muted-foreground tracking-wider">IBRD · IDA  |  WORLD BANK GROUP</div>
+              </div>
             </div>
+
+            {/* Mobile menu */}
+            <button
+              className="lg:hidden p-2 rounded-md border border-border focus-ring justify-self-end"
+              onClick={() => setMobileOpen((v) => !v)}
+              aria-label="Toggle menu"
+            >
+              {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            </button>
           </div>
-
-          <button
-            className="lg:hidden p-2 rounded-md border border-border focus-ring"
-            onClick={() => setMobileOpen((v) => !v)}
-            aria-label="Toggle menu"
-          >
-            {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          </button>
         </div>
       </div>
 

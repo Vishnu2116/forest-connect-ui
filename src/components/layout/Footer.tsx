@@ -65,6 +65,16 @@ export default function Footer() {
         </div>
       </div>
 
+      <div className="border-t border-primary/40 bg-primary/95">
+        <div className="gov-container py-3 text-sm flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3 text-center">
+          <Phone className="h-4 w-4 text-accent" />
+          <span className="font-semibold">{t("common.helpline")}:</span>
+          <span>1800-345-3666</span>
+          <span className="hidden sm:inline opacity-60">|</span>
+          <span className="opacity-90">Toll-free, 9:00 AM – 6:00 PM (Mon–Sat)</span>
+        </div>
+      </div>
+
       <div className="border-t border-primary/40 bg-primary">
         <div className="gov-container py-4 text-xs opacity-90 flex flex-col md:flex-row items-center justify-between gap-2">
           <div>{t("footer.copy")}</div>
