@@ -6,10 +6,10 @@ import MapPreview from "@/components/common/MapPreview";
 import { announcements, events, projects, knowledgeHubItems } from "@/data/content";
 
 const dignitaries = [
-  { name: "Hon'ble Governor", role: "Government of Assam" },
-  { name: "Hon'ble Chief Minister", role: "Government of Assam" },
-  { name: "Hon'ble Forest Minister", role: "Department of Environment & Forests" },
-  { name: "PCCF & HoFF", role: "Assam Forest Department" },
+  { name: "Hon'ble Governor", role: "Government of Tripura" },
+  { name: "Hon'ble Chief Minister", role: "Government of Tripura" },
+  { name: "Hon'ble Forest Minister", role: "Department of Forests" },
+  { name: "PCCF & HoFF", role: "Tripura Forest Department" },
 ];
 
 export default function Home() {
@@ -123,12 +123,12 @@ export default function Home() {
             <MapPreview />
           </div>
           <div className="flex flex-col justify-center">
-            <h2 className="section-title">Plantation Across Assam</h2>
+            <h2 className="section-title">Plantation Across Tripura</h2>
             <p className="mt-4 text-muted-foreground leading-relaxed">
-              Track plantation activities across all 35 districts of Assam. Filter by year, district and species. Built to integrate with Bhuvan, Google Maps and ESRI base layers.
+              Track plantation activities across all 8 districts of Tripura. Filter by year, district and species. Built to integrate with Bhuvan, Google Maps and ESRI base layers.
             </p>
             <dl className="mt-6 grid grid-cols-3 gap-3">
-              {[["1,240+", "Sites"], ["8.6L", "Saplings"], ["35", "Districts"]].map(([n, l]) => (
+              {[["620+", "Sites"], ["4.2L", "Saplings"], ["8", "Districts"]].map(([n, l]) => (
                 <div key={l as string} className="bg-card border border-border rounded p-3 text-center">
                   <dt className="text-2xl font-bold text-primary">{n}</dt>
                   <dd className="text-xs text-muted-foreground mt-1">{l}</dd>

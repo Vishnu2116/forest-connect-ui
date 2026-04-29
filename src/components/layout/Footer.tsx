@@ -6,14 +6,14 @@ export default function Footer() {
     <footer className="bg-primary-dark text-primary-foreground mt-16">
       <div className="gov-container py-12 grid gap-10 md:grid-cols-2 lg:grid-cols-4">
         <div>
-          <h3 className="text-base font-semibold mb-3 text-accent">Assam Forest Department</h3>
+          <h3 className="text-base font-semibold mb-3 text-accent">Tripura Forest Department</h3>
           <p className="text-sm opacity-90 leading-relaxed">
-            Aranya Bhavan, Panjabari, Guwahati, Assam — 781037
+            Aranya Bhawan, Gurkhabasti, Agartala, Tripura — 799006
           </p>
           <div className="mt-4 space-y-2 text-sm opacity-90">
-            <div className="flex items-start gap-2"><MapPin className="h-4 w-4 mt-0.5 shrink-0" /> Aranya Bhavan, Guwahati</div>
-            <div className="flex items-center gap-2"><Phone className="h-4 w-4" /> +91 361 2566064</div>
-            <div className="flex items-center gap-2"><Mail className="h-4 w-4" /> info-forest@assam.gov.in</div>
+            <div className="flex items-start gap-2"><MapPin className="h-4 w-4 mt-0.5 shrink-0" /> Aranya Bhawan, Agartala</div>
+            <div className="flex items-center gap-2"><Phone className="h-4 w-4" /> +91 381 2416403</div>
+            <div className="flex items-center gap-2"><Mail className="h-4 w-4" /> info-forest@tripura.gov.in</div>
           </div>
         </div>
 
@@ -61,8 +61,8 @@ export default function Footer() {
 
       <div className="border-t border-primary/40 bg-primary">
         <div className="gov-container py-4 text-xs opacity-90 flex flex-col md:flex-row items-center justify-between gap-2">
-          <div>© 2026 Assam Forest Department, Government of Assam. All rights reserved.</div>
-          <div>Designed & Developed by NIC Assam</div>
+          <div>© 2026 Tripura Forest Department, Government of Tripura. All rights reserved.</div>
+          <div>Designed & Developed by NIC Tripura</div>
         </div>
       </div>
     </footer>

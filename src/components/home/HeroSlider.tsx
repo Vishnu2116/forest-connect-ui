@@ -5,8 +5,8 @@ import hero2 from "@/assets/hero-plantation.jpg";
 import hero3 from "@/assets/hero-wildlife.jpg";
 
 const slides = [
-  { img: hero1, title: "Conserving Assam's Forest Heritage", subtitle: "Protecting biodiversity for generations to come." },
-  { img: hero2, title: "Greener Assam Mission", subtitle: "Large-scale plantation drives across all districts." },
+  { img: hero1, title: "Conserving Tripura's Forest Heritage", subtitle: "Protecting biodiversity for generations to come." },
+  { img: hero2, title: "Greener Tripura Mission", subtitle: "Large-scale plantation drives across all districts." },
   { img: hero3, title: "Safeguarding Wildlife", subtitle: "Home to the one-horned rhinoceros and rich fauna." },
 ];
 
@@ -33,7 +33,7 @@ export default function HeroSlider() {
             <div className="absolute inset-0 flex items-center">
               <div className="gov-container">
                 <div className="max-w-2xl text-primary-foreground">
-                  <span className="inline-block bg-accent text-accent-foreground text-xs font-semibold px-3 py-1 rounded">Government of Assam</span>
+                  <span className="inline-block bg-accent text-accent-foreground text-xs font-semibold px-3 py-1 rounded">Government of Tripura</span>
                   <h2 className="mt-3 text-3xl md:text-5xl font-bold leading-tight">{s.title}</h2>
                   <p className="mt-3 text-base md:text-lg opacity-90">{s.subtitle}</p>
                   <div className="mt-6 flex flex-wrap gap-3">
