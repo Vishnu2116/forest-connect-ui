@@ -90,7 +90,7 @@ export default function Navbar() {
             </div>
 
             {/* Right: World Bank logo + label */}
-            <div className="hidden md:flex items-center gap-2 md:gap-3 shrink-0">
+            <div className="hidden md:flex items-center gap-2 md:gap-3 shrink-0 justify-self-end">
               <img src={logoWorldBank} alt="The World Bank logo" className="h-14 md:h-20 w-auto" width={80} height={80} />
               <div className="leading-tight">
                 <div className="text-lg md:text-2xl font-extrabold text-primary tracking-tight">{t("site.worldbank")}</div>
