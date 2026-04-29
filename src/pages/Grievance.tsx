@@ -33,7 +33,6 @@ export default function Grievance() {
                 <button type="reset" className="px-5 py-2.5 rounded font-semibold border border-border hover:bg-surface">Reset</button>
               </div>
             </form>
-            <style>{`.form-input{ @apply mt-1 w-full border border-input rounded px-3 py-2 text-sm bg-background focus-ring; }`}</style>
           </div>
 
           <aside className="space-y-4">
