@@ -19,7 +19,7 @@ export default function Footer() {
           </div>
           <p className="text-xs opacity-85 mt-4 leading-relaxed">{t("footer.about")}</p>
           <div className="mt-4 space-y-2 text-sm opacity-90">
-            <div className="flex items-start gap-2"><MapPin className="h-4 w-4 mt-0.5 shrink-0" /> Aranya Bhawan, Agartala, Tripura — 799006</div>
+            <div className="flex items-start gap-2"><MapPin className="h-4 w-4 mt-0.5 shrink-0" /> {t("footer.address")}</div>
             <div className="flex items-center gap-2"><Phone className="h-4 w-4" /> +91 381 2416403</div>
             <div className="flex items-center gap-2"><Mail className="h-4 w-4" /> info@element.tripura.gov.in</div>
           </div>
@@ -60,8 +60,8 @@ export default function Footer() {
             <a href="#" aria-label="Twitter" className="p-2 bg-primary rounded-md hover:bg-accent"><Twitter className="h-4 w-4" /></a>
             <a href="#" aria-label="YouTube" className="p-2 bg-primary rounded-md hover:bg-accent"><Youtube className="h-4 w-4" /></a>
           </div>
-          <div className="mt-4 text-xs opacity-80">Visitor Count: <span className="font-semibold text-accent">12,48,936</span></div>
-          <div className="mt-2 text-xs opacity-80">Last updated: 28 April 2026</div>
+          <div className="mt-4 text-xs opacity-80">{t("footer.visitor")}: <span className="font-semibold text-accent">12,48,936</span></div>
+          <div className="mt-2 text-xs opacity-80">{t("footer.lastUpdated")}: 28 April 2026</div>
         </div>
       </div>
 
@@ -71,14 +71,14 @@ export default function Footer() {
           <span className="font-semibold">{t("common.helpline")}:</span>
           <span>1800-345-3666</span>
           <span className="hidden sm:inline opacity-60">|</span>
-          <span className="opacity-90">Toll-free, 9:00 AM – 6:00 PM (Mon–Sat)</span>
+          <span className="opacity-90">{t("common.helplineHours")}</span>
         </div>
       </div>
 
       <div className="border-t border-primary/40 bg-primary">
         <div className="gov-container py-4 text-xs opacity-90 flex flex-col md:flex-row items-center justify-between gap-2">
           <div>{t("footer.copy")}</div>
-          <div>Designed & Developed by NIC Tripura</div>
+          <div>{t("footer.designed")}</div>
         </div>
       </div>
     </footer>
