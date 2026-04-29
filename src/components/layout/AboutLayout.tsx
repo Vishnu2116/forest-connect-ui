@@ -9,7 +9,7 @@ const links = [
   { to: "/about/mission", title: "Mission & Objective", desc: "Mission statements and objectives." },
 ];
 
-export default function AboutPage({ title, subtitle, body }: { title: string; subtitle?: string; body?: React.ReactNode }) {
+export default function AboutPage({ title, subtitle, children }: { title: string; subtitle?: string; children?: React.ReactNode }) {
   return (
     <PageLayout>
       <PageHeader title={title} subtitle={subtitle} breadcrumb={["Home", "About Us", title]} />
@@ -25,8 +25,8 @@ export default function AboutPage({ title, subtitle, body }: { title: string; su
               ))}
             </nav>
           </aside>
-          <div className="lg:col-span-3 prose-gov">
-            {body}
+          <div className="lg:col-span-3">
+            {children}
           </div>
         </div>
       </section>
