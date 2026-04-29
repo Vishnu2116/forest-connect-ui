@@ -1,30 +1,40 @@
 import { Link } from "react-router-dom";
 import { Mail, MapPin, Phone, Facebook, Twitter, Youtube } from "lucide-react";
+import { useLang } from "@/contexts/LanguageContext";
+import logoTripura from "@/assets/logo-tripura.png";
+import logoWorldBank from "@/assets/logo-worldbank.png";
+import logoElement from "@/assets/logo-element.png";
 
 export default function Footer() {
+  const { t } = useLang();
   return (
     <footer className="bg-primary-dark text-primary-foreground mt-16">
       <div className="gov-container py-12 grid gap-10 md:grid-cols-2 lg:grid-cols-4">
         <div>
-          <h3 className="text-base font-semibold mb-3 text-accent">Tripura Forest Department</h3>
-          <p className="text-sm opacity-90 leading-relaxed">
-            Aranya Bhawan, Gurkhabasti, Agartala, Tripura — 799006
-          </p>
+          <div className="flex items-center gap-3 mb-3">
+            <img src={logoElement} alt="ELEMENT" className="h-10 w-auto bg-white/10 rounded p-1" width={80} height={40} loading="lazy" />
+            <h3 className="text-base font-semibold text-accent">ELEMENT</h3>
+          </div>
+          <p className="text-sm opacity-90 leading-relaxed">{t("footer.about")}</p>
+          <div className="mt-4 flex items-center gap-3">
+            <img src={logoTripura} alt="Government of Tripura" className="h-10 w-10 bg-white rounded p-1" width={40} height={40} loading="lazy" />
+            <img src={logoWorldBank} alt="The World Bank" className="h-10 w-10 bg-white rounded p-1" width={40} height={40} loading="lazy" />
+          </div>
           <div className="mt-4 space-y-2 text-sm opacity-90">
-            <div className="flex items-start gap-2"><MapPin className="h-4 w-4 mt-0.5 shrink-0" /> Aranya Bhawan, Agartala</div>
+            <div className="flex items-start gap-2"><MapPin className="h-4 w-4 mt-0.5 shrink-0" /> Aranya Bhawan, Agartala, Tripura — 799006</div>
             <div className="flex items-center gap-2"><Phone className="h-4 w-4" /> +91 381 2416403</div>
-            <div className="flex items-center gap-2"><Mail className="h-4 w-4" /> info-forest@tripura.gov.in</div>
+            <div className="flex items-center gap-2"><Mail className="h-4 w-4" /> info@element.tripura.gov.in</div>
           </div>
         </div>
 
         <div>
-          <h3 className="text-base font-semibold mb-3 text-accent">Quick Links</h3>
+          <h3 className="text-base font-semibold mb-3 text-accent">{t("footer.quicklinks")}</h3>
           <ul className="space-y-2 text-sm">
             {[
               ["About Us", "/about/organization"],
               ["Projects", "/projects"],
               ["Reports", "/reports"],
-              ["Plantation Map", "/plantation-map"],
+              ["Plantation Locations", "/plantation-map"],
               ["RTI", "/rti"],
               ["Grievance", "/grievance"],
             ].map(([l, h]) => (
@@ -34,7 +44,7 @@ export default function Footer() {
         </div>
 
         <div>
-          <h3 className="text-base font-semibold mb-3 text-accent">Policies</h3>
+          <h3 className="text-base font-semibold mb-3 text-accent">{t("footer.policies")}</h3>
           <ul className="space-y-2 text-sm">
             <li><Link to="/disclaimer" className="opacity-90 hover:text-accent">Disclaimer</Link></li>
             <li><a className="opacity-90 hover:text-accent" href="#">Privacy Policy</a></li>
@@ -46,22 +56,20 @@ export default function Footer() {
         </div>
 
         <div>
-          <h3 className="text-base font-semibold mb-3 text-accent">Connect</h3>
+          <h3 className="text-base font-semibold mb-3 text-accent">{t("footer.connect")}</h3>
           <div className="flex gap-3">
             <a href="#" aria-label="Facebook" className="p-2 bg-primary rounded-md hover:bg-accent"><Facebook className="h-4 w-4" /></a>
             <a href="#" aria-label="Twitter" className="p-2 bg-primary rounded-md hover:bg-accent"><Twitter className="h-4 w-4" /></a>
             <a href="#" aria-label="YouTube" className="p-2 bg-primary rounded-md hover:bg-accent"><Youtube className="h-4 w-4" /></a>
           </div>
-          <div className="mt-4 text-xs opacity-80">
-            Visitor Count: <span className="font-semibold text-accent">12,48,936</span>
-          </div>
+          <div className="mt-4 text-xs opacity-80">Visitor Count: <span className="font-semibold text-accent">12,48,936</span></div>
           <div className="mt-2 text-xs opacity-80">Last updated: 28 April 2026</div>
         </div>
       </div>
 
       <div className="border-t border-primary/40 bg-primary">
         <div className="gov-container py-4 text-xs opacity-90 flex flex-col md:flex-row items-center justify-between gap-2">
-          <div>© 2026 Tripura Forest Department, Government of Tripura. All rights reserved.</div>
+          <div>{t("footer.copy")}</div>
           <div>Designed & Developed by NIC Tripura</div>
         </div>
       </div>
