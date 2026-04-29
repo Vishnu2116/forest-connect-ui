@@ -1,0 +1,180 @@
+import { createContext, useContext, useEffect, useState, ReactNode } from "react";
+
+export type Lang = "en" | "kok" | "bn";
+
+type Dict = Record<string, string>;
+
+const translations: Record<Lang, Dict> = {
+  en: {
+    "site.brand": "ELEMENT",
+    "site.full": "Enhancing Landscape and Ecosystem Management",
+    "site.partners": "Government of Tripura  |  The World Bank",
+    "site.implementer": "Implemented by Tripura Forest Department",
+    "nav.home": "Home",
+    "nav.about": "About Us",
+    "nav.projects": "Projects",
+    "nav.publications": "Publications",
+    "nav.activities": "Activities & Outputs",
+    "nav.knowledge": "Knowledge Hub",
+    "nav.reports": "Reports",
+    "nav.procurements": "Procurements",
+    "nav.plantationMap": "Plantation Locations",
+    "nav.whoswho": "Who's Who",
+    "nav.grievance": "Grievance",
+    "nav.rti": "RTI",
+    "nav.contact": "Contact Us",
+    "common.helpline": "Helpline",
+    "common.skipMain": "Skip to Main",
+    "common.search": "Search",
+    "common.language": "Language",
+    "home.whatsnew": "What's New",
+    "home.viewAll": "View all",
+    "home.notifications": "Notifications",
+    "home.events": "Events",
+    "home.tenders": "Tenders",
+    "home.plantation.title": "Plantation Across Tripura",
+    "home.plantation.desc": "ELEMENT supports landscape-scale plantation, restoration and community livelihood across all 8 districts of Tripura.",
+    "home.plantation.cta": "Explore Plantation Locations",
+    "home.stats.districts": "Districts Covered",
+    "home.stats.activities": "Plantation Activities",
+    "home.stats.community": "Community Members",
+    "home.stats.restoration": "Hectares Restored",
+    "projects.title": "Projects",
+    "projects.subtitle": "Initiatives under the ELEMENT programme — a joint effort of the Government of Tripura and The World Bank.",
+    "projects.objective": "Objective",
+    "projects.activities": "Key Activities",
+    "projects.beneficiaries": "Target Beneficiaries",
+    "projects.status": "Status",
+    "projects.location": "Location / Coverage",
+    "projects.component": "Component",
+    "footer.about": "ELEMENT — Enhancing Landscape and Ecosystem Management. A joint initiative of the Government of Tripura and The World Bank, implemented by the Tripura Forest Department.",
+    "footer.quicklinks": "Quick Links",
+    "footer.policies": "Policies",
+    "footer.connect": "Connect",
+    "footer.copy": "© 2026 ELEMENT Project, Government of Tripura. All rights reserved.",
+  },
+  kok: {
+    "site.brand": "ELEMENT",
+    "site.full": "ফিরাংনি বাঙা ফারিনি আনাকোয়াং তিনি (Landscape & Ecosystem)",
+    "site.partners": "ত্রিপুরা সরকার  |  বিশ্ব ব্যাংক",
+    "site.implementer": "ত্রিপুরা বন বিভাগ-নো লামা",
+    "nav.home": "নুক্‌হা",
+    "nav.about": "চিনি বারে",
+    "nav.projects": "পরিযোজনা",
+    "nav.publications": "প্রকাশনা",
+    "nav.activities": "কাম-নুকুসুং",
+    "nav.knowledge": "নলেজ হাব",
+    "nav.reports": "রিপোর্ট",
+    "nav.procurements": "টেন্ডার",
+    "nav.plantationMap": "চারা-বাগান সাইট",
+    "nav.whoswho": "কাইসা সুরুং",
+    "nav.grievance": "অভিযোগ",
+    "nav.rti": "RTI",
+    "nav.contact": "যোগাযোগ",
+    "common.helpline": "হেল্পলাইন",
+    "common.skipMain": "মূল কনটেন্ট-নো লামা",
+    "common.search": "খুজনা",
+    "common.language": "বুথ্রুক",
+    "home.whatsnew": "তামদাং খবর",
+    "home.viewAll": "সকলো চিনা",
+    "home.notifications": "নোটিফিকেশন",
+    "home.events": "অনুষ্ঠান",
+    "home.tenders": "টেন্ডার",
+    "home.plantation.title": "ত্রিপুরা-নি চারা বাগান",
+    "home.plantation.desc": "ELEMENT-নো ত্রিপুরা-নি ৮ জেলা-নো চারা-বাগান, পুনঃস্থাপন বু সমাজ-জীবিকানি কাম।",
+    "home.plantation.cta": "চারা-বাগান সাইট চিনা",
+    "home.stats.districts": "জেলা",
+    "home.stats.activities": "বাগান কাম",
+    "home.stats.community": "সমাজ সদস্য",
+    "home.stats.restoration": "হেক্টর পুনঃস্থাপন",
+    "projects.title": "পরিযোজনা",
+    "projects.subtitle": "ELEMENT-নি অধীনে পরিযোজনা — ত্রিপুরা সরকার বু বিশ্ব ব্যাংক-নি যৌথ উদ্যোগ।",
+    "projects.objective": "লক্ষ্য",
+    "projects.activities": "মুখ্য কাম",
+    "projects.beneficiaries": "সুবিধাভোগী",
+    "projects.status": "অবস্থা",
+    "projects.location": "এলাকা",
+    "projects.component": "কম্পোনেন্ট",
+    "footer.about": "ELEMENT — ত্রিপুরা সরকার বু বিশ্ব ব্যাংক-নি যৌথ পরিযোজনা, ত্রিপুরা বন বিভাগ-নো লামা।",
+    "footer.quicklinks": "দ্রুত লিংক",
+    "footer.policies": "নীতি",
+    "footer.connect": "যোগাযোগ",
+    "footer.copy": "© ২০২৬ ELEMENT পরিযোজনা, ত্রিপুরা সরকার। সর্বস্বত্ব সংরক্ষিত।",
+  },
+  bn: {
+    "site.brand": "ELEMENT",
+    "site.full": "ভূদৃশ্য ও বাস্তুতন্ত্র ব্যবস্থাপনা উন্নয়ন",
+    "site.partners": "ত্রিপুরা সরকার  |  বিশ্ব ব্যাংক",
+    "site.implementer": "ত্রিপুরা বন বিভাগ কর্তৃক বাস্তবায়িত",
+    "nav.home": "হোম",
+    "nav.about": "আমাদের সম্পর্কে",
+    "nav.projects": "প্রকল্পসমূহ",
+    "nav.publications": "প্রকাশনা",
+    "nav.activities": "কার্যক্রম",
+    "nav.knowledge": "নলেজ হাব",
+    "nav.reports": "প্রতিবেদন",
+    "nav.procurements": "ক্রয়/দরপত্র",
+    "nav.plantationMap": "বৃক্ষরোপণ স্থান",
+    "nav.whoswho": "কর্মকর্তাবৃন্দ",
+    "nav.grievance": "অভিযোগ",
+    "nav.rti": "তথ্যাধিকার",
+    "nav.contact": "যোগাযোগ",
+    "common.helpline": "হেল্পলাইন",
+    "common.skipMain": "মূল বিষয়বস্তুতে যান",
+    "common.search": "অনুসন্ধান",
+    "common.language": "ভাষা",
+    "home.whatsnew": "নতুন কী আছে",
+    "home.viewAll": "সব দেখুন",
+    "home.notifications": "বিজ্ঞপ্তি",
+    "home.events": "অনুষ্ঠান",
+    "home.tenders": "দরপত্র",
+    "home.plantation.title": "ত্রিপুরা জুড়ে বৃক্ষরোপণ",
+    "home.plantation.desc": "ELEMENT ত্রিপুরার ৮টি জেলায় ভূদৃশ্য-ভিত্তিক বৃক্ষরোপণ, পুনরুদ্ধার ও সম্প্রদায়ের জীবিকা সমর্থন করে।",
+    "home.plantation.cta": "বৃক্ষরোপণ স্থান দেখুন",
+    "home.stats.districts": "জেলা",
+    "home.stats.activities": "বৃক্ষরোপণ কার্যক্রম",
+    "home.stats.community": "সম্প্রদায়ের সদস্য",
+    "home.stats.restoration": "হেক্টর পুনরুদ্ধার",
+    "projects.title": "প্রকল্পসমূহ",
+    "projects.subtitle": "ELEMENT কর্মসূচির অধীনে উদ্যোগ — ত্রিপুরা সরকার ও বিশ্ব ব্যাংকের যৌথ প্রয়াস।",
+    "projects.objective": "উদ্দেশ্য",
+    "projects.activities": "প্রধান কার্যক্রম",
+    "projects.beneficiaries": "লক্ষ্য উপকারভোগী",
+    "projects.status": "অবস্থা",
+    "projects.location": "এলাকা",
+    "projects.component": "কম্পোনেন্ট",
+    "footer.about": "ELEMENT — ত্রিপুরা সরকার ও বিশ্ব ব্যাংকের যৌথ উদ্যোগ, ত্রিপুরা বন বিভাগ কর্তৃক বাস্তবায়িত।",
+    "footer.quicklinks": "দ্রুত লিংক",
+    "footer.policies": "নীতি",
+    "footer.connect": "যোগাযোগ",
+    "footer.copy": "© ২০২৬ ELEMENT প্রকল্প, ত্রিপুরা সরকার। সর্বস্বত্ব সংরক্ষিত।",
+  },
+};
+
+type Ctx = { lang: Lang; setLang: (l: Lang) => void; t: (key: string) => string };
+const LanguageContext = createContext<Ctx | undefined>(undefined);
+
+export function LanguageProvider({ children }: { children: ReactNode }) {
+  const [lang, setLangState] = useState<Lang>(() => {
+    const saved = typeof window !== "undefined" ? (localStorage.getItem("lang") as Lang | null) : null;
+    return saved && ["en", "kok", "bn"].includes(saved) ? saved : "en";
+  });
+  useEffect(() => {
+    localStorage.setItem("lang", lang);
+    document.documentElement.lang = lang === "bn" ? "bn" : lang === "kok" ? "kok" : "en";
+  }, [lang]);
+  const t = (key: string) => translations[lang][key] ?? translations.en[key] ?? key;
+  return <LanguageContext.Provider value={{ lang, setLang: setLangState, t }}>{children}</LanguageContext.Provider>;
+}
+
+export const useLang = () => {
+  const ctx = useContext(LanguageContext);
+  if (!ctx) throw new Error("useLang must be used within LanguageProvider");
+  return ctx;
+};
+
+export const LANGUAGES: { code: Lang; label: string }[] = [
+  { code: "en", label: "English" },
+  { code: "kok", label: "Kokborok" },
+  { code: "bn", label: "বাংলা" },
+];

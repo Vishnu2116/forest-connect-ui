@@ -1,13 +1,13 @@
 export type NavItem = {
-  label: string;
+  labelKey: string;
   to?: string;
   children?: { label: string; to: string }[];
 };
 
 export const navItems: NavItem[] = [
-  { label: "Home", to: "/" },
+  { labelKey: "nav.home", to: "/" },
   {
-    label: "About Us",
+    labelKey: "nav.about",
     children: [
       { label: "Organization Structure", to: "/about/organization" },
       { label: "Memorandum of Association", to: "/about/memorandum" },
@@ -16,11 +16,11 @@ export const navItems: NavItem[] = [
       { label: "Mission & Objective", to: "/about/mission" },
     ],
   },
-  { label: "Projects", to: "/projects" },
-  { label: "Publications", to: "/publications" },
-  { label: "Activities & Outputs", to: "/activities" },
+  { labelKey: "nav.projects", to: "/projects" },
+  { labelKey: "nav.publications", to: "/publications" },
+  { labelKey: "nav.activities", to: "/activities" },
   {
-    label: "Knowledge Hub",
+    labelKey: "nav.knowledge",
     children: [
       { label: "IEC Materials", to: "/knowledge-hub/iec" },
       { label: "Newsletters", to: "/knowledge-hub/newsletters" },
@@ -32,11 +32,11 @@ export const navItems: NavItem[] = [
       { label: "Lessons Learned", to: "/knowledge-hub/lessons" },
     ],
   },
-  { label: "Reports", to: "/reports" },
-  { label: "Procurements", to: "/procurements" },
-  { label: "Plantation Map", to: "/plantation-map" },
-  { label: "Who's Who", to: "/whos-who" },
-  { label: "Grievance", to: "/grievance" },
-  { label: "RTI", to: "/rti" },
-  { label: "Contact Us", to: "/contact" },
+  { labelKey: "nav.reports", to: "/reports" },
+  { labelKey: "nav.procurements", to: "/procurements" },
+  { labelKey: "nav.plantationMap", to: "/plantation-map" },
+  { labelKey: "nav.whoswho", to: "/whos-who" },
+  { labelKey: "nav.grievance", to: "/grievance" },
+  { labelKey: "nav.rti", to: "/rti" },
+  { labelKey: "nav.contact", to: "/contact" },
 ];

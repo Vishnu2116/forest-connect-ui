@@ -13,30 +13,77 @@ export const events = [
   { date: "05 Jun 2026", title: "World Environment Day Celebrations", venue: "Statewide" },
 ];
 
-export const projects = [
+export type Project = {
+  title: string;
+  description: string;
+  objective: string;
+  activities: string[];
+  beneficiaries: string;
+  status: string;
+  coverage: string;
+  component?: string;
+};
+
+export const projects: Project[] = [
   {
-    title: "Tripura Forest Environmental Improvement & Poverty Alleviation Project (JICA)",
-    description: "JICA-assisted project for sustainable forest management and livelihood enhancement across forest divisions of Tripura.",
+    title: "Landscape Restoration in Degraded Forest Areas",
+    description: "Restoration of degraded forest landscapes through assisted natural regeneration, soil & moisture conservation, and species enrichment under the ELEMENT programme.",
+    objective: "Restore ecological integrity of degraded forest landscapes and enhance carbon sequestration.",
+    activities: ["Assisted natural regeneration", "Soil & moisture conservation works", "Native species enrichment plantation", "Catchment area treatment"],
+    beneficiaries: "Forest fringe communities across 8 districts; ~25,000 households",
     status: "Ongoing",
-    coverage: "8 Divisions",
+    coverage: "Dhalai, Gomati, Khowai, North Tripura",
+    component: "Component 1 — Landscape Management",
   },
   {
-    title: "Compensatory Afforestation Programme (CAMPA)",
-    description: "Large-scale afforestation and ecological restoration funded under the CAMPA framework.",
+    title: "Forest Conservation & Biodiversity Strengthening",
+    description: "Strengthening protected area management, wildlife habitat improvement and biodiversity conservation across sanctuaries of Tripura.",
+    objective: "Conserve key biodiversity hotspots and improve management effectiveness of protected areas.",
+    activities: ["Habitat improvement in Sipahijala & Trishna WLS", "Anti-poaching infrastructure", "Wildlife corridor mapping", "Species recovery programmes"],
+    beneficiaries: "State biodiversity; eco-development committees; researchers",
     status: "Ongoing",
-    coverage: "All Districts",
+    coverage: "Sipahijala, Trishna, Gumti, Rowa Sanctuaries",
+    component: "Component 2 — Biodiversity Conservation",
   },
   {
-    title: "Green India Mission (GIM)",
-    description: "Centrally sponsored scheme to enhance forest cover and ecosystem services across Tripura.",
+    title: "Community Livelihood & High Value Forest Products",
+    description: "Promoting sustainable livelihoods through value-chain development of bamboo, agar, broom-grass and other High Value Forest Products (HVFPs).",
+    objective: "Enhance income of forest-dependent communities through sustainable HVFP value chains.",
+    activities: ["JFMC capacity building", "HVFP nurseries & cluster development", "Producer collectives & market linkages", "Skill training for women SHGs"],
+    beneficiaries: "12,000+ SHG members, JFMCs, tribal cooperatives",
     status: "Ongoing",
-    coverage: "6 Divisions",
+    coverage: "All 8 districts of Tripura",
+    component: "Component 3 — Livelihood Development",
   },
   {
-    title: "Project Bamboo Mission — Tripura",
-    description: "Promotion of bamboo cultivation, value-addition and livelihood generation in tribal areas of Tripura.",
+    title: "Eco-Tourism Development Initiative",
+    description: "Development of community-managed eco-tourism circuits at scenic forest landscapes to generate alternative livelihoods.",
+    objective: "Develop responsible eco-tourism that benefits local communities and supports conservation.",
+    activities: ["Eco-tourism site upgrades at Jampui Hills & Dumboor Lake", "Homestay programme", "Nature interpretation centres", "Community guide training"],
+    beneficiaries: "Local youth, homestay operators, tourism cooperatives",
+    status: "Pilot Phase",
+    coverage: "Jampui Hills, Dumboor, Sipahijala",
+    component: "Component 3 — Livelihood Development",
+  },
+  {
+    title: "Climate Resilience & Watershed Management",
+    description: "Climate-resilient watershed treatment, riparian restoration and adaptive management in vulnerable landscapes.",
+    objective: "Build climate resilience of forest landscapes and dependent communities.",
+    activities: ["Micro-watershed treatment", "Riparian buffer plantation", "Climate vulnerability assessments", "Drought-resilient species trials"],
+    beneficiaries: "Communities in climate-vulnerable hill terrains",
     status: "Ongoing",
-    coverage: "8 Districts",
+    coverage: "Dhalai, Unakoti, North Tripura",
+    component: "Component 1 — Landscape Management",
+  },
+  {
+    title: "Plantation & Biodiversity Conservation Programme",
+    description: "Large-scale block, avenue and community plantation programme integrating biodiversity-rich species mix.",
+    objective: "Increase green cover and conserve native flora through scientifically planned plantations.",
+    activities: ["Block plantation of native species", "Bamboo corridors", "Avenue & roadside plantation", "Seed bank & nursery development"],
+    beneficiaries: "Forest divisions, JFMCs, schools, urban local bodies",
+    status: "Ongoing",
+    coverage: "All Forest Divisions of Tripura",
+    component: "Component 2 — Biodiversity Conservation",
   },
 ];
 
