@@ -1,11 +1,10 @@
 import { useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
-import { ChevronDown, Menu, X, Search, Phone, Globe } from "lucide-react";
+import { ChevronDown, Menu, X, Phone, Globe, Lock } from "lucide-react";
 import { navItems } from "@/data/navigation";
 import { useLang, LANGUAGES } from "@/contexts/LanguageContext";
 import logoTripura from "@/assets/logo-tripura.png";
 import logoWorldBank from "@/assets/logo-worldbank.png";
-import logoElement from "@/assets/logo-element.png";
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
