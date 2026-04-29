@@ -70,14 +70,14 @@ export default function Navbar() {
       {/* Brand band — joint stakeholder identity */}
       <div className="bg-background border-b border-border">
         <div className="gov-container py-3 md:py-4">
-          <div className="grid grid-cols-[auto_1fr_auto] items-center gap-3 md:gap-6">
+          <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-3 md:gap-6">
             {/* Left: Tripura emblem + label */}
-            <Link to="/" className="flex items-center shrink-0">
+            <Link to="/" className="flex items-center shrink-0 justify-self-start">
               <img src={logoTripura} alt="Government of Tripura emblem" className="h-16 w-16 md:h-24 md:w-24" width={96} height={96} />
             </Link>
 
             {/* Center: ELEMENT title */}
-            <div className="text-center min-w-0">
+            <div className="text-center min-w-0 justify-self-center">
               <h1 className="text-2xl sm:text-3xl md:text-5xl font-extrabold text-primary tracking-wide leading-none">ELEMENT</h1>
               <p className="mt-1 md:mt-2 text-xs sm:text-sm md:text-base font-semibold text-foreground/80">
                 {t("site.full")}
