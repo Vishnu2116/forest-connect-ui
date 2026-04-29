@@ -5,7 +5,7 @@ export default function RTI() {
   const sections = [
     {
       title: "1. Particulars of the Organization",
-      body: "The Assam Forest Department is headed by the Principal Chief Conservator of Forests & Head of Forest Force, with offices across all forest divisions of the State.",
+      body: "The Tripura Forest Department is headed by the Principal Chief Conservator of Forests & Head of Forest Force, with offices across all forest divisions of the State.",
     },
     {
       title: "2. Powers and Duties of Officers",
@@ -13,7 +13,7 @@ export default function RTI() {
     },
     {
       title: "3. Procedure for Decision Making",
-      body: "Decisions are taken in accordance with the Office Procedure Manual and rules of business of the Government of Assam.",
+      body: "Decisions are taken in accordance with the Office Procedure Manual and rules of business of the Government of Tripura.",
     },
     {
       title: "4. Norms set for Discharge of Functions",
@@ -45,8 +45,8 @@ export default function RTI() {
           <aside className="space-y-4">
             <div className="bg-primary text-primary-foreground rounded-md p-5">
               <h3 className="font-semibold">Public Information Officer</h3>
-              <p className="text-sm opacity-90 mt-2">Shri B. Kalita, IFS<br/>CCF (Administration)<br/>Aranya Bhavan, Guwahati</p>
-              <p className="text-sm opacity-90 mt-2">📞 +91 361 2566080<br/>✉ pio-forest@assam.gov.in</p>
+              <p className="text-sm opacity-90 mt-2">Shri B. Chakma, IFS<br/>CCF (Administration)<br/>Aranya Bhawan, Agartala</p>
+              <p className="text-sm opacity-90 mt-2">📞 +91 381 2416480<br/>✉ pio-forest@tripura.gov.in</p>
             </div>
             <div className="bg-card border border-border rounded-md p-5">
               <h3 className="font-semibold text-primary">RTI Documents</h3>

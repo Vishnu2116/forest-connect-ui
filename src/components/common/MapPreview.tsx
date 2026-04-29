@@ -39,7 +39,7 @@ export default function MapPreview({ title = "Plantation Map", interactive = fal
       {/* Overlay label */}
       <div className="absolute top-3 left-3 bg-card/95 backdrop-blur px-3 py-2 rounded shadow-card text-xs">
         <div className="font-semibold text-primary">{title}</div>
-        <div className="text-muted-foreground">Assam · {plantations.length} active sites</div>
+        <div className="text-muted-foreground">Tripura · {plantations.length} active sites</div>
       </div>
       <div className="absolute bottom-3 right-3 bg-card/95 backdrop-blur px-3 py-2 rounded shadow-card text-[10px] text-muted-foreground">
         Demo map · Bhuvan / Google Maps / ESRI integration ready

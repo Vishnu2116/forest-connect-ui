@@ -2,12 +2,12 @@ import AboutLayout from "@/components/layout/AboutLayout";
 
 export function Organization() {
   return (
-    <AboutLayout title="Organization Structure" subtitle="Departmental hierarchy of the Assam Forest Department">
+    <AboutLayout title="Organization Structure" subtitle="Departmental hierarchy of the Tripura Forest Department">
       <div className="bg-card border border-border rounded-md p-6 shadow-card">
         <ol className="space-y-4">
           {[
-            ["Hon'ble Forest Minister", "Government of Assam"],
-            ["Principal Secretary, Environment & Forests", "Administrative Head"],
+            ["Hon'ble Forest Minister", "Government of Tripura"],
+            ["Principal Secretary, Forests", "Administrative Head"],
             ["Principal Chief Conservator of Forests (PCCF) & HoFF", "Head of Forest Force"],
             ["Additional PCCFs (Wildlife / Working Plan / Research / Territorial / Social Forestry / Administration)", "Functional Heads"],
             ["Chief Conservators of Forests (CCFs) — Circles", "Field Heads"],
@@ -33,7 +33,7 @@ export function Memorandum() {
   return (
     <AboutLayout title="Memorandum of Association" subtitle="Founding governance and association framework">
       <div className="bg-card border border-border rounded-md p-6 shadow-card space-y-4 text-sm leading-relaxed text-muted-foreground">
-        <p>The Memorandum of Association sets forth the constitution, objectives, and governance framework of the Assam Forest Department's associated societies and registered bodies operating under its umbrella.</p>
+        <p>The Memorandum of Association sets forth the constitution, objectives, and governance framework of the Tripura Forest Department's associated societies and registered bodies operating under its umbrella.</p>
         <p>It outlines the powers of the General Body, the composition of the Governing Council, the financial controls, and the audit framework as mandated under the Societies Registration Act and applicable State rules.</p>
         <ul className="list-disc list-inside space-y-1">
           <li>Name, registered office and area of operation</li>
@@ -56,12 +56,12 @@ export function Directory() {
           <thead><tr><th>Name</th><th>Designation</th><th>Office</th><th>Phone</th></tr></thead>
           <tbody>
             {[
-              ["Shri M. K. Yadava, IFS", "PCCF & HoFF", "Aranya Bhavan", "+91 361 2566064"],
-              ["Smt. Sonali Ghosh, IFS", "APCCF (Wildlife) & CWLW", "Aranya Bhavan", "+91 361 2566065"],
-              ["Shri R. Borah, IFS", "APCCF (Working Plan)", "Aranya Bhavan", "+91 361 2566066"],
-              ["Dr. P. Sivakumar, IFS", "APCCF (Research)", "RFRI Jorhat", "+91 376 2370058"],
-              ["Shri A. Swargowari, IFS", "APCCF (Territorial)", "Aranya Bhavan", "+91 361 2566068"],
-              ["Smt. R. Suchiang, IFS", "APCCF (Social Forestry)", "Aranya Bhavan", "+91 361 2566069"],
+              ["Shri D. K. Sharma, IFS", "PCCF & HoFF", "Aranya Bhawan", "+91 381 2416403"],
+              ["Smt. R. K. Samal, IFS", "APCCF (Wildlife) & CWLW", "Aranya Bhawan", "+91 381 2416404"],
+              ["Shri P. L. Agarwal, IFS", "APCCF (Working Plan)", "Aranya Bhawan", "+91 381 2416405"],
+              ["Dr. A. K. Gupta, IFS", "APCCF (Research)", "SFRI Hatipara", "+91 381 2374562"],
+              ["Shri B. S. Mishra, IFS", "APCCF (Territorial)", "Aranya Bhawan", "+91 381 2416407"],
+              ["Smt. L. Darlong, IFS", "APCCF (Social Forestry)", "Aranya Bhawan", "+91 381 2416408"],
             ].map((r, i) => <tr key={i}>{r.map((c, j) => <td key={j}>{c}</td>)}</tr>)}
           </tbody>
         </table>
@@ -72,10 +72,10 @@ export function Directory() {
 
 export function Vision() {
   return (
-    <AboutLayout title="Vision & Objective" subtitle="A greener, biodiverse and resilient Assam">
+    <AboutLayout title="Vision & Objective" subtitle="A greener, biodiverse and resilient Tripura">
       <div className="bg-card border border-border rounded-md p-6 shadow-card space-y-4">
         <h3 className="text-xl font-semibold text-primary">Our Vision</h3>
-        <p className="text-muted-foreground leading-relaxed">To conserve, protect and scientifically manage the forest, wildlife and biodiversity resources of Assam in a sustainable manner, ensuring ecological balance and the well-being of present and future generations.</p>
+        <p className="text-muted-foreground leading-relaxed">To conserve, protect and scientifically manage the forest, wildlife and biodiversity resources of Tripura in a sustainable manner, ensuring ecological balance and the well-being of present and future generations.</p>
         <h3 className="text-xl font-semibold text-primary mt-4">Key Objectives</h3>
         <ul className="list-disc list-inside text-sm text-muted-foreground space-y-2">
           <li>Increase the green cover and forest density of the State.</li>
@@ -97,7 +97,7 @@ export function Mission() {
         <p className="text-muted-foreground leading-relaxed">To deliver scientific, transparent and people-centric forest governance through capacity-building, technology adoption, and partnerships with communities, research institutions and other stakeholders.</p>
         <div className="grid md:grid-cols-2 gap-4 mt-4">
           {[
-            ["Conservation", "Protect 35,000+ sq km of recorded forest area."],
+            ["Conservation", "Protect 7,700+ sq km of recorded forest area."],
             ["Restoration", "Restore degraded forests through scientific afforestation."],
             ["Community", "Empower JFMCs and EDCs across the State."],
             ["Innovation", "Adopt GIS, drones and satellite-based monitoring."],

@@ -18,9 +18,9 @@ export default function Navbar() {
       <div className="bg-primary-dark text-primary-foreground text-xs">
         <div className="gov-container flex items-center justify-between h-9">
           <div className="flex items-center gap-4">
-            <span className="hidden sm:inline">Government of Assam</span>
+            <span className="hidden sm:inline">Government of Tripura</span>
             <span className="hidden md:inline opacity-70">|</span>
-            <span className="hidden md:inline">अरण्य भवन, गुवाहाटी</span>
+            <span className="hidden md:inline">অরণ্য ভবন, আগরতলা</span>
           </div>
           <div className="flex items-center gap-4">
             <a href="#main" className="hover:underline hidden sm:inline">Skip to Main</a>
@@ -31,7 +31,7 @@ export default function Navbar() {
             <span className="opacity-70">|</span>
             <button className="hover:underline">English</button>
             <span className="opacity-70">|</span>
-            <button className="hover:underline">অসমীয়া</button>
+            <button className="hover:underline">বাংলা</button>
           </div>
         </div>
       </div>
@@ -40,10 +40,10 @@ export default function Navbar() {
       <div className="bg-background border-b border-border">
         <div className="gov-container flex items-center justify-between py-3 gap-4">
           <Link to="/" className="flex items-center gap-3">
-            <img src={logo} alt="Assam Forest Department emblem" className="h-14 w-14" width={56} height={56} />
+            <img src={logo} alt="Tripura Forest Department emblem" className="h-14 w-14" width={56} height={56} />
             <div>
-              <div className="text-lg md:text-xl font-bold text-primary leading-tight">Assam Forest Department</div>
-              <div className="text-xs md:text-sm text-muted-foreground">Government of Assam · অসম বন বিভাগ</div>
+              <div className="text-lg md:text-xl font-bold text-primary leading-tight">Tripura Forest Department</div>
+              <div className="text-xs md:text-sm text-muted-foreground">Government of Tripura · ত্রিপুরা বন বিভাগ</div>
             </div>
           </Link>
           <div className="hidden lg:flex items-center gap-3">

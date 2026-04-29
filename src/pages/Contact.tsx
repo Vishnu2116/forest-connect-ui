@@ -5,13 +5,13 @@ import { MapPin, Phone, Mail, Clock, Send } from "lucide-react";
 export default function Contact() {
   return (
     <PageLayout>
-      <PageHeader title="Contact Us" subtitle="Reach out to the Assam Forest Department" breadcrumb={["Home", "Contact Us"]} />
+      <PageHeader title="Contact Us" subtitle="Reach out to the Tripura Forest Department" breadcrumb={["Home", "Contact Us"]} />
       <section className="py-10">
         <div className="gov-container grid lg:grid-cols-3 gap-6">
           {[
-            { icon: MapPin, title: "Address", body: "Aranya Bhavan, Panjabari\nGuwahati, Assam — 781037" },
-            { icon: Phone, title: "Phone", body: "+91 361 2566064\nHelpline: 1800-345-3666" },
-            { icon: Mail, title: "Email", body: "info-forest@assam.gov.in\npio-forest@assam.gov.in" },
+            { icon: MapPin, title: "Address", body: "Aranya Bhawan, Gurkhabasti\nAgartala, Tripura — 799006" },
+            { icon: Phone, title: "Phone", body: "+91 381 2416403\nHelpline: 1800-345-3666" },
+            { icon: Mail, title: "Email", body: "info-forest@tripura.gov.in\npio-forest@tripura.gov.in" },
           ].map(c => (
             <div key={c.title} className="bg-card border border-border rounded-md p-6 shadow-card">
               <div className="p-2.5 bg-primary/10 text-primary rounded w-fit"><c.icon className="h-5 w-5" /></div>
@@ -24,7 +24,7 @@ export default function Contact() {
         <div className="gov-container grid lg:grid-cols-2 gap-8 mt-8">
           <div>
             <h2 className="section-title mb-4">Find us on the map</h2>
-            <MapPreview title="Aranya Bhavan, Guwahati" />
+            <MapPreview title="Aranya Bhawan, Agartala" />
             <div className="mt-3 text-xs text-muted-foreground flex items-center gap-2"><Clock className="h-3.5 w-3.5" /> Office Hours: Mon–Fri, 10:00 AM – 5:00 PM</div>
           </div>
           <div className="bg-card border border-border rounded-md p-6 shadow-card">
