@@ -17,6 +17,17 @@ import RTI from "./pages/RTI";
 import Contact from "./pages/Contact";
 import Disclaimer from "./pages/Disclaimer";
 import Activities from "./pages/Activities";
+import AdminLogin from "./pages/admin/AdminLogin";
+import AdminLayout from "./pages/admin/AdminLayout";
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import {
+  NotificationsAdmin, EventsAdmin, TendersAdmin, WhosWhoAdmin, SuccessStoriesAdmin,
+  NewslettersAdmin, ThematicAdmin, ReportsAdmin, IECAdmin, ActivitiesAdmin, ProjectsAdmin,
+} from "./pages/admin/modules";
+import PlantationAdmin from "./pages/admin/PlantationAdmin";
+import { GrievanceAdmin, RTIAdmin } from "./pages/admin/StatusModules";
+import { UsersAdmin } from "./pages/admin/UsersAdmin";
+import SettingsAdmin from "./pages/admin/SettingsAdmin";
 
 const queryClient = new QueryClient();
 
@@ -53,6 +64,27 @@ const App = () => (
           <Route path="/rti" element={<RTI />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/disclaimer" element={<Disclaimer />} />
+          {/* Admin */}
+          <Route path="/admin/login" element={<AdminLogin />} />
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route index element={<AdminDashboard />} />
+            <Route path="notifications" element={<NotificationsAdmin />} />
+            <Route path="events" element={<EventsAdmin />} />
+            <Route path="tenders" element={<TendersAdmin />} />
+            <Route path="whoswho" element={<WhosWhoAdmin />} />
+            <Route path="success-stories" element={<SuccessStoriesAdmin />} />
+            <Route path="newsletters" element={<NewslettersAdmin />} />
+            <Route path="thematic" element={<ThematicAdmin />} />
+            <Route path="reports" element={<ReportsAdmin />} />
+            <Route path="iec" element={<IECAdmin />} />
+            <Route path="activities" element={<ActivitiesAdmin />} />
+            <Route path="projects" element={<ProjectsAdmin />} />
+            <Route path="plantation" element={<PlantationAdmin />} />
+            <Route path="grievance" element={<GrievanceAdmin />} />
+            <Route path="rti" element={<RTIAdmin />} />
+            <Route path="users" element={<UsersAdmin />} />
+            <Route path="settings" element={<SettingsAdmin />} />
+          </Route>
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
