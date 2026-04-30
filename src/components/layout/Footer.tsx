@@ -8,8 +8,8 @@ export default function Footer() {
   const { t } = useLang();
   return (
     <footer className="bg-primary-dark text-primary-foreground mt-16">
-      <div className="gov-container py-12 grid gap-10 md:grid-cols-2 lg:grid-cols-4">
-        <div>
+      <div className="gov-container py-10 md:py-12 grid gap-8 md:gap-10 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="sm:col-span-2 lg:col-span-1">
           <h3 className="text-2xl font-extrabold text-accent tracking-tight">ELEMENT</h3>
           <p className="text-sm font-medium opacity-95 mt-1">Enhancing Landscape and Ecosystem Management</p>
           <p className="text-xs opacity-80 mt-2">Government of Tripura  |  The World Bank</p>

@@ -21,21 +21,21 @@ export default function Navbar() {
     <header className="sticky top-0 z-50 shadow-card">
       {/* Top utility bar */}
       <div className="bg-primary-dark text-primary-foreground text-xs">
-        <div className="gov-container flex items-center justify-between h-9">
-          <div className="flex items-center gap-4">
-            <span className="hidden sm:inline">{t("site.partners")}</span>
+        <div className="gov-container flex items-center justify-between gap-2 h-9">
+          <div className="flex items-center gap-4 min-w-0">
+            <span className="hidden sm:inline truncate">{t("site.partners")}</span>
           </div>
-          <div className="flex items-center gap-4">
-            <a href="#main" className="hover:underline hidden sm:inline">{t("common.skipMain")}</a>
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+            <a href="#main" className="hover:underline hidden md:inline">{t("common.skipMain")}</a>
+            <span className="hidden md:inline opacity-70">|</span>
+            <button className="hover:underline hidden xs:inline" aria-label="Decrease font">A-</button>
+            <button className="hover:underline hidden xs:inline" aria-label="Reset font">A</button>
+            <button className="hover:underline hidden xs:inline" aria-label="Increase font">A+</button>
             <span className="hidden sm:inline opacity-70">|</span>
-            <button className="hover:underline" aria-label="Decrease font">A-</button>
-            <button className="hover:underline" aria-label="Reset font">A</button>
-            <button className="hover:underline" aria-label="Increase font">A+</button>
-            <span className="opacity-70">|</span>
-            <Link to="/admin/login" className="hover:underline flex items-center gap-1">
+            <Link to="/admin/login" className="hover:underline hidden sm:flex items-center gap-1">
               <Lock className="h-3 w-3" /> {t("common.adminLogin")}
             </Link>
-            <span className="opacity-70">|</span>
+            <span className="hidden sm:inline opacity-70">|</span>
             <div className="relative">
               <button
                 onClick={() => setLangOpen((v) => !v)}
@@ -70,42 +70,66 @@ export default function Navbar() {
       {/* Brand band — joint stakeholder identity */}
       <div className="bg-background border-b border-border">
         <div className="gov-container py-3 md:py-4">
-          <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-3 md:gap-6">
-            {/* Left: Tripura emblem + label */}
+          {/* Mobile layout: stacked */}
+          <div className="md:hidden">
+            <div className="flex items-center justify-between gap-2">
+              <Link to="/" className="flex items-center shrink-0">
+                <img src={logoTripura} alt="Government of Tripura emblem" className="h-12 w-12" width={48} height={48} />
+              </Link>
+              <div className="flex-1 text-center min-w-0 px-2">
+                <h1 className="text-xl sm:text-2xl font-extrabold text-primary tracking-wide leading-none break-words">ELEMENT</h1>
+              </div>
+              <div className="flex items-center gap-2 shrink-0">
+                <img src={logoWorldBank} alt="The World Bank logo" className="h-10 w-auto" width={40} height={40} />
+                <button
+                  className="lg:hidden p-2 rounded-md border border-border focus-ring"
+                  onClick={() => setMobileOpen((v) => !v)}
+                  aria-label="Toggle menu"
+                >
+                  {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+                </button>
+              </div>
+            </div>
+            <div className="mt-2 text-center">
+              <p className="text-[11px] sm:text-xs font-semibold text-foreground/80 leading-snug px-2">
+                {t("site.full")}
+              </p>
+              <div className="mx-auto mt-1.5 max-w-md border-t border-border pt-1">
+                <p className="text-[10px] sm:text-xs text-muted-foreground italic px-2 leading-snug">
+                  {t("site.joint")}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Desktop / Tablet layout: 3-column */}
+          <div className="hidden md:grid grid-cols-[1fr_auto_1fr] items-center gap-3 md:gap-6">
+            {/* Left: Tripura emblem */}
             <Link to="/" className="flex items-center shrink-0 justify-self-start">
-              <img src={logoTripura} alt="Government of Tripura emblem" className="h-16 w-16 md:h-24 md:w-24" width={96} height={96} />
+              <img src={logoTripura} alt="Government of Tripura emblem" className="h-20 w-20 md:h-24 md:w-24" width={96} height={96} />
             </Link>
 
             {/* Center: ELEMENT title */}
             <div className="text-center min-w-0 justify-self-center">
-              <h1 className="text-2xl sm:text-3xl md:text-5xl font-extrabold text-primary tracking-wide leading-none">ELEMENT</h1>
-              <p className="mt-1 md:mt-2 text-xs sm:text-sm md:text-base font-semibold text-foreground/80">
+              <h1 className="text-3xl md:text-5xl font-extrabold text-primary tracking-wide leading-none">ELEMENT</h1>
+              <p className="mt-2 text-sm md:text-base font-semibold text-foreground/80">
                 {t("site.full")}
               </p>
-              <div className="mx-auto mt-1 md:mt-2 max-w-md border-t border-border pt-1 md:pt-1.5">
-                <p className="text-[10px] sm:text-xs md:text-sm text-muted-foreground italic">
+              <div className="mx-auto mt-2 max-w-md border-t border-border pt-1.5">
+                <p className="text-xs md:text-sm text-muted-foreground italic">
                   {t("site.joint")}
                 </p>
               </div>
             </div>
 
             {/* Right: World Bank logo + label */}
-            <div className="hidden md:flex items-center gap-2 md:gap-3 shrink-0 justify-self-end">
+            <div className="flex items-center gap-2 md:gap-3 shrink-0 justify-self-end">
               <img src={logoWorldBank} alt="The World Bank logo" className="h-14 md:h-20 w-auto" width={80} height={80} />
               <div className="leading-tight">
                 <div className="text-lg md:text-2xl font-extrabold text-primary tracking-tight">{t("site.worldbank")}</div>
                 <div className="text-[10px] md:text-xs text-muted-foreground tracking-wider">{t("site.worldbankSub")}</div>
               </div>
             </div>
-
-            {/* Mobile menu */}
-            <button
-              className="lg:hidden p-2 rounded-md border border-border focus-ring justify-self-end"
-              onClick={() => setMobileOpen((v) => !v)}
-              aria-label="Toggle menu"
-            >
-              {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-            </button>
           </div>
         </div>
       </div>
