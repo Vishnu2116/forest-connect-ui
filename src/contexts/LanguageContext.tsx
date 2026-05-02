@@ -54,7 +54,7 @@ const translations: Record<Lang, Dict> = {
     "projects.status": "Status",
     "projects.location": "Location / Coverage",
     "projects.component": "Component",
-    "footer.about": "ELEMENT — Enhancing Landscape and Ecosystem Management. A joint initiative of the Government of Tripura and The World Bank, implemented by the Tripura Forest Department.",
+    "footer.about": "ELEMENT — Enhancing Landscape and Ecosystem Management. A joint initiative of the Government of Tripura and The World Bank, for livelihood transformation and economic development.",
     "footer.quicklinks": "Quick Links",
     "footer.policies": "Policies",
     "footer.connect": "Connect",
