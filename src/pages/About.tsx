@@ -7,7 +7,7 @@ import { officials } from "@/data/content";
 const aboutLinks = [
   { to: "/about", title: "About ELEMENT" },
   { to: "/about/organization", title: "Organization Structure" },
-  { to: "/about/whos-who", title: "Key Officials" },
+  { to: "/about/whos-who", title: "Who's Who" },
   { to: "/about/vision", title: "Vision & Objective" },
   { to: "/about/mission", title: "Mission & Objective" },
 ];
@@ -165,7 +165,7 @@ export function WhosWhoSection() {
   const [selected, setSelected] = useState<typeof officials[0] | null>(null);
 
   return (
-    <AboutLayout title="Key Officials" subtitle="Leadership team driving the ELEMENT programme">
+    <AboutLayout title="Who's Who" subtitle="Leadership team driving the ELEMENT programme">
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
         {officials.map((o) => (
           <article
