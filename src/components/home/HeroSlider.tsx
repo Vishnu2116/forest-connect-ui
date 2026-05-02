@@ -5,9 +5,9 @@ import hero2 from "@/assets/hero-plantation.jpg";
 import hero3 from "@/assets/hero-wildlife.jpg";
 
 const slides = [
-  { img: hero1, title: "Enhancing Landscape and Ecosystem Management", subtitle: "ELEMENT — a joint initiative of the Government of Tripura and The World Bank.", badge: "ELEMENT Project" },
-  { img: hero2, title: "Restoring Landscapes Across Tripura", subtitle: "Community-led plantation, biodiversity conservation and sustainable livelihoods.", badge: "Government of Tripura" },
-  { img: hero3, title: "Conserving Biodiversity & Wildlife", subtitle: "Strengthening protected areas and ecosystem services.", badge: "The World Bank" },
+  { img: hero1, title: "Enhancing Landscape and Ecosystem Management", subtitle: "ELEMENT — a joint initiative of the Government of Tripura and The World Bank for livelihood transformation and economic growth.", badge: "ELEMENT Programme" },
+  { img: hero2, title: "Transforming Rural Livelihoods Across Tripura", subtitle: "Community-led value chain development, enterprise support and sustainable landscape management.", badge: "Government of Tripura" },
+  { img: hero3, title: "Building Resilient Communities & Landscapes", subtitle: "Empowering 25,000+ households through livelihood generation, skill development and community participation.", badge: "The World Bank" },
 ];
 
 export default function HeroSlider() {
