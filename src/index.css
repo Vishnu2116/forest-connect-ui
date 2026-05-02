@@ -119,19 +119,17 @@
   }
 
   .section-title {
-    @apply text-2xl md:text-3xl font-bold text-primary border-l-4 border-accent pl-4;
-    margin-bottom: 0;
-    line-height: 1.3;
+    @apply text-2xl md:text-3xl font-bold text-primary border-l-4 border-accent pl-3;
   }
 
   .data-table {
     @apply w-full text-sm border border-border;
   }
   .data-table th {
-    @apply bg-primary text-primary-foreground text-left px-4 py-3.5 font-semibold text-sm;
+    @apply bg-primary text-primary-foreground text-left px-4 py-3 font-semibold;
   }
   .data-table td {
-    @apply px-4 py-3.5 border-t border-border text-sm leading-relaxed;
+    @apply px-4 py-3 border-t border-border;
   }
   .data-table tr:nth-child(even) td {
     @apply bg-surface;
