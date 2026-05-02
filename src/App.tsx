@@ -6,16 +6,18 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import Index from "./pages/Index.tsx";
 import NotFound from "./pages/NotFound.tsx";
-import { Organization, Memorandum, Directory, Vision, Mission } from "./pages/About";
+import { AboutElement, Organization, WhosWhoSection, Vision, Mission } from "./pages/About";
 import Projects from "./pages/Projects";
+import ProjectDetail from "./pages/ProjectDetail";
 import { Reports, Publications, Procurements } from "./pages/Listings";
 import KnowledgeHub from "./pages/KnowledgeHub";
 import PlantationMap from "./pages/PlantationMap";
-import WhosWho from "./pages/WhosWho";
 import Grievance from "./pages/Grievance";
 import RTI from "./pages/RTI";
 import Contact from "./pages/Contact";
 import Disclaimer from "./pages/Disclaimer";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsOfUse from "./pages/TermsOfUse";
 import Activities from "./pages/Activities";
 import AdminLogin from "./pages/admin/AdminLogin";
 import AdminLayout from "./pages/admin/AdminLayout";
@@ -40,12 +42,13 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/about" element={<AboutElement />} />
           <Route path="/about/organization" element={<Organization />} />
-          <Route path="/about/memorandum" element={<Memorandum />} />
-          <Route path="/about/directory" element={<Directory />} />
+          <Route path="/about/whos-who" element={<WhosWhoSection />} />
           <Route path="/about/vision" element={<Vision />} />
           <Route path="/about/mission" element={<Mission />} />
           <Route path="/projects" element={<Projects />} />
+          <Route path="/projects/:slug" element={<ProjectDetail />} />
           <Route path="/publications" element={<Publications />} />
           <Route path="/activities" element={<Activities />} />
           <Route path="/knowledge-hub/iec" element={<KnowledgeHub initialCategory="IEC Materials" />} />
@@ -59,11 +62,12 @@ const App = () => (
           <Route path="/reports" element={<Reports />} />
           <Route path="/procurements" element={<Procurements />} />
           <Route path="/plantation-map" element={<PlantationMap />} />
-          <Route path="/whos-who" element={<WhosWho />} />
           <Route path="/grievance" element={<Grievance />} />
           <Route path="/rti" element={<RTI />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/disclaimer" element={<Disclaimer />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/terms-of-use" element={<TermsOfUse />} />
           {/* Admin */}
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin" element={<AdminLayout />}>
@@ -85,7 +89,6 @@ const App = () => (
             <Route path="users" element={<UsersAdmin />} />
             <Route path="settings" element={<SettingsAdmin />} />
           </Route>
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
