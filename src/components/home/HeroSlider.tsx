@@ -34,8 +34,8 @@ export default function HeroSlider() {
               <div className="gov-container">
                 <div className="max-w-2xl text-primary-foreground">
                   <span className="inline-block bg-accent text-accent-foreground text-[11px] sm:text-xs font-semibold px-3 py-1 rounded">{s.badge}</span>
-                  <h2 className="mt-3 text-2xl sm:text-3xl md:text-5xl font-bold leading-tight">{s.title}</h2>
-                  <p className="mt-3 text-sm sm:text-base md:text-lg opacity-90 leading-relaxed">{s.subtitle}</p>
+                  <h2 className="mt-4 text-2xl sm:text-3xl md:text-5xl font-bold leading-tight mb-0">{s.title}</h2>
+                  <p className="mt-3 text-sm sm:text-base md:text-lg opacity-90 leading-relaxed mb-0">{s.subtitle}</p>
                   <div className="mt-6 flex flex-col sm:flex-row flex-wrap gap-3">
                     <a href="/projects" className="bg-accent hover:bg-accent-hover text-accent-foreground px-5 py-2.5 rounded font-semibold focus-ring text-center">Explore Projects</a>
                     <a href="/plantation-map" className="bg-background/10 backdrop-blur border border-primary-foreground/30 text-primary-foreground px-5 py-2.5 rounded font-semibold hover:bg-background/20 focus-ring text-center">View Plantation Map</a>
