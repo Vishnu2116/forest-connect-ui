@@ -29,12 +29,12 @@ export default function Footer() {
           <h3 className="text-base font-semibold mb-4 text-accent">{t("footer.quicklinks")}</h3>
           <ul className="space-y-2.5 text-sm">
             {[
-              ["About Us", "/about/organization"],
+              ["About ELEMENT", "/about"],
               ["Projects", "/projects"],
               ["Reports", "/reports"],
               ["Plantation Locations", "/plantation-map"],
-              ["RTI", "/rti"],
-              ["Grievance", "/grievance"],
+              ["Activities & Outputs", "/activities"],
+              ["Contact Us", "/contact"],
             ].map(([l, h]) => (
               <li key={h}><Link to={h} className="opacity-90 hover:opacity-100 hover:text-accent">{l}</Link></li>
             ))}
@@ -45,11 +45,10 @@ export default function Footer() {
           <h3 className="text-base font-semibold mb-4 text-accent">{t("footer.policies")}</h3>
           <ul className="space-y-2.5 text-sm">
             <li><Link to="/disclaimer" className="opacity-90 hover:text-accent">Disclaimer</Link></li>
-            <li><a className="opacity-90 hover:text-accent" href="#">Privacy Policy</a></li>
-            <li><a className="opacity-90 hover:text-accent" href="#">Terms of Use</a></li>
-            <li><a className="opacity-90 hover:text-accent" href="#">Copyright Policy</a></li>
-            <li><a className="opacity-90 hover:text-accent" href="#">Accessibility Statement</a></li>
-            <li><a className="opacity-90 hover:text-accent" href="#">Sitemap</a></li>
+            <li><Link to="/privacy-policy" className="opacity-90 hover:text-accent">Privacy Policy</Link></li>
+            <li><Link to="/terms-of-use" className="opacity-90 hover:text-accent">Terms of Use</Link></li>
+            <li><Link to="/grievance" className="opacity-90 hover:text-accent">Grievance Redressal</Link></li>
+            <li><Link to="/rti" className="opacity-90 hover:text-accent">RTI</Link></li>
           </ul>
         </div>
 

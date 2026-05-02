@@ -1,7 +1,16 @@
+import { Link } from "react-router-dom";
 import PageLayout, { PageHeader } from "@/components/layout/PageLayout";
 import { projects } from "@/data/content";
-import { Trees, Target, ListChecks, Users, MapPin, Layers, CheckCircle2 } from "lucide-react";
+import { Trees, Target, Users, MapPin, ArrowRight, BarChart3, TrendingUp, Home, Briefcase } from "lucide-react";
 import { useLang } from "@/contexts/LanguageContext";
+import { slugify } from "./ProjectDetail";
+
+const impactStats = [
+  { icon: TrendingUp, label: "Area Restored", value: "18,500 Ha", color: "text-primary" },
+  { icon: Home, label: "Households Benefited", value: "25,000+", color: "text-accent" },
+  { icon: Briefcase, label: "Livelihood Activities", value: "620+", color: "text-primary" },
+  { icon: BarChart3, label: "Districts Covered", value: "8", color: "text-accent" },
+];
 
 export default function Projects() {
   const { t } = useLang();
@@ -12,6 +21,26 @@ export default function Projects() {
         subtitle={t("projects.subtitle")}
         breadcrumb={["Home", "Projects"]}
       />
+
+      {/* Impact Stats */}
+      <section className="bg-surface py-8 border-b border-border">
+        <div className="gov-container">
+          <div className="flex items-center gap-2 mb-6">
+            <BarChart3 className="h-5 w-5 text-accent" />
+            <h2 className="text-lg font-bold text-primary">Programme Impact</h2>
+          </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {impactStats.map((s) => (
+              <div key={s.label} className="bg-card border border-border rounded-md p-5 text-center shadow-card">
+                <s.icon className={`h-6 w-6 mx-auto ${s.color}`} />
+                <div className="text-2xl font-bold text-primary mt-2">{s.value}</div>
+                <div className="text-sm text-muted-foreground mt-1">{s.label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section className="py-10">
         <div className="gov-container">
           <div className="grid lg:grid-cols-2 gap-6">
@@ -41,20 +70,6 @@ export default function Projects() {
                     </div>
                   </div>
 
-                  <div className="flex gap-2">
-                    <ListChecks className="h-4 w-4 text-accent mt-0.5 shrink-0" />
-                    <div className="flex-1">
-                      <div className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">{t("projects.activities")}</div>
-                      <ul className="mt-1 grid sm:grid-cols-2 gap-x-3 gap-y-1">
-                        {p.activities.map((a) => (
-                          <li key={a} className="flex items-start gap-1.5 text-xs text-foreground">
-                            <CheckCircle2 className="h-3 w-3 text-primary mt-0.5 shrink-0" /> {a}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-
                   <div className="grid sm:grid-cols-2 gap-3 pt-2 border-t border-border">
                     <div className="flex gap-2">
                       <Users className="h-4 w-4 text-primary mt-0.5 shrink-0" />
@@ -71,6 +86,15 @@ export default function Projects() {
                       </div>
                     </div>
                   </div>
+                </div>
+
+                <div className="mt-auto pt-4">
+                  <Link
+                    to={`/projects/${slugify(p.title)}`}
+                    className="inline-flex items-center gap-1.5 bg-accent hover:bg-accent-hover text-accent-foreground px-4 py-2 rounded text-sm font-semibold transition"
+                  >
+                    Know More <ArrowRight className="h-4 w-4" />
+                  </Link>
                 </div>
               </article>
             ))}
