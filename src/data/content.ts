@@ -27,7 +27,7 @@ export type Project = {
 export const projects: Project[] = [
   {
     title: "Landscape Restoration in Degraded Forest Areas",
-    description: "Restoration of degraded forest landscapes through assisted natural regeneration, soil & moisture conservation, and species enrichment under the ELEMENT programme.",
+    description: "Restoring degraded forest landscapes through natural regeneration, soil conservation and native species enrichment.",
     objective: "Restore ecological integrity of degraded forest landscapes and enhance carbon sequestration.",
     activities: ["Assisted natural regeneration", "Soil & moisture conservation works", "Native species enrichment plantation", "Catchment area treatment"],
     beneficiaries: "Forest fringe communities across 8 districts; ~25,000 households",
@@ -37,7 +37,7 @@ export const projects: Project[] = [
   },
   {
     title: "Forest Conservation & Biodiversity Strengthening",
-    description: "Strengthening protected area management, wildlife habitat improvement and biodiversity conservation across sanctuaries of Tripura.",
+    description: "Strengthening protected area management and wildlife habitat improvement across Tripura's sanctuaries.",
     objective: "Conserve key biodiversity hotspots and improve management effectiveness of protected areas.",
     activities: ["Habitat improvement in Sipahijala & Trishna WLS", "Anti-poaching infrastructure", "Wildlife corridor mapping", "Species recovery programmes"],
     beneficiaries: "State biodiversity; eco-development committees; researchers",
@@ -47,7 +47,7 @@ export const projects: Project[] = [
   },
   {
     title: "Community Livelihood & High Value Forest Products",
-    description: "Promoting sustainable livelihoods through value-chain development of bamboo, agar, broom-grass and other High Value Forest Products (HVFPs).",
+    description: "Promoting sustainable livelihoods through bamboo, agar and broom-grass value-chain development.",
     objective: "Enhance income of forest-dependent communities through sustainable HVFP value chains.",
     activities: ["JFMC capacity building", "HVFP nurseries & cluster development", "Producer collectives & market linkages", "Skill training for women SHGs"],
     beneficiaries: "12,000+ SHG members, JFMCs, tribal cooperatives",
@@ -57,7 +57,7 @@ export const projects: Project[] = [
   },
   {
     title: "Eco-Tourism Development Initiative",
-    description: "Development of community-managed eco-tourism circuits at scenic forest landscapes to generate alternative livelihoods.",
+    description: "Community-managed eco-tourism at scenic forest locations to generate alternative livelihoods.",
     objective: "Develop responsible eco-tourism that benefits local communities and supports conservation.",
     activities: ["Eco-tourism site upgrades at Jampui Hills & Dumboor Lake", "Homestay programme", "Nature interpretation centres", "Community guide training"],
     beneficiaries: "Local youth, homestay operators, tourism cooperatives",
@@ -67,7 +67,7 @@ export const projects: Project[] = [
   },
   {
     title: "Climate Resilience & Watershed Management",
-    description: "Climate-resilient watershed treatment, riparian restoration and adaptive management in vulnerable landscapes.",
+    description: "Climate-resilient watershed treatment and riparian restoration in vulnerable landscapes.",
     objective: "Build climate resilience of forest landscapes and dependent communities.",
     activities: ["Micro-watershed treatment", "Riparian buffer plantation", "Climate vulnerability assessments", "Drought-resilient species trials"],
     beneficiaries: "Communities in climate-vulnerable hill terrains",
@@ -77,7 +77,7 @@ export const projects: Project[] = [
   },
   {
     title: "Plantation & Biodiversity Conservation Programme",
-    description: "Large-scale block, avenue and community plantation programme integrating biodiversity-rich species mix.",
+    description: "Large-scale block, avenue and community plantation with biodiversity-rich species.",
     objective: "Increase green cover and conserve native flora through scientifically planned plantations.",
     activities: ["Block plantation of native species", "Bamboo corridors", "Avenue & roadside plantation", "Seed bank & nursery development"],
     beneficiaries: "Forest divisions, JFMCs, schools, urban local bodies",
