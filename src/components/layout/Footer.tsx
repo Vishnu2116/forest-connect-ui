@@ -8,17 +8,17 @@ export default function Footer() {
   const { t } = useLang();
   return (
     <footer className="bg-primary-dark text-primary-foreground mt-16">
-      <div className="gov-container py-10 md:py-12 grid gap-8 md:gap-10 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="gov-container py-12 md:py-14 grid gap-10 md:gap-12 sm:grid-cols-2 lg:grid-cols-4">
         <div className="sm:col-span-2 lg:col-span-1">
-          <h3 className="text-2xl font-extrabold text-accent tracking-tight">ELEMENT</h3>
-          <p className="text-sm font-medium opacity-95 mt-1">Enhancing Landscape and Ecosystem Management</p>
-          <p className="text-xs opacity-80 mt-2">Government of Tripura  |  The World Bank</p>
+          <h3 className="text-2xl font-extrabold text-accent tracking-tight mb-0">ELEMENT</h3>
+          <p className="text-sm font-medium opacity-95 mt-1.5 mb-0">Enhancing Landscape and Ecosystem Management</p>
+          <p className="text-xs opacity-80 mt-2.5 mb-0">Government of Tripura  |  The World Bank</p>
           <div className="mt-4 flex items-center gap-3">
             <img src={logoTripura} alt="Government of Tripura" className="h-14 w-14 bg-white rounded p-1" width={56} height={56} loading="lazy" />
             <img src={logoWorldBank} alt="The World Bank" className="h-14 w-auto bg-white rounded p-1" width={70} height={56} loading="lazy" />
           </div>
-          <p className="text-xs opacity-85 mt-4 leading-relaxed">{t("footer.about")}</p>
-          <div className="mt-4 space-y-2 text-sm opacity-90">
+          <p className="text-sm opacity-85 mt-5 leading-relaxed mb-0">{t("footer.about")}</p>
+          <div className="mt-5 space-y-2.5 text-sm opacity-90">
             <div className="flex items-start gap-2"><MapPin className="h-4 w-4 mt-0.5 shrink-0" /> {t("footer.address")}</div>
             <div className="flex items-center gap-2"><Phone className="h-4 w-4" /> +91 381 2416403</div>
             <div className="flex items-center gap-2"><Mail className="h-4 w-4" /> info@element.tripura.gov.in</div>
@@ -26,8 +26,8 @@ export default function Footer() {
         </div>
 
         <div>
-          <h3 className="text-base font-semibold mb-3 text-accent">{t("footer.quicklinks")}</h3>
-          <ul className="space-y-2 text-sm">
+          <h3 className="text-base font-semibold mb-4 text-accent">{t("footer.quicklinks")}</h3>
+          <ul className="space-y-2.5 text-sm">
             {[
               ["About Us", "/about/organization"],
               ["Projects", "/projects"],
@@ -42,8 +42,8 @@ export default function Footer() {
         </div>
 
         <div>
-          <h3 className="text-base font-semibold mb-3 text-accent">{t("footer.policies")}</h3>
-          <ul className="space-y-2 text-sm">
+          <h3 className="text-base font-semibold mb-4 text-accent">{t("footer.policies")}</h3>
+          <ul className="space-y-2.5 text-sm">
             <li><Link to="/disclaimer" className="opacity-90 hover:text-accent">Disclaimer</Link></li>
             <li><a className="opacity-90 hover:text-accent" href="#">Privacy Policy</a></li>
             <li><a className="opacity-90 hover:text-accent" href="#">Terms of Use</a></li>
@@ -54,7 +54,7 @@ export default function Footer() {
         </div>
 
         <div>
-          <h3 className="text-base font-semibold mb-3 text-accent">{t("footer.connect")}</h3>
+          <h3 className="text-base font-semibold mb-4 text-accent">{t("footer.connect")}</h3>
           <div className="flex gap-3">
             <a href="#" aria-label="Facebook" className="p-2 bg-primary rounded-md hover:bg-accent"><Facebook className="h-4 w-4" /></a>
             <a href="#" aria-label="Twitter" className="p-2 bg-primary rounded-md hover:bg-accent"><Twitter className="h-4 w-4" /></a>

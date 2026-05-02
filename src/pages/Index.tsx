@@ -24,24 +24,24 @@ export default function Home() {
       <HeroSlider />
 
       {/* What's New + Right panel */}
-      <section className="py-12">
-        <div className="gov-container grid lg:grid-cols-3 gap-8">
+      <section className="py-14 md:py-16">
+        <div className="gov-container grid lg:grid-cols-3 gap-10">
           <div className="lg:col-span-2">
-            <div className="flex items-center justify-between mb-5">
+            <div className="flex items-center justify-between mb-6">
               <h2 className="section-title flex items-center gap-2"><Bell className="h-6 w-6 text-accent" /> {t("home.whatsnew")}</h2>
               <Link to="/reports" className="text-sm text-primary hover:text-accent font-medium">{t("home.viewAll")} <ArrowRight className="inline h-4 w-4" /></Link>
             </div>
-            <div className="space-y-3">
+            <div className="space-y-4">
               {announcements.map((a) => (
-                <article key={a.title} className="bg-card border border-border rounded-md p-4 hover:border-primary/40 hover:shadow-card transition flex gap-4 items-start">
-                  <div className="bg-primary text-primary-foreground rounded text-center px-3 py-2 shrink-0 min-w-[68px]">
-                    <div className="text-[10px] uppercase opacity-90">{a.date.split(" ")[1]} {a.date.split(" ")[2]}</div>
-                    <div className="text-xl font-bold leading-none">{a.date.split(" ")[0]}</div>
+                <article key={a.title} className="bg-card border border-border rounded-lg p-5 hover:border-primary/40 hover:shadow-card transition flex gap-4 items-start">
+                  <div className="bg-primary text-primary-foreground rounded-md text-center px-3 py-2.5 shrink-0 min-w-[72px]">
+                    <div className="text-[11px] uppercase opacity-90 tracking-wide">{a.date.split(" ")[1]} {a.date.split(" ")[2]}</div>
+                    <div className="text-xl font-bold leading-none mt-0.5">{a.date.split(" ")[0]}</div>
                   </div>
-                  <div className="flex-1">
-                    <span className="inline-block text-[10px] font-semibold uppercase tracking-wide px-2 py-0.5 rounded bg-accent/10 text-accent mb-1">{a.tag}</span>
-                    <h3 className="text-sm md:text-base font-semibold text-foreground hover:text-primary"><a href="#">{a.title}</a></h3>
-                    <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
+                  <div className="flex-1 min-w-0">
+                    <span className="inline-block text-[11px] font-semibold uppercase tracking-wide px-2 py-0.5 rounded bg-accent/10 text-accent mb-1.5">{a.tag}</span>
+                    <h3 className="text-base font-semibold text-foreground hover:text-primary leading-snug mb-0"><a href="#">{a.title}</a></h3>
+                    <p className="text-sm text-muted-foreground mt-1.5 leading-relaxed mb-0">
                       {announcementDescriptions[a.tag] ?? "Latest update from the ELEMENT programme."}
                     </p>
                   </div>
@@ -122,22 +122,22 @@ export default function Home() {
       </section>
 
       {/* Project highlights */}
-      <section className="bg-surface py-12">
+      <section className="bg-surface py-14 md:py-16">
         <div className="gov-container">
-          <div className="flex items-center justify-between mb-8">
+          <div className="flex items-center justify-between mb-10">
             <h2 className="section-title flex items-center gap-2"><Trees className="h-6 w-6 text-accent" /> Project Highlights</h2>
             <Link to="/projects" className="text-sm text-primary hover:text-accent font-medium">All Projects <ArrowRight className="inline h-4 w-4" /></Link>
           </div>
-          <div className="grid md:grid-cols-2 gap-5">
+          <div className="grid md:grid-cols-2 gap-6">
             {projects.slice(0, 4).map((p) => (
-              <article key={p.title} className="bg-card border border-border rounded-md p-6 hover:shadow-card hover:border-primary/40 transition">
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="text-[10px] font-semibold uppercase px-2 py-0.5 rounded bg-success/10 text-success">{p.status}</span>
-                  {p.component && <span className="text-[10px] font-semibold uppercase px-2 py-0.5 rounded bg-accent/10 text-accent">{p.component}</span>}
+              <article key={p.title} className="bg-card border border-border rounded-lg p-7 hover:shadow-card hover:border-primary/40 transition">
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="text-[11px] font-semibold uppercase px-2.5 py-0.5 rounded bg-success/10 text-success">{p.status}</span>
+                  {p.component && <span className="text-[11px] font-semibold uppercase px-2.5 py-0.5 rounded bg-accent/10 text-accent">{p.component}</span>}
                 </div>
-                <h3 className="text-lg font-semibold text-primary">{p.title}</h3>
-                <p className="text-sm text-muted-foreground mt-2 leading-relaxed">{p.description}</p>
-                <Link to="/projects" className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-accent hover:text-accent-hover">Read more <ArrowRight className="h-4 w-4" /></Link>
+                <h3 className="text-lg font-bold text-primary leading-snug mb-0">{p.title}</h3>
+                <p className="text-sm text-muted-foreground mt-2.5 leading-relaxed mb-0">{p.description}</p>
+                <Link to="/projects" className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-accent hover:text-accent-hover">Read more <ArrowRight className="h-4 w-4" /></Link>
               </article>
             ))}
           </div>
@@ -152,8 +152,8 @@ export default function Home() {
           <div className="relative gov-container h-full flex items-center">
             <div className="max-w-2xl text-primary-foreground">
               <span className="inline-block bg-accent text-accent-foreground text-xs font-semibold px-3 py-1 rounded">ELEMENT Programme</span>
-              <h2 className="mt-3 text-3xl md:text-4xl font-bold leading-tight">{t("home.plantation.title")}</h2>
-              <p className="mt-3 text-base md:text-lg opacity-95 leading-relaxed">{t("home.plantation.desc")}</p>
+              <h2 className="mt-4 text-3xl md:text-4xl font-bold leading-tight mb-0">{t("home.plantation.title")}</h2>
+              <p className="mt-3 text-base md:text-lg opacity-95 leading-relaxed mb-0">{t("home.plantation.desc")}</p>
               <dl className="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-3">
                 {[
                   ["8", t("home.stats.districts")],
@@ -161,9 +161,9 @@ export default function Home() {
                   ["12,000+", t("home.stats.community")],
                   ["18,500", t("home.stats.restoration")],
                 ].map(([n, l]) => (
-                  <div key={l as string} className="bg-background/10 backdrop-blur border border-primary-foreground/20 rounded p-3 text-center">
-                    <dt className="text-xl md:text-2xl font-bold text-accent">{n}</dt>
-                    <dd className="text-[11px] md:text-xs opacity-90 mt-1">{l}</dd>
+                  <div key={l as string} className="bg-background/10 backdrop-blur border border-primary-foreground/20 rounded-md p-4 text-center">
+                    <dt className="text-xl md:text-2xl font-bold text-accent mb-0">{n}</dt>
+                    <dd className="text-xs md:text-sm opacity-90 mt-1.5">{l}</dd>
                   </div>
                 ))}
               </dl>
@@ -176,22 +176,22 @@ export default function Home() {
       </section>
 
       {/* Knowledge hub preview */}
-      <section className="py-12">
+      <section className="py-14 md:py-16">
         <div className="gov-container">
-          <div className="flex items-center justify-between mb-8">
+          <div className="flex items-center justify-between mb-10">
             <h2 className="section-title flex items-center gap-2"><Award className="h-6 w-6 text-accent" /> Knowledge Hub</h2>
             <Link to="/knowledge-hub/iec" className="text-sm text-primary hover:text-accent font-medium">Browse all <ArrowRight className="inline h-4 w-4" /></Link>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {knowledgeHubItems.slice(0, 4).map((k) => (
-              <article key={k.title} className="bg-card border border-border rounded-md overflow-hidden hover:shadow-card transition">
-                <div className="h-28 bg-gradient-to-br from-primary to-primary-light flex items-center justify-center">
+              <article key={k.title} className="bg-card border border-border rounded-lg overflow-hidden hover:shadow-card transition">
+                <div className="h-32 bg-gradient-to-br from-primary to-primary-light flex items-center justify-center">
                   <BookOpen className="h-10 w-10 text-primary-foreground/80" />
                 </div>
-                <div className="p-4">
-                  <span className="text-[10px] font-semibold uppercase tracking-wide text-accent">{k.category}</span>
-                  <h3 className="text-sm font-semibold mt-1 leading-snug">{k.title}</h3>
-                  <p className="text-xs text-muted-foreground mt-2">{k.date}</p>
+                <div className="p-5">
+                  <span className="text-[11px] font-semibold uppercase tracking-wide text-accent">{k.category}</span>
+                  <h3 className="text-sm font-semibold mt-1.5 leading-snug mb-0">{k.title}</h3>
+                  <p className="text-xs text-muted-foreground mt-2 mb-0">{k.date}</p>
                 </div>
               </article>
             ))}

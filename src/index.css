@@ -89,11 +89,15 @@
 
   html {
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
   }
 
   body {
     @apply bg-background text-foreground antialiased;
     font-feature-settings: "cv11", "ss01";
+    line-height: 1.7;
+    letter-spacing: -0.01em;
   }
 
   img, svg, video {
@@ -101,8 +105,48 @@
     height: auto;
   }
 
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-semibold tracking-tight text-foreground;
+  /* Typography scale */
+  h1 {
+    @apply text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-foreground;
+    line-height: 1.2;
+    margin-bottom: 0.75em;
+  }
+  h2 {
+    @apply text-2xl md:text-3xl font-bold tracking-tight text-foreground;
+    line-height: 1.25;
+    margin-bottom: 0.6em;
+  }
+  h3 {
+    @apply text-xl md:text-2xl font-semibold tracking-tight text-foreground;
+    line-height: 1.3;
+    margin-bottom: 0.5em;
+  }
+  h4 {
+    @apply text-lg md:text-xl font-semibold text-foreground;
+    line-height: 1.35;
+    margin-bottom: 0.4em;
+  }
+  h5, h6 {
+    @apply text-base font-semibold text-foreground;
+    line-height: 1.4;
+  }
+
+  p {
+    line-height: 1.75;
+    margin-bottom: 1em;
+    max-width: 75ch;
+  }
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+
+  ul, ol {
+    line-height: 1.7;
+  }
+
+  li + li {
+    margin-top: 0.35em;
   }
 }
 
@@ -112,17 +156,19 @@
   }
 
   .section-title {
-    @apply text-2xl md:text-3xl font-bold text-primary border-l-4 border-accent pl-3;
+    @apply text-2xl md:text-3xl font-bold text-primary border-l-4 border-accent pl-4;
+    margin-bottom: 0;
+    line-height: 1.3;
   }
 
   .data-table {
     @apply w-full text-sm border border-border;
   }
   .data-table th {
-    @apply bg-primary text-primary-foreground text-left px-4 py-3 font-semibold;
+    @apply bg-primary text-primary-foreground text-left px-4 py-3.5 font-semibold text-sm;
   }
   .data-table td {
-    @apply px-4 py-3 border-t border-border;
+    @apply px-4 py-3.5 border-t border-border text-sm leading-relaxed;
   }
   .data-table tr:nth-child(even) td {
     @apply bg-surface;
