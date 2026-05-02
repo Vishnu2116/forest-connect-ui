@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { Calendar, ArrowRight, MapPin, Bell, Trees, Award, BookOpen, Briefcase, Users, TrendingUp, Globe, MessageSquare } from "lucide-react";
+import { Calendar, ArrowRight, MapPin, Bell, Trees, Award, BookOpen, Briefcase, Users, TrendingUp, Globe, Heart, MessageCircle, Repeat2, Share } from "lucide-react";
 import PageLayout from "@/components/layout/PageLayout";
 import HeroSlider from "@/components/home/HeroSlider";
 import { announcements, events, projects, knowledgeHubItems, procurements } from "@/data/content";
@@ -16,10 +16,10 @@ const announcementDescriptions: Record<string, string> = {
 };
 
 const socialFeed = [
-  { date: "30 Apr 2026", content: "Bamboo value chain training completed for 500+ SHG members across Dhalai & Gomati. #ELEMENT #Livelihoods", handle: "@ELEMENT_Tripura" },
-  { date: "25 Apr 2026", content: "Community nursery enterprises now operational in 6 districts — empowering local youth with green jobs. #GreenEnterprise", handle: "@ELEMENT_Tripura" },
-  { date: "20 Apr 2026", content: "Hon'ble Chief Minister visited ELEMENT livelihood centres in North Tripura. Appreciated community participation. #Tripura", handle: "@ELEMENT_Tripura" },
-  { date: "15 Apr 2026", content: "12,000+ households now benefiting from ELEMENT's value chain programme. Real impact, real change. #EconomicGrowth", handle: "@ELEMENT_Tripura" },
+  { date: "30 Apr 2026", content: "Bamboo value chain training completed for 500+ SHG members across Dhalai & Gomati. Empowering communities through skill development! #ELEMENT #Livelihoods", likes: 42, retweets: 12, replies: 5 },
+  { date: "25 Apr 2026", content: "Community nursery enterprises now operational in 6 districts — empowering local youth with green jobs. #GreenEnterprise #Tripura", likes: 67, retweets: 23, replies: 8 },
+  { date: "20 Apr 2026", content: "Hon'ble CM visited ELEMENT livelihood centres in North Tripura. Appreciated community participation in landscape restoration. #Tripura", likes: 128, retweets: 45, replies: 14 },
+  { date: "15 Apr 2026", content: "12,000+ households now benefiting from ELEMENT's value chain programme. Real impact, real change. #EconomicGrowth #ELEMENT", likes: 89, retweets: 31, replies: 11 },
 ];
 
 export default function Home() {
@@ -66,7 +66,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* What's New + Right panel */}
+      {/* What's New + Right panel (Tabs + Tweets) */}
       <section className="py-12 md:py-14">
         <div className="gov-container grid lg:grid-cols-3 gap-10">
           <div className="lg:col-span-2">
@@ -93,8 +93,9 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Right panel: tabs */}
-          <aside>
+          {/* Right panel: tabs + Twitter feed */}
+          <aside className="space-y-5">
+            {/* Notifications / Events / Tenders */}
             <div className="bg-card border border-border rounded-md overflow-hidden sticky top-44">
               <div className="grid grid-cols-3 border-b border-border bg-surface">
                 {([
@@ -114,7 +115,7 @@ export default function Home() {
                   </button>
                 ))}
               </div>
-              <div className="p-4 max-h-[480px] overflow-y-auto">
+              <div className="p-4 max-h-[340px] overflow-y-auto">
                 {updatesTab === "notifications" && (
                   <ul className="space-y-3">
                     {announcements.filter(a => a.tag === "Notification" || a.tag === "Recruitment").map(a => (
@@ -160,35 +161,59 @@ export default function Home() {
                 </Link>
               </div>
             </div>
+
+            {/* Twitter/X style feed */}
+            <div className="bg-card border border-border rounded-md overflow-hidden">
+              <div className="px-4 py-3 border-b border-border bg-surface flex items-center gap-2">
+                <svg viewBox="0 0 24 24" className="h-4 w-4 text-foreground" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                <span className="text-sm font-bold text-foreground">Latest Tweets</span>
+              </div>
+              <div className="divide-y divide-border max-h-[420px] overflow-y-auto">
+                {socialFeed.map((post, i) => (
+                  <div key={i} className="p-4 hover:bg-surface/50 transition">
+                    <div className="flex gap-3">
+                      <div className="shrink-0">
+                        <div className="h-10 w-10 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-xs font-bold">
+                          EL
+                        </div>
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-1.5 flex-wrap">
+                          <span className="text-sm font-bold text-foreground">ELEMENT Project</span>
+                          <span className="text-xs text-muted-foreground">@ELEMENTTripura</span>
+                          <span className="text-xs text-muted-foreground">·</span>
+                          <span className="text-xs text-muted-foreground">{post.date}</span>
+                        </div>
+                        <p className="text-sm text-foreground mt-1 leading-relaxed">{post.content}</p>
+                        <div className="flex items-center gap-5 mt-2.5">
+                          <button className="flex items-center gap-1 text-muted-foreground hover:text-primary transition text-xs">
+                            <MessageCircle className="h-3.5 w-3.5" /> {post.replies}
+                          </button>
+                          <button className="flex items-center gap-1 text-muted-foreground hover:text-success transition text-xs">
+                            <Repeat2 className="h-3.5 w-3.5" /> {post.retweets}
+                          </button>
+                          <button className="flex items-center gap-1 text-muted-foreground hover:text-destructive transition text-xs">
+                            <Heart className="h-3.5 w-3.5" /> {post.likes}
+                          </button>
+                          <button className="text-muted-foreground hover:text-primary transition">
+                            <Share className="h-3.5 w-3.5" />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div className="p-3 border-t border-border bg-surface text-center">
+                <a href="#" className="text-xs font-semibold text-primary hover:text-accent">Show more</a>
+              </div>
+            </div>
           </aside>
         </div>
       </section>
 
-      {/* Latest Updates / Social Feed */}
-      <section className="bg-surface py-10">
-        <div className="gov-container">
-          <h2 className="section-title flex items-center gap-2 mb-6"><MessageSquare className="h-6 w-6 text-accent" /> Latest Updates</h2>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {socialFeed.map((post, i) => (
-              <article key={i} className="bg-card border border-border rounded-md p-4 hover:shadow-card transition">
-                <div className="flex items-center gap-2 mb-2">
-                  <div className="h-8 w-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground">
-                    <MessageSquare className="h-4 w-4" />
-                  </div>
-                  <div>
-                    <div className="text-xs font-semibold text-primary">{post.handle}</div>
-                    <div className="text-[10px] text-muted-foreground">{post.date}</div>
-                  </div>
-                </div>
-                <p className="text-sm text-muted-foreground leading-relaxed">{post.content}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Project highlights */}
-      <section className="py-12 md:py-14">
+      <section className="bg-surface py-12 md:py-14">
         <div className="gov-container">
           <div className="flex items-center justify-between mb-10">
             <h2 className="section-title flex items-center gap-2"><Trees className="h-6 w-6 text-accent" /> Project Highlights</h2>
