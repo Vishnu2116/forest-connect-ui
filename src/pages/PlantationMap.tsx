@@ -2,28 +2,28 @@ import { useState, useMemo } from "react";
 import PageLayout, { PageHeader } from "@/components/layout/PageLayout";
 import MapPreview from "@/components/common/MapPreview";
 import { plantations, districts } from "@/data/content";
-import { Layers, Filter, MapPin, ChevronRight } from "lucide-react";
+import { Layers, Filter, MapPin, Globe, Map, Database } from "lucide-react";
 
-type Dataset = {
+type MapProvider = {
   id: string;
   name: string;
+  icon: React.ReactNode;
   years: string[];
-  description: string;
 };
 
-const datasets: Dataset[] = [
-  { id: "landscape", name: "Tripura Landscape Restoration Layer", years: ["2023", "2024", "2025"], description: "Degraded landscape restoration and productive land management sites" },
-  { id: "livelihood", name: "Community Livelihood Plantation Layer", years: ["2022", "2023"], description: "Community-driven livelihood plantation and nursery sites" },
-  { id: "bamboo", name: "Bamboo & High Value Forest Product Layer", years: ["2024", "2025"], description: "Bamboo corridors and high-value forest product development areas" },
+const mapProviders: MapProvider[] = [
+  { id: "bhuvan", name: "Bhuvan", icon: <Globe className="h-5 w-5" />, years: ["2022", "2023", "2024", "2025"] },
+  { id: "google", name: "Google Maps", icon: <Map className="h-5 w-5" />, years: ["2023", "2024"] },
+  { id: "esri", name: "ESRI", icon: <Database className="h-5 w-5" />, years: ["2021", "2022", "2023"] },
 ];
 
 export default function PlantationMap() {
   const [district, setDistrict] = useState("All Districts");
-  const [selectedDataset, setSelectedDataset] = useState<string | null>(null);
+  const [selectedProvider, setSelectedProvider] = useState<string | null>(null);
   const [selectedYear, setSelectedYear] = useState<string | null>(null);
   const [selected, setSelected] = useState(plantations[0]);
 
-  const activeDataset = datasets.find(d => d.id === selectedDataset);
+  const activeProvider = mapProviders.find(p => p.id === selectedProvider);
 
   const filtered = useMemo(() => {
     return plantations.filter(p =>
@@ -32,8 +32,8 @@ export default function PlantationMap() {
     );
   }, [district, selectedYear]);
 
-  const handleDatasetSelect = (id: string) => {
-    setSelectedDataset(id);
+  const handleProviderSelect = (id: string) => {
+    setSelectedProvider(id);
     setSelectedYear(null);
   };
 
@@ -44,66 +44,55 @@ export default function PlantationMap() {
         <div className="gov-container grid lg:grid-cols-4 gap-6">
           {/* Filters & list */}
           <aside className="lg:col-span-1 space-y-4">
-            {/* Step 1: Select Base Layer / Dataset */}
+            {/* Step 1: Select Map Provider */}
             <div className="bg-card border border-border rounded-md p-4 shadow-card">
-              <h3 className="font-semibold text-primary flex items-center gap-2 mb-1"><Layers className="h-4 w-4" /> Step 1: Select Base Layer</h3>
-              <p className="text-[11px] text-muted-foreground mb-3">Choose a dataset to view available years</p>
-              <ul className="space-y-2">
-                {datasets.map((ds) => (
-                  <li key={ds.id}>
-                    <button
-                      onClick={() => handleDatasetSelect(ds.id)}
-                      className={`w-full text-left px-3 py-2.5 rounded-md border text-sm transition ${
-                        selectedDataset === ds.id
-                          ? "border-accent bg-accent/10 text-primary font-semibold"
-                          : "border-border hover:border-primary/40 hover:bg-surface"
-                      }`}
-                    >
-                      <div className="flex items-center gap-2">
-                        <input
-                          type="radio"
-                          name="dataset"
-                          checked={selectedDataset === ds.id}
-                          onChange={() => handleDatasetSelect(ds.id)}
-                          className="accent-accent"
-                        />
-                        <span>{ds.name}</span>
-                      </div>
-                      <p className="text-[10px] text-muted-foreground mt-1 ml-5">{ds.description}</p>
-                    </button>
-                  </li>
+              <h3 className="font-semibold text-primary flex items-center gap-2 mb-3">
+                <Layers className="h-4 w-4" /> Step 1: Select Map Provider
+              </h3>
+              <div className="grid grid-cols-3 gap-2">
+                {mapProviders.map((provider) => (
+                  <button
+                    key={provider.id}
+                    onClick={() => handleProviderSelect(provider.id)}
+                    className={`flex flex-col items-center gap-1.5 px-2 py-3 rounded-lg border text-xs font-medium transition-all ${
+                      selectedProvider === provider.id
+                        ? "border-accent bg-accent/10 text-accent ring-2 ring-accent/30"
+                        : "border-border hover:border-primary/40 hover:bg-surface text-foreground"
+                    }`}
+                  >
+                    {provider.icon}
+                    <span>{provider.name}</span>
+                  </button>
                 ))}
-              </ul>
+              </div>
             </div>
 
-            {/* Step 2: Select Year (conditional) */}
-            <div className={`bg-card border rounded-md p-4 shadow-card transition ${activeDataset ? "border-border" : "border-border opacity-50"}`}>
-              <h3 className="font-semibold text-primary flex items-center gap-2 mb-1"><Filter className="h-4 w-4" /> Step 2: Select Year</h3>
-              {!activeDataset ? (
-                <p className="text-xs text-muted-foreground italic mt-2 flex items-center gap-1">
-                  <ChevronRight className="h-3 w-3" /> Please select a base layer first
+            {/* Step 2: Select Year (only visible when provider selected) */}
+            {activeProvider && (
+              <div className="bg-card border border-border rounded-md p-4 shadow-card animate-fade-in">
+                <h3 className="font-semibold text-primary flex items-center gap-2 mb-1">
+                  <Filter className="h-4 w-4" /> Step 2: Select Year
+                </h3>
+                <p className="text-[11px] text-muted-foreground mb-3">
+                  Available years for <strong className="text-foreground">{activeProvider.name}</strong>
                 </p>
-              ) : (
-                <>
-                  <p className="text-[11px] text-muted-foreground mb-3">Available years for: <strong className="text-foreground">{activeDataset.name}</strong></p>
-                  <div className="flex flex-wrap gap-2">
-                    {activeDataset.years.map((y) => (
-                      <button
-                        key={y}
-                        onClick={() => setSelectedYear(selectedYear === y ? null : y)}
-                        className={`px-3 py-1.5 rounded-md border text-sm font-medium transition ${
-                          selectedYear === y
-                            ? "border-accent bg-accent text-accent-foreground"
-                            : "border-border hover:border-accent hover:bg-accent/5 text-foreground"
-                        }`}
-                      >
-                        {y}
-                      </button>
-                    ))}
-                  </div>
-                </>
-              )}
-            </div>
+                <div className="flex flex-wrap gap-2">
+                  {activeProvider.years.map((y) => (
+                    <button
+                      key={y}
+                      onClick={() => setSelectedYear(selectedYear === y ? null : y)}
+                      className={`px-3 py-1.5 rounded-md border text-sm font-medium transition ${
+                        selectedYear === y
+                          ? "border-accent bg-accent text-accent-foreground"
+                          : "border-border hover:border-accent hover:bg-accent/5 text-foreground"
+                      }`}
+                    >
+                      {y}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
 
             {/* District filter */}
             <div className="bg-card border border-border rounded-md p-4 shadow-card">
@@ -136,16 +125,12 @@ export default function PlantationMap() {
           {/* Map + details */}
           <div className="lg:col-span-3 space-y-4">
             {/* Status bar */}
-            {selectedDataset && (
+            {selectedProvider && selectedYear && (
               <div className="bg-surface border border-border rounded-md px-4 py-2.5 flex flex-wrap items-center gap-2 text-sm">
-                <span className="text-muted-foreground">Layer:</span>
-                <span className="font-semibold text-primary">{activeDataset?.name}</span>
-                {selectedYear && (
-                  <>
-                    <span className="text-muted-foreground">→ Year:</span>
-                    <span className="font-semibold text-accent">{selectedYear}</span>
-                  </>
-                )}
+                <span className="text-muted-foreground">Showing plantation data for</span>
+                <span className="font-semibold text-primary">{activeProvider?.name}</span>
+                <span className="text-muted-foreground">–</span>
+                <span className="font-semibold text-accent">{selectedYear}</span>
                 {district !== "All Districts" && (
                   <>
                     <span className="text-muted-foreground">→ District:</span>
