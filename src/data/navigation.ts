@@ -11,7 +11,7 @@ export const navItems: NavItem[] = [
     children: [
       { label: "About ELEMENT", to: "/about" },
       { label: "Organization Structure", to: "/about/organization" },
-      { label: "Key Officials", to: "/about/whos-who" },
+      { label: "Who's Who", to: "/about/whos-who" },
       { label: "Vision & Objective", to: "/about/vision" },
       { label: "Mission & Objective", to: "/about/mission" },
     ],
