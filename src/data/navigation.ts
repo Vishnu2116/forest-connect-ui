@@ -9,9 +9,9 @@ export const navItems: NavItem[] = [
   {
     labelKey: "nav.about",
     children: [
+      { label: "About ELEMENT", to: "/about" },
       { label: "Organization Structure", to: "/about/organization" },
-      { label: "Memorandum of Association", to: "/about/memorandum" },
-      { label: "Official Directory", to: "/about/directory" },
+      { label: "Key Officials", to: "/about/whos-who" },
       { label: "Vision & Objective", to: "/about/vision" },
       { label: "Mission & Objective", to: "/about/mission" },
     ],
@@ -35,8 +35,5 @@ export const navItems: NavItem[] = [
   { labelKey: "nav.reports", to: "/reports" },
   { labelKey: "nav.procurements", to: "/procurements" },
   { labelKey: "nav.plantationMap", to: "/plantation-map" },
-  { labelKey: "nav.whoswho", to: "/whos-who" },
-  { labelKey: "nav.grievance", to: "/grievance" },
-  { labelKey: "nav.rti", to: "/rti" },
   { labelKey: "nav.contact", to: "/contact" },
 ];
