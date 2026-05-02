@@ -24,7 +24,7 @@ export default function Home() {
       <HeroSlider />
 
       {/* What's New + Right panel */}
-      <section className="py-12">
+      <section className="py-14 md:py-16">
         <div className="gov-container grid lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2">
             <div className="flex items-center justify-between mb-5">
