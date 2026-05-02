@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { Calendar, ArrowRight, MapPin, Bell, Trees, Award, BookOpen, FileText, Briefcase } from "lucide-react";
+import { Calendar, ArrowRight, MapPin, Bell, Trees, Award, BookOpen, Briefcase, Users, TrendingUp, Globe, MessageSquare } from "lucide-react";
 import PageLayout from "@/components/layout/PageLayout";
 import HeroSlider from "@/components/home/HeroSlider";
 import { announcements, events, projects, knowledgeHubItems, procurements } from "@/data/content";
@@ -8,12 +8,19 @@ import { useLang } from "@/contexts/LanguageContext";
 import plantationBg from "@/assets/plantation-bg.jpg";
 
 const announcementDescriptions: Record<string, string> = {
-  Recruitment: "Applications invited for forest service positions.",
-  Tender: "Sealed tenders for plantation and civil works.",
-  Event: "Awareness and stakeholder engagement events.",
-  Notification: "Departmental orders and guidelines issued.",
-  Report: "Periodic reports published for public reference.",
+  Recruitment: "Applications invited for ELEMENT programme positions.",
+  Tender: "Sealed tenders for livelihood infrastructure and civil works.",
+  Event: "Community engagement and stakeholder events.",
+  Notification: "Programme guidelines and circulars issued.",
+  Report: "Progress reports published for public reference.",
 };
+
+const socialFeed = [
+  { date: "30 Apr 2026", content: "Bamboo value chain training completed for 500+ SHG members across Dhalai & Gomati. #ELEMENT #Livelihoods", handle: "@ELEMENT_Tripura" },
+  { date: "25 Apr 2026", content: "Community nursery enterprises now operational in 6 districts — empowering local youth with green jobs. #GreenEnterprise", handle: "@ELEMENT_Tripura" },
+  { date: "20 Apr 2026", content: "Hon'ble Chief Minister visited ELEMENT livelihood centres in North Tripura. Appreciated community participation. #Tripura", handle: "@ELEMENT_Tripura" },
+  { date: "15 Apr 2026", content: "12,000+ households now benefiting from ELEMENT's value chain programme. Real impact, real change. #EconomicGrowth", handle: "@ELEMENT_Tripura" },
+];
 
 export default function Home() {
   const { t } = useLang();
@@ -23,8 +30,44 @@ export default function Home() {
     <PageLayout>
       <HeroSlider />
 
+      {/* What is ELEMENT? */}
+      <section className="py-12 md:py-14 bg-surface">
+        <div className="gov-container">
+          <div className="text-center max-w-3xl mx-auto mb-8">
+            <h2 className="section-title inline-flex items-center gap-2 mx-auto"><Globe className="h-6 w-6 text-accent" /> What is ELEMENT?</h2>
+          </div>
+          <div className="grid md:grid-cols-2 gap-8 items-center">
+            <div>
+              <p className="text-muted-foreground leading-relaxed">
+                <strong className="text-primary">ELEMENT</strong> (Enhancing Landscape and Ecosystem Management) is a joint initiative of the <strong>Government of Tripura</strong> and the <strong>World Bank</strong>, focused on transforming rural livelihoods, driving economic development, and building resilient landscapes across the state.
+              </p>
+              <p className="text-muted-foreground leading-relaxed mt-3">
+                The programme goes beyond traditional approaches — integrating <strong>livelihood generation</strong>, <strong>value chain development</strong>, <strong>community participation</strong>, and <strong>sustainable landscape management</strong> to create lasting impact for communities across all 8 districts of Tripura.
+              </p>
+              <Link to="/about" className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-accent hover:text-accent-hover">
+                Learn more about ELEMENT <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              {[
+                { icon: TrendingUp, label: "Economic Growth", desc: "Boosting rural economy through enterprise development" },
+                { icon: Users, label: "Community Participation", desc: "Empowering 25,000+ households across Tripura" },
+                { icon: Briefcase, label: "Livelihood Generation", desc: "Sustainable income through value chains" },
+                { icon: Trees, label: "Landscape Management", desc: "Restoring degraded lands for productive use" },
+              ].map((item) => (
+                <div key={item.label} className="bg-card border border-border rounded-md p-4 text-center shadow-card">
+                  <item.icon className="h-6 w-6 text-primary mx-auto" />
+                  <h4 className="text-sm font-semibold text-primary mt-2">{item.label}</h4>
+                  <p className="text-xs text-muted-foreground mt-1">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* What's New + Right panel */}
-      <section className="py-14 md:py-16">
+      <section className="py-12 md:py-14">
         <div className="gov-container grid lg:grid-cols-3 gap-10">
           <div className="lg:col-span-2">
             <div className="flex items-center justify-between mb-6">
@@ -50,7 +93,7 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Right panel: tabs for Notifications / Events / Tenders */}
+          {/* Right panel: tabs */}
           <aside>
             <div className="bg-card border border-border rounded-md overflow-hidden sticky top-44">
               <div className="grid grid-cols-3 border-b border-border bg-surface">
@@ -121,8 +164,31 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Latest Updates / Social Feed */}
+      <section className="bg-surface py-10">
+        <div className="gov-container">
+          <h2 className="section-title flex items-center gap-2 mb-6"><MessageSquare className="h-6 w-6 text-accent" /> Latest Updates</h2>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {socialFeed.map((post, i) => (
+              <article key={i} className="bg-card border border-border rounded-md p-4 hover:shadow-card transition">
+                <div className="flex items-center gap-2 mb-2">
+                  <div className="h-8 w-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground">
+                    <MessageSquare className="h-4 w-4" />
+                  </div>
+                  <div>
+                    <div className="text-xs font-semibold text-primary">{post.handle}</div>
+                    <div className="text-[10px] text-muted-foreground">{post.date}</div>
+                  </div>
+                </div>
+                <p className="text-sm text-muted-foreground leading-relaxed">{post.content}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Project highlights */}
-      <section className="bg-surface py-14 md:py-16">
+      <section className="py-12 md:py-14">
         <div className="gov-container">
           <div className="flex items-center justify-between mb-10">
             <h2 className="section-title flex items-center gap-2"><Trees className="h-6 w-6 text-accent" /> Project Highlights</h2>
@@ -130,7 +196,7 @@ export default function Home() {
           </div>
           <div className="grid md:grid-cols-2 gap-6">
             {projects.slice(0, 4).map((p) => (
-              <article key={p.title} className="bg-card border border-border rounded-lg p-7 hover:shadow-card hover:border-primary/40 transition">
+              <article key={p.title} className="bg-card border border-border rounded-lg p-6 hover:shadow-card hover:border-primary/40 transition">
                 <div className="flex items-center gap-2 mb-3">
                   <span className="text-[11px] font-semibold uppercase px-2.5 py-0.5 rounded bg-success/10 text-success">{p.status}</span>
                   {p.component && <span className="text-[11px] font-semibold uppercase px-2.5 py-0.5 rounded bg-accent/10 text-accent">{p.component}</span>}
@@ -144,10 +210,10 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Plantation hero/image section (no map) */}
+      {/* Programme stats banner */}
       <section className="relative">
         <div className="relative h-[460px] md:h-[520px] overflow-hidden">
-          <img src={plantationBg} alt="Forest landscape across Tripura" className="absolute inset-0 w-full h-full object-cover" loading="lazy" width={1920} height={1080} />
+          <img src={plantationBg} alt="Landscape across Tripura" className="absolute inset-0 w-full h-full object-cover" loading="lazy" width={1920} height={1080} />
           <div className="absolute inset-0 bg-gradient-to-r from-primary-dark/85 via-primary-dark/60 to-primary-dark/30" />
           <div className="relative gov-container h-full flex items-center">
             <div className="max-w-2xl text-primary-foreground">
@@ -158,7 +224,7 @@ export default function Home() {
                 {[
                   ["8", t("home.stats.districts")],
                   ["620+", t("home.stats.activities")],
-                  ["12,000+", t("home.stats.community")],
+                  ["25,000+", t("home.stats.community")],
                   ["18,500", t("home.stats.restoration")],
                 ].map(([n, l]) => (
                   <div key={l as string} className="bg-background/10 backdrop-blur border border-primary-foreground/20 rounded-md p-4 text-center">
@@ -176,7 +242,7 @@ export default function Home() {
       </section>
 
       {/* Knowledge hub preview */}
-      <section className="py-14 md:py-16">
+      <section className="py-12 md:py-14">
         <div className="gov-container">
           <div className="flex items-center justify-between mb-10">
             <h2 className="section-title flex items-center gap-2"><Award className="h-6 w-6 text-accent" /> Knowledge Hub</h2>
