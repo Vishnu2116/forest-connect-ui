@@ -8,11 +8,11 @@ import { useLang } from "@/contexts/LanguageContext";
 import plantationBg from "@/assets/plantation-bg.jpg";
 
 const announcementDescriptions: Record<string, string> = {
-  Recruitment: "Online applications invited for forest service positions. Eligibility, fees and key dates available in the official notification.",
-  Tender: "Sealed tenders invited for plantation, civil and survey works under the ELEMENT programme.",
-  Event: "Awareness, training and stakeholder engagement events organised across forest divisions.",
-  Notification: "Departmental orders, guidelines and circulars issued for field implementation.",
-  Report: "Periodic reports on forest, wildlife and plantation activities published for public reference.",
+  Recruitment: "Applications invited for forest service positions.",
+  Tender: "Sealed tenders for plantation and civil works.",
+  Event: "Awareness and stakeholder engagement events.",
+  Notification: "Departmental orders and guidelines issued.",
+  Report: "Periodic reports published for public reference.",
 };
 
 export default function Home() {
