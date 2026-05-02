@@ -161,9 +161,9 @@ export default function Home() {
                   ["12,000+", t("home.stats.community")],
                   ["18,500", t("home.stats.restoration")],
                 ].map(([n, l]) => (
-                  <div key={l as string} className="bg-background/10 backdrop-blur border border-primary-foreground/20 rounded p-3 text-center">
-                    <dt className="text-xl md:text-2xl font-bold text-accent">{n}</dt>
-                    <dd className="text-[11px] md:text-xs opacity-90 mt-1">{l}</dd>
+                  <div key={l as string} className="bg-background/10 backdrop-blur border border-primary-foreground/20 rounded-md p-4 text-center">
+                    <dt className="text-xl md:text-2xl font-bold text-accent mb-0">{n}</dt>
+                    <dd className="text-xs md:text-sm opacity-90 mt-1.5">{l}</dd>
                   </div>
                 ))}
               </dl>
