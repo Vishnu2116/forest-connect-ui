@@ -15,9 +15,9 @@ export default function PageLayout({ children }: { children: ReactNode }) {
 export function PageHeader({ title, subtitle, breadcrumb }: { title: string; subtitle?: string; breadcrumb?: string[] }) {
   return (
     <section className="bg-gradient-to-r from-primary to-primary-light text-primary-foreground">
-      <div className="gov-container py-12 md:py-14">
+      <div className="gov-container py-10">
         {breadcrumb && (
-          <nav className="text-sm opacity-90 mb-4">
+          <nav className="text-xs opacity-90 mb-3">
             {breadcrumb.map((b, i) => (
               <span key={i}>
                 {i > 0 && <span className="mx-2">/</span>}
@@ -26,8 +26,8 @@ export function PageHeader({ title, subtitle, breadcrumb }: { title: string; sub
             ))}
           </nav>
         )}
-        <h1 className="text-3xl md:text-4xl font-bold mb-0">{title}</h1>
-        {subtitle && <p className="mt-3 text-base md:text-lg opacity-90 max-w-3xl leading-relaxed mb-0">{subtitle}</p>}
+        <h1 className="text-2xl md:text-4xl font-bold">{title}</h1>
+        {subtitle && <p className="mt-2 text-sm md:text-base opacity-90 max-w-3xl">{subtitle}</p>}
       </div>
     </section>
   );
