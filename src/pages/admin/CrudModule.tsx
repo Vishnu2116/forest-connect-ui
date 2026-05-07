@@ -1,5 +1,5 @@
 import { useMemo, useState, ReactNode } from "react";
-import { Plus, Pencil, Trash2, Eye, Search, X } from "lucide-react";
+import { Plus, Pencil, Trash2, Eye, Search, X, Upload } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
