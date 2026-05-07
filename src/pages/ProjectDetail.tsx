@@ -1,7 +1,7 @@
 import { useParams, Link } from "react-router-dom";
 import PageLayout, { PageHeader } from "@/components/layout/PageLayout";
 import { projects } from "@/data/content";
-import { Target, ListChecks, Users, MapPin, CheckCircle2, ArrowLeft, BarChart3, Calendar, Layers, Activity } from "lucide-react";
+import { Target, Users, MapPin, CheckCircle2, ArrowLeft, BarChart3, Calendar, Layers, Activity, Camera, TreePine, Sprout, Home } from "lucide-react";
 
 function slugify(title: string) {
   return title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
@@ -28,18 +28,26 @@ export default function ProjectDetail() {
   }
 
   const impactStats = [
-    { label: "Area Under Management", value: `${project.coverage}` },
-    { label: "Households Benefited", value: project.beneficiaries.match(/[\d,]+/)?.[0] || "5,000+" },
+    { label: "Area Covered", value: `${project.coverage}` },
+    { label: "Households", value: project.beneficiaries.match(/[\d,]+/)?.[0] || "5,000+" },
     { label: "Status", value: project.status },
+    { label: "Districts", value: "8" },
   ];
 
-  const infoCards = [
-    { icon: Target, title: "Objective", content: project.objective },
-    { icon: Users, title: "Beneficiaries", content: project.beneficiaries },
-    { icon: MapPin, title: "District Coverage", content: project.coverage },
-    { icon: Calendar, title: "Timeline", content: "2024 — Ongoing" },
-    { icon: Layers, title: "Component", content: project.component || "General" },
-    { icon: Activity, title: "Status", content: project.status },
+  const sidebarItems = [
+    { icon: Target, label: "Objective", value: project.objective },
+    { icon: Users, label: "Beneficiaries", value: project.beneficiaries },
+    { icon: Calendar, label: "Timeline", value: "2024 — Ongoing" },
+    { icon: MapPin, label: "Coverage", value: project.coverage },
+    { icon: Layers, label: "Component", value: project.component || "General" },
+    { icon: Activity, label: "Status", value: project.status },
+  ];
+
+  const galleryItems = [
+    { caption: "Community Engagement", icon: Users },
+    { caption: "Bamboo Livelihood Initiative", icon: Sprout },
+    { caption: "Landscape Restoration Activity", icon: TreePine },
+    { caption: "Eco-tourism Cluster", icon: Home },
   ];
 
   return (
@@ -55,101 +63,132 @@ export default function ProjectDetail() {
             <ArrowLeft className="h-4 w-4" /> Back to all projects
           </Link>
 
-          {/* Top: Banner + Summary */}
-          <div className="bg-gradient-to-br from-primary to-primary-light rounded-xl p-8 md:p-10 text-primary-foreground mb-8 shadow-lg">
+          {/* Banner */}
+          <div className="bg-gradient-to-br from-primary to-primary-light rounded-xl p-8 md:p-10 text-primary-foreground mb-10">
             <div className="flex items-center gap-2 mb-3">
-              <span className="text-xs font-semibold uppercase px-2.5 py-0.5 rounded bg-white/20">{project.status}</span>
-              {project.component && <span className="text-xs font-semibold uppercase px-2.5 py-0.5 rounded bg-white/20">{project.component}</span>}
+              <span className="text-xs font-semibold uppercase px-2.5 py-0.5 rounded-full bg-white/20">{project.status}</span>
+              {project.component && <span className="text-xs font-semibold uppercase px-2.5 py-0.5 rounded-full bg-white/20">{project.component}</span>}
             </div>
-            <h2 className="text-2xl md:text-3xl font-bold leading-tight mb-3">{project.title}</h2>
+            <h2 className="text-2xl md:text-3xl font-bold leading-tight mb-3 text-primary-foreground">{project.title}</h2>
             <p className="text-sm md:text-base opacity-90 leading-relaxed max-w-3xl">{project.description}</p>
           </div>
 
-          {/* Main Grid: Info cards (left) + Description (right) */}
-          <div className="grid lg:grid-cols-3 gap-6 mb-8">
-            {/* Left: Small info cards */}
-            <div className="lg:col-span-1 grid grid-cols-2 gap-4 auto-rows-min">
-              {infoCards.map((card) => (
-                <div key={card.title} className="bg-card border border-border rounded-lg p-4 shadow-card">
-                  <div className="flex items-center gap-2 mb-2">
-                    <div className="h-8 w-8 rounded-md bg-primary/10 flex items-center justify-center shrink-0">
-                      <card.icon className="h-4 w-4 text-primary" />
-                    </div>
-                    <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">{card.title}</h4>
+          {/* Main: Sidebar + Narrative */}
+          <div className="grid lg:grid-cols-12 gap-8 mb-12">
+            {/* LEFT: Compact sidebar metadata */}
+            <aside className="lg:col-span-3 space-y-1">
+              <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">Project Details</h4>
+              {sidebarItems.map((item) => (
+                <div key={item.label} className="flex items-start gap-3 py-3 border-b border-border/50 last:border-0">
+                  <item.icon className="h-4 w-4 text-primary mt-0.5 shrink-0" />
+                  <div className="min-w-0">
+                    <div className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wide">{item.label}</div>
+                    <div className="text-sm text-foreground leading-snug mt-0.5">{item.value}</div>
                   </div>
-                  <p className="text-sm font-medium text-foreground leading-snug">{card.content}</p>
                 </div>
               ))}
-            </div>
+            </aside>
 
-            {/* Right: Full description + Activities */}
-            <div className="lg:col-span-2 space-y-6">
-              <div className="bg-card border border-border rounded-lg p-6 shadow-card">
-                <h3 className="text-lg font-bold text-primary mb-3">About this Project</h3>
-                <p className="text-muted-foreground leading-relaxed mb-4">{project.description}</p>
-                <h4 className="text-sm font-bold text-primary mb-2">Objective</h4>
-                <p className="text-sm text-muted-foreground leading-relaxed">{project.objective}</p>
-              </div>
+            {/* RIGHT: Narrative story area */}
+            <div className="lg:col-span-9">
+              <article className="prose-like space-y-10">
+                {/* About */}
+                <section>
+                  <h3 className="text-xl font-bold text-primary mb-3">About the Project</h3>
+                  <p className="text-muted-foreground leading-relaxed">{project.description}</p>
+                  <p className="text-muted-foreground leading-relaxed mt-3">{project.objective}</p>
+                </section>
 
-              <div className="bg-card border border-border rounded-lg p-6 shadow-card">
-                <div className="flex items-center gap-2 mb-4">
-                  <ListChecks className="h-5 w-5 text-accent" />
-                  <h3 className="text-lg font-bold text-primary">Key Activities</h3>
-                </div>
-                <ul className="grid sm:grid-cols-2 gap-3">
-                  {project.activities.map((a) => (
-                    <li key={a} className="flex items-start gap-2 text-sm text-muted-foreground bg-surface border border-border rounded-md p-3">
-                      <CheckCircle2 className="h-4 w-4 text-primary mt-0.5 shrink-0" /> {a}
-                    </li>
-                  ))}
-                </ul>
-              </div>
+                <hr className="border-border/60" />
+
+                {/* Key Activities */}
+                <section>
+                  <h3 className="text-xl font-bold text-primary mb-4">Key Activities</h3>
+                  <div className="space-y-2.5">
+                    {project.activities.map((a) => (
+                      <div key={a} className="flex items-start gap-3">
+                        <CheckCircle2 className="h-4 w-4 text-accent mt-1 shrink-0" />
+                        <span className="text-sm text-muted-foreground leading-relaxed">{a}</span>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+
+                <hr className="border-border/60" />
+
+                {/* Expected Outcomes */}
+                <section>
+                  <h3 className="text-xl font-bold text-primary mb-3">Expected Outcomes</h3>
+                  <p className="text-muted-foreground leading-relaxed">
+                    The project aims to deliver measurable improvements in household income, land productivity, and community resilience. Through targeted interventions across value chains and landscape management, participating communities will gain access to sustainable livelihood opportunities, improved natural resource management, and stronger institutional capacity for self-governance.
+                  </p>
+                </section>
+
+                <hr className="border-border/60" />
+
+                {/* Community Impact */}
+                <section>
+                  <h3 className="text-xl font-bold text-primary mb-3">Community Impact</h3>
+                  <p className="text-muted-foreground leading-relaxed">
+                    Direct beneficiaries include {project.beneficiaries.toLowerCase()}, with emphasis on tribal and marginalized households. Community-based institutions such as JFMCs and SHGs are being strengthened to ensure participatory planning and inclusive decision-making at the grassroots level.
+                  </p>
+                </section>
+
+                <hr className="border-border/60" />
+
+                {/* Livelihood Opportunities */}
+                <section>
+                  <h3 className="text-xl font-bold text-primary mb-3">Livelihood Opportunities</h3>
+                  <p className="text-muted-foreground leading-relaxed">
+                    The project promotes diversified income sources through high-value product chains including bamboo, agar, broom-grass, and non-timber forest products. Producer collectives and micro-enterprises are supported with market linkages, skill development, and working capital to ensure long-term economic sustainability.
+                  </p>
+                </section>
+
+                <hr className="border-border/60" />
+
+                {/* Landscape Development */}
+                <section>
+                  <h3 className="text-xl font-bold text-primary mb-3">Landscape Development Benefits</h3>
+                  <p className="text-muted-foreground leading-relaxed">
+                    Covering {project.coverage}, the landscape interventions focus on restoring degraded lands, improving soil health, enhancing water resources, and building ecological resilience. These efforts create a foundation for sustained agricultural productivity and environmental conservation across participating districts.
+                  </p>
+                </section>
+              </article>
             </div>
           </div>
 
-          {/* Impact / Insights section */}
-          <div className="bg-card border border-border rounded-lg p-6 shadow-card">
+          {/* Impact Stats — compact infographic */}
+          <div className="mb-10">
             <div className="flex items-center gap-2 mb-5">
-              <BarChart3 className="h-6 w-6 text-accent" />
+              <BarChart3 className="h-5 w-5 text-accent" />
               <h3 className="text-lg font-bold text-primary">Impact & Insights</h3>
             </div>
-            <div className="grid sm:grid-cols-3 gap-4 mb-6">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
               {impactStats.map((s) => (
-                <div key={s.label} className="bg-surface border border-border rounded-md p-5 text-center">
-                  <div className="text-2xl font-bold text-primary">{s.value}</div>
-                  <div className="text-sm text-muted-foreground mt-1">{s.label}</div>
+                <div key={s.label} className="bg-surface rounded-lg p-4 text-center">
+                  <div className="text-xl md:text-2xl font-bold text-primary">{s.value}</div>
+                  <div className="text-[11px] text-muted-foreground mt-1 uppercase tracking-wide font-medium">{s.label}</div>
                 </div>
               ))}
             </div>
-            <div className="grid sm:grid-cols-2 gap-4">
-              <div className="bg-surface border border-border rounded-md p-4">
-                <div className="flex items-start gap-2">
-                  <Users className="h-5 w-5 text-primary mt-0.5 shrink-0" />
-                  <div>
-                    <h4 className="font-semibold text-primary mb-1">Beneficiaries</h4>
-                    <p className="text-sm text-muted-foreground">{project.beneficiaries}</p>
-                  </div>
-                </div>
-              </div>
-              <div className="bg-surface border border-border rounded-md p-4">
-                <div className="flex items-start gap-2">
-                  <MapPin className="h-5 w-5 text-primary mt-0.5 shrink-0" />
-                  <div>
-                    <h4 className="font-semibold text-primary mb-1">Location / Coverage</h4>
-                    <p className="text-sm text-muted-foreground">{project.coverage}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
 
-          {/* Gallery */}
-          <div className="bg-card border border-border rounded-lg p-6 shadow-card mt-6">
+          {/* Gallery — premium placeholders */}
+          <div>
             <h3 className="text-lg font-bold text-primary mb-4">Gallery</h3>
             <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-4">
-              {[1, 2, 3, 4].map((n) => (
-                <div key={n} className="bg-gradient-to-br from-primary to-primary-light rounded-md h-32 flex items-center justify-center text-primary-foreground">
-                  <p className="text-sm opacity-80">Project image {n}</p>
+              {galleryItems.map((item) => (
+                <div key={item.caption} className="relative bg-gradient-to-br from-primary/80 to-primary-light rounded-lg h-40 flex flex-col items-center justify-center text-primary-foreground overflow-hidden group">
+                  <div className="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors" />
+                  <div className="relative z-10 flex flex-col items-center gap-2">
+                    <div className="h-10 w-10 rounded-full bg-white/15 flex items-center justify-center">
+                      <item.icon className="h-5 w-5" />
+                    </div>
+                    <Camera className="h-4 w-4 opacity-50" />
+                  </div>
+                  <div className="absolute bottom-0 inset-x-0 bg-black/30 backdrop-blur-sm px-3 py-2 text-center">
+                    <span className="text-xs font-medium">{item.caption}</span>
+                  </div>
                 </div>
               ))}
             </div>
