@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import PageLayout, { PageHeader } from "@/components/layout/PageLayout";
-import { Phone, Mail, User, ChevronRight, X } from "lucide-react";
+import { Phone, Mail, User, ChevronRight, X, Briefcase, TrendingUp, Mountain, Handshake, Sprout } from "lucide-react";
 import { officials } from "@/data/content";
 
 const aboutLinks = [
@@ -48,40 +48,55 @@ function AboutLayout({ title, subtitle, children }: { title: string; subtitle?: 
 export function AboutElement() {
   return (
     <AboutLayout title="About ELEMENT" subtitle="A joint initiative for landscape development, livelihood generation and economic transformation">
-      <div className="space-y-6">
-        <div className="bg-card border border-border rounded-md p-6 shadow-card">
-          <h3 className="text-xl font-semibold text-primary mb-3">What is ELEMENT?</h3>
-          <p className="text-muted-foreground leading-relaxed">
-            <strong>ELEMENT</strong> (Enhancing Landscape and Ecosystem Management) is a joint initiative of the <strong>Government of Tripura</strong> and the <strong>World Bank</strong>, aimed at transforming rural livelihoods, strengthening economic development, and building resilient landscapes across the state.
-          </p>
-          <p className="text-muted-foreground leading-relaxed mt-3">
-            Unlike traditional forest programmes, ELEMENT takes a <strong>landscape-based approach</strong> that integrates livelihood generation, value chain development, community participation, and sustainable land management. The programme is designed to directly benefit communities through income enhancement, skill development, and access to markets.
+      <div className="space-y-8">
+        {/* Grand intro */}
+        <div className="bg-gradient-to-br from-primary/5 to-accent/5 border border-border rounded-xl p-8 shadow-card text-center">
+          <span className="inline-block bg-accent/10 text-accent text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-4">About the Programme</span>
+          <h3 className="text-2xl md:text-3xl font-bold text-primary mb-4">What is ELEMENT?</h3>
+          <p className="text-muted-foreground leading-relaxed max-w-2xl mx-auto">
+            <strong>ELEMENT</strong> (Enhancing Landscape and Ecosystem Management) is a flagship joint initiative of the <strong>Government of Tripura</strong> and the <strong>World Bank</strong> — transforming rural livelihoods, strengthening economic development, and building resilient landscapes across all 8 districts.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-5">
+        {/* Pillar cards — infographic style */}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {[
-            { title: "Livelihood Generation", desc: "Creating sustainable income opportunities through value chains of bamboo, agar, broom-grass and other high-value products." },
-            { title: "Economic Development", desc: "Boosting rural economy through enterprise development, producer collectives and market linkages across all 8 districts." },
-            { title: "Landscape Management", desc: "Science-based restoration and management of degraded landscapes for long-term productivity and climate resilience." },
-            { title: "Community Participation", desc: "Empowering local communities, SHGs and village-level committees as active partners in planning and implementation." },
-          ].map((item) => (
-            <div key={item.title} className="bg-card border border-border rounded-md p-5 shadow-card">
-              <h4 className="font-semibold text-primary mb-2">{item.title}</h4>
-              <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
+            { icon: Briefcase, label: "Livelihood Generation", stat: "25,000+", statLabel: "Households", desc: "Sustainable income through bamboo, agar and broom-grass value chains.", gradient: "from-primary to-primary-light" },
+            { icon: TrendingUp, label: "Economic Transformation", stat: "₹45 Cr+", statLabel: "Investment", desc: "Enterprise development, producer collectives and market linkages.", gradient: "from-accent to-accent-hover" },
+            { icon: Mountain, label: "Landscape Restoration", stat: "18,500", statLabel: "Hectares", desc: "Science-based restoration of degraded lands for productivity.", gradient: "from-primary to-primary-light" },
+            { icon: Handshake, label: "Community Development", stat: "12,000+", statLabel: "SHG Members", desc: "Empowering local communities as active partners in planning.", gradient: "from-accent to-accent-hover" },
+            { icon: Sprout, label: "Sustainable Rural Economy", stat: "8", statLabel: "Districts", desc: "Building long-term climate-resilient and inclusive growth across Tripura.", gradient: "from-primary to-primary-light" },
+          ].map((p) => (
+            <div key={p.label} className="relative bg-card border border-border rounded-xl p-6 text-center shadow-card hover:shadow-lg transition-shadow group overflow-hidden">
+              <div className={`mx-auto h-16 w-16 rounded-full bg-gradient-to-br ${p.gradient} flex items-center justify-center mb-4 shadow-md group-hover:scale-110 transition-transform`}>
+                <p.icon className="h-7 w-7 text-primary-foreground" />
+              </div>
+              <div className="text-3xl font-extrabold text-primary">{p.stat}</div>
+              <div className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider mt-0.5">{p.statLabel}</div>
+              <h4 className="text-base font-bold text-foreground mt-3">{p.label}</h4>
+              <p className="text-xs text-muted-foreground mt-1.5 leading-relaxed">{p.desc}</p>
             </div>
           ))}
         </div>
 
-        <div className="bg-surface border border-border rounded-md p-6">
-          <h3 className="text-lg font-semibold text-primary mb-3">Key Highlights</h3>
-          <ul className="space-y-2 text-sm text-muted-foreground">
-            <li className="flex items-start gap-2"><ChevronRight className="h-4 w-4 text-accent mt-0.5 shrink-0" /> Covers all <strong>8 districts</strong> of Tripura</li>
-            <li className="flex items-start gap-2"><ChevronRight className="h-4 w-4 text-accent mt-0.5 shrink-0" /> Benefits <strong>25,000+ households</strong> through livelihood support</li>
-            <li className="flex items-start gap-2"><ChevronRight className="h-4 w-4 text-accent mt-0.5 shrink-0" /> <strong>12,000+ SHG members</strong> engaged in value chain activities</li>
-            <li className="flex items-start gap-2"><ChevronRight className="h-4 w-4 text-accent mt-0.5 shrink-0" /> Focus on <strong>economic transformation</strong>, not just afforestation</li>
-            <li className="flex items-start gap-2"><ChevronRight className="h-4 w-4 text-accent mt-0.5 shrink-0" /> Implemented by <strong>Government of Tripura</strong> with World Bank support</li>
-          </ul>
+        {/* Key Highlights */}
+        <div className="bg-surface border border-border rounded-xl p-6">
+          <h3 className="text-lg font-semibold text-primary mb-4">Key Highlights</h3>
+          <div className="grid sm:grid-cols-2 gap-3">
+            {[
+              "Covers all 8 districts of Tripura",
+              "Benefits 25,000+ households through livelihood support",
+              "12,000+ SHG members engaged in value chain activities",
+              "Focus on economic transformation, not just afforestation",
+              "Implemented by Government of Tripura with World Bank support",
+              "Landscape-based approach integrating livelihood and restoration",
+            ].map((item) => (
+              <div key={item} className="flex items-start gap-2 bg-card border border-border rounded-md p-3">
+                <ChevronRight className="h-4 w-4 text-accent mt-0.5 shrink-0" />
+                <span className="text-sm text-muted-foreground">{item}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </AboutLayout>
