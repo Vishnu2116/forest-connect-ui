@@ -102,6 +102,7 @@ const docFields = [
   { key: "date", label: "Date", type: "date" as const },
   { key: "publishStatus", label: "Status", type: "select" as const, options: ["Published","Draft","Archived"] },
   { key: "pdf", label: "PDF Document", type: "file" as const },
+  { key: "thumbnail", label: "Thumbnail Image", type: "image" as const, imageDimensions: "600 × 400 px" },
 ];
 
 export const NewslettersAdmin = () => (
