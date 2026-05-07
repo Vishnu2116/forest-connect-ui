@@ -169,6 +169,7 @@ export const ProjectsAdmin = () => (
       { key: "status", label: "Status", type: "select", options: ["Planned","Ongoing","Completed"] },
       { key: "location", label: "Location" },
       { key: "image", label: "Project Image", type: "image", imageDimensions: "800 × 500 px" },
+    ]}
     columns={["title","beneficiaries","status","location"]}
     initial={[
       { title: "Landscape Restoration Programme", objective: "Restore degraded forest landscapes.", activities: "Plantation, ANR, soil & moisture conservation.", beneficiaries: "Forest-fringe communities", status: "Ongoing", location: "All districts" },
