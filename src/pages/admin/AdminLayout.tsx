@@ -20,6 +20,8 @@ export const adminMenu = [
   { to: "/admin/iec", label: "IEC Materials", icon: ImageIcon },
   { to: "/admin/activities", label: "Activities & Outputs", icon: Activity },
   { to: "/admin/projects", label: "Projects", icon: Briefcase },
+  { to: "/admin/hero", label: "Hero Slides", icon: SlidersHorizontal },
+  { to: "/admin/images", label: "Image Management", icon: Layers },
   { to: "/admin/plantation", label: "Plantation Module", icon: TreePine },
   { to: "/admin/grievance", label: "Grievance Mgmt", icon: MessageSquare },
   { to: "/admin/rti", label: "RTI Mgmt", icon: FileQuestion },
