@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { Calendar, ArrowRight, MapPin, Bell, Trees, Award, BookOpen, Briefcase, Users, TrendingUp, Globe, Heart, MessageCircle, Repeat2, Share } from "lucide-react";
+import { Calendar, ArrowRight, MapPin, Bell, Trees, Award, BookOpen, Briefcase, Users, TrendingUp, Globe, Heart, MessageCircle, Repeat2, Share, Sprout, Mountain, Handshake } from "lucide-react";
 import PageLayout from "@/components/layout/PageLayout";
 import HeroSlider from "@/components/home/HeroSlider";
 import { announcements, events, projects, knowledgeHubItems, procurements } from "@/data/content";
 import { useLang } from "@/contexts/LanguageContext";
+import { slugify } from "./ProjectDetail";
 import plantationBg from "@/assets/plantation-bg.jpg";
 
 const announcementDescriptions: Record<string, string> = {
@@ -22,6 +23,13 @@ const socialFeed = [
   { date: "15 Apr 2026", content: "12,000+ households now benefiting from ELEMENT's value chain programme. Real impact, real change. #EconomicGrowth #ELEMENT", likes: 89, retweets: 31, replies: 11 },
 ];
 
+const pillars = [
+  { icon: Briefcase, label: "Livelihood Generation", stat: "620+", statLabel: "Activities", desc: "Sustainable income through value chains & enterprise", gradient: "from-primary to-primary-light" },
+  { icon: TrendingUp, label: "Economic Transformation", stat: "₹45 Cr+", statLabel: "Investment", desc: "Boosting rural economy across all 8 districts", gradient: "from-accent to-accent-hover" },
+  { icon: Mountain, label: "Landscape Restoration", stat: "18,500", statLabel: "Hectares", desc: "Restoring degraded lands for productive use", gradient: "from-primary to-primary-light" },
+  { icon: Handshake, label: "Community Development", stat: "25,000+", statLabel: "Households", desc: "Empowering communities through participation", gradient: "from-accent to-accent-hover" },
+];
+
 export default function Home() {
   const { t } = useLang();
   const [updatesTab, setUpdatesTab] = useState<"notifications" | "events" | "tenders">("notifications");
@@ -30,38 +38,35 @@ export default function Home() {
     <PageLayout>
       <HeroSlider />
 
-      {/* What is ELEMENT? */}
-      <section className="py-12 md:py-14 bg-surface">
+      {/* What is ELEMENT? — Redesigned */}
+      <section className="py-14 md:py-18 bg-surface">
         <div className="gov-container">
-          <div className="text-center max-w-3xl mx-auto mb-8">
-            <h2 className="section-title inline-flex items-center gap-2 mx-auto"><Globe className="h-6 w-6 text-accent" /> What is ELEMENT?</h2>
+          <div className="text-center max-w-3xl mx-auto mb-10">
+            <span className="inline-block bg-accent/10 text-accent text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-3">About the Programme</span>
+            <h2 className="text-2xl md:text-3xl font-bold text-primary leading-tight">What is ELEMENT?</h2>
+            <p className="text-muted-foreground mt-3 text-sm md:text-base max-w-2xl mx-auto">
+              A flagship initiative of the Government of Tripura and the World Bank — transforming livelihoods, landscapes, and communities across all 8 districts.
+            </p>
           </div>
-          <div className="grid md:grid-cols-2 gap-8 items-center">
-            <div>
-              <p className="text-muted-foreground leading-relaxed">
-                <strong className="text-primary">ELEMENT</strong> (Enhancing Landscape and Ecosystem Management) is a joint initiative of the <strong>Government of Tripura</strong> and the <strong>World Bank</strong>, focused on transforming rural livelihoods, driving economic development, and building resilient landscapes across the state.
-              </p>
-              <p className="text-muted-foreground leading-relaxed mt-3">
-                The programme goes beyond traditional approaches — integrating <strong>livelihood generation</strong>, <strong>value chain development</strong>, <strong>community participation</strong>, and <strong>sustainable landscape management</strong> to create lasting impact for communities across all 8 districts of Tripura.
-              </p>
-              <Link to="/about" className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-accent hover:text-accent-hover">
-                Learn more about ELEMENT <ArrowRight className="h-4 w-4" />
-              </Link>
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-              {[
-                { icon: TrendingUp, label: "Economic Growth", desc: "Boosting rural economy through enterprise development" },
-                { icon: Users, label: "Community Participation", desc: "Empowering 25,000+ households across Tripura" },
-                { icon: Briefcase, label: "Livelihood Generation", desc: "Sustainable income through value chains" },
-                { icon: Trees, label: "Landscape Management", desc: "Restoring degraded lands for productive use" },
-              ].map((item) => (
-                <div key={item.label} className="bg-card border border-border rounded-md p-4 text-center shadow-card">
-                  <item.icon className="h-6 w-6 text-primary mx-auto" />
-                  <h4 className="text-sm font-semibold text-primary mt-2">{item.label}</h4>
-                  <p className="text-xs text-muted-foreground mt-1">{item.desc}</p>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {pillars.map((p) => (
+              <div key={p.label} className="relative bg-card border border-border rounded-xl p-6 text-center shadow-card hover:shadow-lg transition-shadow group overflow-hidden">
+                <div className={`mx-auto h-16 w-16 rounded-full bg-gradient-to-br ${p.gradient} flex items-center justify-center mb-4 shadow-md group-hover:scale-110 transition-transform`}>
+                  <p.icon className="h-7 w-7 text-primary-foreground" />
                 </div>
-              ))}
-            </div>
+                <div className="text-3xl font-extrabold text-primary">{p.stat}</div>
+                <div className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider mt-0.5">{p.statLabel}</div>
+                <h4 className="text-base font-bold text-foreground mt-3">{p.label}</h4>
+                <p className="text-xs text-muted-foreground mt-1.5 leading-relaxed">{p.desc}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="text-center mt-8">
+            <Link to="/about" className="inline-flex items-center gap-1.5 bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-2.5 rounded font-semibold text-sm focus-ring">
+              Learn more about ELEMENT <ArrowRight className="h-4 w-4" />
+            </Link>
           </div>
         </div>
       </section>
@@ -95,7 +100,6 @@ export default function Home() {
 
           {/* Right panel: tabs + Twitter feed */}
           <aside className="space-y-5">
-            {/* Notifications / Events / Tenders */}
             <div className="bg-card border border-border rounded-md overflow-hidden sticky top-44">
               <div className="grid grid-cols-3 border-b border-border bg-surface">
                 {([
@@ -227,8 +231,8 @@ export default function Home() {
                   {p.component && <span className="text-[11px] font-semibold uppercase px-2.5 py-0.5 rounded bg-accent/10 text-accent">{p.component}</span>}
                 </div>
                 <h3 className="text-lg font-bold text-primary leading-snug mb-0">{p.title}</h3>
-                <p className="text-sm text-muted-foreground mt-2.5 leading-relaxed mb-0">{p.description}</p>
-                <Link to="/projects" className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-accent hover:text-accent-hover">Read more <ArrowRight className="h-4 w-4" /></Link>
+                <p className="text-sm text-muted-foreground mt-2 leading-relaxed line-clamp-2 mb-0">{p.description}</p>
+                <Link to={`/projects/${slugify(p.title)}`} className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-accent hover:text-accent-hover">Know More <ArrowRight className="h-4 w-4" /></Link>
               </article>
             ))}
           </div>
@@ -281,7 +285,7 @@ export default function Home() {
                 </div>
                 <div className="p-5">
                   <span className="text-[11px] font-semibold uppercase tracking-wide text-accent">{k.category}</span>
-                  <h3 className="text-sm font-semibold mt-1.5 leading-snug mb-0">{k.title}</h3>
+                  <h3 className="text-sm font-semibold text-foreground mt-1.5 leading-snug mb-0">{k.title}</h3>
                   <p className="text-xs text-muted-foreground mt-2 mb-0">{k.date}</p>
                 </div>
               </article>
