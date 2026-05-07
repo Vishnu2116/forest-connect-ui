@@ -31,6 +31,8 @@ import PlantationAdmin from "./pages/admin/PlantationAdmin";
 import { GrievanceAdmin, RTIAdmin } from "./pages/admin/StatusModules";
 import { UsersAdmin } from "./pages/admin/UsersAdmin";
 import SettingsAdmin from "./pages/admin/SettingsAdmin";
+import HeroManagementAdmin from "./pages/admin/HeroManagementAdmin";
+import ImageManagementAdmin from "./pages/admin/ImageManagementAdmin";
 
 const queryClient = new QueryClient();
 
