@@ -31,6 +31,8 @@ import PlantationAdmin from "./pages/admin/PlantationAdmin";
 import { GrievanceAdmin, RTIAdmin } from "./pages/admin/StatusModules";
 import { UsersAdmin } from "./pages/admin/UsersAdmin";
 import SettingsAdmin from "./pages/admin/SettingsAdmin";
+import HeroManagementAdmin from "./pages/admin/HeroManagementAdmin";
+import ImageManagementAdmin from "./pages/admin/ImageManagementAdmin";
 
 const queryClient = new QueryClient();
 
@@ -86,6 +88,8 @@ const App = () => (
             <Route path="activities" element={<ActivitiesAdmin />} />
             <Route path="projects" element={<ProjectsAdmin />} />
             <Route path="plantation" element={<PlantationAdmin />} />
+            <Route path="hero" element={<HeroManagementAdmin />} />
+            <Route path="images" element={<ImageManagementAdmin />} />
             <Route path="grievance" element={<GrievanceAdmin />} />
             <Route path="rti" element={<RTIAdmin />} />
             <Route path="users" element={<UsersAdmin />} />

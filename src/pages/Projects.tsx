@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import PageLayout, { PageHeader } from "@/components/layout/PageLayout";
 import { projects } from "@/data/content";
-import { Trees, Target, Users, MapPin, ArrowRight, BarChart3, TrendingUp, Home, Briefcase } from "lucide-react";
+import { Trees, ArrowRight, BarChart3, TrendingUp, Home, Briefcase } from "lucide-react";
 import { useLang } from "@/contexts/LanguageContext";
 import { slugify } from "./ProjectDetail";
 
@@ -43,58 +43,30 @@ export default function Projects() {
 
       <section className="py-10">
         <div className="gov-container">
-          <div className="grid lg:grid-cols-2 gap-6">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {projects.map((p) => (
-              <article key={p.title} className="bg-card border border-border rounded-lg p-6 hover:shadow-card transition flex flex-col">
-                <div className="flex items-start gap-3 mb-3">
-                  <div className="p-2.5 rounded bg-primary/10 text-primary shrink-0"><Trees className="h-5 w-5" /></div>
-                  <div className="flex-1">
-                    <div className="flex flex-wrap items-center gap-2 mb-1">
-                      <span className="text-[10px] font-semibold uppercase px-2 py-0.5 rounded bg-success/10 text-success">{p.status}</span>
-                      {p.component && (
-                        <span className="text-[10px] font-semibold uppercase px-2 py-0.5 rounded bg-accent/10 text-accent">{p.component}</span>
-                      )}
-                    </div>
-                    <h3 className="text-base md:text-lg font-semibold text-primary leading-snug">{p.title}</h3>
-                  </div>
+              <article key={p.title} className="bg-card border border-border rounded-lg overflow-hidden hover:shadow-card transition flex flex-col">
+                {/* Image placeholder */}
+                <div className="h-40 bg-gradient-to-br from-primary to-primary-light flex items-center justify-center">
+                  <Trees className="h-10 w-10 text-primary-foreground/70" />
                 </div>
-
-                <p className="text-sm text-muted-foreground leading-relaxed">{p.description}</p>
-
-                <div className="mt-4 space-y-3 text-sm">
-                  <div className="flex gap-2">
-                    <Target className="h-4 w-4 text-accent mt-0.5 shrink-0" />
-                    <div>
-                      <div className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">{t("projects.objective")}</div>
-                      <p className="text-foreground">{p.objective}</p>
-                    </div>
+                <div className="p-5 flex flex-col flex-1">
+                  <div className="flex flex-wrap items-center gap-2 mb-2">
+                    <span className="text-[10px] font-semibold uppercase px-2 py-0.5 rounded bg-success/10 text-success">{p.status}</span>
+                    {p.component && (
+                      <span className="text-[10px] font-semibold uppercase px-2 py-0.5 rounded bg-accent/10 text-accent">{p.component}</span>
+                    )}
                   </div>
-
-                  <div className="grid sm:grid-cols-2 gap-3 pt-2 border-t border-border">
-                    <div className="flex gap-2">
-                      <Users className="h-4 w-4 text-primary mt-0.5 shrink-0" />
-                      <div>
-                        <div className="text-[11px] font-semibold uppercase text-muted-foreground">{t("projects.beneficiaries")}</div>
-                        <p className="text-xs text-foreground">{p.beneficiaries}</p>
-                      </div>
-                    </div>
-                    <div className="flex gap-2">
-                      <MapPin className="h-4 w-4 text-primary mt-0.5 shrink-0" />
-                      <div>
-                        <div className="text-[11px] font-semibold uppercase text-muted-foreground">{t("projects.location")}</div>
-                        <p className="text-xs text-foreground">{p.coverage}</p>
-                      </div>
-                    </div>
+                  <h3 className="text-base font-bold text-primary leading-snug">{p.title}</h3>
+                  <p className="text-sm text-muted-foreground mt-2 line-clamp-2 leading-relaxed">{p.objective}</p>
+                  <div className="mt-auto pt-4">
+                    <Link
+                      to={`/projects/${slugify(p.title)}`}
+                      className="inline-flex items-center gap-1.5 bg-accent hover:bg-accent-hover text-accent-foreground px-4 py-2 rounded text-sm font-semibold transition"
+                    >
+                      Know More <ArrowRight className="h-4 w-4" />
+                    </Link>
                   </div>
-                </div>
-
-                <div className="mt-auto pt-4">
-                  <Link
-                    to={`/projects/${slugify(p.title)}`}
-                    className="inline-flex items-center gap-1.5 bg-accent hover:bg-accent-hover text-accent-foreground px-4 py-2 rounded text-sm font-semibold transition"
-                  >
-                    Know More <ArrowRight className="h-4 w-4" />
-                  </Link>
                 </div>
               </article>
             ))}

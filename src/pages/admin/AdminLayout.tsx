@@ -3,7 +3,7 @@ import { Link, NavLink, useNavigate, Outlet } from "react-router-dom";
 import {
   LayoutDashboard, Bell, Calendar, FileText, Users, Award, BookOpen, FolderKanban,
   Image as ImageIcon, Activity, Briefcase, TreePine, MessageSquare, FileQuestion,
-  UserCog, Settings, LogOut, Menu, X, Home as HomeIcon
+  UserCog, Settings, LogOut, Menu, X, Home as HomeIcon, Layers, SlidersHorizontal
 } from "lucide-react";
 import logoTripura from "@/assets/logo-tripura.png";
 
@@ -20,6 +20,8 @@ export const adminMenu = [
   { to: "/admin/iec", label: "IEC Materials", icon: ImageIcon },
   { to: "/admin/activities", label: "Activities & Outputs", icon: Activity },
   { to: "/admin/projects", label: "Projects", icon: Briefcase },
+  { to: "/admin/hero", label: "Hero Slides", icon: SlidersHorizontal },
+  { to: "/admin/images", label: "Image Management", icon: Layers },
   { to: "/admin/plantation", label: "Plantation Module", icon: TreePine },
   { to: "/admin/grievance", label: "Grievance Mgmt", icon: MessageSquare },
   { to: "/admin/rti", label: "RTI Mgmt", icon: FileQuestion },

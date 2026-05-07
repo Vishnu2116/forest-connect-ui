@@ -11,12 +11,14 @@ export function ListingPage({
   rows,
   type = "doc",
   breadcrumb,
+  showAdminActions = false,
 }: {
   title: string;
   subtitle: string;
   rows: Row[];
   type?: "doc" | "tender";
   breadcrumb: string[];
+  showAdminActions?: boolean;
 }) {
   return (
     <PageLayout>
@@ -30,9 +32,11 @@ export function ListingPage({
                 <option>All Years</option><option>2026</option><option>2025</option><option>2024</option>
               </select>
             </div>
-            <button className="inline-flex items-center gap-2 bg-accent hover:bg-accent-hover text-accent-foreground px-4 py-2 rounded text-sm font-semibold">
-              <Upload className="h-4 w-4" /> Upload New
-            </button>
+            {showAdminActions && (
+              <button className="inline-flex items-center gap-2 bg-accent hover:bg-accent-hover text-accent-foreground px-4 py-2 rounded text-sm font-semibold">
+                <Upload className="h-4 w-4" /> Upload New
+              </button>
+            )}
           </div>
 
           {type === "doc" ? (
@@ -48,8 +52,6 @@ export function ListingPage({
                     <div className="flex gap-2">
                       <button className="p-1.5 text-primary hover:bg-primary/10 rounded" aria-label="View"><Eye className="h-4 w-4" /></button>
                       <button className="p-1.5 text-accent hover:bg-accent/10 rounded" aria-label="Download"><Download className="h-4 w-4" /></button>
-                      <button className="p-1.5 text-muted-foreground hover:bg-surface rounded" aria-label="Edit"><Pencil className="h-4 w-4" /></button>
-                      <button className="p-1.5 text-destructive hover:bg-destructive/10 rounded" aria-label="Delete"><Trash2 className="h-4 w-4" /></button>
                     </div>
                   </td>
                 </tr>

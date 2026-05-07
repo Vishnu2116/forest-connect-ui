@@ -18,11 +18,6 @@ export default function Footer() {
             <img src={logoWorldBank} alt="The World Bank" className="h-14 w-auto bg-white rounded p-1" width={70} height={56} loading="lazy" />
           </div>
           <p className="text-sm opacity-85 mt-5 leading-relaxed mb-0">{t("footer.about")}</p>
-          <div className="mt-5 space-y-2.5 text-sm opacity-90">
-            <div className="flex items-start gap-2"><MapPin className="h-4 w-4 mt-0.5 shrink-0" /> {t("footer.address")}</div>
-            <div className="flex items-center gap-2"><Phone className="h-4 w-4" /> +91 381 2416403</div>
-            <div className="flex items-center gap-2"><Mail className="h-4 w-4" /> info@element.tripura.gov.in</div>
-          </div>
         </div>
 
         <div>
@@ -52,9 +47,15 @@ export default function Footer() {
           </ul>
         </div>
 
+        {/* Connect section with address, contact & social */}
         <div>
           <h3 className="text-base font-semibold mb-4 text-accent">{t("footer.connect")}</h3>
-          <div className="flex gap-3">
+          <div className="space-y-3 text-sm opacity-90">
+            <div className="flex items-start gap-2"><MapPin className="h-4 w-4 mt-0.5 shrink-0 text-accent" /> {t("footer.address")}</div>
+            <div className="flex items-center gap-2"><Phone className="h-4 w-4 shrink-0 text-accent" /> +91 381 2416403</div>
+            <div className="flex items-center gap-2"><Mail className="h-4 w-4 shrink-0 text-accent" /> info@element.tripura.gov.in</div>
+          </div>
+          <div className="flex gap-3 mt-4">
             <a href="#" aria-label="Facebook" className="p-2 bg-primary rounded-md hover:bg-accent"><Facebook className="h-4 w-4" /></a>
             <a href="#" aria-label="Twitter" className="p-2 bg-primary rounded-md hover:bg-accent"><Twitter className="h-4 w-4" /></a>
             <a href="#" aria-label="YouTube" className="p-2 bg-primary rounded-md hover:bg-accent"><Youtube className="h-4 w-4" /></a>
