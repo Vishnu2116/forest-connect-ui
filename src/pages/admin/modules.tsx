@@ -148,6 +148,7 @@ export const ActivitiesAdmin = () => (
       { key: "status", label: "Status", type: "select", options: ["Planned","Ongoing","Completed"] },
       { key: "description", label: "Description", type: "textarea" },
       { key: "image", label: "Activity Image", type: "image", imageDimensions: "800 × 500 px" },
+    ]}
     columns={["title","component","district","status"]}
     initial={[
       { title: "Mixed plantation in Sepahijala", component: "Landscape Restoration", district: "Sepahijala", status: "Ongoing", description: "120 ha mixed-species plantation." },
