@@ -6,13 +6,14 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { AdminPageHeader } from "./AdminLayout";
 
-export type FieldType = "text" | "textarea" | "date" | "select" | "file" | "number";
+export type FieldType = "text" | "textarea" | "date" | "select" | "file" | "number" | "image";
 export interface Field {
   key: string;
   label: string;
   type?: FieldType;
   options?: string[];
   required?: boolean;
+  imageDimensions?: string; // e.g. "1920 × 1080 px"
 }
 
 interface Props {
@@ -150,6 +151,28 @@ function FieldInput({ field, value, onChange }: { field: Field; value: any; onCh
       <option value="">Select...</option>
       {field.options?.map((o) => <option key={o} value={o}>{o}</option>)}
     </select>
+  );
+  if (field.type === "image") return (
+    <div className="mt-1">
+      <div className="border-2 border-dashed border-border rounded-md p-4 bg-surface hover:border-primary/40 transition cursor-pointer">
+        {value ? (
+          <div className="text-center">
+            <div className="h-24 w-full bg-gradient-to-br from-primary/20 to-primary-light/20 rounded-md flex items-center justify-center mb-2">
+              <span className="text-xs font-medium text-primary">{value}</span>
+            </div>
+            <p className="text-[10px] text-muted-foreground">{field.imageDimensions ? `Recommended: ${field.imageDimensions}` : "Image uploaded"}</p>
+            <input type="file" accept="image/*" className="text-xs mt-2" onChange={(e) => onChange(e.target.files?.[0]?.name || value)} />
+          </div>
+        ) : (
+          <div className="text-center py-2">
+            <Upload className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
+            <p className="text-xs text-muted-foreground">Click to upload image</p>
+            {field.imageDimensions && <p className="text-[10px] text-muted-foreground mt-1">Recommended: {field.imageDimensions}</p>}
+            <input type="file" accept="image/*" className="text-xs mt-2" onChange={(e) => onChange(e.target.files?.[0]?.name || "")} />
+          </div>
+        )}
+      </div>
+    </div>
   );
   if (field.type === "file") return (
     <div className="mt-1 border border-dashed border-border rounded-md p-3 text-xs text-muted-foreground bg-surface">
