@@ -3,7 +3,7 @@ import { Link, NavLink, useNavigate, Outlet } from "react-router-dom";
 import {
   LayoutDashboard, Bell, Calendar, FileText, Users, Award, BookOpen, FolderKanban,
   Image as ImageIcon, Activity, Briefcase, TreePine, MessageSquare, FileQuestion,
-  UserCog, Settings, LogOut, Menu, X, Home as HomeIcon
+  UserCog, Settings, LogOut, Menu, X, Home as HomeIcon, Layers, SlidersHorizontal
 } from "lucide-react";
 import logoTripura from "@/assets/logo-tripura.png";
 
