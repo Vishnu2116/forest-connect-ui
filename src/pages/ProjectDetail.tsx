@@ -1,25 +1,15 @@
 import { useParams, Link } from "react-router-dom";
 import PageLayout, { PageHeader } from "@/components/layout/PageLayout";
 import { projects } from "@/data/content";
-import { Target, ListChecks, Users, MapPin, CheckCircle2, ArrowLeft, BarChart3, FileText, Image as ImageIcon } from "lucide-react";
-import { useState } from "react";
+import { Target, ListChecks, Users, MapPin, CheckCircle2, ArrowLeft, BarChart3, Calendar, Layers, Activity } from "lucide-react";
 
 function slugify(title: string) {
   return title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
 }
 
-const sideNavItems = [
-  { id: "overview", label: "Overview", icon: FileText },
-  { id: "objective", label: "Objective", icon: Target },
-  { id: "activities", label: "Key Activities", icon: ListChecks },
-  { id: "impact", label: "Impact & Coverage", icon: BarChart3 },
-  { id: "gallery", label: "Gallery", icon: ImageIcon },
-];
-
 export default function ProjectDetail() {
   const { slug } = useParams<{ slug: string }>();
   const project = projects.find((p) => slugify(p.title) === slug);
-  const [activeSection, setActiveSection] = useState("overview");
 
   if (!project) {
     return (
@@ -43,6 +33,15 @@ export default function ProjectDetail() {
     { label: "Status", value: project.status },
   ];
 
+  const infoCards = [
+    { icon: Target, title: "Objective", content: project.objective },
+    { icon: Users, title: "Beneficiaries", content: project.beneficiaries },
+    { icon: MapPin, title: "District Coverage", content: project.coverage },
+    { icon: Calendar, title: "Timeline", content: "2024 — Ongoing" },
+    { icon: Layers, title: "Component", content: project.component || "General" },
+    { icon: Activity, title: "Status", content: project.status },
+  ];
+
   return (
     <PageLayout>
       <PageHeader
@@ -56,152 +55,103 @@ export default function ProjectDetail() {
             <ArrowLeft className="h-4 w-4" /> Back to all projects
           </Link>
 
-          <div className="grid lg:grid-cols-4 gap-6">
-            {/* Left: Navigation + Info cards */}
-            <div className="lg:col-span-1 space-y-4">
-              {/* Section Nav */}
-              <div className="bg-card border border-border rounded-md overflow-hidden sticky top-24">
-                <div className="px-4 py-3 border-b border-border bg-surface">
-                  <h3 className="text-sm font-semibold text-primary">Sections</h3>
+          {/* Top: Banner + Summary */}
+          <div className="bg-gradient-to-br from-primary to-primary-light rounded-xl p-8 md:p-10 text-primary-foreground mb-8 shadow-lg">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-xs font-semibold uppercase px-2.5 py-0.5 rounded bg-white/20">{project.status}</span>
+              {project.component && <span className="text-xs font-semibold uppercase px-2.5 py-0.5 rounded bg-white/20">{project.component}</span>}
+            </div>
+            <h2 className="text-2xl md:text-3xl font-bold leading-tight mb-3">{project.title}</h2>
+            <p className="text-sm md:text-base opacity-90 leading-relaxed max-w-3xl">{project.description}</p>
+          </div>
+
+          {/* Main Grid: Info cards (left) + Description (right) */}
+          <div className="grid lg:grid-cols-3 gap-6 mb-8">
+            {/* Left: Small info cards */}
+            <div className="lg:col-span-1 grid grid-cols-2 gap-4 auto-rows-min">
+              {infoCards.map((card) => (
+                <div key={card.title} className="bg-card border border-border rounded-lg p-4 shadow-card">
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="h-8 w-8 rounded-md bg-primary/10 flex items-center justify-center shrink-0">
+                      <card.icon className="h-4 w-4 text-primary" />
+                    </div>
+                    <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">{card.title}</h4>
+                  </div>
+                  <p className="text-sm font-medium text-foreground leading-snug">{card.content}</p>
                 </div>
-                <nav className="p-2">
-                  {sideNavItems.map((item) => (
-                    <button
-                      key={item.id}
-                      onClick={() => setActiveSection(item.id)}
-                      className={`w-full flex items-center gap-2 px-3 py-2.5 text-sm rounded transition ${
-                        activeSection === item.id
-                          ? "bg-primary/10 text-primary font-semibold border-l-2 border-accent"
-                          : "text-muted-foreground hover:bg-surface hover:text-foreground"
-                      }`}
-                    >
-                      <item.icon className="h-4 w-4 shrink-0" />
-                      {item.label}
-                    </button>
-                  ))}
-                </nav>
+              ))}
+            </div>
+
+            {/* Right: Full description + Activities */}
+            <div className="lg:col-span-2 space-y-6">
+              <div className="bg-card border border-border rounded-lg p-6 shadow-card">
+                <h3 className="text-lg font-bold text-primary mb-3">About this Project</h3>
+                <p className="text-muted-foreground leading-relaxed mb-4">{project.description}</p>
+                <h4 className="text-sm font-bold text-primary mb-2">Objective</h4>
+                <p className="text-sm text-muted-foreground leading-relaxed">{project.objective}</p>
               </div>
 
-              {/* Quick Info */}
-              <div className="bg-card border border-border rounded-md p-4 space-y-3">
-                <h4 className="text-xs font-semibold uppercase text-muted-foreground tracking-wide">Quick Info</h4>
-                <div className="flex items-center gap-2">
-                  <span className="text-xs font-semibold uppercase px-2 py-0.5 rounded bg-success/10 text-success">{project.status}</span>
-                  {project.component && <span className="text-xs font-semibold uppercase px-2 py-0.5 rounded bg-accent/10 text-accent">{project.component}</span>}
+              <div className="bg-card border border-border rounded-lg p-6 shadow-card">
+                <div className="flex items-center gap-2 mb-4">
+                  <ListChecks className="h-5 w-5 text-accent" />
+                  <h3 className="text-lg font-bold text-primary">Key Activities</h3>
                 </div>
-                <div className="text-sm space-y-2">
-                  <div className="flex items-start gap-2">
-                    <Users className="h-4 w-4 text-primary mt-0.5 shrink-0" />
-                    <div>
-                      <div className="text-[11px] font-semibold text-muted-foreground uppercase">Beneficiaries</div>
-                      <p className="text-xs text-foreground">{project.beneficiaries}</p>
-                    </div>
+                <ul className="grid sm:grid-cols-2 gap-3">
+                  {project.activities.map((a) => (
+                    <li key={a} className="flex items-start gap-2 text-sm text-muted-foreground bg-surface border border-border rounded-md p-3">
+                      <CheckCircle2 className="h-4 w-4 text-primary mt-0.5 shrink-0" /> {a}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          {/* Impact / Insights section */}
+          <div className="bg-card border border-border rounded-lg p-6 shadow-card">
+            <div className="flex items-center gap-2 mb-5">
+              <BarChart3 className="h-6 w-6 text-accent" />
+              <h3 className="text-lg font-bold text-primary">Impact & Insights</h3>
+            </div>
+            <div className="grid sm:grid-cols-3 gap-4 mb-6">
+              {impactStats.map((s) => (
+                <div key={s.label} className="bg-surface border border-border rounded-md p-5 text-center">
+                  <div className="text-2xl font-bold text-primary">{s.value}</div>
+                  <div className="text-sm text-muted-foreground mt-1">{s.label}</div>
+                </div>
+              ))}
+            </div>
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div className="bg-surface border border-border rounded-md p-4">
+                <div className="flex items-start gap-2">
+                  <Users className="h-5 w-5 text-primary mt-0.5 shrink-0" />
+                  <div>
+                    <h4 className="font-semibold text-primary mb-1">Beneficiaries</h4>
+                    <p className="text-sm text-muted-foreground">{project.beneficiaries}</p>
                   </div>
-                  <div className="flex items-start gap-2">
-                    <MapPin className="h-4 w-4 text-primary mt-0.5 shrink-0" />
-                    <div>
-                      <div className="text-[11px] font-semibold text-muted-foreground uppercase">Coverage</div>
-                      <p className="text-xs text-foreground">{project.coverage}</p>
-                    </div>
+                </div>
+              </div>
+              <div className="bg-surface border border-border rounded-md p-4">
+                <div className="flex items-start gap-2">
+                  <MapPin className="h-5 w-5 text-primary mt-0.5 shrink-0" />
+                  <div>
+                    <h4 className="font-semibold text-primary mb-1">Location / Coverage</h4>
+                    <p className="text-sm text-muted-foreground">{project.coverage}</p>
                   </div>
                 </div>
               </div>
             </div>
+          </div>
 
-            {/* Right: Main content */}
-            <div className="lg:col-span-3">
-              {activeSection === "overview" && (
-                <div className="bg-card border border-border rounded-md p-6 shadow-card">
-                  <h2 className="text-lg font-semibold text-primary mb-3">About this Project</h2>
-                  <p className="text-muted-foreground leading-relaxed">{project.description}</p>
-                  <div className="mt-6 grid sm:grid-cols-3 gap-4">
-                    {impactStats.map((s) => (
-                      <div key={s.label} className="bg-surface border border-border rounded-md p-4 text-center">
-                        <div className="text-lg font-bold text-primary">{s.value}</div>
-                        <div className="text-xs text-muted-foreground mt-1">{s.label}</div>
-                      </div>
-                    ))}
-                  </div>
+          {/* Gallery */}
+          <div className="bg-card border border-border rounded-lg p-6 shadow-card mt-6">
+            <h3 className="text-lg font-bold text-primary mb-4">Gallery</h3>
+            <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-4">
+              {[1, 2, 3, 4].map((n) => (
+                <div key={n} className="bg-gradient-to-br from-primary to-primary-light rounded-md h-32 flex items-center justify-center text-primary-foreground">
+                  <p className="text-sm opacity-80">Project image {n}</p>
                 </div>
-              )}
-
-              {activeSection === "objective" && (
-                <div className="bg-card border border-border rounded-md p-6 shadow-card">
-                  <div className="flex items-start gap-3">
-                    <Target className="h-6 w-6 text-accent mt-0.5 shrink-0" />
-                    <div>
-                      <h2 className="text-lg font-semibold text-primary mb-3">Objective</h2>
-                      <p className="text-muted-foreground leading-relaxed">{project.objective}</p>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {activeSection === "activities" && (
-                <div className="bg-card border border-border rounded-md p-6 shadow-card">
-                  <div className="flex items-start gap-3 mb-4">
-                    <ListChecks className="h-6 w-6 text-accent mt-0.5 shrink-0" />
-                    <h2 className="text-lg font-semibold text-primary">Key Activities</h2>
-                  </div>
-                  <ul className="grid sm:grid-cols-2 gap-3">
-                    {project.activities.map((a) => (
-                      <li key={a} className="flex items-start gap-2 text-sm text-muted-foreground bg-surface border border-border rounded-md p-3">
-                        <CheckCircle2 className="h-4 w-4 text-primary mt-0.5 shrink-0" /> {a}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
-              {activeSection === "impact" && (
-                <div className="bg-card border border-border rounded-md p-6 shadow-card">
-                  <div className="flex items-center gap-2 mb-4">
-                    <BarChart3 className="h-6 w-6 text-accent" />
-                    <h2 className="text-lg font-semibold text-primary">Impact & Coverage</h2>
-                  </div>
-                  <div className="grid sm:grid-cols-3 gap-4">
-                    {impactStats.map((s) => (
-                      <div key={s.label} className="bg-surface border border-border rounded-md p-5 text-center">
-                        <div className="text-2xl font-bold text-primary">{s.value}</div>
-                        <div className="text-sm text-muted-foreground mt-1">{s.label}</div>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="mt-6 grid sm:grid-cols-2 gap-4">
-                    <div className="bg-surface border border-border rounded-md p-4">
-                      <div className="flex items-start gap-2">
-                        <Users className="h-5 w-5 text-primary mt-0.5 shrink-0" />
-                        <div>
-                          <h3 className="font-semibold text-primary mb-1">Beneficiaries</h3>
-                          <p className="text-sm text-muted-foreground">{project.beneficiaries}</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="bg-surface border border-border rounded-md p-4">
-                      <div className="flex items-start gap-2">
-                        <MapPin className="h-5 w-5 text-primary mt-0.5 shrink-0" />
-                        <div>
-                          <h3 className="font-semibold text-primary mb-1">Location / Coverage</h3>
-                          <p className="text-sm text-muted-foreground">{project.coverage}</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {activeSection === "gallery" && (
-                <div className="bg-card border border-border rounded-md p-6 shadow-card">
-                  <h2 className="text-lg font-semibold text-primary mb-4">Gallery</h2>
-                  <div className="grid sm:grid-cols-2 gap-4">
-                    {[1, 2, 3, 4].map((n) => (
-                      <div key={n} className="bg-gradient-to-br from-primary to-primary-light rounded-md h-40 flex items-center justify-center text-primary-foreground">
-                        <p className="text-sm opacity-80">Project image {n}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
+              ))}
             </div>
           </div>
         </div>

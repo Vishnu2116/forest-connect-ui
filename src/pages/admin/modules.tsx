@@ -102,6 +102,7 @@ const docFields = [
   { key: "date", label: "Date", type: "date" as const },
   { key: "publishStatus", label: "Status", type: "select" as const, options: ["Published","Draft","Archived"] },
   { key: "pdf", label: "PDF Document", type: "file" as const },
+  { key: "thumbnail", label: "Thumbnail Image", type: "image" as const, imageDimensions: "600 × 400 px" },
 ];
 
 export const NewslettersAdmin = () => (
@@ -146,6 +147,7 @@ export const ActivitiesAdmin = () => (
       { key: "district", label: "District", type: "select", options: districts },
       { key: "status", label: "Status", type: "select", options: ["Planned","Ongoing","Completed"] },
       { key: "description", label: "Description", type: "textarea" },
+      { key: "image", label: "Activity Image", type: "image", imageDimensions: "800 × 500 px" },
     ]}
     columns={["title","component","district","status"]}
     initial={[
@@ -166,6 +168,7 @@ export const ProjectsAdmin = () => (
       { key: "beneficiaries", label: "Target Beneficiaries" },
       { key: "status", label: "Status", type: "select", options: ["Planned","Ongoing","Completed"] },
       { key: "location", label: "Location" },
+      { key: "image", label: "Project Image", type: "image", imageDimensions: "800 × 500 px" },
     ]}
     columns={["title","beneficiaries","status","location"]}
     initial={[
