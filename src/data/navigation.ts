@@ -12,6 +12,8 @@ export const navItems: NavItem[] = [
       { label: "About ELEMENT", to: "/about" },
       { label: "Organization Structure", to: "/about/organization" },
       { label: "Who's Who", to: "/about/whos-who" },
+      { label: "Memorandum of Association", to: "/about/memorandum" },
+      { label: "Official Directory", to: "/about/directory" },
       { label: "Vision & Objective", to: "/about/vision" },
       { label: "Mission & Objective", to: "/about/mission" },
     ],
