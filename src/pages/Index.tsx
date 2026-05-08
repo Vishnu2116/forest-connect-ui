@@ -37,6 +37,8 @@ import plantationBg from "@/assets/plantation-bg.jpg";
 import cmImage from "@/assets/dignitaries/CM.jpeg";
 import Animesh from "@/assets/dignitaries/Animesh.jpeg";
 import CS from "@/assets/dignitaries/CS.jpg";
+import Honnareddy from "@/assets/dignitaries/Honnareddy.jpeg";
+import SanjibDas from "@/assets/dignitaries/SanjibDas.png";
 
 const announcementDescriptions: Record<string, string> = {
   Recruitment: "Applications invited for ELEMENT programme positions.",
@@ -225,13 +227,13 @@ export default function Home() {
                 name: "Dr. Honnareddy N, IFS",
                 designation: "Addl. CEO, ELEMENT Project",
                 desc: "CCF(P&D) I/C, CF (Establishment & HRD)",
-                image: "",
+                image: Honnareddy,
               },
               {
                 name: "Shri Sanjib Das, IFS",
                 designation: "Director, Project ELEMENT",
                 desc: "CF (Territorial & Coordination)",
-                image: "",
+                image: SanjibDas,
               },
             ].map((d) => (
               <div
