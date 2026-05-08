@@ -118,14 +118,12 @@ export const procurements = [
 ];
 
 export const officials = [
-  { name: "Shri D. K. Sharma, IFS", designation: "Project Director, ELEMENT & PCCF", phone: "+91 381 2416403", image: "" },
-  { name: "Smt. R. K. Samal, IFS", designation: "Additional Project Director (Biodiversity)", phone: "+91 381 2416404", image: "" },
-  { name: "Shri P. L. Agarwal, IFS", designation: "Component Head (Landscape Management)", phone: "+91 381 2416405", image: "" },
-  { name: "Dr. A. K. Gupta, IFS", designation: "Component Head (Research & M&E)", phone: "+91 381 2416406", image: "" },
-  { name: "Shri B. S. Mishra, IFS", designation: "Component Head (Livelihood Development)", phone: "+91 381 2416407", image: "" },
-  { name: "Smt. L. Darlong, IFS", designation: "Community Development Coordinator", phone: "+91 381 2416408", image: "" },
-  { name: "Shri J. Reang, IFS", designation: "Financial Management Specialist", phone: "+91 381 2416409", image: "" },
-  { name: "Shri S. Debbarma, IFS", designation: "District Coordinator (South Tripura)", phone: "+91 3823 222033", image: "" },
+  { name: "Shri Chaitanya Murti, IFS", designation: "Principal Chief Conservator of Forests (Administration)", department: "CEO & Project Director, ELEMENT Project", phone: "+91 381 2416403", email: "ceo@element.tripura.gov.in", image: "" },
+  { name: "Dr. Honnareddy N, IFS", designation: "Addl. CEO (ELEMENT Project)", department: "CCF(P&D) I/C, CF (Establishment & HRD)", phone: "+91 381 2416404", email: "addlceo@element.tripura.gov.in", image: "" },
+  { name: "Shri Jaya Krishnan V, IFS", designation: "Director (Administration, Procurement & Finance)", department: "ELEMENT PMU", phone: "+91 381 2416405", email: "director.admin@element.tripura.gov.in", image: "" },
+  { name: "Shri Naresh Jamatia, IFS", designation: "Director (SFM)", department: "Tripura ELEMENT Project", phone: "+91 381 2416406", email: "director.sfm@element.tripura.gov.in", image: "" },
+  { name: "Smt Paushali Roy, IFS", designation: "Director (Community Institution, Capacity Building, Knowledge Management)", department: "ELEMENT PMU", phone: "+91 381 2416407", email: "director.cb@element.tripura.gov.in", image: "" },
+  { name: "Mr. Khushwant Sethi", designation: "Principal Chief Conservator of Forests", department: "Government of Tripura", phone: "+91 381 2416408", email: "pccf@tripuraforest.gov.in", image: "" },
 ];
 
 export const knowledgeHubItems = [

@@ -182,7 +182,7 @@ export default function Home() {
       </section>
 
       {/* Dignitaries / Leadership */}
-      <section className="py-12 md:py-14 bg-primary-400">
+      <section className="py-14 md:py-18 bg-gradient-to-b from-surface to-background border-t border-border/40">
         <div className="gov-container">
           <div className="text-center mb-10">
             <span className="inline-block bg-primary/10 text-primary text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-3">
@@ -195,7 +195,7 @@ export default function Home() {
               Senior leaders and dignitaries guiding the ELEMENT programme.
             </p>
           </div>
-          <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
             {[
               {
                 name: "Shri Manik Saha",
@@ -216,15 +216,21 @@ export default function Home() {
                 image: CS,
               },
               {
-                name: "Dr. R.K. Das, IFS",
-                designation: "Project Director, ELEMENT",
-                desc: "ELEMENT Programme",
+                name: "Shri Chaitanya Murti, IFS",
+                designation: "CEO & Project Director, ELEMENT",
+                desc: "Principal Chief Conservator of Forests (Administration)",
                 image: "",
               },
               {
-                name: "Ms. Sarah Chen",
-                designation: "World Bank Representative",
-                desc: "World Bank India Office",
+                name: "Dr. Honnareddy N, IFS",
+                designation: "Addl. CEO, ELEMENT Project",
+                desc: "CCF(P&D) I/C, CF (Establishment & HRD)",
+                image: "",
+              },
+              {
+                name: "Mr. Khushwant Sethi",
+                designation: "Principal Chief Conservator of Forests",
+                desc: "Government of Tripura",
                 image: "",
               },
             ].map((d) => (
@@ -257,7 +263,7 @@ export default function Home() {
       </section>
 
       {/* What's New + Right panel (Tabs + Tweets) */}
-      <section className="py-12 mt-3 md:py-14">
+      <section className="py-14 md:py-18 bg-background">
         <div className="gov-container grid lg:grid-cols-3 gap-10">
           <div className="lg:col-span-2">
             <div className="flex items-center justify-between mb-10">
