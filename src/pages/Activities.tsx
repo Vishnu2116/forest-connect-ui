@@ -65,23 +65,66 @@ export default function Activities() {
             ))}
           </div>
 
-          {/* Key Activity Areas — Circular Cards */}
-          <div className="mt-12">
-            <h3 className="text-lg font-semibold text-primary mb-6 text-center">Key Activity Areas</h3>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-              {activityAreas.map((item) => (
-                <div key={item.title} className="flex flex-col items-center text-center group">
-                  <div className="h-20 w-20 rounded-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center shadow-md group-hover:scale-110 transition-transform">
-                    <item.icon className="h-8 w-8 text-primary-foreground" />
+          {/* Key Activity Areas — Connected Ecosystem */}
+          <div className="mt-16 mb-4">
+            <h3 className="text-lg font-semibold text-primary mb-10 text-center">Key Activity Areas</h3>
+            
+            {/* Ecosystem diagram */}
+            <div className="relative max-w-2xl mx-auto">
+              {/* SVG connecting lines */}
+              <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid meet">
+                {/* Lines from center to each node */}
+                {[
+                  { x: 200, y: 60 },
+                  { x: 340, y: 130 },
+                  { x: 340, y: 270 },
+                  { x: 200, y: 340 },
+                  { x: 60, y: 270 },
+                  { x: 60, y: 130 },
+                ].map((pos, i) => (
+                  <line key={i} x1="200" y1="200" x2={pos.x} y2={pos.y} stroke="hsl(123 57% 24% / 0.2)" strokeWidth="1.5" strokeDasharray="4 3" />
+                ))}
+              </svg>
+
+              <div className="relative" style={{ paddingBottom: '100%' }}>
+                {/* Center circle */}
+                <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
+                  <div className="h-24 w-24 md:h-28 md:w-28 rounded-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center shadow-lg border-4 border-card">
+                    <span className="text-primary-foreground font-extrabold text-sm md:text-base tracking-wide">ELEMENT</span>
                   </div>
-                  <h4 className="text-sm font-bold text-foreground mt-4">{item.title}</h4>
-                  <p className="text-xs text-muted-foreground mt-1.5 max-w-[200px]">{item.desc}</p>
                 </div>
-              ))}
+
+                {/* Surrounding circles — positioned absolutely */}
+                {activityAreas.map((item, i) => {
+                  const positions = [
+                    { top: '0%', left: '50%', tx: '-50%', ty: '0' },
+                    { top: '17%', left: '93%', tx: '-50%', ty: '-50%' },
+                    { top: '63%', left: '93%', tx: '-50%', ty: '-50%' },
+                    { top: '85%', left: '50%', tx: '-50%', ty: '-50%' },
+                    { top: '63%', left: '7%', tx: '-50%', ty: '-50%' },
+                    { top: '17%', left: '7%', tx: '-50%', ty: '-50%' },
+                  ];
+                  const pos = positions[i];
+                  return (
+                    <div
+                      key={item.title}
+                      className="absolute flex flex-col items-center text-center group"
+                      style={{
+                        top: pos.top,
+                        left: pos.left,
+                        transform: `translate(${pos.tx}, ${pos.ty})`,
+                      }}
+                    >
+                      <div className="h-16 w-16 md:h-20 md:w-20 rounded-full bg-card border-2 border-primary/20 flex items-center justify-center shadow-md group-hover:border-accent group-hover:shadow-lg transition-all">
+                        <item.icon className="h-6 w-6 md:h-7 md:w-7 text-primary" />
+                      </div>
+                      <h4 className="text-[10px] md:text-xs font-bold text-foreground mt-2 max-w-[100px] leading-tight">{item.title}</h4>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </div>
-        </div>
-      </section>
     </PageLayout>
   );
 }
