@@ -1,7 +1,11 @@
 import { useParams, Link } from "react-router-dom";
 import PageLayout, { PageHeader } from "@/components/layout/PageLayout";
 import { projects } from "@/data/content";
-import { Target, Users, MapPin, CheckCircle2, ArrowLeft, BarChart3, Calendar, Layers, Activity, Camera, TreePine, Sprout, Home, TrendingUp } from "lucide-react";
+import { Target, Users, MapPin, CheckCircle2, ArrowLeft, BarChart3, Calendar, Layers, Activity, TreePine, Sprout, Home, TrendingUp } from "lucide-react";
+import galleryCommunity from "@/assets/projects/gallery-community.jpg";
+import galleryBamboo from "@/assets/projects/gallery-bamboo.jpg";
+import galleryLandscape from "@/assets/projects/gallery-landscape.jpg";
+import galleryEcotourism from "@/assets/projects/gallery-ecotourism.jpg";
 
 function slugify(title: string) {
   return title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
