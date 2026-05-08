@@ -102,16 +102,16 @@ export default function Navbar() {
           {/* Mobile layout */}
           <div className="md:hidden">
             <div className="flex items-center justify-between gap-2">
-              <Link to="/" className="flex items-center shrink-0">
+              <Link to="/" className="pl-1 flex items-center shrink-0">
                 <img
                   src={logoTripura}
                   alt="Government of Tripura emblem"
-                  className="h-14 w-16"
+                  className="h-16 w-[70px]"
                   width={48}
                   height={48}
                 />
               </Link>
-              <div className="flex-1 text-center min-w-0 px-2">
+              <div className="flex-1 text-center min-w-0 pt-2 pl-4">
                 <h1 className="text-3xl sm:text-2xl font-extrabold text-primary tracking-wide leading-none break-words">
                   ELEMENT
                 </h1>
@@ -120,7 +120,7 @@ export default function Navbar() {
                 <img
                   src={logoWorldBank}
                   alt="The World Bank logo"
-                  className="h-16 w-16"
+                  className="h-20 w-[80px]"
                   width={100}
                   height={100}
                 />
@@ -137,7 +137,7 @@ export default function Navbar() {
                 </button>
               </div>
             </div>
-            <div className="mt-2 text-center">
+            <div className="mt-0 pr-7 text-center">
               <p className="text-[11px] sm:text-xs font-semibold text-foreground/80 leading-snug px-2">
                 {t("site.full")}
               </p>
@@ -158,7 +158,7 @@ export default function Navbar() {
               <img
                 src={logoTripura}
                 alt="Government of Tripura emblem"
-                className="h-20 w-[120px] md:h-24 md:w-25"
+                className="h-12 w-[120px] md:h-24 md:w-25"
                 width={96}
                 height={96}
               />
