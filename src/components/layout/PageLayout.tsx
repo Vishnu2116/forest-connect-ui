@@ -12,7 +12,7 @@ export default function PageLayout({ children }: { children: ReactNode }) {
   );
 }
 
-export function PageHeader({ title, subtitle, breadcrumb }: { title: string; subtitle?: string; breadcrumb?: string[] }) {
+export function PageHeader({ title, subtitle, breadcrumb, children }: { title: string; subtitle?: string; breadcrumb?: string[]; children?: ReactNode }) {
   return (
     <section className="bg-gradient-to-r from-primary to-primary-light text-primary-foreground">
       <div className="gov-container py-10">
@@ -28,6 +28,7 @@ export function PageHeader({ title, subtitle, breadcrumb }: { title: string; sub
         )}
         <h1 className="text-2xl md:text-4xl font-bold">{title}</h1>
         {subtitle && <p className="mt-2 text-sm md:text-base opacity-90 max-w-3xl">{subtitle}</p>}
+        {children}
       </div>
     </section>
   );
