@@ -92,6 +92,7 @@ export const projects: Project[] = [
     status: "Ongoing",
     coverage: "Dhalai, Gomati, Khowai, North Tripura",
     component: "Component 1 — Landscape Management",
+    image: landscapeRestoration,
   },
   {
     title: "Biodiversity Conservation & Ecosystem Services",
