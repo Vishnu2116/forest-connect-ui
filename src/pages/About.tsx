@@ -195,14 +195,19 @@ export function WhosWhoSection() {
           {officials.map((o) => (
             <article
               key={o.name}
-              className="bg-card border border-border rounded-xl p-5 text-center hover:shadow-md hover:border-primary/30 transition cursor-pointer group"
+              className="bg-card border border-border rounded-xl p-6 text-center hover:shadow-md hover:border-primary/30 transition cursor-pointer group"
               onClick={() => setSelected(o)}
             >
-              <div className="mx-auto h-16 w-16 rounded-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center text-primary-foreground group-hover:scale-105 transition-transform">
-                <User className="h-7 w-7" />
+              <div className="mx-auto h-20 w-20 rounded-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center text-primary-foreground group-hover:scale-105 transition-transform overflow-hidden">
+                {o.image ? (
+                  <img src={o.image} alt={o.name} className="h-full w-full object-cover" />
+                ) : (
+                  <User className="h-8 w-8" />
+                )}
               </div>
-              <h3 className="mt-3 font-semibold text-sm text-primary">{o.name}</h3>
-              <p className="text-xs text-muted-foreground mt-1">{o.designation}</p>
+              <h3 className="mt-4 font-bold text-sm text-primary">{o.name}</h3>
+              <p className="text-xs text-foreground font-semibold mt-1">{o.designation}</p>
+              <p className="text-[11px] text-muted-foreground mt-0.5">{o.department}</p>
               <div className="mt-3 text-xs text-accent font-semibold group-hover:underline">View Profile →</div>
             </article>
           ))}
@@ -217,15 +222,19 @@ export function WhosWhoSection() {
               <X className="h-5 w-5 text-muted-foreground" />
             </button>
             <div className="text-center">
-              <div className="mx-auto h-20 w-20 rounded-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center text-primary-foreground">
-                <User className="h-9 w-9" />
+              <div className="mx-auto h-20 w-20 rounded-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center text-primary-foreground overflow-hidden">
+                {selected.image ? (
+                  <img src={selected.image} alt={selected.name} className="h-full w-full object-cover" />
+                ) : (
+                  <User className="h-9 w-9" />
+                )}
               </div>
               <h3 className="mt-4 text-lg font-bold text-primary">{selected.name}</h3>
-              <p className="text-sm text-muted-foreground mt-1">{selected.designation}</p>
-              <p className="text-xs text-muted-foreground mt-0.5">ELEMENT Programme, Government of Tripura</p>
+              <p className="text-sm text-foreground font-semibold mt-1">{selected.designation}</p>
+              <p className="text-xs text-muted-foreground mt-0.5">{selected.department}</p>
               <div className="mt-4 pt-4 border-t border-border space-y-2 text-sm text-muted-foreground">
                 <div className="flex items-center justify-center gap-2"><Phone className="h-4 w-4 text-primary" /> {selected.phone}</div>
-                <div className="flex items-center justify-center gap-2"><Mail className="h-4 w-4 text-primary" /> contact@element.tripura.gov.in</div>
+                <div className="flex items-center justify-center gap-2"><Mail className="h-4 w-4 text-primary" /> {selected.email}</div>
               </div>
             </div>
           </div>
@@ -366,14 +375,12 @@ export function Memorandum() {
 
 /* ---- Official Directory ---- */
 const directoryEntries = [
-  { name: "Dr. R.K. Das, IFS", designation: "Project Director", department: "ELEMENT PMU", phone: "+91-381-232-XXXX", email: "pd@element.tripura.gov.in" },
-  { name: "Shri A.B. Sharma, IFS", designation: "Additional Project Director", department: "ELEMENT PMU", phone: "+91-381-232-XXXX", email: "apd@element.tripura.gov.in" },
-  { name: "Smt. P.K. Devi", designation: "Financial Controller", department: "Finance Wing", phone: "+91-381-232-XXXX", email: "fc@element.tripura.gov.in" },
-  { name: "Shri M. Debbarma", designation: "Monitoring & Evaluation Head", department: "M&E Cell", phone: "+91-381-232-XXXX", email: "me@element.tripura.gov.in" },
-  { name: "Shri S.K. Roy", designation: "Procurement Specialist", department: "Procurement Cell", phone: "+91-381-232-XXXX", email: "procurement@element.tripura.gov.in" },
-  { name: "Dr. N. Chakraborty", designation: "Livelihood Specialist", department: "Component 2", phone: "+91-381-232-XXXX", email: "livelihood@element.tripura.gov.in" },
-  { name: "Shri R. Jamatia", designation: "District Coordinator, Dhalai", department: "District Unit", phone: "+91-381-232-XXXX", email: "dhalai@element.tripura.gov.in" },
-  { name: "Smt. L. Reang", designation: "District Coordinator, North Tripura", department: "District Unit", phone: "+91-381-232-XXXX", email: "north@element.tripura.gov.in" },
+  { name: "Shri Chaitanya Murti, IFS", designation: "CEO & Project Director, ELEMENT", department: "Principal Chief Conservator of Forests (Administration)", phone: "+91 381 2416403", email: "ceo@element.tripura.gov.in" },
+  { name: "Dr. Honnareddy N, IFS", designation: "Addl. CEO (ELEMENT Project)", department: "CCF(P&D) I/C, CF (Establishment & HRD)", phone: "+91 381 2416404", email: "addlceo@element.tripura.gov.in" },
+  { name: "Shri Jaya Krishnan V, IFS", designation: "Director (Administration, Procurement & Finance)", department: "ELEMENT PMU", phone: "+91 381 2416405", email: "director.admin@element.tripura.gov.in" },
+  { name: "Shri Naresh Jamatia, IFS", designation: "Director (SFM)", department: "Tripura ELEMENT Project", phone: "+91 381 2416406", email: "director.sfm@element.tripura.gov.in" },
+  { name: "Smt Paushali Roy, IFS", designation: "Director (Community Institution, Capacity Building, KM)", department: "ELEMENT PMU", phone: "+91 381 2416407", email: "director.cb@element.tripura.gov.in" },
+  { name: "Mr. Khushwant Sethi", designation: "Principal Chief Conservator of Forests", department: "Government of Tripura", phone: "+91 381 2416408", email: "pccf@tripuraforest.gov.in" },
 ];
 
 export function OfficialDirectory() {
