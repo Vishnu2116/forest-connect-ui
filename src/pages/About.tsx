@@ -934,85 +934,90 @@ export function OfficialDirectory() {
             <h3 className="text-base font-bold text-primary mb-3 flex items-center gap-2">
               <Users className="h-4 w-4 text-accent" /> {cat.title}
             </h3>
-            <div className="overflow-x-auto rounded-xl border border-border bg-card shadow-sm">
+            {/* Desktop table */}
+            <div className="hidden md:block overflow-x-auto rounded-xl border border-border bg-card shadow-sm">
               <table className="w-full text-sm">
                 <thead>
                   <tr className="bg-primary/5 border-b border-border">
-                    <th className="text-left py-3 px-4 font-semibold text-primary">
-                      Official
-                    </th>
-                    <th className="text-left py-3 px-4 font-semibold text-primary">
-                      Designation
-                    </th>
-                    <th className="text-left py-3 px-4 font-semibold text-primary">
-                      Division / Office
-                    </th>
-                    <th className="text-left py-3 px-4 font-semibold text-primary">
-                      Phone
-                    </th>
-                    <th className="text-left py-3 px-4 font-semibold text-primary">
-                      Mobile
-                    </th>
-                    <th className="text-left py-3 px-4 font-semibold text-primary">
-                      Email
-                    </th>
+                    <th className="text-left py-3 px-4 font-semibold text-primary">Official</th>
+                    <th className="text-left py-3 px-4 font-semibold text-primary">Designation</th>
+                    <th className="text-left py-3 px-4 font-semibold text-primary">Division / Office</th>
+                    <th className="text-left py-3 px-4 font-semibold text-primary">Phone</th>
+                    <th className="text-left py-3 px-4 font-semibold text-primary">Mobile</th>
+                    <th className="text-left py-3 px-4 font-semibold text-primary">Email</th>
                   </tr>
                 </thead>
                 <tbody>
                   {cat.entries.map((entry) => {
                     const img = govLeaderImages[entry.name] || "";
                     return (
-                      <tr
-                        key={entry.name}
-                        className="border-b border-border last:border-b-0 hover:bg-muted/30 transition"
-                      >
+                      <tr key={entry.name} className="border-b border-border last:border-b-0 hover:bg-muted/30 transition">
                         <td className="py-3 px-4">
                           <div className="flex items-center gap-3">
                             <div className="h-10 w-10 rounded-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center text-primary-foreground shrink-0 overflow-hidden">
-                              {img ? (
-                                <img
-                                  src={img}
-                                  alt={entry.name}
-                                  className="h-full w-full object-cover"
-                                />
-                              ) : (
-                                <User className="h-4 w-4" />
-                              )}
+                              {img ? <img src={img} alt={entry.name} className="h-full w-full object-cover" /> : <User className="h-4 w-4" />}
                             </div>
-                            <span className="font-semibold text-foreground whitespace-nowrap">
-                              {entry.name}
-                            </span>
+                            <span className="font-semibold text-foreground whitespace-nowrap">{entry.name}</span>
                           </div>
                         </td>
-                        <td className="py-3 px-4 text-foreground">
-                          {entry.designation}
-                        </td>
-                        <td className="py-3 px-4 text-muted-foreground">
-                          {entry.division || "—"}
-                        </td>
-                        <td className="py-3 px-4 text-muted-foreground whitespace-nowrap">
-                          {entry.phone || "—"}
-                        </td>
-                        <td className="py-3 px-4 text-muted-foreground whitespace-nowrap">
-                          {entry.mobile || "—"}
-                        </td>
+                        <td className="py-3 px-4 text-foreground">{entry.designation}</td>
+                        <td className="py-3 px-4 text-muted-foreground">{entry.division || "—"}</td>
+                        <td className="py-3 px-4 text-muted-foreground whitespace-nowrap">{entry.phone || "—"}</td>
+                        <td className="py-3 px-4 text-muted-foreground whitespace-nowrap">{entry.mobile || "—"}</td>
                         <td className="py-3 px-4">
-                          {entry.email ? (
-                            <a
-                              href={`mailto:${entry.email}`}
-                              className="text-primary hover:underline whitespace-nowrap"
-                            >
-                              {entry.email}
-                            </a>
-                          ) : (
-                            <span className="text-muted-foreground">—</span>
-                          )}
+                          {entry.email ? <a href={`mailto:${entry.email}`} className="text-primary hover:underline whitespace-nowrap">{entry.email}</a> : <span className="text-muted-foreground">—</span>}
                         </td>
                       </tr>
                     );
                   })}
                 </tbody>
               </table>
+            </div>
+
+            {/* Mobile cards */}
+            <div className="md:hidden space-y-3">
+              {cat.entries.map((entry) => {
+                const img = govLeaderImages[entry.name] || "";
+                return (
+                  <div key={entry.name} className="bg-card border border-border rounded-xl p-4 shadow-sm">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="h-12 w-12 rounded-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center text-primary-foreground shrink-0 overflow-hidden">
+                        {img ? <img src={img} alt={entry.name} className="h-full w-full object-cover" /> : <User className="h-5 w-5" />}
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-sm text-foreground">{entry.name}</h4>
+                        <p className="text-xs text-primary font-medium">{entry.designation}</p>
+                      </div>
+                    </div>
+                    <div className="space-y-1.5 text-xs text-muted-foreground">
+                      {entry.division && (
+                        <div className="flex items-start gap-2">
+                          <MapPin className="h-3.5 w-3.5 shrink-0 mt-0.5" />
+                          <span>{entry.division}</span>
+                        </div>
+                      )}
+                      {entry.phone && (
+                        <div className="flex items-center gap-2">
+                          <Phone className="h-3.5 w-3.5 shrink-0" />
+                          <span>{entry.phone}</span>
+                        </div>
+                      )}
+                      {entry.mobile && (
+                        <div className="flex items-center gap-2">
+                          <Smartphone className="h-3.5 w-3.5 shrink-0" />
+                          <span>{entry.mobile}</span>
+                        </div>
+                      )}
+                      {entry.email && (
+                        <div className="flex items-center gap-2">
+                          <Mail className="h-3.5 w-3.5 shrink-0" />
+                          <a href={`mailto:${entry.email}`} className="text-primary hover:underline">{entry.email}</a>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
         ))}
