@@ -78,7 +78,6 @@ export default function ProjectDetail() {
               <span className="text-xs font-semibold uppercase px-2.5 py-0.5 rounded-full bg-white/20">{project.status}</span>
               {project.component && <span className="text-xs font-semibold uppercase px-2.5 py-0.5 rounded-full bg-white/20">{project.component}</span>}
             </div>
-            <h2 className="text-2xl md:text-3xl font-bold leading-tight mb-3 text-primary-foreground">{project.title}</h2>
             <p className="text-sm md:text-base opacity-90 leading-relaxed max-w-3xl">{project.description}</p>
           </div>
 
