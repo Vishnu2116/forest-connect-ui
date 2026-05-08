@@ -1,13 +1,15 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import PageLayout, { PageHeader } from "@/components/layout/PageLayout";
-import { Phone, Mail, User, ChevronRight, X, Briefcase, TrendingUp, Mountain, Handshake, Sprout, Eye, Target, Lightbulb, Globe, Shield, Leaf, Users, Compass, Award, BookOpen, Zap } from "lucide-react";
+import { Phone, Mail, User, ChevronRight, X, Briefcase, TrendingUp, Mountain, Handshake, Sprout, Eye, Target, Lightbulb, Globe, Shield, Leaf, Users, Compass, Award, BookOpen, Zap, FileText, Download, Search } from "lucide-react";
 import { officials } from "@/data/content";
 
 const aboutLinks = [
   { to: "/about", title: "About ELEMENT" },
   { to: "/about/organization", title: "Organization Structure" },
   { to: "/about/whos-who", title: "Who's Who" },
+  { to: "/about/memorandum", title: "Memorandum of Association" },
+  { to: "/about/directory", title: "Official Directory" },
   { to: "/about/vision", title: "Vision & Objective" },
   { to: "/about/mission", title: "Mission & Objective" },
 ];
