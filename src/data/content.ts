@@ -22,6 +22,7 @@ export type Project = {
   status: string;
   coverage: string;
   component?: string;
+  image?: string;
 };
 
 export const projects: Project[] = [
@@ -117,14 +118,14 @@ export const procurements = [
 ];
 
 export const officials = [
-  { name: "Shri D. K. Sharma, IFS", designation: "Project Director, ELEMENT & PCCF", phone: "+91 381 2416403" },
-  { name: "Smt. R. K. Samal, IFS", designation: "Additional Project Director (Biodiversity)", phone: "+91 381 2416404" },
-  { name: "Shri P. L. Agarwal, IFS", designation: "Component Head (Landscape Management)", phone: "+91 381 2416405" },
-  { name: "Dr. A. K. Gupta, IFS", designation: "Component Head (Research & M&E)", phone: "+91 381 2416406" },
-  { name: "Shri B. S. Mishra, IFS", designation: "Component Head (Livelihood Development)", phone: "+91 381 2416407" },
-  { name: "Smt. L. Darlong, IFS", designation: "Community Development Coordinator", phone: "+91 381 2416408" },
-  { name: "Shri J. Reang, IFS", designation: "Financial Management Specialist", phone: "+91 381 2416409" },
-  { name: "Shri S. Debbarma, IFS", designation: "District Coordinator (South Tripura)", phone: "+91 3823 222033" },
+  { name: "Shri D. K. Sharma, IFS", designation: "Project Director, ELEMENT & PCCF", phone: "+91 381 2416403", image: "" },
+  { name: "Smt. R. K. Samal, IFS", designation: "Additional Project Director (Biodiversity)", phone: "+91 381 2416404", image: "" },
+  { name: "Shri P. L. Agarwal, IFS", designation: "Component Head (Landscape Management)", phone: "+91 381 2416405", image: "" },
+  { name: "Dr. A. K. Gupta, IFS", designation: "Component Head (Research & M&E)", phone: "+91 381 2416406", image: "" },
+  { name: "Shri B. S. Mishra, IFS", designation: "Component Head (Livelihood Development)", phone: "+91 381 2416407", image: "" },
+  { name: "Smt. L. Darlong, IFS", designation: "Community Development Coordinator", phone: "+91 381 2416408", image: "" },
+  { name: "Shri J. Reang, IFS", designation: "Financial Management Specialist", phone: "+91 381 2416409", image: "" },
+  { name: "Shri S. Debbarma, IFS", designation: "District Coordinator (South Tripura)", phone: "+91 3823 222033", image: "" },
 ];
 
 export const knowledgeHubItems = [
