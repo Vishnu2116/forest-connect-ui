@@ -105,46 +105,71 @@ export function AboutElement() {
 
 /* ---- Organization Structure — Flowchart ---- */
 const orgNodes = [
-  { id: "got", label: "Government of Tripura", role: "Apex Authority", name: "Hon'ble Chief Minister" },
-  { id: "psc", label: "Project Steering Committee", role: "Strategic Oversight", name: "Chief Secretary (Chair)" },
-  { id: "sfda", label: "State Forest Development Agency", role: "Nodal Agency", name: "Principal Secretary, Forests" },
-  { id: "pmu", label: "Project Management Unit", role: "Implementation Lead", name: "Project Director (PCCF-rank)" },
-  { id: "du", label: "District Units", role: "Field Coordination", name: "DFOs / District Coordinators" },
-  { id: "vlc", label: "Village Level Committees", role: "Community Implementation", name: "Community Leaders / JFMC Chairs" },
+  { id: "got", label: "Government of Tripura", role: "Apex Authority", name: "Hon'ble Chief Minister", designation: "Chief Minister, Tripura", description: "Provides overall policy direction and governance for ELEMENT through the State Government machinery." },
+  { id: "psc", label: "Project Steering Committee", role: "Strategic Oversight", name: "Chief Secretary (Chair)", designation: "Chief Secretary, Government of Tripura", description: "High-level inter-departmental committee that provides strategic direction, reviews progress, and ensures inter-agency coordination." },
+  { id: "sfda", label: "State Forest Development Agency", role: "Nodal Agency", name: "Principal Secretary, Forests", designation: "Administrative Head", description: "Acts as the nodal agency for channeling funds, monitoring implementation, and providing administrative support to the PMU." },
+  { id: "pmu", label: "Project Management Unit", role: "Implementation Lead", name: "Project Director (PCCF-rank)", designation: "Project Director, ELEMENT", description: "Central unit responsible for day-to-day management, procurement, financial management, M&E, and coordination with all implementing units." },
+  { id: "du", label: "District Units", role: "Field Coordination", name: "DFOs / District Coordinators", designation: "District-level Officers", description: "Coordinate implementation at district level, manage sub-projects, supervise field teams, and liaise with local government bodies." },
+  { id: "vlc", label: "Village Level Committees", role: "Community Implementation", name: "Community Leaders / JFMC Chairs", designation: "Village-level Representatives", description: "Grassroots bodies that plan and implement livelihood activities, plantation works, and community development initiatives at village level." },
 ];
 
 export function Organization() {
+  const [selected, setSelected] = useState<typeof orgNodes[0] | null>(null);
+
   return (
     <AboutLayout title="Organization Structure" subtitle="Governance and implementation framework of the ELEMENT programme">
-      <div className="space-y-6">
-        <p className="text-sm text-muted-foreground leading-relaxed">
-          The ELEMENT programme operates through a multi-tier governance framework ensuring effective implementation from state-level policy to village-level action.
-        </p>
+      <div className="space-y-8">
+        {/* Header intro */}
+        <div className="bg-gradient-to-br from-primary/5 to-accent/5 border border-border rounded-xl p-6 text-center">
+          <span className="inline-block bg-primary/10 text-primary text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-3">Institutional Framework</span>
+          <h3 className="text-xl font-bold text-primary mb-2">ELEMENT Governance Structure</h3>
+          <p className="text-sm text-muted-foreground max-w-xl mx-auto">A multi-tier governance framework ensuring effective implementation from state-level policy to village-level action.</p>
+        </div>
 
         {/* Flowchart */}
         <div className="flex flex-col items-center gap-0">
           {orgNodes.map((node, i) => (
             <div key={node.id} className="flex flex-col items-center">
-              {/* Connector line */}
-              {i > 0 && (
-                <div className="w-px h-6 bg-primary/30" />
-              )}
-              {/* Node */}
-              <div className={`w-full max-w-md border rounded-lg p-4 text-center transition hover:shadow-md ${
-                i === 0
-                  ? "bg-primary text-primary-foreground border-primary"
-                  : "bg-card border-border hover:border-primary/40"
-              }`}>
+              {i > 0 && <div className="w-px h-6 bg-primary/30" />}
+              <button
+                onClick={() => setSelected(selected?.id === node.id ? null : node)}
+                className={`w-full max-w-md border rounded-lg p-4 text-center transition cursor-pointer ${
+                  i === 0
+                    ? "bg-primary text-primary-foreground border-primary hover:opacity-90"
+                    : selected?.id === node.id
+                      ? "bg-accent/5 border-accent shadow-sm"
+                      : "bg-card border-border hover:border-primary/40 hover:shadow-md"
+                }`}
+              >
                 <h4 className={`text-sm font-bold ${i === 0 ? "text-primary-foreground" : "text-primary"}`}>{node.label}</h4>
                 <p className={`text-xs mt-1 ${i === 0 ? "text-primary-foreground/80" : "text-muted-foreground"}`}>{node.role} · {node.name}</p>
-              </div>
-              {/* Arrow head */}
+              </button>
               {i < orgNodes.length - 1 && (
                 <div className="w-0 h-0 border-l-[6px] border-r-[6px] border-t-[6px] border-l-transparent border-r-transparent border-t-primary/30 mt-0" />
               )}
             </div>
           ))}
         </div>
+
+        {/* Selected node detail */}
+        {selected && (
+          <div className="bg-card border border-accent/30 rounded-xl p-6 shadow-card animate-fade-in">
+            <div className="flex items-start justify-between mb-3">
+              <div>
+                <h4 className="text-base font-bold text-primary">{selected.label}</h4>
+                <p className="text-xs text-accent font-semibold mt-0.5">{selected.role}</p>
+              </div>
+              <button onClick={() => setSelected(null)} className="p-1 rounded hover:bg-surface">
+                <X className="h-4 w-4 text-muted-foreground" />
+              </button>
+            </div>
+            <p className="text-sm text-muted-foreground leading-relaxed">{selected.description}</p>
+            <div className="mt-3 pt-3 border-t border-border/60 flex gap-4 text-xs text-muted-foreground">
+              <span><span className="font-medium text-foreground">Name:</span> {selected.name}</span>
+              <span><span className="font-medium text-foreground">Designation:</span> {selected.designation}</span>
+            </div>
+          </div>
+        )}
       </div>
     </AboutLayout>
   );
