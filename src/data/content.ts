@@ -110,6 +110,7 @@ export const projects: Project[] = [
     status: "Ongoing",
     coverage: "Sipahijala, Trishna, Gumti, Rowa Landscapes",
     component: "Component 2 — Biodiversity & Ecosystem Services",
+    image: biodiversityConservation,
   },
   {
     title: "Community Livelihood & Value Chain Development",
@@ -127,6 +128,7 @@ export const projects: Project[] = [
     status: "Ongoing",
     coverage: "All 8 districts of Tripura",
     component: "Component 3 — Livelihood Development",
+    image: livelihoodValueChain,
   },
   {
     title: "Eco-Tourism & Enterprise Development",
@@ -144,6 +146,7 @@ export const projects: Project[] = [
     status: "Pilot Phase",
     coverage: "Jampui Hills, Dumboor, Sipahijala",
     component: "Component 3 — Livelihood Development",
+    image: ecoTourism,
   },
   {
     title: "Climate Resilience & Watershed Management",
@@ -161,6 +164,7 @@ export const projects: Project[] = [
     status: "Ongoing",
     coverage: "Dhalai, Unakoti, North Tripura",
     component: "Component 1 — Landscape Management",
+    image: climateWatershed,
   },
   {
     title: "Community Plantation & Green Enterprise Programme",
@@ -178,6 +182,7 @@ export const projects: Project[] = [
     status: "Ongoing",
     coverage: "All Districts of Tripura",
     component: "Component 2 — Biodiversity & Ecosystem Services",
+    image: communityPlantation,
   },
 ];
 
