@@ -106,13 +106,13 @@ export default function Navbar() {
                 <img
                   src={logoTripura}
                   alt="Government of Tripura emblem"
-                  className="h-12 w-12"
+                  className="h-14 w-16"
                   width={48}
                   height={48}
                 />
               </Link>
               <div className="flex-1 text-center min-w-0 px-2">
-                <h1 className="text-xl sm:text-2xl font-extrabold text-primary tracking-wide leading-none break-words">
+                <h1 className="text-3xl sm:text-2xl font-extrabold text-primary tracking-wide leading-none break-words">
                   ELEMENT
                 </h1>
               </div>
@@ -120,9 +120,9 @@ export default function Navbar() {
                 <img
                   src={logoWorldBank}
                   alt="The World Bank logo"
-                  className="h-10 w-auto"
-                  width={40}
-                  height={40}
+                  className="h-16 w-16"
+                  width={100}
+                  height={100}
                 />
                 <button
                   className="lg:hidden p-2 rounded-md border border-border focus-ring"
@@ -153,7 +153,7 @@ export default function Navbar() {
           <div className="hidden md:grid grid-cols-[1fr_auto_1fr] items-center gap-3 md:gap-6">
             <Link
               to="/"
-              className="flex items-center shrink-0 justify-self-start"
+              className="pl-[150px] flex items-center shrink-0 justify-self-start"
             >
               <img
                 src={logoTripura}
