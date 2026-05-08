@@ -184,10 +184,10 @@ export default function Home() {
       </section>
 
       {/* Dignitaries / Leadership */}
-      <section className="py-14 md:py-18 bg-gradient-to-b from-surface to-background border-t border-border/40">
+      <section className="py-14 md:py-18 bg-orange-500/70 border-t border-border/40">
         <div className="gov-container">
           <div className="text-center mb-10">
-            <span className="inline-block bg-primary/10 text-primary text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-3">
+            <span className="inline-block bg-primary/40 text-primary text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-3">
               Leadership
             </span>
             <h2 className="text-2xl md:text-3xl font-bold text-primary">
