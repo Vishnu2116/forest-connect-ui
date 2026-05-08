@@ -63,23 +63,19 @@ export default function ProjectDetail() {
     <PageLayout>
       <PageHeader
         title={project.title}
-        subtitle={project.component}
+        subtitle={project.description}
         breadcrumb={["Home", "Projects", project.title]}
-      />
+      >
+        <div className="flex items-center gap-2 mt-3">
+          <span className="text-xs font-semibold uppercase px-2.5 py-0.5 rounded-full bg-white/20">{project.status}</span>
+          {project.component && <span className="text-xs font-semibold uppercase px-2.5 py-0.5 rounded-full bg-white/20">{project.component}</span>}
+        </div>
+      </PageHeader>
       <section className="py-10">
         <div className="gov-container">
           <Link to="/projects" className="inline-flex items-center gap-1.5 text-sm text-primary hover:text-accent font-medium mb-6">
             <ArrowLeft className="h-4 w-4" /> Back to all projects
           </Link>
-
-          {/* Banner */}
-          <div className="bg-gradient-to-br from-primary to-primary-light rounded-xl p-8 md:p-10 text-primary-foreground mb-10">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-xs font-semibold uppercase px-2.5 py-0.5 rounded-full bg-white/20">{project.status}</span>
-              {project.component && <span className="text-xs font-semibold uppercase px-2.5 py-0.5 rounded-full bg-white/20">{project.component}</span>}
-            </div>
-            <p className="text-sm md:text-base opacity-90 leading-relaxed max-w-3xl">{project.description}</p>
-          </div>
 
           {/* Main: Sidebar + Narrative */}
           <div className="grid lg:grid-cols-12 gap-8 mb-12">
