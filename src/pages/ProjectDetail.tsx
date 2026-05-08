@@ -57,10 +57,10 @@ export default function ProjectDetail() {
   ];
 
   const galleryItems = [
-    { caption: "Community Engagement", icon: Users },
-    { caption: "Bamboo Livelihood Initiative", icon: Sprout },
-    { caption: "Landscape Restoration Activity", icon: TreePine },
-    { caption: "Eco-tourism Cluster", icon: Home },
+    { caption: "Community Engagement", image: galleryCommunity },
+    { caption: "Bamboo Livelihood Initiative", image: galleryBamboo },
+    { caption: "Landscape Restoration Activity", image: galleryLandscape },
+    { caption: "Eco-tourism Cluster", image: galleryEcotourism },
   ];
 
   return (
