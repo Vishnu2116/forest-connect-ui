@@ -451,30 +451,39 @@ export default function Home() {
             {projects.slice(0, 4).map((p) => (
               <article
                 key={p.title}
-                className="bg-card border border-border rounded-lg p-6 hover:shadow-card hover:border-primary/40 transition"
+                className="bg-card border border-border rounded-lg overflow-hidden hover:shadow-card hover:border-primary/40 transition"
               >
-                <div className="flex items-center gap-2 mb-3">
-                  <span className="text-[11px] font-semibold uppercase px-2.5 py-0.5 rounded bg-success/10 text-success">
-                    {p.status}
-                  </span>
-                  {p.component && (
-                    <span className="text-[11px] font-semibold uppercase px-2.5 py-0.5 rounded bg-accent/10 text-accent">
-                      {p.component}
-                    </span>
+                <div className="h-44 bg-gradient-to-br from-primary/20 to-primary-light/20 flex items-center justify-center overflow-hidden">
+                  {p.image ? (
+                    <img src={p.image} alt={p.title} className="w-full h-full object-cover" />
+                  ) : (
+                    <Trees className="h-16 w-16 text-primary/30" />
                   )}
                 </div>
-                <h3 className="text-lg font-bold text-primary leading-snug mb-0">
-                  {p.title}
-                </h3>
-                <p className="text-sm text-muted-foreground mt-2 leading-relaxed line-clamp-2 mb-0">
-                  {p.description}
-                </p>
-                <Link
-                  to={`/projects/${slugify(p.title)}`}
-                  className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-accent hover:text-accent-hover"
-                >
-                  Know More <ArrowRight className="h-4 w-4" />
-                </Link>
+                <div className="p-6">
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="text-[11px] font-semibold uppercase px-2.5 py-0.5 rounded bg-success/10 text-success">
+                      {p.status}
+                    </span>
+                    {p.component && (
+                      <span className="text-[11px] font-semibold uppercase px-2.5 py-0.5 rounded bg-accent/10 text-accent">
+                        {p.component}
+                      </span>
+                    )}
+                  </div>
+                  <h3 className="text-lg font-bold text-primary leading-snug mb-0">
+                    {p.title}
+                  </h3>
+                  <p className="text-sm text-muted-foreground mt-2 leading-relaxed line-clamp-2 mb-0">
+                    {p.description}
+                  </p>
+                  <Link
+                    to={`/projects/${slugify(p.title)}`}
+                    className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-accent hover:text-accent-hover"
+                  >
+                    Know More <ArrowRight className="h-4 w-4" />
+                  </Link>
+                </div>
               </article>
             ))}
           </div>
