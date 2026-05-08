@@ -34,6 +34,10 @@ import { useLang } from "@/contexts/LanguageContext";
 import { slugify } from "./ProjectDetail";
 import plantationBg from "@/assets/plantation-bg.jpg";
 
+import cmImage from "@/assets/dignitaries/CM.jpeg";
+import Animesh from "@/assets/dignitaries/Animesh.jpeg";
+import CS from "@/assets/dignitaries/CS.jpg";
+
 const announcementDescriptions: Record<string, string> = {
   Recruitment: "Applications invited for ELEMENT programme positions.",
   Tender: "Sealed tenders for livelihood infrastructure and civil works.",
@@ -173,6 +177,81 @@ export default function Home() {
             >
               Learn more about ELEMENT <ArrowRight className="h-4 w-4" />
             </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Dignitaries / Leadership */}
+      <section className="py-12 md:py-14 bg-primary-400">
+        <div className="gov-container">
+          <div className="text-center mb-10">
+            <span className="inline-block bg-primary/10 text-primary text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-3">
+              Leadership
+            </span>
+            <h2 className="text-2xl md:text-3xl font-bold text-primary">
+              Programme Dignitaries
+            </h2>
+            <p className="text-sm text-muted-foreground mt-2 max-w-xl mx-auto">
+              Senior leaders and dignitaries guiding the ELEMENT programme.
+            </p>
+          </div>
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+            {[
+              {
+                name: "Shri Manik Saha",
+                designation: "Hon'ble Chief Minister",
+                desc: "Government of Tripura",
+                image: cmImage,
+              },
+              {
+                name: "Shri Animesh Debbarma",
+                designation: "Forest & Environment Minister",
+                desc: "Government of Tripura",
+                image: Animesh,
+              },
+              {
+                name: "Shri J.K. Sinha, IAS",
+                designation: "Chief Secretary",
+                desc: "Government of Tripura",
+                image: CS,
+              },
+              {
+                name: "Dr. R.K. Das, IFS",
+                designation: "Project Director, ELEMENT",
+                desc: "ELEMENT Programme",
+                image: "",
+              },
+              {
+                name: "Ms. Sarah Chen",
+                designation: "World Bank Representative",
+                desc: "World Bank India Office",
+                image: "",
+              },
+            ].map((d) => (
+              <div
+                key={d.name}
+                className="bg-card border border-border rounded-xl p-6 text-center hover:shadow-md hover:border-primary/30 transition group"
+              >
+                <div className="mx-auto h-28 w-28 rounded-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center text-primary-foreground mb-4 group-hover:scale-105 transition-transform overflow-hidden">
+                  {d.image ? (
+                    <img
+                      src={d.image}
+                      alt={d.name}
+                      className="h-full w-full object-cover"
+                    />
+                  ) : (
+                    <User className="h-12 w-12" />
+                  )}
+                </div>
+                <h4 className="text-base font-bold text-foreground leading-snug">
+                  {d.name}
+                </h4>
+                <p className="text-sm text-primary font-semibold mt-1.5">
+                  {d.designation}
+                </p>
+                <p className="text-xs text-muted-foreground mt-1">{d.desc}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -455,7 +534,11 @@ export default function Home() {
               >
                 <div className="h-44 bg-gradient-to-br from-primary/20 to-primary-light/20 flex items-center justify-center overflow-hidden">
                   {p.image ? (
-                    <img src={p.image} alt={p.title} className="w-full h-full object-cover" />
+                    <img
+                      src={p.image}
+                      alt={p.title}
+                      className="w-full h-full object-cover"
+                    />
                   ) : (
                     <Trees className="h-16 w-16 text-primary/30" />
                   )}
@@ -540,39 +623,6 @@ export default function Home() {
                 {t("home.plantation.cta")} <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Dignitaries / Leadership */}
-      <section className="py-12 md:py-14 bg-surface">
-        <div className="gov-container">
-          <div className="text-center mb-10">
-            <span className="inline-block bg-primary/10 text-primary text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-3">Leadership</span>
-            <h2 className="text-2xl md:text-3xl font-bold text-primary">Programme Dignitaries</h2>
-            <p className="text-sm text-muted-foreground mt-2 max-w-xl mx-auto">Senior leaders and dignitaries guiding the ELEMENT programme.</p>
-          </div>
-          <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-            {[
-              { name: "Shri Manik Saha", designation: "Hon'ble Chief Minister", desc: "Government of Tripura", image: "" },
-              { name: "Shri Animesh Debbarma", designation: "Forest & Environment Minister", desc: "Government of Tripura", image: "" },
-              { name: "Shri J.K. Sinha, IAS", designation: "Chief Secretary", desc: "Government of Tripura", image: "" },
-              { name: "Dr. R.K. Das, IFS", designation: "Project Director, ELEMENT", desc: "ELEMENT Programme", image: "" },
-              { name: "Ms. Sarah Chen", designation: "World Bank Representative", desc: "World Bank India Office", image: "" },
-            ].map((d) => (
-              <div key={d.name} className="bg-card border border-border rounded-xl p-6 text-center hover:shadow-md hover:border-primary/30 transition group">
-                <div className="mx-auto h-28 w-28 rounded-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center text-primary-foreground mb-4 group-hover:scale-105 transition-transform overflow-hidden">
-                  {d.image ? (
-                    <img src={d.image} alt={d.name} className="h-full w-full object-cover" />
-                  ) : (
-                    <User className="h-12 w-12" />
-                  )}
-                </div>
-                <h4 className="text-base font-bold text-foreground leading-snug">{d.name}</h4>
-                <p className="text-sm text-primary font-semibold mt-1.5">{d.designation}</p>
-                <p className="text-xs text-muted-foreground mt-1">{d.desc}</p>
-              </div>
-            ))}
           </div>
         </div>
       </section>
