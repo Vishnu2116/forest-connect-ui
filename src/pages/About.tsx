@@ -251,42 +251,44 @@ export function WhosWhoSection() {
 /* ---- Vision ---- */
 export function Vision() {
   const objectives = [
-    { icon: Sprout, title: "Sustainable Livelihoods", desc: "Generate sustainable livelihoods through value chain development." },
-    { icon: Users, title: "Community Institutions", desc: "Strengthen community-based institutions and local governance." },
-    { icon: Mountain, title: "Landscape Restoration", desc: "Restore degraded landscapes for long-term economic productivity." },
-    { icon: Shield, title: "Climate Resilience", desc: "Build climate resilience through adaptive land management." },
-    { icon: TrendingUp, title: "Market Access", desc: "Improve market access and enterprise opportunities for rural communities." },
+    { icon: Sprout, title: "Sustainable Livelihoods" },
+    { icon: Users, title: "Strong Community Institutions" },
+    { icon: Mountain, title: "Restored Landscapes" },
+    { icon: Shield, title: "Climate Resilience" },
+    { icon: TrendingUp, title: "Market Access for All" },
   ];
 
   return (
     <AboutLayout title="Vision & Objective" subtitle="Building a prosperous, resilient and inclusive Tripura">
-      <div className="space-y-8">
-        {/* Vision statement — hero style */}
-        <div className="bg-gradient-to-br from-primary/5 to-accent/5 border border-border rounded-xl p-8 text-center">
-          <div className="mx-auto h-14 w-14 rounded-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center mb-4">
-            <Eye className="h-7 w-7 text-primary-foreground" />
+      <div className="space-y-10">
+        {/* Vision statement — clean hero */}
+        <div className="text-center py-6">
+          <div className="mx-auto h-16 w-16 rounded-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center mb-5 shadow-md">
+            <Eye className="h-8 w-8 text-primary-foreground" />
           </div>
-          <span className="inline-block bg-accent/10 text-accent text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-3">Our Vision</span>
-          <p className="text-base md:text-lg text-foreground leading-relaxed max-w-2xl mx-auto font-medium">
-            To transform rural livelihoods and strengthen economic development across Tripura through sustainable landscape management, community-driven value chains, and inclusive growth — ensuring prosperity for present and future generations.
+          <span className="inline-block bg-accent/10 text-accent text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-4">Our Vision</span>
+          <h3 className="text-xl md:text-2xl font-bold text-primary mb-4 max-w-xl mx-auto leading-snug">
+            A prosperous Tripura with <span className="text-accent">resilient landscapes</span> and <span className="text-accent">thriving communities</span>
+          </h3>
+          <p className="text-sm text-muted-foreground max-w-lg mx-auto leading-relaxed">
+            Sustainable growth through community-driven value chains and inclusive economic development across all 8 districts.
           </p>
         </div>
 
-        {/* Objectives — icon grid */}
+        <hr className="border-border/60" />
+
+        {/* Objectives — minimal icon row */}
         <div>
-          <h3 className="text-lg font-bold text-primary mb-5 flex items-center gap-2">
+          <h3 className="text-lg font-bold text-primary mb-6 flex items-center gap-2">
             <Target className="h-5 w-5 text-accent" /> Key Objectives
           </h3>
-          <div className="grid sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
             {objectives.map((obj) => (
-              <div key={obj.title} className="flex items-start gap-4 p-4 rounded-lg border border-border bg-card hover:shadow-sm transition">
-                <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+              <div key={obj.title} className="flex flex-col items-center text-center p-4 rounded-xl border border-border bg-card hover:border-primary/30 hover:shadow-sm transition">
+                <div className="h-11 w-11 rounded-full bg-primary/10 flex items-center justify-center mb-3">
                   <obj.icon className="h-5 w-5 text-primary" />
                 </div>
-                <div>
-                  <h4 className="text-sm font-semibold text-foreground">{obj.title}</h4>
-                  <p className="text-xs text-muted-foreground mt-1 leading-relaxed">{obj.desc}</p>
-                </div>
+                <span className="text-xs font-semibold text-foreground leading-snug">{obj.title}</span>
               </div>
             ))}
           </div>
@@ -299,39 +301,46 @@ export function Vision() {
 /* ---- Mission ---- */
 export function Mission() {
   const pillars = [
-    { icon: Briefcase, title: "Livelihoods", desc: "Create sustainable income for 25,000+ households through high-value product chains.", color: "from-primary to-primary-light" },
-    { icon: Mountain, title: "Landscape Restoration", desc: "Restore degraded lands for productive use and ecological balance.", color: "from-accent to-accent-hover" },
-    { icon: Handshake, title: "Community Empowerment", desc: "Strengthen JFMCs, SHGs and village committees across all districts.", color: "from-primary to-primary-light" },
-    { icon: Zap, title: "Innovation & Technology", desc: "Adopt GIS, drones and digital monitoring for transparent implementation.", color: "from-accent to-accent-hover" },
+    { icon: Briefcase, title: "Livelihoods", highlight: "25,000+ households", color: "from-primary to-primary-light" },
+    { icon: Mountain, title: "Landscape Restoration", highlight: "18,500 hectares", color: "from-accent to-accent-hover" },
+    { icon: Handshake, title: "Community Empowerment", highlight: "JFMCs, SHGs & VLCs", color: "from-primary to-primary-light" },
+    { icon: Zap, title: "Innovation & Technology", highlight: "GIS, drones & digital M&E", color: "from-accent to-accent-hover" },
   ];
 
   return (
     <AboutLayout title="Mission & Objective" subtitle="Action-oriented commitments of the ELEMENT programme">
-      <div className="space-y-8">
-        {/* Mission statement */}
-        <div className="bg-gradient-to-br from-primary/5 to-accent/5 border border-border rounded-xl p-8 text-center">
-          <div className="mx-auto h-14 w-14 rounded-full bg-gradient-to-br from-accent to-accent-hover flex items-center justify-center mb-4">
-            <Lightbulb className="h-7 w-7 text-accent-foreground" />
+      <div className="space-y-10">
+        {/* Mission statement — clean */}
+        <div className="text-center py-6">
+          <div className="mx-auto h-16 w-16 rounded-full bg-gradient-to-br from-accent to-accent-hover flex items-center justify-center mb-5 shadow-md">
+            <Lightbulb className="h-8 w-8 text-accent-foreground" />
           </div>
-          <span className="inline-block bg-primary/10 text-primary text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-3">Our Mission</span>
-          <p className="text-base md:text-lg text-foreground leading-relaxed max-w-2xl mx-auto font-medium">
-            To deliver transparent, community-centric development through capacity-building, technology adoption, value chain strengthening, and partnerships with communities, enterprises, and institutions across Tripura.
+          <span className="inline-block bg-primary/10 text-primary text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-4">Our Mission</span>
+          <h3 className="text-xl md:text-2xl font-bold text-primary mb-4 max-w-xl mx-auto leading-snug">
+            Deliver <span className="text-accent">transparent</span>, <span className="text-accent">community-centric</span> development across Tripura
+          </h3>
+          <p className="text-sm text-muted-foreground max-w-lg mx-auto leading-relaxed">
+            Capacity-building, technology adoption, and value chain strengthening — in partnership with communities, enterprises, and institutions.
           </p>
         </div>
 
-        {/* Mission pillars */}
+        <hr className="border-border/60" />
+
+        {/* Mission pillars — compact cards with highlight */}
         <div>
-          <h3 className="text-lg font-bold text-primary mb-5 flex items-center gap-2">
+          <h3 className="text-lg font-bold text-primary mb-6 flex items-center gap-2">
             <BookOpen className="h-5 w-5 text-accent" /> Mission Pillars
           </h3>
-          <div className="grid sm:grid-cols-2 gap-5">
+          <div className="grid sm:grid-cols-2 gap-4">
             {pillars.map((p) => (
-              <div key={p.title} className="bg-card border border-border rounded-xl p-5 text-center hover:shadow-md transition group">
-                <div className={`mx-auto h-12 w-12 rounded-full bg-gradient-to-br ${p.color} flex items-center justify-center mb-3 group-hover:scale-110 transition-transform`}>
+              <div key={p.title} className="flex items-center gap-4 bg-card border border-border rounded-xl p-5 hover:shadow-sm transition">
+                <div className={`h-12 w-12 rounded-full bg-gradient-to-br ${p.color} flex items-center justify-center shrink-0`}>
                   <p.icon className="h-5 w-5 text-primary-foreground" />
                 </div>
-                <h4 className="text-sm font-bold text-foreground">{p.title}</h4>
-                <p className="text-xs text-muted-foreground mt-1.5 leading-relaxed">{p.desc}</p>
+                <div>
+                  <h4 className="text-sm font-bold text-foreground">{p.title}</h4>
+                  <span className="text-xs text-accent font-semibold">{p.highlight}</span>
+                </div>
               </div>
             ))}
           </div>
