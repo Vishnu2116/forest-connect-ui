@@ -199,14 +199,8 @@ export default function ProjectDetail() {
             <h3 className="text-lg font-bold text-primary mb-4">Gallery</h3>
             <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-4">
               {galleryItems.map((item) => (
-                <div key={item.caption} className="relative bg-gradient-to-br from-primary/80 to-primary-light rounded-lg h-56 flex items-center justify-center text-primary-foreground overflow-hidden group">
-                  <div className="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors" />
-                  <div className="relative z-10 flex flex-col items-center gap-2">
-                    <div className="h-12 w-12 rounded-full bg-white/15 flex items-center justify-center">
-                      <item.icon className="h-6 w-6" />
-                    </div>
-                    <Camera className="h-4 w-4 opacity-50" />
-                  </div>
+                <div key={item.caption} className="relative rounded-lg h-56 overflow-hidden group">
+                  <img src={item.image} alt={item.caption} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy" />
                 </div>
               ))}
             </div>
