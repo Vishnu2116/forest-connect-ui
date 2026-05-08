@@ -46,9 +46,13 @@ export default function Projects() {
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {projects.map((p) => (
               <article key={p.title} className="bg-card border border-border rounded-lg overflow-hidden hover:shadow-card transition flex flex-col">
-                {/* Image placeholder */}
-                <div className="h-40 bg-gradient-to-br from-primary to-primary-light flex items-center justify-center">
-                  <Trees className="h-10 w-10 text-primary-foreground/70" />
+                {/* Project image — set p.image in content.ts to use a real image */}
+                <div className="h-40 bg-gradient-to-br from-primary/20 to-primary-light/20 flex items-center justify-center overflow-hidden">
+                  {p.image ? (
+                    <img src={p.image} alt={p.title} className="w-full h-full object-cover" />
+                  ) : (
+                    <Trees className="h-10 w-10 text-primary/30" />
+                  )}
                 </div>
                 <div className="p-5 flex flex-col flex-1">
                   <div className="flex flex-wrap items-center gap-2 mb-2">
