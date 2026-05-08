@@ -4,6 +4,13 @@ import Animesh from "@/assets/dignitaries/Animesh.jpeg";
 import CS from "@/assets/dignitaries/CS.jpg";
 import SanjibDas from "@/assets/dignitaries/SanjibDas.png";
 
+import landscapeRestoration from "@/assets/projects/landscape-restoration.jpg";
+import biodiversityConservation from "@/assets/projects/biodiversity-conservation.jpg";
+import livelihoodValueChain from "@/assets/projects/livelihood-value-chain.jpg";
+import ecoTourism from "@/assets/projects/eco-tourism.jpg";
+import climateWatershed from "@/assets/projects/climate-watershed.jpg";
+import communityPlantation from "@/assets/projects/community-plantation.jpg";
+
 export const announcements = [
   {
     date: "28 Apr 2026",
@@ -85,6 +92,7 @@ export const projects: Project[] = [
     status: "Ongoing",
     coverage: "Dhalai, Gomati, Khowai, North Tripura",
     component: "Component 1 — Landscape Management",
+    image: landscapeRestoration,
   },
   {
     title: "Biodiversity Conservation & Ecosystem Services",
@@ -102,6 +110,7 @@ export const projects: Project[] = [
     status: "Ongoing",
     coverage: "Sipahijala, Trishna, Gumti, Rowa Landscapes",
     component: "Component 2 — Biodiversity & Ecosystem Services",
+    image: biodiversityConservation,
   },
   {
     title: "Community Livelihood & Value Chain Development",
@@ -119,6 +128,7 @@ export const projects: Project[] = [
     status: "Ongoing",
     coverage: "All 8 districts of Tripura",
     component: "Component 3 — Livelihood Development",
+    image: livelihoodValueChain,
   },
   {
     title: "Eco-Tourism & Enterprise Development",
@@ -136,6 +146,7 @@ export const projects: Project[] = [
     status: "Pilot Phase",
     coverage: "Jampui Hills, Dumboor, Sipahijala",
     component: "Component 3 — Livelihood Development",
+    image: ecoTourism,
   },
   {
     title: "Climate Resilience & Watershed Management",
@@ -153,6 +164,7 @@ export const projects: Project[] = [
     status: "Ongoing",
     coverage: "Dhalai, Unakoti, North Tripura",
     component: "Component 1 — Landscape Management",
+    image: climateWatershed,
   },
   {
     title: "Community Plantation & Green Enterprise Programme",
@@ -170,6 +182,7 @@ export const projects: Project[] = [
     status: "Ongoing",
     coverage: "All Districts of Tripura",
     component: "Component 2 — Biodiversity & Ecosystem Services",
+    image: communityPlantation,
   },
 ];
 
