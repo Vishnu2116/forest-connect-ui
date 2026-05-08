@@ -34,6 +34,15 @@ export default function ProjectDetail() {
     { label: "Districts", value: "8" },
   ];
 
+  const outcomes = [
+    { icon: TrendingUp, text: "Improved household income through diversified livelihood sources" },
+    { icon: Sprout, text: "Sustainable livelihood opportunities via high-value product chains" },
+    { icon: TreePine, text: "Better natural resource management and landscape productivity" },
+    { icon: Users, text: "Stronger community institutions and participatory governance" },
+    { icon: BarChart3, text: "Enhanced market access and enterprise development" },
+    { icon: Target, text: "Climate-resilient land management practices across districts" },
+  ];
+
   const sidebarItems = [
     { icon: Target, label: "Objective", value: project.objective },
     { icon: Users, label: "Beneficiaries", value: project.beneficiaries },
