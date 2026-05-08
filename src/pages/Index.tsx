@@ -217,8 +217,8 @@ export default function Home() {
               },
               {
                 name: "Shri Chaitanya Murti, IFS",
-                designation: "CEO & Project Director, ELEMENT",
-                desc: "Principal Chief Conservator of Forests (Administration)",
+                designation: "CEO & Project Director, ELEMENT Project",
+                desc: "PCCF (Administration & Personal Relations, Protection), CWLW & MS, TBB",
                 image: "",
               },
               {
@@ -228,9 +228,9 @@ export default function Home() {
                 image: "",
               },
               {
-                name: "Mr. Khushwant Sethi",
-                designation: "Principal Chief Conservator of Forests",
-                desc: "Government of Tripura",
+                name: "Shri Sanjib Das, IFS",
+                designation: "Director, Project ELEMENT",
+                desc: "CF (Territorial & Coordination)",
                 image: "",
               },
             ].map((d) => (

@@ -1,8 +1,12 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import PageLayout, { PageHeader } from "@/components/layout/PageLayout";
-import { Phone, Mail, User, ChevronRight, X, Briefcase, TrendingUp, Mountain, Handshake, Sprout, Eye, Target, Lightbulb, Globe, Shield, Leaf, Users, Compass, Award, BookOpen, Zap, FileText, Download, Search } from "lucide-react";
-import { officials } from "@/data/content";
+import { Phone, Mail, User, ChevronRight, X, Briefcase, TrendingUp, Mountain, Handshake, Sprout, Eye, Target, Lightbulb, Globe, Shield, Leaf, Users, Compass, Award, BookOpen, Zap, FileText, Download, Search, MapPin, Smartphone } from "lucide-react";
+import { officials, governmentLeaders, elementLeadership, type Official } from "@/data/content";
+
+import cmImage from "@/assets/dignitaries/CM.jpeg";
+import Animesh from "@/assets/dignitaries/Animesh.jpeg";
+import CS from "@/assets/dignitaries/CS.jpg";
 
 const aboutLinks = [
   { to: "/about", title: "About ELEMENT" },
@@ -178,12 +182,40 @@ export function Organization() {
 }
 
 /* ---- Who's Who ---- */
+
+const govLeadersWithImages = [
+  { ...governmentLeaders[0], image: cmImage },
+  { ...governmentLeaders[1], image: Animesh },
+  { ...governmentLeaders[2], image: CS },
+];
+
+function OfficialCard({ o, onClick }: { o: Official; onClick?: () => void }) {
+  return (
+    <article
+      className="bg-card border border-border rounded-xl p-6 text-center hover:shadow-md hover:border-primary/30 transition cursor-pointer group"
+      onClick={onClick}
+    >
+      <div className="mx-auto h-20 w-20 rounded-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center text-primary-foreground group-hover:scale-105 transition-transform overflow-hidden">
+        {o.image ? (
+          <img src={o.image} alt={o.name} className="h-full w-full object-cover" />
+        ) : (
+          <User className="h-8 w-8" />
+        )}
+      </div>
+      <h3 className="mt-4 font-bold text-sm text-primary">{o.name}</h3>
+      <p className="text-xs text-foreground font-semibold mt-1">{o.designation}</p>
+      <p className="text-[11px] text-muted-foreground mt-0.5">{o.department}</p>
+      {onClick && <div className="mt-3 text-xs text-accent font-semibold group-hover:underline">View Profile →</div>}
+    </article>
+  );
+}
+
 export function WhosWhoSection() {
-  const [selected, setSelected] = useState<typeof officials[0] | null>(null);
+  const [selected, setSelected] = useState<Official | null>(null);
 
   return (
     <AboutLayout title="Who's Who" subtitle="Leadership team driving the ELEMENT programme">
-      <div className="space-y-6">
+      <div className="space-y-8">
         {/* Intro */}
         <div className="bg-gradient-to-br from-primary/5 to-accent/5 border border-border rounded-xl p-6 text-center">
           <span className="inline-block bg-primary/10 text-primary text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-3">Leadership</span>
@@ -191,33 +223,35 @@ export function WhosWhoSection() {
           <p className="text-sm text-muted-foreground max-w-lg mx-auto">Meet the senior officials and programme leaders steering the ELEMENT initiative.</p>
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {officials.map((o) => (
-            <article
-              key={o.name}
-              className="bg-card border border-border rounded-xl p-6 text-center hover:shadow-md hover:border-primary/30 transition cursor-pointer group"
-              onClick={() => setSelected(o)}
-            >
-              <div className="mx-auto h-20 w-20 rounded-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center text-primary-foreground group-hover:scale-105 transition-transform overflow-hidden">
-                {o.image ? (
-                  <img src={o.image} alt={o.name} className="h-full w-full object-cover" />
-                ) : (
-                  <User className="h-8 w-8" />
-                )}
-              </div>
-              <h3 className="mt-4 font-bold text-sm text-primary">{o.name}</h3>
-              <p className="text-xs text-foreground font-semibold mt-1">{o.designation}</p>
-              <p className="text-[11px] text-muted-foreground mt-0.5">{o.department}</p>
-              <div className="mt-3 text-xs text-accent font-semibold group-hover:underline">View Profile →</div>
-            </article>
-          ))}
+        {/* Government Leadership */}
+        <div>
+          <h3 className="text-lg font-bold text-primary mb-4 flex items-center gap-2">
+            <Shield className="h-5 w-5 text-accent" /> Government Leadership
+          </h3>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {govLeadersWithImages.map((o) => (
+              <OfficialCard key={o.name} o={o} />
+            ))}
+          </div>
+        </div>
+
+        {/* ELEMENT Project Leadership */}
+        <div>
+          <h3 className="text-lg font-bold text-primary mb-4 flex items-center gap-2">
+            <Briefcase className="h-5 w-5 text-accent" /> ELEMENT Project Leadership
+          </h3>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {elementLeadership.map((o) => (
+              <OfficialCard key={o.name} o={o} onClick={() => setSelected(o)} />
+            ))}
+          </div>
         </div>
       </div>
 
       {/* Detail overlay */}
       {selected && (
         <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4" onClick={() => setSelected(null)}>
-          <div className="bg-card rounded-xl shadow-elevated max-w-md w-full p-6 relative" onClick={(e) => e.stopPropagation()}>
+          <div className="bg-card rounded-xl shadow-elevated max-w-md w-full p-6 relative max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
             <button onClick={() => setSelected(null)} className="absolute top-3 right-3 p-1 rounded hover:bg-surface" aria-label="Close">
               <X className="h-5 w-5 text-muted-foreground" />
             </button>
@@ -231,10 +265,31 @@ export function WhosWhoSection() {
               </div>
               <h3 className="mt-4 text-lg font-bold text-primary">{selected.name}</h3>
               <p className="text-sm text-foreground font-semibold mt-1">{selected.designation}</p>
-              <p className="text-xs text-muted-foreground mt-0.5">{selected.department}</p>
-              <div className="mt-4 pt-4 border-t border-border space-y-2 text-sm text-muted-foreground">
-                <div className="flex items-center justify-center gap-2"><Phone className="h-4 w-4 text-primary" /> {selected.phone}</div>
-                <div className="flex items-center justify-center gap-2"><Mail className="h-4 w-4 text-primary" /> {selected.email}</div>
+              {selected.additionalRoles && (
+                <p className="text-xs text-muted-foreground mt-1">{selected.additionalRoles}</p>
+              )}
+              <div className="mt-4 pt-4 border-t border-border space-y-2 text-sm text-muted-foreground text-left">
+                {selected.office && (
+                  <div className="flex items-start gap-2"><MapPin className="h-4 w-4 text-primary mt-0.5 shrink-0" /> <span>{selected.office}</span></div>
+                )}
+                {selected.phone && (
+                  <div className="flex items-center gap-2"><Phone className="h-4 w-4 text-primary" /> {selected.phone}</div>
+                )}
+                {selected.mobile && (
+                  <div className="flex items-center gap-2"><Smartphone className="h-4 w-4 text-primary" /> {selected.mobile}</div>
+                )}
+                {selected.emails && selected.emails.length > 0 ? (
+                  <div className="flex items-start gap-2">
+                    <Mail className="h-4 w-4 text-primary mt-0.5 shrink-0" />
+                    <div className="space-y-0.5">
+                      {selected.emails.map((e) => (
+                        <a key={e} href={`mailto:${e}`} className="block text-primary hover:underline">{e}</a>
+                      ))}
+                    </div>
+                  </div>
+                ) : selected.email ? (
+                  <div className="flex items-center gap-2"><Mail className="h-4 w-4 text-primary" /> <a href={`mailto:${selected.email}`} className="text-primary hover:underline">{selected.email}</a></div>
+                ) : null}
               </div>
             </div>
           </div>
@@ -374,20 +429,44 @@ export function Memorandum() {
 }
 
 /* ---- Official Directory ---- */
-const directoryEntries = [
-  { name: "Shri Chaitanya Murti, IFS", designation: "CEO & Project Director, ELEMENT", department: "Principal Chief Conservator of Forests (Administration)", phone: "+91 381 2416403", email: "ceo@element.tripura.gov.in" },
-  { name: "Dr. Honnareddy N, IFS", designation: "Addl. CEO (ELEMENT Project)", department: "CCF(P&D) I/C, CF (Establishment & HRD)", phone: "+91 381 2416404", email: "addlceo@element.tripura.gov.in" },
-  { name: "Shri Jaya Krishnan V, IFS", designation: "Director (Administration, Procurement & Finance)", department: "ELEMENT PMU", phone: "+91 381 2416405", email: "director.admin@element.tripura.gov.in" },
-  { name: "Shri Naresh Jamatia, IFS", designation: "Director (SFM)", department: "Tripura ELEMENT Project", phone: "+91 381 2416406", email: "director.sfm@element.tripura.gov.in" },
-  { name: "Smt Paushali Roy, IFS", designation: "Director (Community Institution, Capacity Building, KM)", department: "ELEMENT PMU", phone: "+91 381 2416407", email: "director.cb@element.tripura.gov.in" },
-  { name: "Mr. Khushwant Sethi", designation: "Principal Chief Conservator of Forests", department: "Government of Tripura", phone: "+91 381 2416408", email: "pccf@tripuraforest.gov.in" },
+
+const directoryCategories = [
+  {
+    title: "Senior Government Leadership",
+    entries: [
+      { name: "Shri Manik Saha", designation: "Hon'ble Chief Minister", division: "Government of Tripura", phone: "", email: "", mobile: "" },
+      { name: "Shri Animesh Debbarma", designation: "Forest & Environment Minister", division: "Government of Tripura", phone: "", email: "", mobile: "" },
+      { name: "Shri J.K. Sinha, IAS", designation: "Chief Secretary", division: "Government of Tripura", phone: "", email: "", mobile: "" },
+    ],
+  },
+  {
+    title: "ELEMENT Project Leadership",
+    entries: [
+      { name: "Shri Chaitanya Murti, IFS", designation: "CEO & Project Director, ELEMENT Project", division: "Aranya Bhawan, Pt. Nehru Complex, Agartala", phone: "0381-2326874", email: "cwlw.tfd-tr@gov.in", mobile: "9717403877" },
+      { name: "Dr. Honnareddy N, IFS", designation: "Addl. CEO (ELEMENT Project)", division: "Aranya Bhawan, Pt. Nehru Complex, Agartala", phone: "", email: "honnareddy.n@gov.in", mobile: "99971518296" },
+      { name: "Shri Sanjib Das, IFS", designation: "Director (Project ELEMENT)", division: "Aranya Bhawan, Pt. Nehru Complex, Agartala", phone: "", email: "ccfttripura@gmail.com", mobile: "7630049150" },
+    ],
+  },
+  {
+    title: "Directors & Division Heads",
+    entries: [
+      { name: "Shri Krishna Gopal Roy, IFS", designation: "Director (Community Institution, Capacity Building, KM)", division: "ELEMENT Project FHQ, Aranya Bhawan, Agartala", phone: "", email: "krishnagopalr78@gmail.com", mobile: "7005447409" },
+      { name: "Shri Amalendu Debnath, IFS", designation: "Director (Value Chain Innovation & Eco Tourism)", division: "ELEMENT Project FHQ, Aranya Bhawan, Agartala", phone: "", email: "elementtripuraforest@gmail.com", mobile: "8415924070" },
+      { name: "Shri Jaya Krishnan V, IFS", designation: "Director (Administration, Procurement & Finance)", division: "ELEMENT Project", phone: "", email: "", mobile: "" },
+      { name: "Shri Naresh Jamatia, IFS", designation: "Director (SFM) / DCF (Wildlife)", division: "Aranya Bhawan, Agartala", phone: "", email: "dcfwildlife2025@gmail.com", mobile: "8131843631" },
+    ],
+  },
 ];
 
 export function OfficialDirectory() {
   const [search, setSearch] = useState("");
-  const filtered = directoryEntries.filter((e) =>
-    `${e.name} ${e.designation} ${e.department}`.toLowerCase().includes(search.toLowerCase())
-  );
+
+  const filteredCategories = directoryCategories.map((cat) => ({
+    ...cat,
+    entries: cat.entries.filter((e) =>
+      `${e.name} ${e.designation} ${e.division}`.toLowerCase().includes(search.toLowerCase())
+    ),
+  })).filter((cat) => cat.entries.length > 0);
 
   return (
     <AboutLayout title="Official Directory" subtitle="Contact details of ELEMENT programme officials">
@@ -403,39 +482,55 @@ export function OfficialDirectory() {
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <input
             type="text"
-            placeholder="Search by name, designation or department..."
+            placeholder="Search by name, designation or division..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="w-full pl-10 pr-4 py-2.5 border border-border rounded-lg text-sm bg-card focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"
           />
         </div>
 
-        {/* Directory cards */}
-        <div className="grid sm:grid-cols-2 gap-4">
-          {filtered.map((entry) => (
-            <div key={entry.email} className="bg-card border border-border rounded-xl p-5 hover:shadow-md hover:border-primary/30 transition">
-              <div className="flex items-start gap-4">
-                <div className="h-12 w-12 rounded-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center text-primary-foreground shrink-0">
-                  <User className="h-5 w-5" />
-                </div>
-                <div className="min-w-0 flex-1">
-                  <h4 className="text-sm font-bold text-foreground">{entry.name}</h4>
-                  <p className="text-xs text-primary font-semibold mt-0.5">{entry.designation}</p>
-                  <p className="text-[11px] text-muted-foreground">{entry.department}</p>
-                  <div className="mt-2 space-y-1">
-                    <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                      <Phone className="h-3 w-3 text-primary" /> {entry.phone}
+        {/* Categorized directory */}
+        {filteredCategories.map((cat) => (
+          <div key={cat.title}>
+            <h3 className="text-base font-bold text-primary mb-3 flex items-center gap-2">
+              <Users className="h-4 w-4 text-accent" /> {cat.title}
+            </h3>
+            <div className="grid sm:grid-cols-2 gap-4">
+              {cat.entries.map((entry) => (
+                <div key={entry.name} className="bg-card border border-border rounded-xl p-5 hover:shadow-md hover:border-primary/30 transition">
+                  <div className="flex items-start gap-4">
+                    <div className="h-12 w-12 rounded-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center text-primary-foreground shrink-0">
+                      <User className="h-5 w-5" />
                     </div>
-                    <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                      <Mail className="h-3 w-3 text-primary" /> {entry.email}
+                    <div className="min-w-0 flex-1">
+                      <h4 className="text-sm font-bold text-foreground">{entry.name}</h4>
+                      <p className="text-xs text-primary font-semibold mt-0.5">{entry.designation}</p>
+                      <p className="text-[11px] text-muted-foreground">{entry.division}</p>
+                      <div className="mt-2 space-y-1">
+                        {entry.phone && (
+                          <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                            <Phone className="h-3 w-3 text-primary" /> {entry.phone}
+                          </div>
+                        )}
+                        {entry.mobile && (
+                          <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                            <Smartphone className="h-3 w-3 text-primary" /> {entry.mobile}
+                          </div>
+                        )}
+                        {entry.email && (
+                          <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                            <Mail className="h-3 w-3 text-primary" /> <a href={`mailto:${entry.email}`} className="hover:text-primary">{entry.email}</a>
+                          </div>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              ))}
             </div>
-          ))}
-        </div>
-        {filtered.length === 0 && (
+          </div>
+        ))}
+        {filteredCategories.length === 0 && (
           <p className="text-sm text-muted-foreground text-center py-8">No officials found matching your search.</p>
         )}
       </div>

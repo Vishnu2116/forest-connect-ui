@@ -117,14 +117,110 @@ export const procurements = [
   { title: "Printing of IEC Materials FY 2026-27", date: "25 Mar 2026", deadline: "12 Apr 2026", status: "Closed" },
 ];
 
-export const officials = [
-  { name: "Shri Chaitanya Murti, IFS", designation: "Principal Chief Conservator of Forests (Administration)", department: "CEO & Project Director, ELEMENT Project", phone: "+91 381 2416403", email: "ceo@element.tripura.gov.in", image: "" },
-  { name: "Dr. Honnareddy N, IFS", designation: "Addl. CEO (ELEMENT Project)", department: "CCF(P&D) I/C, CF (Establishment & HRD)", phone: "+91 381 2416404", email: "addlceo@element.tripura.gov.in", image: "" },
-  { name: "Shri Jaya Krishnan V, IFS", designation: "Director (Administration, Procurement & Finance)", department: "ELEMENT PMU", phone: "+91 381 2416405", email: "director.admin@element.tripura.gov.in", image: "" },
-  { name: "Shri Naresh Jamatia, IFS", designation: "Director (SFM)", department: "Tripura ELEMENT Project", phone: "+91 381 2416406", email: "director.sfm@element.tripura.gov.in", image: "" },
-  { name: "Smt Paushali Roy, IFS", designation: "Director (Community Institution, Capacity Building, Knowledge Management)", department: "ELEMENT PMU", phone: "+91 381 2416407", email: "director.cb@element.tripura.gov.in", image: "" },
-  { name: "Mr. Khushwant Sethi", designation: "Principal Chief Conservator of Forests", department: "Government of Tripura", phone: "+91 381 2416408", email: "pccf@tripuraforest.gov.in", image: "" },
+export type Official = {
+  name: string;
+  designation: string;
+  department: string;
+  phone: string;
+  email: string;
+  image: string;
+  additionalRoles?: string;
+  office?: string;
+  mobile?: string;
+  emails?: string[];
+  category?: string;
+};
+
+export const governmentLeaders: Official[] = [
+  { name: "Shri Manik Saha", designation: "Hon'ble Chief Minister", department: "Government of Tripura", phone: "", email: "", image: "" },
+  { name: "Shri Animesh Debbarma", designation: "Forest & Environment Minister", department: "Government of Tripura", phone: "", email: "", image: "" },
+  { name: "Shri J.K. Sinha, IAS", designation: "Chief Secretary", department: "Government of Tripura", phone: "", email: "", image: "" },
 ];
+
+export const elementLeadership: Official[] = [
+  {
+    name: "Shri Chaitanya Murti, IFS",
+    designation: "CEO & Project Director, ELEMENT Project",
+    department: "PCCF (Administration & Personal Relations, Protection), CWLW & MS, TBB",
+    additionalRoles: "PCCF (Administration & Personal Relations, Protection), CWLW & MS, TBB, NO (FCA)",
+    office: "Aranya Bhawan, Pt. Nehru Complex, Agartala, Tripura (West)",
+    phone: "0381-2326874",
+    mobile: "9717403877",
+    email: "cwlw.tfd-tr@gov.in",
+    emails: ["cwlw.tfd-tr@gov.in", "chiefwildlife@gmail.com", "sputbb@gmail.com", "apccft@gmail.com"],
+    image: "",
+    category: "ELEMENT Project Leadership",
+  },
+  {
+    name: "Dr. Honnareddy N, IFS",
+    designation: "Addl. CEO (ELEMENT Project)",
+    department: "CCF(P&D) I/C, CF (Establishment & HRD)",
+    additionalRoles: "CCF(P&D) I/C, CF (Establishment & HRD)",
+    office: "Aranya Bhawan, Pt. Nehru Complex, Agartala, Tripura (West)",
+    phone: "",
+    mobile: "99971518296",
+    email: "honnareddy.n@gov.in",
+    image: "",
+    category: "ELEMENT Project Leadership",
+  },
+  {
+    name: "Shri Sanjib Das, IFS",
+    designation: "Director (Project ELEMENT)",
+    department: "CF (Territorial & Coordination)",
+    additionalRoles: "CF (Territorial & Coordination)",
+    office: "Aranya Bhawan, Pt. Nehru Complex, Agartala, Tripura (West)",
+    phone: "",
+    mobile: "7630049150",
+    email: "ccfttripura@gmail.com",
+    image: "",
+    category: "ELEMENT Project Leadership",
+  },
+  {
+    name: "Shri Krishna Gopal Roy, IFS",
+    designation: "Director (Community Institution, Capacity Building, Knowledge Management)",
+    department: "ELEMENT Project FHQ",
+    office: "ELEMENT Project FHQ, Aranya Bhawan, Agartala, Tripura (West)",
+    phone: "",
+    mobile: "7005447409",
+    email: "krishnagopalr78@gmail.com",
+    image: "",
+    category: "ELEMENT Project Leadership",
+  },
+  {
+    name: "Shri Amalendu Debnath, IFS",
+    designation: "Director (Value Chain Innovation & Eco Tourism)",
+    department: "ELEMENT Project FHQ",
+    office: "ELEMENT Project FHQ, Aranya Bhawan, Agartala, Tripura (West)",
+    phone: "",
+    mobile: "8415924070",
+    email: "elementtripuraforest@gmail.com",
+    image: "",
+    category: "ELEMENT Project Leadership",
+  },
+  {
+    name: "Shri Jaya Krishnan V, IFS",
+    designation: "Director (Administration, Procurement & Finance)",
+    department: "ELEMENT Project",
+    phone: "",
+    email: "",
+    image: "",
+    category: "ELEMENT Project Leadership",
+  },
+  {
+    name: "Shri Naresh Jamatia, IFS",
+    designation: "Director (SFM)",
+    department: "DCF (Wildlife)",
+    additionalRoles: "DCF (Wildlife)",
+    office: "Aranya Bhawan, Agartala, Tripura (West)",
+    phone: "",
+    mobile: "8131843631",
+    email: "dcfwildlife2025@gmail.com",
+    image: "",
+    category: "ELEMENT Project Leadership",
+  },
+];
+
+export const officials: Official[] = [...governmentLeaders, ...elementLeadership];
 
 export const knowledgeHubItems = [
   { category: "IEC Materials", title: "ELEMENT Programme — Awareness Brochure", date: "Apr 2026" },
