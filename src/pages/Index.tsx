@@ -199,24 +199,24 @@ export default function Home() {
           </div>
           <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
             {[
-              {
-                name: "Shri Manik Saha",
-                designation: "Hon'ble Chief Minister",
-                desc: "Government of Tripura",
-                image: cmImage,
-              },
-              {
-                name: "Shri Animesh Debbarma",
-                designation: "Forest & Environment Minister",
-                desc: "Government of Tripura",
-                image: Animesh,
-              },
-              {
-                name: "Shri J.K. Sinha, IAS",
-                designation: "Chief Secretary",
-                desc: "Government of Tripura",
-                image: CS,
-              },
+              // {
+              //   name: "Shri Manik Saha",
+              //   designation: "Hon'ble Chief Minister",
+              //   desc: "Government of Tripura",
+              //   image: cmImage,
+              // },
+              // {
+              //   name: "Shri Animesh Debbarma",
+              //   designation: "Forest & Environment Minister",
+              //   desc: "Government of Tripura",
+              //   image: Animesh,
+              // },
+              // {
+              //   name: "Shri J.K. Sinha, IAS",
+              //   designation: "Chief Secretary",
+              //   desc: "Government of Tripura",
+              //   image: CS,
+              // },
               {
                 name: "Shri Chaitanya Murti, IFS",
                 designation: "CEO & Project Director, ELEMENT Project",
