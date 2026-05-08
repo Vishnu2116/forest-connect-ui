@@ -22,6 +22,7 @@ export type Project = {
   status: string;
   coverage: string;
   component?: string;
+  image?: string;
 };
 
 export const projects: Project[] = [
