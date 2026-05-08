@@ -304,3 +304,134 @@ export function Mission() {
     </AboutLayout>
   );
 }
+
+/* ---- Memorandum of Association ---- */
+export function Memorandum() {
+  return (
+    <AboutLayout title="Memorandum of Association" subtitle="Founding documents and governance framework of ELEMENT">
+      <div className="space-y-8">
+        <div className="bg-gradient-to-br from-primary/5 to-accent/5 border border-border rounded-xl p-6 text-center">
+          <span className="inline-block bg-primary/10 text-primary text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-3">Official Document</span>
+          <h3 className="text-xl font-bold text-primary mb-2">Memorandum of Association</h3>
+          <p className="text-sm text-muted-foreground max-w-lg mx-auto">The founding document establishing the governance, objectives, and operational framework of the ELEMENT programme.</p>
+        </div>
+
+        {/* Document card */}
+        <div className="bg-card border border-border rounded-xl p-6 shadow-card">
+          <div className="flex items-start gap-5">
+            <div className="h-20 w-16 bg-gradient-to-br from-primary to-primary-light rounded-lg flex items-center justify-center shrink-0">
+              <FileText className="h-8 w-8 text-primary-foreground" />
+            </div>
+            <div className="flex-1">
+              <h4 className="text-base font-bold text-foreground">ELEMENT Programme — Memorandum of Association</h4>
+              <p className="text-xs text-muted-foreground mt-1">Government of Tripura · Registered under Societies Registration Act</p>
+              <p className="text-sm text-muted-foreground mt-3 leading-relaxed">
+                This document outlines the constitution, governance structure, and operational mandate of the ELEMENT programme under the aegis of the Government of Tripura in partnership with the World Bank.
+              </p>
+              <div className="flex gap-3 mt-4">
+                <button className="inline-flex items-center gap-1.5 bg-primary hover:bg-primary/90 text-primary-foreground px-4 py-2 rounded text-sm font-semibold transition">
+                  <Download className="h-4 w-4" /> Download PDF
+                </button>
+                <button className="inline-flex items-center gap-1.5 border border-primary text-primary hover:bg-primary/5 px-4 py-2 rounded text-sm font-semibold transition">
+                  <Eye className="h-4 w-4" /> View Document
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Key highlights */}
+        <div>
+          <h3 className="text-lg font-bold text-primary mb-4">Key Highlights</h3>
+          <div className="grid sm:grid-cols-2 gap-3">
+            {[
+              { title: "Registered Society", desc: "Established as a registered society under the Societies Registration Act for autonomous programme management." },
+              { title: "Governance Structure", desc: "Multi-tier governance with Project Steering Committee, Governing Body, and Executive Committee." },
+              { title: "Objectives", desc: "Landscape restoration, livelihood generation, community empowerment, and economic transformation across Tripura." },
+              { title: "Financial Framework", desc: "World Bank-funded with Government of Tripura counterpart contribution and transparent fund flow mechanism." },
+              { title: "Implementation Authority", desc: "State Forest Development Agency (SFDA) as nodal agency with Project Management Unit for day-to-day operations." },
+              { title: "Amendment Provisions", desc: "MOA can be amended with approval of the Governing Body and prior consent of the World Bank." },
+            ].map((item) => (
+              <div key={item.title} className="bg-card border border-border rounded-lg p-4 hover:shadow-sm transition">
+                <h4 className="text-sm font-bold text-foreground mb-1">{item.title}</h4>
+                <p className="text-xs text-muted-foreground leading-relaxed">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </AboutLayout>
+  );
+}
+
+/* ---- Official Directory ---- */
+const directoryEntries = [
+  { name: "Dr. R.K. Das, IFS", designation: "Project Director", department: "ELEMENT PMU", phone: "+91-381-232-XXXX", email: "pd@element.tripura.gov.in" },
+  { name: "Shri A.B. Sharma, IFS", designation: "Additional Project Director", department: "ELEMENT PMU", phone: "+91-381-232-XXXX", email: "apd@element.tripura.gov.in" },
+  { name: "Smt. P.K. Devi", designation: "Financial Controller", department: "Finance Wing", phone: "+91-381-232-XXXX", email: "fc@element.tripura.gov.in" },
+  { name: "Shri M. Debbarma", designation: "Monitoring & Evaluation Head", department: "M&E Cell", phone: "+91-381-232-XXXX", email: "me@element.tripura.gov.in" },
+  { name: "Shri S.K. Roy", designation: "Procurement Specialist", department: "Procurement Cell", phone: "+91-381-232-XXXX", email: "procurement@element.tripura.gov.in" },
+  { name: "Dr. N. Chakraborty", designation: "Livelihood Specialist", department: "Component 2", phone: "+91-381-232-XXXX", email: "livelihood@element.tripura.gov.in" },
+  { name: "Shri R. Jamatia", designation: "District Coordinator, Dhalai", department: "District Unit", phone: "+91-381-232-XXXX", email: "dhalai@element.tripura.gov.in" },
+  { name: "Smt. L. Reang", designation: "District Coordinator, North Tripura", department: "District Unit", phone: "+91-381-232-XXXX", email: "north@element.tripura.gov.in" },
+];
+
+export function OfficialDirectory() {
+  const [search, setSearch] = useState("");
+  const filtered = directoryEntries.filter((e) =>
+    `${e.name} ${e.designation} ${e.department}`.toLowerCase().includes(search.toLowerCase())
+  );
+
+  return (
+    <AboutLayout title="Official Directory" subtitle="Contact details of ELEMENT programme officials">
+      <div className="space-y-6">
+        <div className="bg-gradient-to-br from-primary/5 to-accent/5 border border-border rounded-xl p-6 text-center">
+          <span className="inline-block bg-primary/10 text-primary text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-3">Directory</span>
+          <h3 className="text-xl font-bold text-primary mb-2">Official Directory</h3>
+          <p className="text-sm text-muted-foreground max-w-lg mx-auto">Contact information for key ELEMENT programme officials across departments.</p>
+        </div>
+
+        {/* Search */}
+        <div className="relative max-w-md">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <input
+            type="text"
+            placeholder="Search by name, designation or department..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="w-full pl-10 pr-4 py-2.5 border border-border rounded-lg text-sm bg-card focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"
+          />
+        </div>
+
+        {/* Directory cards */}
+        <div className="grid sm:grid-cols-2 gap-4">
+          {filtered.map((entry) => (
+            <div key={entry.email} className="bg-card border border-border rounded-xl p-5 hover:shadow-md hover:border-primary/30 transition">
+              <div className="flex items-start gap-4">
+                <div className="h-12 w-12 rounded-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center text-primary-foreground shrink-0">
+                  <User className="h-5 w-5" />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <h4 className="text-sm font-bold text-foreground">{entry.name}</h4>
+                  <p className="text-xs text-primary font-semibold mt-0.5">{entry.designation}</p>
+                  <p className="text-[11px] text-muted-foreground">{entry.department}</p>
+                  <div className="mt-2 space-y-1">
+                    <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                      <Phone className="h-3 w-3 text-primary" /> {entry.phone}
+                    </div>
+                    <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                      <Mail className="h-3 w-3 text-primary" /> {entry.email}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+        {filtered.length === 0 && (
+          <p className="text-sm text-muted-foreground text-center py-8">No officials found matching your search.</p>
+        )}
+      </div>
+    </AboutLayout>
+  );
+}
