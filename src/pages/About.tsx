@@ -103,87 +103,47 @@ export function AboutElement() {
   );
 }
 
-/* ---- Organization Structure ---- */
-type OrgNode = { id: string; label: string; name: string; designation: string; role: string; description: string; icon: typeof Briefcase };
-
-const orgNodes: OrgNode[] = [
-  { id: "got", label: "Government of Tripura", name: "Hon'ble Chief Minister", designation: "Chief Minister, Tripura", role: "Apex Authority", description: "Provides overall policy direction and governance for ELEMENT through the State Government machinery.", icon: Shield },
-  { id: "psc", label: "Project Steering Committee", name: "Chief Secretary (Chair)", designation: "Chief Secretary, Government of Tripura", role: "Strategic Oversight", description: "High-level inter-departmental committee that provides strategic direction, reviews progress, and ensures inter-agency coordination.", icon: Compass },
-  { id: "sfda", label: "State Forest Development Agency", name: "Principal Secretary, Forests", designation: "Administrative Head", role: "Nodal Agency", description: "Acts as the nodal agency for channeling funds, monitoring implementation, and providing administrative support to the PMU.", icon: Globe },
-  { id: "pmu", label: "Project Management Unit", name: "Project Director (PCCF-rank)", designation: "Project Director, ELEMENT", role: "Implementation Lead", description: "Central unit responsible for day-to-day management, procurement, financial management, M&E, and coordination with all implementing units.", icon: Target },
-  { id: "du", label: "District Units", name: "DFOs / District Coordinators", designation: "District-level Officers", role: "Field Coordination", description: "Coordinate implementation at district level, manage sub-projects, supervise field teams, and liaise with local government bodies.", icon: Users },
-  { id: "vlc", label: "Village Level Committees", name: "Community Leaders / JFMC Chairs", designation: "Village-level Representatives", role: "Community Implementation", description: "Grassroots bodies that plan and implement livelihood activities, plantation works, and community development initiatives at village level.", icon: Leaf },
+/* ---- Organization Structure — Flowchart ---- */
+const orgNodes = [
+  { id: "got", label: "Government of Tripura", role: "Apex Authority", name: "Hon'ble Chief Minister" },
+  { id: "psc", label: "Project Steering Committee", role: "Strategic Oversight", name: "Chief Secretary (Chair)" },
+  { id: "sfda", label: "State Forest Development Agency", role: "Nodal Agency", name: "Principal Secretary, Forests" },
+  { id: "pmu", label: "Project Management Unit", role: "Implementation Lead", name: "Project Director (PCCF-rank)" },
+  { id: "du", label: "District Units", role: "Field Coordination", name: "DFOs / District Coordinators" },
+  { id: "vlc", label: "Village Level Committees", role: "Community Implementation", name: "Community Leaders / JFMC Chairs" },
 ];
 
 export function Organization() {
-  const [selected, setSelected] = useState<OrgNode | null>(null);
-
   return (
     <AboutLayout title="Organization Structure" subtitle="Governance and implementation framework of the ELEMENT programme">
-      <div className="space-y-8">
-        {/* Header intro */}
-        <div className="bg-gradient-to-br from-primary/5 to-accent/5 border border-border rounded-xl p-6 text-center">
-          <span className="inline-block bg-primary/10 text-primary text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-3">Institutional Framework</span>
-          <h3 className="text-xl font-bold text-primary mb-2">ELEMENT Governance Structure</h3>
-          <p className="text-sm text-muted-foreground max-w-xl mx-auto">A multi-tier governance framework ensuring effective implementation from state-level policy to village-level action.</p>
-        </div>
+      <div className="space-y-6">
+        <p className="text-sm text-muted-foreground leading-relaxed">
+          The ELEMENT programme operates through a multi-tier governance framework ensuring effective implementation from state-level policy to village-level action.
+        </p>
 
-        {/* Org hierarchy — vertical timeline style */}
-        <div className="relative">
-          {/* Vertical line */}
-          <div className="absolute left-6 top-0 bottom-0 w-px bg-primary/20 hidden md:block" />
-
-          <div className="space-y-4">
-            {orgNodes.map((node, i) => (
-              <button
-                key={node.id}
-                onClick={() => setSelected(selected?.id === node.id ? null : node)}
-                className={`relative w-full text-left md:pl-16 transition-all ${
-                  selected?.id === node.id ? "" : ""
-                }`}
-              >
-                {/* Timeline dot */}
-                <div className={`absolute left-4 top-4 h-5 w-5 rounded-full border-2 hidden md:flex items-center justify-center transition-colors ${
-                  selected?.id === node.id
-                    ? "border-accent bg-accent"
-                    : "border-primary/40 bg-card"
-                }`}>
-                  <div className={`h-2 w-2 rounded-full ${selected?.id === node.id ? "bg-accent-foreground" : "bg-primary/40"}`} />
-                </div>
-
-                <div className={`rounded-lg p-4 border transition-all ${
-                  selected?.id === node.id
-                    ? "border-accent bg-accent/5 shadow-sm"
-                    : "border-border bg-card hover:border-primary/30 hover:shadow-sm"
-                }`}>
-                  <div className="flex items-center gap-3">
-                    <div className={`h-10 w-10 rounded-lg flex items-center justify-center shrink-0 ${
-                      selected?.id === node.id
-                        ? "bg-accent/10"
-                        : "bg-primary/10"
-                    }`}>
-                      <node.icon className={`h-5 w-5 ${selected?.id === node.id ? "text-accent" : "text-primary"}`} />
-                    </div>
-                    <div className="min-w-0">
-                      <div className="font-semibold text-sm text-foreground">{node.label}</div>
-                      <div className="text-xs text-muted-foreground">{node.role} · {node.name}</div>
-                    </div>
-                    <span className={`ml-auto text-[10px] font-semibold uppercase px-2 py-0.5 rounded-full shrink-0 ${
-                      i === 0 ? "bg-primary/10 text-primary" : "bg-surface text-muted-foreground"
-                    }`}>Level {i + 1}</span>
-                  </div>
-
-                  {/* Expanded detail */}
-                  {selected?.id === node.id && (
-                    <div className="mt-3 pt-3 border-t border-border/60 animate-fade-in">
-                      <p className="text-sm text-muted-foreground leading-relaxed">{node.description}</p>
-                      <p className="text-xs text-muted-foreground mt-2"><span className="font-medium text-foreground">Designation:</span> {node.designation}</p>
-                    </div>
-                  )}
-                </div>
-              </button>
-            ))}
-          </div>
+        {/* Flowchart */}
+        <div className="flex flex-col items-center gap-0">
+          {orgNodes.map((node, i) => (
+            <div key={node.id} className="flex flex-col items-center">
+              {/* Connector line */}
+              {i > 0 && (
+                <div className="w-px h-6 bg-primary/30" />
+              )}
+              {/* Node */}
+              <div className={`w-full max-w-md border rounded-lg p-4 text-center transition hover:shadow-md ${
+                i === 0
+                  ? "bg-primary text-primary-foreground border-primary"
+                  : "bg-card border-border hover:border-primary/40"
+              }`}>
+                <h4 className={`text-sm font-bold ${i === 0 ? "text-primary-foreground" : "text-primary"}`}>{node.label}</h4>
+                <p className={`text-xs mt-1 ${i === 0 ? "text-primary-foreground/80" : "text-muted-foreground"}`}>{node.role} · {node.name}</p>
+              </div>
+              {/* Arrow head */}
+              {i < orgNodes.length - 1 && (
+                <div className="w-0 h-0 border-l-[6px] border-r-[6px] border-t-[6px] border-l-transparent border-r-transparent border-t-primary/30 mt-0" />
+              )}
+            </div>
+          ))}
         </div>
       </div>
     </AboutLayout>
@@ -250,45 +210,30 @@ export function WhosWhoSection() {
 
 /* ---- Vision ---- */
 export function Vision() {
-  const objectives = [
-    { icon: Sprout, title: "Sustainable Livelihoods" },
-    { icon: Users, title: "Strong Community Institutions" },
-    { icon: Mountain, title: "Restored Landscapes" },
-    { icon: Shield, title: "Climate Resilience" },
-    { icon: TrendingUp, title: "Market Access for All" },
-  ];
-
   return (
     <AboutLayout title="Vision & Objective" subtitle="Building a prosperous, resilient and inclusive Tripura">
-      <div className="space-y-10">
-        {/* Vision statement — clean hero */}
-        <div className="text-center py-6">
-          <div className="mx-auto h-16 w-16 rounded-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center mb-5 shadow-md">
-            <Eye className="h-8 w-8 text-primary-foreground" />
-          </div>
-          <span className="inline-block bg-accent/10 text-accent text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-4">Our Vision</span>
-          <h3 className="text-xl md:text-2xl font-bold text-primary mb-4 max-w-xl mx-auto leading-snug">
-            A prosperous Tripura with <span className="text-accent">resilient landscapes</span> and <span className="text-accent">thriving communities</span>
-          </h3>
-          <p className="text-sm text-muted-foreground max-w-lg mx-auto leading-relaxed">
-            Sustainable growth through community-driven value chains and inclusive economic development across all 8 districts.
+      <div className="space-y-8">
+        {/* Vision statement */}
+        <div className="bg-card border border-border rounded-xl p-6 shadow-card">
+          <span className="inline-block bg-accent/10 text-accent text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-3">Our Vision</span>
+          <p className="text-base text-foreground leading-relaxed font-medium">
+            To transform rural livelihoods and strengthen economic development across Tripura through sustainable landscape management, community-driven value chains, and inclusive growth — ensuring prosperity for present and future generations.
           </p>
         </div>
 
-        <hr className="border-border/60" />
-
-        {/* Objectives — minimal icon row */}
+        {/* Objectives */}
         <div>
-          <h3 className="text-lg font-bold text-primary mb-6 flex items-center gap-2">
-            <Target className="h-5 w-5 text-accent" /> Key Objectives
-          </h3>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-            {objectives.map((obj) => (
-              <div key={obj.title} className="flex flex-col items-center text-center p-4 rounded-xl border border-border bg-card hover:border-primary/30 hover:shadow-sm transition">
-                <div className="h-11 w-11 rounded-full bg-primary/10 flex items-center justify-center mb-3">
-                  <obj.icon className="h-5 w-5 text-primary" />
-                </div>
-                <span className="text-xs font-semibold text-foreground leading-snug">{obj.title}</span>
+          <h3 className="text-lg font-bold text-primary mb-4">Key Objectives</h3>
+          <div className="grid sm:grid-cols-2 gap-3">
+            {[
+              "Generate sustainable livelihoods through value chain development",
+              "Strengthen community-based institutions and local governance",
+              "Restore degraded landscapes for long-term economic productivity",
+              "Build climate resilience through adaptive land management",
+              "Improve market access and enterprise opportunities for rural communities",
+            ].map((obj) => (
+              <div key={obj} className="bg-card border border-border rounded-lg p-4 hover:shadow-sm transition">
+                <p className="text-sm text-muted-foreground leading-relaxed">{obj}</p>
               </div>
             ))}
           </div>
@@ -300,47 +245,30 @@ export function Vision() {
 
 /* ---- Mission ---- */
 export function Mission() {
-  const pillars = [
-    { icon: Briefcase, title: "Livelihoods", highlight: "25,000+ households", color: "from-primary to-primary-light" },
-    { icon: Mountain, title: "Landscape Restoration", highlight: "18,500 hectares", color: "from-accent to-accent-hover" },
-    { icon: Handshake, title: "Community Empowerment", highlight: "JFMCs, SHGs & VLCs", color: "from-primary to-primary-light" },
-    { icon: Zap, title: "Innovation & Technology", highlight: "GIS, drones & digital M&E", color: "from-accent to-accent-hover" },
-  ];
-
   return (
     <AboutLayout title="Mission & Objective" subtitle="Action-oriented commitments of the ELEMENT programme">
-      <div className="space-y-10">
-        {/* Mission statement — clean */}
-        <div className="text-center py-6">
-          <div className="mx-auto h-16 w-16 rounded-full bg-gradient-to-br from-accent to-accent-hover flex items-center justify-center mb-5 shadow-md">
-            <Lightbulb className="h-8 w-8 text-accent-foreground" />
-          </div>
-          <span className="inline-block bg-primary/10 text-primary text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-4">Our Mission</span>
-          <h3 className="text-xl md:text-2xl font-bold text-primary mb-4 max-w-xl mx-auto leading-snug">
-            Deliver <span className="text-accent">transparent</span>, <span className="text-accent">community-centric</span> development across Tripura
-          </h3>
-          <p className="text-sm text-muted-foreground max-w-lg mx-auto leading-relaxed">
-            Capacity-building, technology adoption, and value chain strengthening — in partnership with communities, enterprises, and institutions.
+      <div className="space-y-8">
+        {/* Mission statement */}
+        <div className="bg-card border border-border rounded-xl p-6 shadow-card">
+          <span className="inline-block bg-primary/10 text-primary text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-3">Our Mission</span>
+          <p className="text-base text-foreground leading-relaxed font-medium">
+            To deliver transparent, community-centric development through capacity-building, technology adoption, value chain strengthening, and partnerships with communities, enterprises, and institutions across Tripura.
           </p>
         </div>
 
-        <hr className="border-border/60" />
-
-        {/* Mission pillars — compact cards with highlight */}
+        {/* Mission pillars */}
         <div>
-          <h3 className="text-lg font-bold text-primary mb-6 flex items-center gap-2">
-            <BookOpen className="h-5 w-5 text-accent" /> Mission Pillars
-          </h3>
-          <div className="grid sm:grid-cols-2 gap-4">
-            {pillars.map((p) => (
-              <div key={p.title} className="flex items-center gap-4 bg-card border border-border rounded-xl p-5 hover:shadow-sm transition">
-                <div className={`h-12 w-12 rounded-full bg-gradient-to-br ${p.color} flex items-center justify-center shrink-0`}>
-                  <p.icon className="h-5 w-5 text-primary-foreground" />
-                </div>
-                <div>
-                  <h4 className="text-sm font-bold text-foreground">{p.title}</h4>
-                  <span className="text-xs text-accent font-semibold">{p.highlight}</span>
-                </div>
+          <h3 className="text-lg font-bold text-primary mb-4">Mission Pillars</h3>
+          <div className="grid sm:grid-cols-2 gap-3">
+            {[
+              { title: "Livelihoods", desc: "Create sustainable income for 25,000+ households through high-value product chains." },
+              { title: "Landscape Restoration", desc: "Restore degraded lands for productive use and ecological balance." },
+              { title: "Community Empowerment", desc: "Strengthen JFMCs, SHGs and village committees across all districts." },
+              { title: "Innovation & Technology", desc: "Adopt GIS, drones and digital monitoring for transparent implementation." },
+            ].map((p) => (
+              <div key={p.title} className="bg-card border border-border rounded-lg p-4 hover:shadow-sm transition">
+                <h4 className="text-sm font-bold text-foreground mb-1">{p.title}</h4>
+                <p className="text-xs text-muted-foreground leading-relaxed">{p.desc}</p>
               </div>
             ))}
           </div>
