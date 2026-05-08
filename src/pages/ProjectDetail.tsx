@@ -1,7 +1,7 @@
 import { useParams, Link } from "react-router-dom";
 import PageLayout, { PageHeader } from "@/components/layout/PageLayout";
 import { projects } from "@/data/content";
-import { Target, Users, MapPin, CheckCircle2, ArrowLeft, BarChart3, Calendar, Layers, Activity, Camera, TreePine, Sprout, Home } from "lucide-react";
+import { Target, Users, MapPin, CheckCircle2, ArrowLeft, BarChart3, Calendar, Layers, Activity, Camera, TreePine, Sprout, Home, TrendingUp } from "lucide-react";
 
 function slugify(title: string) {
   return title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
