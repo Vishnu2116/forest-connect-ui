@@ -84,89 +84,102 @@ export default function ProjectDetail() {
 
           {/* Main: Sidebar + Narrative */}
           <div className="grid lg:grid-cols-12 gap-8 mb-12">
-            {/* LEFT: Compact sidebar metadata */}
-            <aside className="lg:col-span-3 space-y-1">
-              <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">Project Details</h4>
-              {sidebarItems.map((item) => (
-                <div key={item.label} className="flex items-start gap-3 py-3 border-b border-border/50 last:border-0">
-                  <item.icon className="h-4 w-4 text-primary mt-0.5 shrink-0" />
-                  <div className="min-w-0">
-                    <div className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wide">{item.label}</div>
-                    <div className="text-sm text-foreground leading-snug mt-0.5">{item.value}</div>
-                  </div>
+            {/* LEFT: Compact sidebar metadata — wrapped in card */}
+            <aside className="lg:col-span-3">
+              <div className="bg-card border border-border rounded-xl p-5 shadow-card">
+                <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">Project Details</h4>
+                <div className="space-y-0">
+                  {sidebarItems.map((item) => (
+                    <div key={item.label} className="flex items-start gap-3 py-3 border-b border-border/50 last:border-0">
+                      <item.icon className="h-4 w-4 text-primary mt-0.5 shrink-0" />
+                      <div className="min-w-0">
+                        <div className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wide">{item.label}</div>
+                        <div className="text-sm text-foreground leading-snug mt-0.5">{item.value}</div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              ))}
+              </div>
             </aside>
 
-            {/* RIGHT: Narrative story area */}
+            {/* RIGHT: Narrative story area — wrapped in card */}
             <div className="lg:col-span-9">
-              <article className="prose-like space-y-10">
-                {/* About */}
-                <section>
-                  <h3 className="text-xl font-bold text-primary mb-3">About the Project</h3>
-                  <p className="text-muted-foreground leading-relaxed">{project.description}</p>
-                  <p className="text-muted-foreground leading-relaxed mt-3">{project.objective}</p>
-                </section>
+              <div className="bg-card border border-border rounded-xl p-6 md:p-8 shadow-card">
+                <article className="prose-like space-y-10">
+                  {/* About */}
+                  <section>
+                    <h3 className="text-xl font-bold text-primary mb-3">About the Project</h3>
+                    <p className="text-muted-foreground leading-relaxed">{project.description}</p>
+                    <p className="text-muted-foreground leading-relaxed mt-3">{project.objective}</p>
+                  </section>
 
-                <hr className="border-border/60" />
+                  <hr className="border-border/60" />
 
-                {/* Key Activities */}
-                <section>
-                  <h3 className="text-xl font-bold text-primary mb-4">Key Activities</h3>
-                  <div className="space-y-2.5">
-                    {project.activities.map((a) => (
-                      <div key={a} className="flex items-start gap-3">
-                        <CheckCircle2 className="h-4 w-4 text-accent mt-1 shrink-0" />
-                        <span className="text-sm text-muted-foreground leading-relaxed">{a}</span>
-                      </div>
-                    ))}
-                  </div>
-                </section>
+                  {/* Key Activities */}
+                  <section>
+                    <h3 className="text-xl font-bold text-primary mb-4">Key Activities</h3>
+                    <div className="space-y-2.5">
+                      {project.activities.map((a) => (
+                        <div key={a} className="flex items-start gap-3">
+                          <CheckCircle2 className="h-4 w-4 text-accent mt-1 shrink-0" />
+                          <span className="text-sm text-muted-foreground leading-relaxed">{a}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </section>
 
-                <hr className="border-border/60" />
+                  <hr className="border-border/60" />
 
-                {/* Expected Outcomes */}
-                <section>
-                  <h3 className="text-xl font-bold text-primary mb-3">Expected Outcomes</h3>
-                  <p className="text-muted-foreground leading-relaxed">
-                    The project aims to deliver measurable improvements in household income, land productivity, and community resilience. Through targeted interventions across value chains and landscape management, participating communities will gain access to sustainable livelihood opportunities, improved natural resource management, and stronger institutional capacity for self-governance.
-                  </p>
-                </section>
+                  {/* Expected Outcomes — icon-based */}
+                  <section>
+                    <h3 className="text-xl font-bold text-primary mb-4">Expected Outcomes</h3>
+                    <div className="grid sm:grid-cols-2 gap-3">
+                      {outcomes.map((o) => (
+                        <div key={o.text} className="flex items-start gap-3 p-3 rounded-lg bg-surface/60">
+                          <div className="h-8 w-8 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                            <o.icon className="h-4 w-4 text-primary" />
+                          </div>
+                          <span className="text-sm text-muted-foreground leading-snug">{o.text}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </section>
 
-                <hr className="border-border/60" />
+                  <hr className="border-border/60" />
 
-                {/* Community Impact */}
-                <section>
-                  <h3 className="text-xl font-bold text-primary mb-3">Community Impact</h3>
-                  <p className="text-muted-foreground leading-relaxed">
-                    Direct beneficiaries include {project.beneficiaries.toLowerCase()}, with emphasis on tribal and marginalized households. Community-based institutions such as JFMCs and SHGs are being strengthened to ensure participatory planning and inclusive decision-making at the grassroots level.
-                  </p>
-                </section>
+                  {/* Community Impact */}
+                  <section>
+                    <h3 className="text-xl font-bold text-primary mb-3">Community Impact</h3>
+                    <p className="text-muted-foreground leading-relaxed">
+                      Direct beneficiaries include {project.beneficiaries.toLowerCase()}, with emphasis on tribal and marginalized households. Community-based institutions such as JFMCs and SHGs are being strengthened to ensure participatory planning and inclusive decision-making at the grassroots level.
+                    </p>
+                  </section>
 
-                <hr className="border-border/60" />
+                  <hr className="border-border/60" />
 
-                {/* Livelihood Opportunities */}
-                <section>
-                  <h3 className="text-xl font-bold text-primary mb-3">Livelihood Opportunities</h3>
-                  <p className="text-muted-foreground leading-relaxed">
-                    The project promotes diversified income sources through high-value product chains including bamboo, agar, broom-grass, and non-timber forest products. Producer collectives and micro-enterprises are supported with market linkages, skill development, and working capital to ensure long-term economic sustainability.
-                  </p>
-                </section>
+                  {/* Livelihood Opportunities */}
+                  <section>
+                    <h3 className="text-xl font-bold text-primary mb-3">Livelihood Opportunities</h3>
+                    <p className="text-muted-foreground leading-relaxed">
+                      The project promotes diversified income sources through high-value product chains including bamboo, agar, broom-grass, and non-timber forest products. Producer collectives and micro-enterprises are supported with market linkages, skill development, and working capital to ensure long-term economic sustainability.
+                    </p>
+                  </section>
 
-                <hr className="border-border/60" />
+                  <hr className="border-border/60" />
 
-                {/* Landscape Development */}
-                <section>
-                  <h3 className="text-xl font-bold text-primary mb-3">Landscape Development Benefits</h3>
-                  <p className="text-muted-foreground leading-relaxed">
-                    Covering {project.coverage}, the landscape interventions focus on restoring degraded lands, improving soil health, enhancing water resources, and building ecological resilience. These efforts create a foundation for sustained agricultural productivity and environmental conservation across participating districts.
-                  </p>
-                </section>
-              </article>
+                  {/* Landscape Development */}
+                  <section>
+                    <h3 className="text-xl font-bold text-primary mb-3">Landscape Development Benefits</h3>
+                    <p className="text-muted-foreground leading-relaxed">
+                      Covering {project.coverage}, the landscape interventions focus on restoring degraded lands, improving soil health, enhancing water resources, and building ecological resilience. These efforts create a foundation for sustained agricultural productivity and environmental conservation across participating districts.
+                    </p>
+                  </section>
+                </article>
+              </div>
             </div>
           </div>
 
-          {/* Impact Stats — compact infographic */}
+          {/* Impact Stats — label first, then value */}
           <div className="mb-10">
             <div className="flex items-center gap-2 mb-5">
               <BarChart3 className="h-5 w-5 text-accent" />
@@ -175,8 +188,8 @@ export default function ProjectDetail() {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
               {impactStats.map((s) => (
                 <div key={s.label} className="bg-surface rounded-lg p-4 text-center">
-                  <div className="text-xl md:text-2xl font-bold text-primary">{s.value}</div>
-                  <div className="text-[11px] text-muted-foreground mt-1 uppercase tracking-wide font-medium">{s.label}</div>
+                  <div className="text-[11px] text-muted-foreground uppercase tracking-wide font-medium mb-1">{s.label}</div>
+                  <div className="text-lg md:text-xl font-bold text-primary leading-snug">{s.value}</div>
                 </div>
               ))}
             </div>
