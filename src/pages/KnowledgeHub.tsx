@@ -43,7 +43,7 @@ export default function KnowledgeHub({ initialCategory = "IEC Materials" }: { in
                   <div className="p-4 flex-1 flex flex-col">
                     <span className="text-[10px] font-semibold uppercase tracking-wide text-accent">{k.category}</span>
                     <h3 className="text-sm font-bold text-foreground mt-1 leading-snug">{k.title} {i > 0 && `— Vol. ${i + 1}`}</h3>
-                    <p className="text-xs text-muted-foreground mt-2 flex items-center gap-1"><FileText className="h-3 w-3" /> PDF · {k.date}</p>
+                    <p className="text-xs text-muted-foreground mt-2 flex items-center gap-1"><FileText className="h-3 w-3" /> PDF · 2.4 MB · English · {k.date}</p>
                     <button className="mt-3 inline-flex items-center justify-center gap-1.5 bg-accent hover:bg-accent-hover text-accent-foreground px-3 py-1.5 rounded text-xs font-semibold">
                       <Download className="h-3.5 w-3.5" /> Download
                     </button>
