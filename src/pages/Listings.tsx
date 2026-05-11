@@ -40,18 +40,25 @@ export function ListingPage({
           </div>
 
           {type === "doc" ? (
-            <DataTable headers={["#", "Title", "Date", "Type", "Size", "Actions"]}>
+            <DataTable headers={["#", "Title", "Date", "File Details", "Actions"]}>
               {rows.map((r, i) => (
                 <tr key={r.title}>
                   <td>{i + 1}</td>
                   <td className="font-medium">{r.title}</td>
                   <td>{r.date}</td>
-                  <td><span className="text-[10px] font-semibold px-2 py-0.5 rounded bg-primary/10 text-primary">{r.type}</span></td>
-                  <td>{r.size}</td>
+                  <td>
+                    <span className="text-[11px] text-muted-foreground">
+                      <span className="font-semibold text-primary">{r.type || "PDF"}</span>
+                      <span className="mx-1.5 opacity-50">|</span>
+                      {r.size || "—"}
+                      <span className="mx-1.5 opacity-50">|</span>
+                      English
+                    </span>
+                  </td>
                   <td>
                     <div className="flex gap-2">
-                      <button className="p-1.5 text-primary hover:bg-primary/10 rounded" aria-label="View"><Eye className="h-4 w-4" /></button>
-                      <button className="p-1.5 text-accent hover:bg-accent/10 rounded" aria-label="Download"><Download className="h-4 w-4" /></button>
+                      <button className="p-1.5 text-primary hover:bg-primary/10 rounded" aria-label={`View ${r.title}`}><Eye className="h-4 w-4" /></button>
+                      <button className="p-1.5 text-accent hover:bg-accent/10 rounded" aria-label={`Download ${r.title}`}><Download className="h-4 w-4" /></button>
                     </div>
                   </td>
                 </tr>

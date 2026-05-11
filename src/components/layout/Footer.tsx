@@ -41,9 +41,22 @@ export default function Footer() {
           <ul className="space-y-2.5 text-sm">
             <li><Link to="/disclaimer" className="opacity-90 hover:text-accent">Disclaimer</Link></li>
             <li><Link to="/privacy-policy" className="opacity-90 hover:text-accent">Privacy Policy</Link></li>
-            <li><Link to="/terms-of-use" className="opacity-90 hover:text-accent">Terms of Use</Link></li>
+            <li><Link to="/terms-of-use" className="opacity-90 hover:text-accent">Terms &amp; Conditions</Link></li>
+            <li><Link to="/hyperlinking-policy" className="opacity-90 hover:text-accent">Hyperlinking Policy</Link></li>
+            <li><Link to="/copyright-policy" className="opacity-90 hover:text-accent">Copyright Policy</Link></li>
+            <li><Link to="/accessibility" className="opacity-90 hover:text-accent">Accessibility Statement</Link></li>
+            <li><Link to="/screen-reader" className="opacity-90 hover:text-accent">Screen Reader Access</Link></li>
+            <li><Link to="/help" className="opacity-90 hover:text-accent">Help</Link></li>
+            <li><Link to="/sitemap" className="opacity-90 hover:text-accent">Sitemap</Link></li>
+            <li><Link to="/feedback" className="opacity-90 hover:text-accent">Feedback</Link></li>
+            <li><Link to="/archive" className="opacity-90 hover:text-accent">Archive</Link></li>
             <li><Link to="/grievance" className="opacity-90 hover:text-accent">Grievance Redressal</Link></li>
             <li><Link to="/rti" className="opacity-90 hover:text-accent">RTI</Link></li>
+            <li>
+              <a href="https://www.india.gov.in/" target="_blank" rel="noopener noreferrer" className="opacity-90 hover:text-accent">
+                National Portal of India ↗
+              </a>
+            </li>
           </ul>
         </div>
 
@@ -76,8 +89,9 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-primary/40 bg-primary">
-        <div className="gov-container py-4 text-xs opacity-90 flex flex-col md:flex-row items-center justify-between gap-2">
-          <div>{t("footer.copy")}</div>
+        <div className="gov-container py-4 text-xs opacity-90 flex flex-col md:flex-row items-center justify-between gap-2 text-center md:text-left">
+          <div>© 2026 ELEMENT – Government of Tripura &amp; The World Bank. All rights reserved.</div>
+          <div>{t("footer.lastUpdated")}: 11 May 2026</div>
           <div>{t("footer.designed")}</div>
         </div>
       </div>

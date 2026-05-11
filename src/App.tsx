@@ -32,6 +32,15 @@ import { GrievanceAdmin, RTIAdmin } from "./pages/admin/StatusModules";
 import { UsersAdmin } from "./pages/admin/UsersAdmin";
 import SettingsAdmin from "./pages/admin/SettingsAdmin";
 import HeroManagementAdmin from "./pages/admin/HeroManagementAdmin";
+import Accessibility from "./pages/Accessibility";
+import ScreenReader from "./pages/ScreenReader";
+import Help from "./pages/Help";
+import Sitemap from "./pages/Sitemap";
+import Feedback from "./pages/Feedback";
+import Archive from "./pages/Archive";
+import HyperlinkingPolicy from "./pages/HyperlinkingPolicy";
+import CopyrightPolicy from "./pages/CopyrightPolicy";
+import { AccessibilityProvider } from "./contexts/AccessibilityContext";
 
 
 const queryClient = new QueryClient();
@@ -39,6 +48,7 @@ const queryClient = new QueryClient();
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <LanguageProvider>
+    <AccessibilityProvider>
     <TooltipProvider>
       <Toaster />
       <Sonner />
@@ -74,6 +84,14 @@ const App = () => (
           <Route path="/disclaimer" element={<Disclaimer />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/terms-of-use" element={<TermsOfUse />} />
+          <Route path="/accessibility" element={<Accessibility />} />
+          <Route path="/screen-reader" element={<ScreenReader />} />
+          <Route path="/help" element={<Help />} />
+          <Route path="/sitemap" element={<Sitemap />} />
+          <Route path="/feedback" element={<Feedback />} />
+          <Route path="/archive" element={<Archive />} />
+          <Route path="/hyperlinking-policy" element={<HyperlinkingPolicy />} />
+          <Route path="/copyright-policy" element={<CopyrightPolicy />} />
           {/* Admin */}
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin" element={<AdminLayout />}>
@@ -101,6 +119,7 @@ const App = () => (
         </Routes>
       </BrowserRouter>
     </TooltipProvider>
+    </AccessibilityProvider>
     </LanguageProvider>
   </QueryClientProvider>
 );

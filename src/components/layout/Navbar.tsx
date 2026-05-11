@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { Link, NavLink, useLocation } from "react-router-dom";
-import { ChevronDown, Menu, X, Globe, Lock } from "lucide-react";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
+import { ChevronDown, Menu, X, Globe, Lock, Search, Contrast, Map as MapIcon, Eye } from "lucide-react";
 import { navItems } from "@/data/navigation";
 import { useLang, LANGUAGES } from "@/contexts/LanguageContext";
+import { useA11y } from "@/contexts/AccessibilityContext";
 import logoTripura from "@/assets/logo-tripura.png";
 import logoWorldBank from "@/assets/logo-worldbank.png";
 
@@ -11,8 +12,12 @@ export default function Navbar() {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [mobileSubOpen, setMobileSubOpen] = useState<string | null>(null);
   const [langOpen, setLangOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchQ, setSearchQ] = useState("");
   const { pathname } = useLocation();
+  const navigate = useNavigate();
   const { t, lang, setLang } = useLang();
+  const { increaseFont, decreaseFont, resetFont, highContrast, toggleHighContrast } = useA11y();
 
   const isActive = (to?: string) =>
     to && (to === "/" ? pathname === "/" : pathname.startsWith(to));
@@ -23,55 +28,58 @@ export default function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 shadow-card">
+      <a href="#main" className="skip-link focus-ring">{t("common.skipMain")}</a>
       {/* Top utility bar */}
       <div className="bg-primary-dark text-primary-foreground text-xs">
         <div className="gov-container flex items-center justify-between gap-2 h-9">
-          <div className="flex items-center gap-4 min-w-0">
-            <span className="hidden sm:inline truncate">
-              {t("site.partners")}
-            </span>
+          <div className="flex items-center gap-3 min-w-0">
+            <span className="hidden md:inline truncate">{t("site.partners")}</span>
           </div>
-          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-            <a href="#main" className="hover:underline hidden md:inline">
-              {t("common.skipMain")}
-            </a>
-            <span className="hidden md:inline opacity-70">|</span>
+          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+            <a href="#main" className="hover:underline focus-ring px-1 hidden md:inline">{t("common.skipMain")}</a>
+            <span className="hidden md:inline opacity-50">|</span>
+            <Link to="/screen-reader" className="hover:underline focus-ring px-1 hidden md:inline-flex items-center gap-1" aria-label="Screen Reader Access">
+              <Eye className="h-3 w-3" /> Screen Reader
+            </Link>
+            <span className="hidden md:inline opacity-50">|</span>
+            <div className="flex items-center gap-0.5" role="group" aria-label="Text size">
+              <button onClick={decreaseFont} aria-label="Decrease text size" className="px-1.5 hover:bg-primary rounded focus-ring text-[11px]">A-</button>
+              <button onClick={resetFont} aria-label="Reset text size" className="px-1.5 hover:bg-primary rounded focus-ring text-[12px]">A</button>
+              <button onClick={increaseFont} aria-label="Increase text size" className="px-1.5 hover:bg-primary rounded focus-ring text-[14px]">A+</button>
+            </div>
+            <span className="opacity-50">|</span>
             <button
-              className="hover:underline hidden xs:inline"
-              aria-label="Decrease font"
+              onClick={toggleHighContrast}
+              aria-pressed={highContrast}
+              aria-label="Toggle high contrast"
+              className="p-1 hover:bg-primary rounded focus-ring"
+              title="High contrast"
             >
-              A-
+              <Contrast className="h-3.5 w-3.5" />
             </button>
-            <button
-              className="hover:underline hidden xs:inline"
-              aria-label="Reset font"
-            >
-              A
+            <span className="hidden sm:inline opacity-50">|</span>
+            <Link to="/sitemap" className="hover:underline focus-ring px-1 hidden sm:inline-flex items-center gap-1" aria-label="Sitemap">
+              <MapIcon className="h-3 w-3" /> Sitemap
+            </Link>
+            <span className="hidden sm:inline opacity-50">|</span>
+            <button onClick={() => setSearchOpen(v => !v)} aria-label="Search" aria-expanded={searchOpen} className="p-1 hover:bg-primary rounded focus-ring">
+              <Search className="h-3.5 w-3.5" />
             </button>
-            <button
-              className="hover:underline hidden xs:inline"
-              aria-label="Increase font"
-            >
-              A+
-            </button>
-            <span className="hidden sm:inline opacity-70">|</span>
-            <Link
-              to="/admin/login"
-              className="hover:underline hidden sm:flex items-center gap-1"
-            >
+            <span className="hidden sm:inline opacity-50">|</span>
+            <Link to="/admin/login" className="hover:underline focus-ring px-1 hidden sm:inline-flex items-center gap-1">
               <Lock className="h-3 w-3" /> {t("common.adminLogin")}
             </Link>
-            <span className="hidden sm:inline opacity-70">|</span>
+            <span className="hidden sm:inline opacity-50">|</span>
             <div className="relative">
               <button
                 onClick={() => setLangOpen((v) => !v)}
                 onBlur={() => setTimeout(() => setLangOpen(false), 150)}
-                className="flex items-center gap-1 hover:underline focus-ring"
+                className="flex items-center gap-1 hover:underline focus-ring px-1"
                 aria-haspopup="listbox"
                 aria-expanded={langOpen}
               >
                 <Globe className="h-3.5 w-3.5" />
-                <span>{currentLangLabel}</span>
+                <span className="hidden xs:inline">{currentLangLabel}</span>
                 <ChevronDown className="h-3 w-3" />
               </button>
               {langOpen && (
@@ -79,10 +87,7 @@ export default function Navbar() {
                   {LANGUAGES.map((l) => (
                     <li key={l.code}>
                       <button
-                        onClick={() => {
-                          setLang(l.code);
-                          setLangOpen(false);
-                        }}
+                        onClick={() => { setLang(l.code); setLangOpen(false); }}
                         className={`w-full text-left px-3 py-2 text-xs hover:bg-surface ${lang === l.code ? "bg-surface text-primary font-semibold" : ""}`}
                       >
                         {l.label}
@@ -94,6 +99,28 @@ export default function Navbar() {
             </div>
           </div>
         </div>
+        {searchOpen && (
+          <div className="bg-primary border-t border-primary-dark/40">
+            <form
+              onSubmit={(e) => { e.preventDefault(); if (searchQ.trim()) { navigate(`/sitemap?q=${encodeURIComponent(searchQ.trim())}`); setSearchOpen(false); } }}
+              className="gov-container py-2 flex items-center gap-2"
+              role="search"
+            >
+              <label htmlFor="site-search" className="sr-only">Search the portal</label>
+              <Search className="h-4 w-4 opacity-80" />
+              <input
+                id="site-search"
+                value={searchQ}
+                onChange={(e) => setSearchQ(e.target.value)}
+                placeholder="Search ELEMENT portal…"
+                className="flex-1 bg-transparent border-b border-primary-foreground/40 focus:outline-none focus:border-accent text-sm py-1 placeholder:text-primary-foreground/60"
+                autoFocus
+              />
+              <button type="submit" className="bg-accent hover:bg-accent-hover text-accent-foreground text-xs font-semibold px-3 py-1 rounded">Search</button>
+              <button type="button" onClick={() => setSearchOpen(false)} aria-label="Close search" className="p-1 hover:bg-primary-dark rounded"><X className="h-4 w-4" /></button>
+            </form>
+          </div>
+        )}
       </div>
 
       {/* Brand band */}
