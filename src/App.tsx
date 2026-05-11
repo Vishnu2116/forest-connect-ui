@@ -48,6 +48,7 @@ const queryClient = new QueryClient();
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <LanguageProvider>
+    <AccessibilityProvider>
     <TooltipProvider>
       <Toaster />
       <Sonner />
@@ -83,6 +84,14 @@ const App = () => (
           <Route path="/disclaimer" element={<Disclaimer />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/terms-of-use" element={<TermsOfUse />} />
+          <Route path="/accessibility" element={<Accessibility />} />
+          <Route path="/screen-reader" element={<ScreenReader />} />
+          <Route path="/help" element={<Help />} />
+          <Route path="/sitemap" element={<Sitemap />} />
+          <Route path="/feedback" element={<Feedback />} />
+          <Route path="/archive" element={<Archive />} />
+          <Route path="/hyperlinking-policy" element={<HyperlinkingPolicy />} />
+          <Route path="/copyright-policy" element={<CopyrightPolicy />} />
           {/* Admin */}
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin" element={<AdminLayout />}>
