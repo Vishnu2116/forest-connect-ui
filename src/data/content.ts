@@ -358,6 +358,30 @@ export const governmentLeaders: Official[] = [
 
 export const elementLeadership: Official[] = [
   {
+    name: "PCCF HOFF",
+    designation: "SFDA Chair Person",
+    department: "Tripura Forest Department",
+    additionalRoles: "Head of Forest Force, Chair Person — SFDA",
+    office: "Aranya Bhawan, Pt. Nehru Complex, Agartala, Tripura (West)",
+    phone: "",
+    mobile: "",
+    email: "",
+    image: "",
+    category: "ELEMENT Project Leadership",
+  },
+  {
+    name: "PCCF CEO / PD",
+    designation: "CEO & Project Director",
+    department: "ELEMENT Project, Tripura Forest Department",
+    additionalRoles: "PCCF, CEO & Project Director, ELEMENT",
+    office: "Aranya Bhawan, Pt. Nehru Complex, Agartala, Tripura (West)",
+    phone: "",
+    mobile: "",
+    email: "",
+    image: "",
+    category: "ELEMENT Project Leadership",
+  },
+  {
     name: "Shri Chaitanya Murti, IFS",
     designation: "CEO & Project Director, ELEMENT Project",
     department:
