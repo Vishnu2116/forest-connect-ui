@@ -79,12 +79,21 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-primary/40 bg-primary/95">
-        <div className="gov-container py-3 text-sm flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3 text-center">
+        <div className="gov-container py-3 text-sm flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3 text-center flex-wrap">
           <Phone className="h-4 w-4 text-accent" />
           <span className="font-semibold">{t("common.helpline")}:</span>
           <span>1800-345-3666</span>
           <span className="hidden sm:inline opacity-60">|</span>
           <span className="opacity-90">{t("common.helplineHours")}</span>
+          <span className="hidden sm:inline opacity-60">|</span>
+          <a
+            href="https://pgportal.gov.in/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-semibold hover:text-accent underline-offset-2 hover:underline"
+          >
+            CPGRAMS ↗
+          </a>
         </div>
       </div>
 
