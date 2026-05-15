@@ -316,9 +316,9 @@ export default function Home() {
       {/* Three-column information section */}
       <section className="py-14 md:py-18 bg-surface border-t border-border">
         <div className="gov-container">
-          <div className="grid lg:grid-cols-3 gap-8">
+          <div className="grid lg:grid-cols-3 gap-6 items-stretch">
             {/* Column 1: Project Highlights */}
-            <div>
+            <div className="bg-card border border-border rounded-xl shadow-card p-5 flex flex-col h-full">
               <div className="flex items-center justify-between mb-5">
                 <h2 className="text-lg font-bold text-primary flex items-center gap-2">
                   <Trees className="h-5 w-5 text-accent" /> Project Highlights
@@ -327,9 +327,9 @@ export default function Home() {
                   View all <ArrowRight className="inline h-3 w-3" />
                 </Link>
               </div>
-              <div className="space-y-4">
+              <div className="space-y-4 flex-1">
                 {projects.slice(0, 3).map((p) => (
-                  <article key={p.title} className="bg-card border border-border rounded-lg overflow-hidden hover:shadow-card hover:border-primary/40 transition">
+                  <article key={p.title} className="bg-background border border-border rounded-lg overflow-hidden hover:shadow-card hover:border-primary/40 transition">
                     <div className="h-32 bg-gradient-to-br from-primary/20 to-primary-light/20 flex items-center justify-center overflow-hidden">
                       {p.image ? (
                         <img src={p.image} alt={p.title} className="w-full h-full object-cover" />
@@ -355,7 +355,7 @@ export default function Home() {
             </div>
 
             {/* Column 2: Social Media */}
-            <div>
+            <div className="bg-card border border-border rounded-xl shadow-card p-5 flex flex-col h-full">
               <div className="flex items-center justify-between mb-5">
                 <h2 className="text-lg font-bold text-primary flex items-center gap-2">
                   <Facebook className="h-5 w-5 text-accent" /> Social Media
@@ -364,8 +364,8 @@ export default function Home() {
                   View all <ArrowRight className="inline h-3 w-3" />
                 </Link>
               </div>
-              <div className="space-y-4">
-                <div className="bg-card border border-border rounded-lg overflow-hidden shadow-card">
+              <div className="space-y-4 flex-1">
+                <div className="bg-background border border-border rounded-lg overflow-hidden">
                   <div className="px-4 py-2.5 border-b border-border bg-surface flex items-center gap-2">
                     <Facebook className="h-4 w-4 text-primary" />
                     <span className="text-xs font-bold">Facebook</span>
@@ -374,7 +374,7 @@ export default function Home() {
                     Facebook embed placeholder
                   </div>
                 </div>
-                <div className="bg-card border border-border rounded-lg overflow-hidden shadow-card">
+                <div className="bg-background border border-border rounded-lg overflow-hidden">
                   <div className="px-4 py-2.5 border-b border-border bg-surface flex items-center gap-2">
                     <Twitter className="h-4 w-4 text-primary" />
                     <span className="text-xs font-bold">Twitter / X</span>
@@ -385,6 +385,33 @@ export default function Home() {
                 </div>
               </div>
             </div>
+
+            {/* Column 3: Knowledge Hub */}
+            <div className="bg-card border border-border rounded-xl shadow-card p-5 flex flex-col h-full">
+              <div className="flex items-center justify-between mb-5">
+                <h2 className="text-lg font-bold text-primary flex items-center gap-2">
+                  <Award className="h-5 w-5 text-accent" /> Knowledge Hub
+                </h2>
+                <Link to="/knowledge-hub/iec" className="text-xs text-primary hover:text-accent font-medium">
+                  View all <ArrowRight className="inline h-3 w-3" />
+                </Link>
+              </div>
+              <div className="space-y-4 flex-1">
+                {knowledgeHubItems.slice(0, 3).map((k) => (
+                  <article key={k.title} className="bg-background border border-border rounded-lg overflow-hidden hover:shadow-card transition">
+                    <div className="h-24 bg-gradient-to-br from-primary to-primary-light flex items-center justify-center">
+                      <BookOpen className="h-8 w-8 text-primary-foreground/80" />
+                    </div>
+                    <div className="p-4">
+                      <span className="text-[10px] font-semibold uppercase tracking-wide text-accent">{k.category}</span>
+                      <h3 className="text-sm font-semibold text-foreground mt-1 leading-snug mb-0">{k.title}</h3>
+                      <p className="text-xs text-muted-foreground mt-1.5 mb-0">{k.date}</p>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </div>
+          </div>
 
             {/* Column 3: Knowledge Hub */}
             <div>
