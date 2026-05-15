@@ -128,7 +128,10 @@ const translations: Record<Lang, Dict> = {
     "footer.address": "অরণ্য ভবন, আগরতলা, ত্রিপুরা — ৭৯৯০০৬",
     "footer.visitor": "দর্শক সংখ্যা",
     "footer.lastUpdated": "সর্বশেষ আপডেট",
-    "footer.designed": "ডিজাইন ও বিকাশ: NIC ত্রিপুরা",
+    "footer.designed": "Designed and Developed by Polygon Geospatial",
+    "nav.components": "কম্পোনেন্ট",
+    "nav.media": "মিডিয়া",
+    "nav.misgis": "MIS/GIS",
     "footer.copy": "© ২০২৬ ELEMENT পরিযোজনা, ত্রিপুরা সরকার। সর্বস্বত্ব সংরক্ষিত।",
   },
   bn: {
