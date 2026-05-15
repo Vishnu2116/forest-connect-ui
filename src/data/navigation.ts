@@ -18,12 +18,21 @@ export const navItems: NavItem[] = [
       { label: "Mission & Objective", to: "/about/mission" },
     ],
   },
-  { labelKey: "nav.projects", to: "/projects" },
-  { labelKey: "nav.publications", to: "/publications" },
+  {
+    labelKey: "nav.components",
+    children: [
+      { label: "Component-1", to: "/components/component-1" },
+      { label: "Component-2", to: "/components/component-2" },
+      { label: "Component-3", to: "/components/component-3" },
+      { label: "Component-4", to: "/components/component-4" },
+    ],
+  },
   { labelKey: "nav.activities", to: "/activities" },
   {
     labelKey: "nav.knowledge",
     children: [
+      { label: "Publications", to: "/publications" },
+      { label: "Reports", to: "/reports" },
       { label: "IEC Materials", to: "/knowledge-hub/iec" },
       { label: "Newsletters", to: "/knowledge-hub/newsletters" },
       { label: "Success Stories", to: "/knowledge-hub/success-stories" },
@@ -34,8 +43,23 @@ export const navItems: NavItem[] = [
       { label: "Lessons Learned", to: "/knowledge-hub/lessons" },
     ],
   },
-  { labelKey: "nav.reports", to: "/reports" },
-  { labelKey: "nav.procurements", to: "/procurements" },
-  { labelKey: "nav.plantationMap", to: "/plantation-map" },
+  {
+    labelKey: "nav.media",
+    children: [
+      { label: "Social Media", to: "/media/social" },
+      { label: "Gallery", to: "/media/gallery" },
+      { label: "Events", to: "/media/events" },
+    ],
+  },
+  {
+    labelKey: "nav.procurements",
+    children: [
+      { label: "RFPs", to: "/procurements/rfps" },
+      { label: "Tenders", to: "/procurements/tenders" },
+    ],
+  },
+  { labelKey: "nav.misgis", to: "/plantation-map" },
+  { labelKey: "nav.grievance", to: "/grievance" },
+  { labelKey: "nav.rti", to: "/rti" },
   { labelKey: "nav.contact", to: "/contact" },
 ];

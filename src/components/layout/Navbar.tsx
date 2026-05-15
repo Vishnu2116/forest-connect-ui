@@ -6,6 +6,10 @@ import { useLang, LANGUAGES } from "@/contexts/LanguageContext";
 import { useA11y } from "@/contexts/AccessibilityContext";
 import logoTripura from "@/assets/logo-tripura.png";
 import logoWorldBank from "@/assets/logo-worldbank.png";
+import logoForest from "@/assets/logo.png";
+import logoElement from "@/assets/logo-element.png";
+import cmImage from "@/assets/dignitaries/CM.jpeg";
+import ministerImage from "@/assets/dignitaries/Animesh.jpeg";
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -129,96 +133,99 @@ export default function Navbar() {
           {/* Mobile layout */}
           <div className="md:hidden">
             <div className="flex items-center justify-between gap-2">
-              <Link to="/" className="pl-1 flex items-center shrink-0">
-                <img
-                  src={logoTripura}
-                  alt="Government of Tripura emblem"
-                  className="h-16 w-[70px]"
-                  width={48}
-                  height={48}
-                />
+              {/* Group 1: Tripura Govt + CM */}
+              <Link to="/" className="flex items-center gap-1 shrink-0" aria-label="Home">
+                <img src={logoTripura} alt="Government of Tripura emblem" className="h-12 w-auto" />
+                <img src={cmImage} alt="Hon'ble Chief Minister, Government of Tripura" className="h-12 w-12 rounded-full object-cover border border-border" />
               </Link>
-              <div className="flex-1 text-center min-w-0 pt-2 pl-4">
-                <h1 className="text-3xl sm:text-2xl font-extrabold text-primary tracking-wide leading-none break-words">
-                  ELEMENT
-                </h1>
+              {/* Group 2 + 3: ELEMENT + World Bank */}
+              <div className="flex-1 flex items-center justify-center gap-2 min-w-0">
+                <h1 className="text-xl font-extrabold text-primary tracking-wide leading-none">ELEMENT</h1>
+                <img src={logoWorldBank} alt="The World Bank logo" className="h-10 w-auto" />
               </div>
-              <div className="flex items-center gap-2 shrink-0">
-                <img
-                  src={logoWorldBank}
-                  alt="The World Bank logo"
-                  className="h-20 w-[80px]"
-                  width={100}
-                  height={100}
-                />
+              {/* Group 4: Forest Dept + Minister */}
+              <div className="flex items-center gap-1 shrink-0">
+                <img src={ministerImage} alt="Hon'ble Forest & Environment Minister, Tripura" className="h-12 w-12 rounded-full object-cover border border-border" />
+                <img src={logoForest} alt="Tripura Forest Department" className="h-12 w-auto" />
                 <button
-                  className="lg:hidden p-2 rounded-md border border-border focus-ring"
+                  className="ml-1 p-2 rounded-md border border-border focus-ring"
                   onClick={() => setMobileOpen((v) => !v)}
                   aria-label="Toggle menu"
                 >
-                  {mobileOpen ? (
-                    <X className="h-5 w-5" />
-                  ) : (
-                    <Menu className="h-5 w-5" />
-                  )}
+                  {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
                 </button>
               </div>
             </div>
-            <div className="mt-0 pr-7 text-center">
-              <p className="text-[11px] sm:text-xs font-semibold text-foreground/80 leading-snug px-2">
+            <div className="mt-2 text-center">
+              <p className="text-[11px] font-semibold text-foreground/80 leading-snug px-2">
                 {t("site.full")}
               </p>
               <div className="mx-auto mt-1.5 max-w-md border-t border-border pt-1">
-                <p className="text-[10px] sm:text-xs text-muted-foreground italic px-2 leading-snug">
+                <p className="text-[10px] text-muted-foreground italic px-2 leading-snug">
                   {t("site.joint")}
                 </p>
               </div>
             </div>
           </div>
 
-          {/* Desktop layout */}
-          <div className="hidden md:grid grid-cols-[1fr_auto_1fr] items-center gap-3 md:gap-6">
-            <Link
-              to="/"
-              className="pl-[150px] flex items-center shrink-0 justify-self-start"
-            >
+          {/* Desktop layout — 4 groups */}
+          <div className="hidden md:flex items-center justify-between gap-4">
+            {/* Group 1: Tripura Govt logo + CM image */}
+            <Link to="/" className="flex items-center gap-3 shrink-0" aria-label="Home">
               <img
                 src={logoTripura}
                 alt="Government of Tripura emblem"
-                className="h-12 w-[120px] md:h-24 md:w-25"
-                width={96}
-                height={96}
+                className="h-20 w-auto"
               />
-            </Link>
-            <div className="text-center min-w-0 justify-self-center">
-              <h1 className="text-3xl md:text-5xl font-extrabold text-primary tracking-wide leading-none">
-                ELEMENT
-              </h1>
-              <p className="mt-2 text-sm md:text-base font-semibold text-foreground/80">
-                {t("site.full")}
-              </p>
-              <div className="mx-auto mt-2 max-w-md border-t border-border pt-1.5">
-                <p className="text-xs md:text-sm text-muted-foreground italic">
-                  {t("site.joint")}
-                </p>
+              <div className="text-center">
+                <img
+                  src={cmImage}
+                  alt="Hon'ble Chief Minister, Government of Tripura"
+                  className="h-20 w-20 rounded-full object-cover border-2 border-primary/20"
+                />
+                <div className="text-[10px] font-semibold text-primary mt-1 leading-tight">Hon'ble CM</div>
               </div>
-            </div>
-            <div className="pl-10 flex items-center gap-4 md:gap-1 shrink-0 justify-self-end">
+            </Link>
+
+            {/* Center: ELEMENT title + tagline */}
+            <div className="flex-1 flex items-center justify-center gap-4 min-w-0 px-2">
+              {/* Group 2: ELEMENT */}
+              <div className="text-center min-w-0">
+                <h1 className="text-3xl lg:text-5xl font-extrabold text-primary tracking-wide leading-none">
+                  ELEMENT
+                </h1>
+                <p className="mt-2 text-xs lg:text-sm font-semibold text-foreground/80">
+                  {t("site.full")}
+                </p>
+                <div className="mx-auto mt-1.5 max-w-md border-t border-border pt-1">
+                  <p className="text-[11px] lg:text-xs text-muted-foreground italic">
+                    {t("site.joint")}
+                  </p>
+                </div>
+              </div>
+              {/* Group 3: World Bank */}
               <img
                 src={logoWorldBank}
                 alt="The World Bank logo"
-                className="h-[120px] md:h-26 w-auto"
-                width={80}
-                height={80}
+                className="h-20 w-auto shrink-0"
               />
-              <div className="leading-tight">
-                <div className="text-lg md:text-2xl font-extrabold text-primary tracking-tight">
-                  {t("site.worldbank")}
-                </div>
-                <div className="text-[10px] md:text-xs text-muted-foreground tracking-wider">
-                  {t("site.worldbankSub")}
-                </div>
+            </div>
+
+            {/* Group 4: Forest Dept logo + Forest Minister */}
+            <div className="flex items-center gap-3 shrink-0">
+              <div className="text-center">
+                <img
+                  src={ministerImage}
+                  alt="Hon'ble Forest & Environment Minister, Tripura"
+                  className="h-20 w-20 rounded-full object-cover border-2 border-primary/20"
+                />
+                <div className="text-[10px] font-semibold text-primary mt-1 leading-tight">Forest Minister</div>
               </div>
+              <img
+                src={logoForest}
+                alt="Tripura Forest Department"
+                className="h-20 w-auto"
+              />
             </div>
           </div>
         </div>

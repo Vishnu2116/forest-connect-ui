@@ -87,7 +87,7 @@ export default function HeroSlider() {
                   <span className="inline-block bg-accent text-accent-foreground text-[11px] sm:text-xs font-semibold px-3 py-1 rounded">
                     {s.badge}
                   </span>
-                  <h2 className="mt-4 text-2xl sm:text-3xl md:text-5xl font-bold leading-tight mb-0">
+                  <h2 className="mt-4 text-2xl sm:text-3xl md:text-5xl font-bold leading-tight mb-0 text-white">
                     {s.title}
                   </h2>
                   <p className="mt-3 text-sm sm:text-base md:text-lg opacity-90 leading-relaxed mb-0">

@@ -10,7 +10,9 @@ import NotFound from "./pages/NotFound.tsx";
 import { AboutElement, Organization, WhosWhoSection, Vision, Mission, Memorandum, OfficialDirectory } from "./pages/About";
 import Projects from "./pages/Projects";
 import ProjectDetail from "./pages/ProjectDetail";
-import { Reports, Publications, Procurements } from "./pages/Listings";
+import { Reports, Publications, Procurements, RFPs, Tenders } from "./pages/Listings";
+import ComponentPage from "./pages/ComponentPage";
+import { SocialMedia, Gallery, MediaEvents } from "./pages/Media";
 import KnowledgeHub from "./pages/KnowledgeHub";
 import PlantationMap from "./pages/PlantationMap";
 import Grievance from "./pages/Grievance";
@@ -77,6 +79,12 @@ const App = () => (
           <Route path="/knowledge-hub/lessons" element={<KnowledgeHub initialCategory="Lessons Learned" />} />
           <Route path="/reports" element={<Reports />} />
           <Route path="/procurements" element={<Procurements />} />
+          <Route path="/procurements/rfps" element={<RFPs />} />
+          <Route path="/procurements/tenders" element={<Tenders />} />
+          <Route path="/components/:slug" element={<ComponentPage />} />
+          <Route path="/media/social" element={<SocialMedia />} />
+          <Route path="/media/gallery" element={<Gallery />} />
+          <Route path="/media/events" element={<MediaEvents />} />
           <Route path="/plantation-map" element={<PlantationMap />} />
           <Route path="/grievance" element={<Grievance />} />
           <Route path="/rti" element={<RTI />} />
