@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import logoTripura from "@/assets/logo-tripura.png";
-import logoWorldBank from "@/assets/logo-worldbank.png";
+import logoWorldBank from "@/assets/logo-theworldbank.jpg";
 
 export default function AdminLogin() {
   const navigate = useNavigate();
@@ -23,10 +23,15 @@ export default function AdminLogin() {
     <main className="min-h-screen bg-surface flex flex-col">
       <div className="bg-primary text-primary-foreground py-3">
         <div className="gov-container flex items-center justify-between">
-          <Link to="/" className="text-sm flex items-center gap-2 hover:underline">
+          <Link
+            to="/"
+            className="text-sm flex items-center gap-2 hover:underline"
+          >
             <ArrowLeft className="h-4 w-4" /> Back to Public Website
           </Link>
-          <span className="text-xs opacity-90">Government of Tripura | The World Bank</span>
+          <span className="text-xs opacity-90">
+            Government of Tripura | The World Bank
+          </span>
         </div>
       </div>
 
@@ -34,11 +39,21 @@ export default function AdminLogin() {
         <div className="w-full max-w-md bg-card rounded-lg shadow-elevated border border-border overflow-hidden">
           <div className="bg-primary text-primary-foreground px-6 py-5 text-center">
             <div className="flex items-center justify-center gap-3 mb-2">
-              <img src={logoTripura} alt="Tripura" className="h-10 w-10 bg-white rounded p-1" />
-              <img src={logoWorldBank} alt="World Bank" className="h-10 w-auto bg-white rounded p-1" />
+              <img
+                src={logoTripura}
+                alt="Tripura"
+                className="h-10 w-10 bg-white rounded p-1"
+              />
+              <img
+                src={logoWorldBank}
+                alt="World Bank"
+                className="h-10 w-auto bg-white rounded p-1"
+              />
             </div>
             <h1 className="text-2xl font-extrabold tracking-tight">ELEMENT</h1>
-            <p className="text-xs opacity-90">Enhancing Landscape and Ecosystem Management</p>
+            <p className="text-xs opacity-90">
+              Enhancing Landscape and Ecosystem Management
+            </p>
             <p className="text-[11px] opacity-80 mt-1">Admin Portal</p>
           </div>
 
@@ -47,24 +62,48 @@ export default function AdminLogin() {
               <Label htmlFor="user">Username / Email</Label>
               <div className="relative mt-1">
                 <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input id="user" value={user} onChange={(e) => setUser(e.target.value)} placeholder="admin@element.tripura.gov.in" className="pl-9" required />
+                <Input
+                  id="user"
+                  value={user}
+                  onChange={(e) => setUser(e.target.value)}
+                  placeholder="admin@element.tripura.gov.in"
+                  className="pl-9"
+                  required
+                />
               </div>
             </div>
             <div>
               <Label htmlFor="pass">Password</Label>
               <div className="relative mt-1">
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input id="pass" type="password" value={pass} onChange={(e) => setPass(e.target.value)} placeholder="••••••••" className="pl-9" required />
+                <Input
+                  id="pass"
+                  type="password"
+                  value={pass}
+                  onChange={(e) => setPass(e.target.value)}
+                  placeholder="••••••••"
+                  className="pl-9"
+                  required
+                />
               </div>
             </div>
             <div className="flex items-center justify-between text-xs">
-              <label className="flex items-center gap-2"><input type="checkbox" /> Remember me</label>
-              <a href="#" className="text-primary hover:underline">Forgot password?</a>
+              <label className="flex items-center gap-2">
+                <input type="checkbox" /> Remember me
+              </label>
+              <a href="#" className="text-primary hover:underline">
+                Forgot password?
+              </a>
             </div>
-            <Button type="submit" className="w-full bg-accent hover:bg-accent/90 text-accent-foreground h-11 text-base font-semibold">
+            <Button
+              type="submit"
+              className="w-full bg-accent hover:bg-accent/90 text-accent-foreground h-11 text-base font-semibold"
+            >
               Login to Dashboard
             </Button>
-            <p className="text-[11px] text-center text-muted-foreground">Demo only — any credentials will be accepted.</p>
+            <p className="text-[11px] text-center text-muted-foreground">
+              Demo only — any credentials will be accepted.
+            </p>
           </form>
         </div>
       </div>

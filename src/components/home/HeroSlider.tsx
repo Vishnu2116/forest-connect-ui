@@ -113,27 +113,36 @@ export default function HeroSlider() {
           </div>
         ))}
       </div>
+      {/* Left Arrow */}
       <button
         onClick={prev}
         aria-label="Previous slide"
-        className="absolute right-16 bottom-4 bg-background/30 hover:bg-background/50 text-primary-foreground p-2 rounded-full backdrop-blur focus-ring z-20"
+        className="absolute left-4 top-1/2 -translate-y-1/2 bg-background/20 hover:bg-background/40 text-primary-foreground p-3 rounded-full backdrop-blur-md focus-ring z-30 transition-all"
       >
-        <ChevronLeft className="h-5 w-5" />
+        <ChevronLeft className="h-6 w-6" />
       </button>
+
+      {/* Right Arrow */}
       <button
         onClick={next}
         aria-label="Next slide"
-        className="absolute right-4 bottom-4 bg-background/30 hover:bg-background/50 text-primary-foreground p-2 rounded-full backdrop-blur focus-ring z-20"
+        className="absolute right-4 top-1/2 -translate-y-1/2 bg-background/20 hover:bg-background/40 text-primary-foreground p-3 rounded-full backdrop-blur-md focus-ring z-30 transition-all"
       >
-        <ChevronRight className="h-5 w-5" />
+        <ChevronRight className="h-6 w-6" />
       </button>
-      <div className="absolute bottom-6 left-6 flex gap-2 z-20">
+
+      {/* Bottom Center Dots */}
+      <div className="absolute bottom-5 left-1/2 -translate-x-1/2 flex items-center gap-2 z-30">
         {slides.map((_, idx) => (
           <button
             key={idx}
             onClick={() => setI(idx)}
             aria-label={`Go to slide ${idx + 1}`}
-            className={`h-2 rounded-full transition-all ${idx === i ? "bg-accent w-8" : "bg-primary-foreground/50 w-2"}`}
+            className={`h-2.5 rounded-full transition-all duration-300 ${
+              idx === i
+                ? "bg-accent w-8"
+                : "bg-primary-foreground/60 hover:bg-primary-foreground/80 w-2.5"
+            }`}
           />
         ))}
       </div>

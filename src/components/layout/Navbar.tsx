@@ -1,6 +1,16 @@
 import { useState } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
-import { ChevronDown, Menu, X, Globe, Lock, Search, Contrast, Map as MapIcon, Eye } from "lucide-react";
+import {
+  ChevronDown,
+  Menu,
+  X,
+  Globe,
+  Lock,
+  Search,
+  Contrast,
+  Map as MapIcon,
+  Eye,
+} from "lucide-react";
 import { navItems } from "@/data/navigation";
 import { useLang, LANGUAGES } from "@/contexts/LanguageContext";
 import { useA11y } from "@/contexts/AccessibilityContext";
@@ -10,6 +20,8 @@ import logoForest from "@/assets/logo.png";
 import logoElement from "@/assets/logo-element.png";
 import cmImage from "@/assets/dignitaries/CM.jpeg";
 import ministerImage from "@/assets/dignitaries/Animesh.jpeg";
+import logoTheWorldBank from "@/assets/logo-theworldbank.jpg";
+import logoTripuraForestDept from "@/assets/logo-tripuraforestdept.png";
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -21,7 +33,13 @@ export default function Navbar() {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const { t, lang, setLang } = useLang();
-  const { increaseFont, decreaseFont, resetFont, highContrast, toggleHighContrast } = useA11y();
+  const {
+    increaseFont,
+    decreaseFont,
+    resetFont,
+    highContrast,
+    toggleHighContrast,
+  } = useA11y();
 
   const isActive = (to?: string) =>
     to && (to === "/" ? pathname === "/" : pathname.startsWith(to));
@@ -32,24 +50,59 @@ export default function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 shadow-card">
-      <a href="#main" className="skip-link focus-ring">{t("common.skipMain")}</a>
+      <a href="#main" className="skip-link focus-ring">
+        {t("common.skipMain")}
+      </a>
       {/* Top utility bar */}
       <div className="bg-primary-dark text-primary-foreground text-xs">
         <div className="gov-container flex items-center justify-between gap-2 h-9">
           <div className="flex items-center gap-3 min-w-0">
-            <span className="hidden md:inline truncate">{t("site.partners")}</span>
+            <span className="hidden md:inline truncate">
+              {t("site.partners")}
+            </span>
           </div>
           <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
-            <a href="#main" className="hover:underline focus-ring px-1 hidden md:inline">{t("common.skipMain")}</a>
+            <a
+              href="#main"
+              className="hover:underline focus-ring px-1 hidden md:inline"
+            >
+              {t("common.skipMain")}
+            </a>
             <span className="hidden md:inline opacity-50">|</span>
-            <Link to="/screen-reader" className="hover:underline focus-ring px-1 hidden md:inline-flex items-center gap-1" aria-label="Screen Reader Access">
+            <Link
+              to="/screen-reader"
+              className="hover:underline focus-ring px-1 hidden md:inline-flex items-center gap-1"
+              aria-label="Screen Reader Access"
+            >
               <Eye className="h-3 w-3" /> Screen Reader
             </Link>
             <span className="hidden md:inline opacity-50">|</span>
-            <div className="flex items-center gap-0.5" role="group" aria-label="Text size">
-              <button onClick={decreaseFont} aria-label="Decrease text size" className="px-1.5 hover:bg-primary rounded focus-ring text-[11px]">A-</button>
-              <button onClick={resetFont} aria-label="Reset text size" className="px-1.5 hover:bg-primary rounded focus-ring text-[12px]">A</button>
-              <button onClick={increaseFont} aria-label="Increase text size" className="px-1.5 hover:bg-primary rounded focus-ring text-[14px]">A+</button>
+            <div
+              className="flex items-center gap-0.5"
+              role="group"
+              aria-label="Text size"
+            >
+              <button
+                onClick={decreaseFont}
+                aria-label="Decrease text size"
+                className="px-1.5 hover:bg-primary rounded focus-ring text-[11px]"
+              >
+                A-
+              </button>
+              <button
+                onClick={resetFont}
+                aria-label="Reset text size"
+                className="px-1.5 hover:bg-primary rounded focus-ring text-[12px]"
+              >
+                A
+              </button>
+              <button
+                onClick={increaseFont}
+                aria-label="Increase text size"
+                className="px-1.5 hover:bg-primary rounded focus-ring text-[14px]"
+              >
+                A+
+              </button>
             </div>
             <span className="opacity-50">|</span>
             <button
@@ -62,15 +115,27 @@ export default function Navbar() {
               <Contrast className="h-3.5 w-3.5" />
             </button>
             <span className="hidden sm:inline opacity-50">|</span>
-            <Link to="/sitemap" className="hover:underline focus-ring px-1 hidden sm:inline-flex items-center gap-1" aria-label="Sitemap">
+            <Link
+              to="/sitemap"
+              className="hover:underline focus-ring px-1 hidden sm:inline-flex items-center gap-1"
+              aria-label="Sitemap"
+            >
               <MapIcon className="h-3 w-3" /> Sitemap
             </Link>
             <span className="hidden sm:inline opacity-50">|</span>
-            <button onClick={() => setSearchOpen(v => !v)} aria-label="Search" aria-expanded={searchOpen} className="p-1 hover:bg-primary rounded focus-ring">
+            <button
+              onClick={() => setSearchOpen((v) => !v)}
+              aria-label="Search"
+              aria-expanded={searchOpen}
+              className="p-1 hover:bg-primary rounded focus-ring"
+            >
               <Search className="h-3.5 w-3.5" />
             </button>
             <span className="hidden sm:inline opacity-50">|</span>
-            <Link to="/admin/login" className="hover:underline focus-ring px-1 hidden sm:inline-flex items-center gap-1">
+            <Link
+              to="/admin/login"
+              className="hover:underline focus-ring px-1 hidden sm:inline-flex items-center gap-1"
+            >
               <Lock className="h-3 w-3" /> {t("common.adminLogin")}
             </Link>
             <span className="hidden sm:inline opacity-50">|</span>
@@ -91,7 +156,10 @@ export default function Navbar() {
                   {LANGUAGES.map((l) => (
                     <li key={l.code}>
                       <button
-                        onClick={() => { setLang(l.code); setLangOpen(false); }}
+                        onClick={() => {
+                          setLang(l.code);
+                          setLangOpen(false);
+                        }}
                         className={`w-full text-left px-3 py-2 text-xs hover:bg-surface ${lang === l.code ? "bg-surface text-primary font-semibold" : ""}`}
                       >
                         {l.label}
@@ -106,11 +174,19 @@ export default function Navbar() {
         {searchOpen && (
           <div className="bg-primary border-t border-primary-dark/40">
             <form
-              onSubmit={(e) => { e.preventDefault(); if (searchQ.trim()) { navigate(`/sitemap?q=${encodeURIComponent(searchQ.trim())}`); setSearchOpen(false); } }}
+              onSubmit={(e) => {
+                e.preventDefault();
+                if (searchQ.trim()) {
+                  navigate(`/sitemap?q=${encodeURIComponent(searchQ.trim())}`);
+                  setSearchOpen(false);
+                }
+              }}
               className="gov-container py-2 flex items-center gap-2"
               role="search"
             >
-              <label htmlFor="site-search" className="sr-only">Search the portal</label>
+              <label htmlFor="site-search" className="sr-only">
+                Search the portal
+              </label>
               <Search className="h-4 w-4 opacity-80" />
               <input
                 id="site-search"
@@ -120,116 +196,154 @@ export default function Navbar() {
                 className="flex-1 bg-transparent border-b border-primary-foreground/40 focus:outline-none focus:border-accent text-sm py-1 placeholder:text-primary-foreground/60"
                 autoFocus
               />
-              <button type="submit" className="bg-accent hover:bg-accent-hover text-accent-foreground text-xs font-semibold px-3 py-1 rounded">Search</button>
-              <button type="button" onClick={() => setSearchOpen(false)} aria-label="Close search" className="p-1 hover:bg-primary-dark rounded"><X className="h-4 w-4" /></button>
+              <button
+                type="submit"
+                className="bg-accent hover:bg-accent-hover text-accent-foreground text-xs font-semibold px-3 py-1 rounded"
+              >
+                Search
+              </button>
+              <button
+                type="button"
+                onClick={() => setSearchOpen(false)}
+                aria-label="Close search"
+                className="p-1 hover:bg-primary-dark rounded"
+              >
+                <X className="h-4 w-4" />
+              </button>
             </form>
           </div>
         )}
       </div>
 
-      {/* Brand band */}
-      <div className="bg-background border-b border-border">
-        <div className="gov-container-wide py-3 md:py-4">
-          {/* Mobile layout — show only Tripura Govt logo + ELEMENT title */}
-          <div className="md:hidden">
-            <div className="flex items-center justify-between gap-2">
-              <Link to="/" className="flex items-center gap-2 shrink-0" aria-label="Home">
-                <img src={logoTripura} alt="Government of Tripura emblem" className="h-12 w-12 object-contain" />
-              </Link>
-              <div className="flex-1 text-center min-w-0 px-2">
-                <h1 className="text-xl font-extrabold text-primary tracking-wide leading-none">ELEMENT</h1>
-              </div>
-              <button
-                className="p-2 rounded-md border border-border focus-ring shrink-0"
-                onClick={() => setMobileOpen((v) => !v)}
-                aria-label="Toggle menu"
-              >
-                {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-              </button>
+      {/* Desktop layout — balanced 3-group structure */}
+      <div className="hidden md:flex items-center justify-between gap-8 py-2">
+        {/* Left Group — Tripura Govt + CM */}
+        <div className="flex items-center justify-center gap-6 flex-1">
+          {/* Tripura Govt Logo */}
+          <div className="flex items-center justify-center">
+            <img
+              src={logoTripura}
+              alt="Government of Tripura emblem"
+              className="h-20 w-20 object-contain"
+            />
+          </div>
+
+          {/* CM Image */}
+          <div className="flex flex-col items-center justify-center">
+            <img
+              src={cmImage}
+              alt="Hon'ble Chief Minister, Government of Tripura"
+              className="h-20 w-20 rounded-full object-cover border-2 border-primary/20"
+            />
+            <div className="text-[10px] font-semibold text-primary mt-1 leading-tight text-center">
+              Hon'ble CM
             </div>
-            <div className="mt-2 text-center">
-              <p className="text-[11px] font-semibold text-foreground/80 leading-snug px-2">
-                {t("site.full")}
+          </div>
+        </div>
+
+        {/* Center Group — ELEMENT + World Bank */}
+        <div className="flex items-center justify-center gap-6 flex-1 px-4">
+          {/* ELEMENT Section */}
+          <div className="flex flex-col items-center justify-center text-center">
+            <h1 className="text-3xl lg:text-5xl font-extrabold text-primary tracking-wide leading-none">
+              ELEMENT
+            </h1>
+
+            <p className="mt-2 text-xs lg:text-sm font-semibold text-foreground/80">
+              {t("site.full")}
+            </p>
+
+            <div className="mx-auto mt-1.5 border-t border-border pt-1">
+              <p className="text-[11px] lg:text-xs text-muted-foreground italic">
+                {t("site.joint")}
               </p>
-              <div className="mx-auto mt-1.5 max-w-md border-t border-border pt-1">
-                <p className="text-[10px] text-muted-foreground italic px-2 leading-snug">
-                  {t("site.joint")}
-                </p>
-              </div>
             </div>
           </div>
 
-          {/* Desktop layout — 6 equally sized assets, equal spacing */}
-          <div className="hidden md:flex items-center justify-between gap-4">
-            {/* Left group: Tripura Govt logo + CM image */}
-            <Link to="/" className="flex items-center gap-4 shrink-0" aria-label="Home">
-              <img
-                src={logoTripura}
-                alt="Government of Tripura emblem"
-                className="h-20 w-20 object-contain"
-              />
-              <div className="text-center">
-                <img
-                  src={cmImage}
-                  alt="Hon'ble Chief Minister, Government of Tripura"
-                  className="h-20 w-20 rounded-full object-cover border-2 border-primary/20"
-                />
-                <div className="text-[10px] font-semibold text-primary mt-1 leading-tight">Hon'ble CM</div>
-              </div>
-            </Link>
+          {/* World Bank Logo */}
+          <div className="flex items-center justify-center">
+            <img
+              src={logoTheWorldBank}
+              alt="The World Bank logo"
+              className="h-20 w-20 object-contain"
+            />
+          </div>
+        </div>
 
-            {/* Center: ELEMENT title + World Bank logo */}
-            <div className="flex-1 flex items-center justify-center gap-4 min-w-0 px-2">
-              <div className="text-center min-w-0">
-                <h1 className="text-3xl lg:text-5xl font-extrabold text-primary tracking-wide leading-none">
-                  ELEMENT
-                </h1>
-                <p className="mt-2 text-xs lg:text-sm font-semibold text-foreground/80">
-                  {t("site.full")}
-                </p>
-                <div className="mx-auto mt-1.5 max-w-md border-t border-border pt-1">
-                  <p className="text-[11px] lg:text-xs text-muted-foreground italic">
-                    {t("site.joint")}
-                  </p>
-                </div>
-              </div>
-              <img
-                src={logoWorldBank}
-                alt="The World Bank logo"
-                className="h-20 w-20 object-contain shrink-0"
-              />
+        {/* Right Group — Forest Minister + Forest Dept */}
+        <div className="flex items-center justify-center gap-6 flex-1">
+          {/* Forest Minister */}
+          <div className="flex flex-col items-center justify-center">
+            <img
+              src={ministerImage}
+              alt="Hon'ble Forest & Environment Minister, Tripura"
+              className="h-20 w-20 rounded-full object-cover border-2 border-primary/20"
+            />
+            <div className="text-[10px] font-semibold text-primary mt-1 leading-tight text-center">
+              Forest Minister
             </div>
+          </div>
 
-            {/* Right group: Forest Minister + Forest Dept logo */}
-            <div className="flex items-center gap-4 shrink-0">
-              <div className="text-center">
-                <img
-                  src={ministerImage}
-                  alt="Hon'ble Forest & Environment Minister, Tripura"
-                  className="h-20 w-20 rounded-full object-cover border-2 border-primary/20"
-                />
-                <div className="text-[10px] font-semibold text-primary mt-1 leading-tight">Forest Minister</div>
-              </div>
-              <img
-                src={logoForest}
-                alt="Tripura Forest Department"
-                className="h-20 w-20 object-contain"
-              />
-            </div>
+          {/* Forest Department Logo */}
+          <div className="flex items-center justify-center">
+            <img
+              src={logoTripuraForestDept}
+              alt="Tripura Forest Department"
+              className="h-20 w-20 object-contain"
+            />
           </div>
         </div>
       </div>
 
-      {/* Main nav — consistent height/padding, orange active bar for all including dropdown parents */}
+      {/* Mobile Header */}
+      <div className="md:hidden bg-background border-b border-border">
+        <div className="flex items-center justify-between px-4 py-3">
+          {/* Left Logo */}
+          <Link
+            to="/"
+            className="flex items-center gap-2 shrink-0"
+            aria-label="Home"
+          >
+            <img
+              src={logoTripura}
+              alt="Government of Tripura emblem"
+              className="h-12 w-12 object-contain"
+            />
+          </Link>
+
+          {/* ELEMENT Title */}
+          <div className="flex-1 text-center px-2">
+            <h1 className="text-xl font-extrabold text-primary tracking-wide leading-none">
+              ELEMENT
+            </h1>
+          </div>
+
+          {/* Hamburger Button */}
+          <button
+            className="p-2 rounded-md border border-border focus-ring shrink-0"
+            onClick={() => setMobileOpen((v) => !v)}
+            aria-label="Toggle menu"
+          >
+            {mobileOpen ? (
+              <X className="h-5 w-5" />
+            ) : (
+              <Menu className="h-5 w-5" />
+            )}
+          </button>
+        </div>
+      </div>
+
+      {/* Main nav — equal width and equal spacing navbar */}
       <nav className="bg-primary text-primary-foreground hidden lg:block">
-        <div className="gov-container">
-          <ul className="flex items-stretch">
+        <div className="gov-container-wide">
+          <ul className="flex items-stretch justify-between w-full">
             {navItems.map((item) => {
               const dropActive = isDropdownActive(item);
+
               return (
                 <li
                   key={item.labelKey}
-                  className="relative flex"
+                  className="relative flex flex-1"
                   onMouseEnter={() =>
                     item.children && setOpenDropdown(item.labelKey)
                   }
@@ -237,20 +351,21 @@ export default function Navbar() {
                 >
                   {item.children ? (
                     <button
-                      className={`flex items-center gap-1 px-4 py-3.5 text-sm font-medium hover:bg-primary-dark transition-colors border-b-2 ${
+                      className={`flex items-center justify-center gap-1 w-full px-4 py-3.5 text-sm font-medium hover:bg-primary-dark transition-colors border-b-2 ${
                         dropActive
                           ? "bg-primary-dark border-accent"
                           : "border-transparent"
                       }`}
                     >
                       {t(item.labelKey)}
-                      <ChevronDown className="h-3.5 w-3.5" />
+
+                      <ChevronDown className="h-3.5 w-3.5 shrink-0" />
                     </button>
                   ) : (
                     <NavLink
                       to={item.to!}
                       className={({ isActive: a }) =>
-                        `flex items-center px-4 py-3.5 text-sm font-medium hover:bg-primary-dark transition-colors border-b-2 ${
+                        `flex items-center justify-center w-full px-4 py-3.5 text-sm font-medium hover:bg-primary-dark transition-colors border-b-2 ${
                           a
                             ? "bg-primary-dark border-accent"
                             : "border-transparent"
@@ -261,6 +376,7 @@ export default function Navbar() {
                       {t(item.labelKey)}
                     </NavLink>
                   )}
+
                   {item.children && openDropdown === item.labelKey && (
                     <div className="absolute left-0 top-full min-w-[260px] bg-background text-foreground shadow-elevated border border-border rounded-b-md overflow-hidden animate-fade-in z-50">
                       {item.children.map((c) => (
