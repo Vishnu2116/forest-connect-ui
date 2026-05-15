@@ -67,9 +67,6 @@ const translations: Record<Lang, Dict> = {
     "footer.visitor": "Visitor Count",
     "footer.lastUpdated": "Last updated",
     "footer.designed": "Designed and Developed by Polygon Geospatial",
-    "nav.components": "Components",
-    "nav.media": "Media",
-    "nav.misgis": "MIS/GIS",
     "footer.copy": "© 2026 ELEMENT Project, Government of Tripura. All rights reserved.",
   },
   kok: {
