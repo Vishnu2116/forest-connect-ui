@@ -30,9 +30,6 @@ import { slugify } from "./ProjectDetail";
 
 import cmImage from "@/assets/dignitaries/CM.jpeg";
 import Animesh from "@/assets/dignitaries/Animesh.jpeg";
-import CS from "@/assets/dignitaries/CS.jpg";
-import Honnareddy from "@/assets/dignitaries/Honnareddy.jpeg";
-import SanjibDas from "@/assets/dignitaries/SanjibDas.png";
 
 const announcementDescriptions: Record<string, string> = {
   Recruitment: "Applications invited for ELEMENT programme positions.",
