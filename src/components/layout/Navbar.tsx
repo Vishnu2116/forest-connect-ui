@@ -129,32 +129,23 @@ export default function Navbar() {
 
       {/* Brand band */}
       <div className="bg-background border-b border-border">
-        <div className="gov-container py-3 md:py-4">
-          {/* Mobile layout */}
+        <div className="gov-container-wide py-3 md:py-4">
+          {/* Mobile layout — show only Tripura Govt logo + ELEMENT title */}
           <div className="md:hidden">
             <div className="flex items-center justify-between gap-2">
-              {/* Group 1: Tripura Govt + CM */}
-              <Link to="/" className="flex items-center gap-1 shrink-0" aria-label="Home">
-                <img src={logoTripura} alt="Government of Tripura emblem" className="h-12 w-auto" />
-                <img src={cmImage} alt="Hon'ble Chief Minister, Government of Tripura" className="h-12 w-12 rounded-full object-cover border border-border" />
+              <Link to="/" className="flex items-center gap-2 shrink-0" aria-label="Home">
+                <img src={logoTripura} alt="Government of Tripura emblem" className="h-12 w-12 object-contain" />
               </Link>
-              {/* Group 2 + 3: ELEMENT + World Bank */}
-              <div className="flex-1 flex items-center justify-center gap-2 min-w-0">
+              <div className="flex-1 text-center min-w-0 px-2">
                 <h1 className="text-xl font-extrabold text-primary tracking-wide leading-none">ELEMENT</h1>
-                <img src={logoWorldBank} alt="The World Bank logo" className="h-10 w-auto" />
               </div>
-              {/* Group 4: Forest Dept + Minister */}
-              <div className="flex items-center gap-1 shrink-0">
-                <img src={ministerImage} alt="Hon'ble Forest & Environment Minister, Tripura" className="h-12 w-12 rounded-full object-cover border border-border" />
-                <img src={logoForest} alt="Tripura Forest Department" className="h-12 w-auto" />
-                <button
-                  className="ml-1 p-2 rounded-md border border-border focus-ring"
-                  onClick={() => setMobileOpen((v) => !v)}
-                  aria-label="Toggle menu"
-                >
-                  {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-                </button>
-              </div>
+              <button
+                className="p-2 rounded-md border border-border focus-ring shrink-0"
+                onClick={() => setMobileOpen((v) => !v)}
+                aria-label="Toggle menu"
+              >
+                {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              </button>
             </div>
             <div className="mt-2 text-center">
               <p className="text-[11px] font-semibold text-foreground/80 leading-snug px-2">
@@ -168,14 +159,14 @@ export default function Navbar() {
             </div>
           </div>
 
-          {/* Desktop layout — 4 groups */}
+          {/* Desktop layout — 6 equally sized assets, equal spacing */}
           <div className="hidden md:flex items-center justify-between gap-4">
-            {/* Group 1: Tripura Govt logo + CM image */}
-            <Link to="/" className="flex items-center gap-3 shrink-0" aria-label="Home">
+            {/* Left group: Tripura Govt logo + CM image */}
+            <Link to="/" className="flex items-center gap-4 shrink-0" aria-label="Home">
               <img
                 src={logoTripura}
                 alt="Government of Tripura emblem"
-                className="h-20 w-auto"
+                className="h-20 w-20 object-contain"
               />
               <div className="text-center">
                 <img
@@ -187,9 +178,8 @@ export default function Navbar() {
               </div>
             </Link>
 
-            {/* Center: ELEMENT title + tagline */}
+            {/* Center: ELEMENT title + World Bank logo */}
             <div className="flex-1 flex items-center justify-center gap-4 min-w-0 px-2">
-              {/* Group 2: ELEMENT */}
               <div className="text-center min-w-0">
                 <h1 className="text-3xl lg:text-5xl font-extrabold text-primary tracking-wide leading-none">
                   ELEMENT
@@ -203,16 +193,15 @@ export default function Navbar() {
                   </p>
                 </div>
               </div>
-              {/* Group 3: World Bank */}
               <img
                 src={logoWorldBank}
                 alt="The World Bank logo"
-                className="h-20 w-auto shrink-0"
+                className="h-20 w-20 object-contain shrink-0"
               />
             </div>
 
-            {/* Group 4: Forest Dept logo + Forest Minister */}
-            <div className="flex items-center gap-3 shrink-0">
+            {/* Right group: Forest Minister + Forest Dept logo */}
+            <div className="flex items-center gap-4 shrink-0">
               <div className="text-center">
                 <img
                   src={ministerImage}
@@ -224,7 +213,7 @@ export default function Navbar() {
               <img
                 src={logoForest}
                 alt="Tripura Forest Department"
-                className="h-20 w-auto"
+                className="h-20 w-20 object-contain"
               />
             </div>
           </div>

@@ -116,18 +116,18 @@ export default function HeroSlider() {
       <button
         onClick={prev}
         aria-label="Previous slide"
-        className="absolute left-3 bottom-12 sm:bottom-auto sm:top-1/2 sm:-translate-y-1/2 bg-background/20 hover:bg-background/40 text-primary-foreground p-2 rounded-full backdrop-blur focus-ring z-10"
+        className="absolute right-16 bottom-4 bg-background/30 hover:bg-background/50 text-primary-foreground p-2 rounded-full backdrop-blur focus-ring z-20"
       >
         <ChevronLeft className="h-5 w-5" />
       </button>
       <button
         onClick={next}
         aria-label="Next slide"
-        className="absolute right-3 bottom-12 sm:bottom-auto sm:top-1/2 sm:-translate-y-1/2 bg-background/20 hover:bg-background/40 text-primary-foreground p-2 rounded-full backdrop-blur focus-ring z-10"
+        className="absolute right-4 bottom-4 bg-background/30 hover:bg-background/50 text-primary-foreground p-2 rounded-full backdrop-blur focus-ring z-20"
       >
         <ChevronRight className="h-5 w-5" />
       </button>
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+      <div className="absolute bottom-6 left-6 flex gap-2 z-20">
         {slides.map((_, idx) => (
           <button
             key={idx}

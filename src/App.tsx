@@ -12,7 +12,7 @@ import Projects from "./pages/Projects";
 import ProjectDetail from "./pages/ProjectDetail";
 import { Reports, Publications, Procurements, RFPs, Tenders } from "./pages/Listings";
 import ComponentPage from "./pages/ComponentPage";
-import { SocialMedia, Gallery, MediaEvents } from "./pages/Media";
+import { SocialMedia, Gallery, MediaEvents, MediaEventDetail } from "./pages/Media";
 import KnowledgeHub from "./pages/KnowledgeHub";
 import PlantationMap from "./pages/PlantationMap";
 import Grievance from "./pages/Grievance";
@@ -85,6 +85,7 @@ const App = () => (
           <Route path="/media/social" element={<SocialMedia />} />
           <Route path="/media/gallery" element={<Gallery />} />
           <Route path="/media/events" element={<MediaEvents />} />
+          <Route path="/media/events/:slug" element={<MediaEventDetail />} />
           <Route path="/plantation-map" element={<PlantationMap />} />
           <Route path="/grievance" element={<Grievance />} />
           <Route path="/rti" element={<RTI />} />

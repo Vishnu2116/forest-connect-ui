@@ -1,5 +1,6 @@
+import { useParams, Link } from "react-router-dom";
 import PageLayout, { PageHeader } from "@/components/layout/PageLayout";
-import { Facebook, Twitter, Youtube } from "lucide-react";
+import { Facebook, Twitter, Youtube, ArrowRight, Calendar, MapPin, ArrowLeft } from "lucide-react";
 
 const videos = [
   { id: "1", title: "ELEMENT Programme Overview" },
@@ -15,52 +16,30 @@ export function SocialMedia() {
     <PageLayout>
       <PageHeader
         title="Social Media"
-        subtitle="Stay connected with the ELEMENT Programme and Tripura Forest Department on social media."
+        subtitle="Stay connected with the ELEMENT Programme on social media."
         breadcrumb={["Home", "Media", "Social Media"]}
       />
       <section className="py-10">
         <div className="gov-container">
-          <div className="grid lg:grid-cols-2 gap-6">
-            {/* Left: Facebook */}
-            <div className="space-y-6">
-              <div className="bg-card border border-border rounded-lg overflow-hidden shadow-card">
-                <div className="px-4 py-3 border-b border-border bg-surface flex items-center gap-2">
-                  <Facebook className="h-4 w-4 text-primary" />
-                  <span className="text-sm font-bold">ELEMENT — Facebook</span>
-                </div>
-                <div className="aspect-[4/3] bg-muted/50 flex items-center justify-center text-muted-foreground text-sm">
-                  Facebook embed placeholder
-                </div>
+          <div className="grid md:grid-cols-2 gap-6">
+            {/* Facebook */}
+            <div className="bg-card border border-border rounded-lg overflow-hidden shadow-card flex flex-col">
+              <div className="px-4 py-3 border-b border-border bg-surface flex items-center gap-2">
+                <Facebook className="h-4 w-4 text-primary" />
+                <span className="text-sm font-bold">ELEMENT — Facebook</span>
               </div>
-              <div className="bg-card border border-border rounded-lg overflow-hidden shadow-card">
-                <div className="px-4 py-3 border-b border-border bg-surface flex items-center gap-2">
-                  <Facebook className="h-4 w-4 text-primary" />
-                  <span className="text-sm font-bold">Tripura Forest Department — Facebook</span>
-                </div>
-                <div className="aspect-[4/3] bg-muted/50 flex items-center justify-center text-muted-foreground text-sm">
-                  Facebook embed placeholder
-                </div>
+              <div className="aspect-[4/5] bg-muted/50 flex items-center justify-center text-muted-foreground text-sm">
+                Facebook iframe embed (ELEMENT)
               </div>
             </div>
-            {/* Right: Twitter */}
-            <div className="space-y-6">
-              <div className="bg-card border border-border rounded-lg overflow-hidden shadow-card">
-                <div className="px-4 py-3 border-b border-border bg-surface flex items-center gap-2">
-                  <Twitter className="h-4 w-4 text-primary" />
-                  <span className="text-sm font-bold">ELEMENT — Twitter / X</span>
-                </div>
-                <div className="aspect-[4/3] bg-muted/50 flex items-center justify-center text-muted-foreground text-sm">
-                  Twitter / X embed placeholder
-                </div>
+            {/* Twitter / X */}
+            <div className="bg-card border border-border rounded-lg overflow-hidden shadow-card flex flex-col">
+              <div className="px-4 py-3 border-b border-border bg-surface flex items-center gap-2">
+                <Twitter className="h-4 w-4 text-primary" />
+                <span className="text-sm font-bold">ELEMENT — Twitter / X</span>
               </div>
-              <div className="bg-card border border-border rounded-lg overflow-hidden shadow-card">
-                <div className="px-4 py-3 border-b border-border bg-surface flex items-center gap-2">
-                  <Twitter className="h-4 w-4 text-primary" />
-                  <span className="text-sm font-bold">Tripura Forest Department — Twitter / X</span>
-                </div>
-                <div className="aspect-[4/3] bg-muted/50 flex items-center justify-center text-muted-foreground text-sm">
-                  Twitter / X embed placeholder
-                </div>
+              <div className="aspect-[4/5] bg-muted/50 flex items-center justify-center text-muted-foreground text-sm">
+                Twitter / X iframe embed (ELEMENT)
               </div>
             </div>
           </div>
@@ -91,8 +70,65 @@ export function SocialMedia() {
   );
 }
 
+/* ---- Events data (shared by Events list + Detail) ---- */
+export const mediaEvents = [
+  {
+    slug: "world-bank-mission-visit-agartala",
+    date: "10 May 2026",
+    title: "World Bank Mission Visit — Agartala",
+    venue: "Agartala, Tripura",
+    description:
+      "A high-level World Bank mission visited Agartala to review the progress of the ELEMENT Programme. The team met with the Chief Secretary, Forest Department leadership, and field implementation units to review livelihood, landscape and value-chain interventions.",
+    images: [
+      { aspect: "aspect-[4/3]", label: "Mission opening session" },
+      { aspect: "aspect-square", label: "Field briefing" },
+      { aspect: "aspect-[3/4]", label: "Community meeting" },
+      { aspect: "aspect-[16/9]", label: "Group photograph" },
+    ],
+  },
+  {
+    slug: "element-stakeholder-workshop-dhalai",
+    date: "02 May 2026",
+    title: "ELEMENT Stakeholder Workshop — Dhalai",
+    venue: "Dhalai District, Tripura",
+    description:
+      "A district-level workshop convened community institutions, line departments and partner agencies to align value-chain priorities, plantation calendars and capacity-building plans for the year.",
+    images: [
+      { aspect: "aspect-[3/4]", label: "Workshop inauguration" },
+      { aspect: "aspect-[16/9]", label: "Group discussion" },
+      { aspect: "aspect-square", label: "Stakeholder presentation" },
+    ],
+  },
+  {
+    slug: "community-plantation-drive-gomati",
+    date: "20 Apr 2026",
+    title: "Community Plantation Drive — Gomati",
+    venue: "Gomati District, Tripura",
+    description:
+      "Hundreds of community members joined a coordinated plantation drive in Gomati district, planting livelihood-oriented species and undertaking soil & moisture conservation works.",
+    images: [
+      { aspect: "aspect-[16/9]", label: "Plantation in progress" },
+      { aspect: "aspect-square", label: "Community participation" },
+      { aspect: "aspect-[3/4]", label: "Saplings ready" },
+      { aspect: "aspect-[4/3]", label: "Field officers on-site" },
+    ],
+  },
+  {
+    slug: "bamboo-value-chain-mela-north-tripura",
+    date: "10 Apr 2026",
+    title: "Bamboo Value Chain Mela — North Tripura",
+    venue: "North Tripura District",
+    description:
+      "Artisans, FPOs and bamboo entrepreneurs showcased products, design innovations and market linkages under the ELEMENT value-chain initiative.",
+    images: [
+      { aspect: "aspect-square", label: "Bamboo handicrafts" },
+      { aspect: "aspect-[4/3]", label: "Artisan stall" },
+      { aspect: "aspect-[3/4]", label: "Mela visitors" },
+    ],
+  },
+];
+
 export function Gallery() {
-  const items = Array.from({ length: 12 }).map((_, i) => i + 1);
   return (
     <PageLayout>
       <PageHeader
@@ -101,14 +137,32 @@ export function Gallery() {
         breadcrumb={["Home", "Media", "Gallery"]}
       />
       <section className="py-10">
-        <div className="gov-container">
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-            {items.map((i) => (
-              <div key={i} className="aspect-square bg-muted/50 border border-border rounded-md flex items-center justify-center text-xs text-muted-foreground">
-                Photo {i}
+        <div className="gov-container space-y-12">
+          {mediaEvents.map((ev) => (
+            <article key={ev.slug} className="bg-card border border-border rounded-xl p-5 md:p-6 shadow-card">
+              <header className="mb-5">
+                <div className="flex items-center gap-2 text-xs text-accent font-semibold uppercase tracking-wide">
+                  <Calendar className="h-3.5 w-3.5" /> {ev.date}
+                  <span className="text-muted-foreground/60">·</span>
+                  <MapPin className="h-3.5 w-3.5" /> {ev.venue}
+                </div>
+                <h2 className="text-xl md:text-2xl font-bold text-primary mt-2 mb-2">{ev.title}</h2>
+                <p className="text-sm text-muted-foreground max-w-3xl">{ev.description}</p>
+              </header>
+
+              {/* Masonry-style varied image grid */}
+              <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 [column-fill:_balance]">
+                {ev.images.map((img, idx) => (
+                  <div
+                    key={idx}
+                    className={`mb-4 break-inside-avoid rounded-lg overflow-hidden border border-border bg-gradient-to-br from-primary/10 to-primary-light/10 ${img.aspect} flex items-center justify-center text-xs text-muted-foreground`}
+                  >
+                    {img.label}
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
+            </article>
+          ))}
         </div>
       </section>
     </PageLayout>
@@ -116,12 +170,6 @@ export function Gallery() {
 }
 
 export function MediaEvents() {
-  const items = [
-    { date: "10 May 2026", title: "World Bank Mission Visit — Agartala" },
-    { date: "02 May 2026", title: "ELEMENT Stakeholder Workshop — Dhalai" },
-    { date: "20 Apr 2026", title: "Community Plantation Drive — Gomati" },
-    { date: "10 Apr 2026", title: "Bamboo Value Chain Mela — North Tripura" },
-  ];
   return (
     <PageLayout>
       <PageHeader
@@ -131,19 +179,91 @@ export function MediaEvents() {
       />
       <section className="py-10">
         <div className="gov-container">
-          <div className="space-y-4">
-            {items.map((e) => (
-              <article key={e.title} className="bg-card border border-border rounded-lg p-5 hover:border-primary/40 hover:shadow-card transition flex gap-4 items-start">
-                <div className="bg-primary text-primary-foreground rounded-md text-center px-3 py-2.5 shrink-0 min-w-[72px]">
-                  <div className="text-[11px] uppercase opacity-90 tracking-wide">{e.date.split(" ")[1]} {e.date.split(" ")[2]}</div>
-                  <div className="text-xl font-bold leading-none mt-0.5">{e.date.split(" ")[0]}</div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {mediaEvents.map((ev) => (
+              <Link
+                key={ev.slug}
+                to={`/media/events/${ev.slug}`}
+                className="group bg-card border border-border rounded-xl overflow-hidden hover:shadow-card hover:border-primary/40 transition flex flex-col"
+              >
+                <div className="aspect-video bg-gradient-to-br from-primary/15 to-primary-light/15 flex items-center justify-center text-xs text-muted-foreground">
+                  Event cover
                 </div>
-                <div>
-                  <h3 className="text-base font-semibold text-foreground leading-snug mb-0">{e.title}</h3>
-                  <p className="text-sm text-muted-foreground mt-1.5 mb-0">Programme event under ELEMENT.</p>
+                <div className="p-5 flex-1 flex flex-col">
+                  <div className="flex items-center gap-2 text-[11px] text-accent font-semibold uppercase tracking-wide mb-2">
+                    <Calendar className="h-3 w-3" /> {ev.date}
+                  </div>
+                  <h3 className="text-base font-bold text-foreground leading-snug mb-2 group-hover:text-primary">
+                    {ev.title}
+                  </h3>
+                  <p className="text-xs text-muted-foreground leading-relaxed line-clamp-3">
+                    {ev.description}
+                  </p>
+                  <span className="mt-4 inline-flex items-center gap-1 text-xs font-semibold text-accent">
+                    View details <ArrowRight className="h-3 w-3" />
+                  </span>
                 </div>
-              </article>
+              </Link>
             ))}
+          </div>
+        </div>
+      </section>
+    </PageLayout>
+  );
+}
+
+export function MediaEventDetail() {
+  const { slug } = useParams();
+  const ev = mediaEvents.find((e) => e.slug === slug);
+
+  if (!ev) {
+    return (
+      <PageLayout>
+        <PageHeader title="Event not found" breadcrumb={["Home", "Media", "Events"]} />
+        <section className="py-10">
+          <div className="gov-container">
+            <Link to="/media/events" className="text-sm text-primary inline-flex items-center gap-1 hover:underline">
+              <ArrowLeft className="h-4 w-4" /> Back to all events
+            </Link>
+          </div>
+        </section>
+      </PageLayout>
+    );
+  }
+
+  return (
+    <PageLayout>
+      <PageHeader
+        title={ev.title}
+        subtitle={`${ev.date} · ${ev.venue}`}
+        breadcrumb={["Home", "Media", "Events", ev.title]}
+      />
+      <section className="py-10">
+        <div className="gov-container max-w-5xl">
+          <Link to="/media/events" className="text-sm text-primary inline-flex items-center gap-1 hover:underline mb-6">
+            <ArrowLeft className="h-4 w-4" /> Back to all events
+          </Link>
+
+          <div className="bg-card border border-border rounded-xl p-6 shadow-card">
+            <div className="flex items-center gap-3 text-xs text-accent font-semibold uppercase tracking-wide mb-3">
+              <Calendar className="h-3.5 w-3.5" /> {ev.date}
+              <span className="text-muted-foreground/60">·</span>
+              <MapPin className="h-3.5 w-3.5" /> {ev.venue}
+            </div>
+            <h1 className="text-2xl md:text-3xl font-bold text-primary mb-4">{ev.title}</h1>
+            <p className="text-sm md:text-base text-muted-foreground leading-relaxed">{ev.description}</p>
+
+            <h2 className="text-base font-bold text-primary mt-8 mb-4">Event Gallery</h2>
+            <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 [column-fill:_balance]">
+              {ev.images.map((img, idx) => (
+                <div
+                  key={idx}
+                  className={`mb-4 break-inside-avoid rounded-lg overflow-hidden border border-border bg-gradient-to-br from-primary/10 to-primary-light/10 ${img.aspect} flex items-center justify-center text-xs text-muted-foreground`}
+                >
+                  {img.label}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
