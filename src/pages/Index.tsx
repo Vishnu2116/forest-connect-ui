@@ -80,23 +80,21 @@ const pillars = [
 const leftDignitaries = [
   { name: "Shri Manik Saha", designation: "Hon'ble Chief Minister", desc: "Government of Tripura", image: cmImage },
   { name: "Shri Animesh Debbarma", designation: "Forest & Environment Minister", desc: "Government of Tripura", image: Animesh },
-  { name: "Shri J.K. Sinha, IAS", designation: "Chief Secretary", desc: "Government of Tripura", image: CS },
 ];
 
 const rightDignitaries = [
-  { name: "Shri Chaitanya Murti, IFS", designation: "CEO & Project Director", desc: "ELEMENT Project", image: "" },
-  { name: "Dr. Honnareddy N, IFS", designation: "Addl. CEO", desc: "ELEMENT Project", image: Honnareddy },
-  { name: "Shri Sanjib Das, IFS", designation: "Director", desc: "Project ELEMENT", image: SanjibDas },
+  { name: "PCCF HOFF", designation: "SFDA Chair Person", desc: "Tripura Forest Department", image: "" },
+  { name: "Shri Chaitanya Murti, IFS", designation: "PCCF CEO / PD", desc: "ELEMENT Project", image: "" },
 ];
 
 function DignitaryCard({ d }: { d: { name: string; designation: string; desc: string; image: string } }) {
   return (
-    <div className="bg-card border border-border rounded-xl p-4 text-center hover:shadow-md hover:border-primary/30 transition group">
-      <div className="mx-auto h-20 w-20 rounded-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center text-primary-foreground mb-3 overflow-hidden">
+    <div className="bg-card border border-border rounded-xl p-4 text-center hover:shadow-md hover:border-primary/30 transition group h-full flex flex-col">
+      <div className="mx-auto aspect-square w-full max-w-[180px] rounded-lg bg-gradient-to-br from-primary to-primary-light flex items-center justify-center text-primary-foreground mb-3 overflow-hidden shadow-sm">
         {d.image ? (
           <img src={d.image} alt={d.name} className="h-full w-full object-cover" />
         ) : (
-          <User className="h-8 w-8" />
+          <User className="h-12 w-12" />
         )}
       </div>
       <h4 className="text-sm font-bold text-foreground leading-snug">{d.name}</h4>
