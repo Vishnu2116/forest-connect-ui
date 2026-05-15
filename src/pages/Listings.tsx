@@ -99,3 +99,22 @@ export function ListingPage({
 export const Reports = () => <ListingPage title="Reports" subtitle="Annual, statutory and thematic reports of the Department" rows={reports} breadcrumb={["Home", "Reports"]} />;
 export const Publications = () => <ListingPage title="Publications" subtitle="Books, manuals and field guides published by the Department" rows={publications} breadcrumb={["Home", "Publications"]} />;
 export const Procurements = () => <ListingPage title="Procurements & Tenders" subtitle="Active and archived tender notices" rows={procurements} type="tender" breadcrumb={["Home", "Procurements"]} />;
+
+const rfpRows = [
+  { title: "RFP for Consultancy — Landscape Restoration Baseline Study", date: "12 May 2026", deadline: "10 Jun 2026", status: "Open" },
+  { title: "RFP for Communications & Outreach Agency (ELEMENT)", date: "05 May 2026", deadline: "02 Jun 2026", status: "Open" },
+  { title: "RFP for MIS/GIS Platform Implementation Partner", date: "28 Apr 2026", deadline: "25 May 2026", status: "Closing Soon" },
+  { title: "RFP for Third-Party Monitoring & Evaluation Agency", date: "15 Apr 2026", deadline: "12 May 2026", status: "Closed" },
+  { title: "RFP for Bamboo Value-Chain Technical Advisor", date: "02 Apr 2026", deadline: "30 Apr 2026", status: "Closed" },
+];
+
+const tenderRows = [
+  { title: "Construction of Community Nursery Centres — Dhalai District", date: "10 May 2026", deadline: "08 Jun 2026", status: "Open" },
+  { title: "Supply of Saplings & Planting Material — Phase II", date: "06 May 2026", deadline: "30 May 2026", status: "Open" },
+  { title: "Procurement of Field Survey Equipment", date: "02 May 2026", deadline: "22 May 2026", status: "Closing Soon" },
+  { title: "Civil Works — Eco-Tourism Cluster, Jampui Hills", date: "20 Apr 2026", deadline: "18 May 2026", status: "Closing Soon" },
+  { title: "Annual Vehicle Hiring — Project Offices", date: "10 Apr 2026", deadline: "05 May 2026", status: "Closed" },
+];
+
+export const RFPs = () => <ListingPage title="RFPs" subtitle="Active Requests for Proposals under the ELEMENT programme" rows={rfpRows} type="tender" breadcrumb={["Home", "Procurements", "RFPs"]} />;
+export const Tenders = () => <ListingPage title="Tenders" subtitle="Active and archived tender notices" rows={tenderRows} type="tender" breadcrumb={["Home", "Procurements", "Tenders"]} />;
