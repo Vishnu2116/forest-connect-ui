@@ -6,6 +6,10 @@ import { useLang, LANGUAGES } from "@/contexts/LanguageContext";
 import { useA11y } from "@/contexts/AccessibilityContext";
 import logoTripura from "@/assets/logo-tripura.png";
 import logoWorldBank from "@/assets/logo-worldbank.png";
+import logoForest from "@/assets/logo.png";
+import logoElement from "@/assets/logo-element.png";
+import cmImage from "@/assets/dignitaries/CM.jpeg";
+import ministerImage from "@/assets/dignitaries/Animesh.jpeg";
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
