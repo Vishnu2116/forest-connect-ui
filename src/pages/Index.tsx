@@ -412,33 +412,6 @@ export default function Home() {
               </div>
             </div>
           </div>
-
-            {/* Column 3: Knowledge Hub */}
-            <div>
-              <div className="flex items-center justify-between mb-5">
-                <h2 className="text-lg font-bold text-primary flex items-center gap-2">
-                  <Award className="h-5 w-5 text-accent" /> Knowledge Hub
-                </h2>
-                <Link to="/knowledge-hub/iec" className="text-xs text-primary hover:text-accent font-medium">
-                  View all <ArrowRight className="inline h-3 w-3" />
-                </Link>
-              </div>
-              <div className="space-y-4">
-                {knowledgeHubItems.slice(0, 3).map((k) => (
-                  <article key={k.title} className="bg-card border border-border rounded-lg overflow-hidden hover:shadow-card transition">
-                    <div className="h-24 bg-gradient-to-br from-primary to-primary-light flex items-center justify-center">
-                      <BookOpen className="h-8 w-8 text-primary-foreground/80" />
-                    </div>
-                    <div className="p-4">
-                      <span className="text-[10px] font-semibold uppercase tracking-wide text-accent">{k.category}</span>
-                      <h3 className="text-sm font-semibold text-foreground mt-1 leading-snug mb-0">{k.title}</h3>
-                      <p className="text-xs text-muted-foreground mt-1.5 mb-0">{k.date}</p>
-                    </div>
-                  </article>
-                ))}
-              </div>
-            </div>
-          </div>
         </div>
       </section>
     </PageLayout>
