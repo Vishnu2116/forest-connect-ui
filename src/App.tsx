@@ -85,6 +85,7 @@ const App = () => (
           <Route path="/media/social" element={<SocialMedia />} />
           <Route path="/media/gallery" element={<Gallery />} />
           <Route path="/media/events" element={<MediaEvents />} />
+          <Route path="/media/events/:slug" element={<MediaEventDetail />} />
           <Route path="/plantation-map" element={<PlantationMap />} />
           <Route path="/grievance" element={<Grievance />} />
           <Route path="/rti" element={<RTI />} />
