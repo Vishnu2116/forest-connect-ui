@@ -1,8 +1,11 @@
 import Honnareddy from "@/assets/dignitaries/Honnareddy.jpeg";
-import cmImage from "@/assets/dignitaries/CM.jpeg";
-import Animesh from "@/assets/dignitaries/Animesh.jpeg";
+// import cmImage from "@/assets/dignitaries/CM.jpeg";
+import cmImage from "@/assets/dignitaries/TripuraCM.png";
+// import Animesh from "@/assets/dignitaries/Animesh.jpeg";
+import Animesh from "@/assets/dignitaries/TripuraForestMinister.jpg";
 import CS from "@/assets/dignitaries/CS.jpg";
 import SanjibDas from "@/assets/dignitaries/SanjibDas.png";
+import PCCF from "@/assets/dignitaries/ShriRabindraKumarSamal_PCCF.jpg";
 
 import landscapeRestoration from "@/assets/projects/landscape-restoration.jpg";
 import biodiversityConservation from "@/assets/projects/biodiversity-conservation.jpg";
@@ -358,15 +361,15 @@ export const governmentLeaders: Official[] = [
 
 export const elementLeadership: Official[] = [
   {
-    name: "PCCF HOFF",
-    designation: "SFDA Chair Person",
+    name: "Rabindra Kumar Samal, IFS",
+    designation: "PCCF HOFF SFDA Chair Person",
     department: "Tripura Forest Department",
     additionalRoles: "Head of Forest Force, Chair Person — SFDA",
     office: "Aranya Bhawan, Pt. Nehru Complex, Agartala, Tripura (West)",
     phone: "",
     mobile: "",
     email: "",
-    image: "",
+    image: PCCF,
     category: "ELEMENT Project Leadership",
   },
   {

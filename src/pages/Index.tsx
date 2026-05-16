@@ -33,8 +33,9 @@ import { useLang } from "@/contexts/LanguageContext";
 import { slugify } from "./ProjectDetail";
 import { useAutoScroll } from "@/hooks/useAutoScroll";
 
-import cmImage from "@/assets/dignitaries/CM.jpeg";
-import Animesh from "@/assets/dignitaries/Animesh.jpeg";
+import cmImage from "@/assets/dignitaries/TripuraCM.png";
+import Animesh from "@/assets/dignitaries/TripuraForestMinister.jpg";
+import PCCF from "@/assets/dignitaries/ShriRabindraKumarSamal_PCCF.jpg";
 
 /* ────────────────────────────────────────────────────────────────────────────
  * AUTO-SCROLL SPEEDS (pixels per second)
@@ -109,7 +110,6 @@ function ScrollArrows({
 // Hardcoded NEW-enabled set for now. Replace with API/backend flags later.
 const isItemNew = (_title: string) => true;
 
-
 const pillars = [
   {
     icon: Briefcase,
@@ -146,29 +146,63 @@ const pillars = [
 ];
 
 const leftDignitaries = [
-  { name: "Shri Manik Saha", designation: "Hon'ble Chief Minister", desc: "Government of Tripura", image: cmImage },
-  { name: "Shri Animesh Debbarma", designation: "Forest & Environment Minister", desc: "Government of Tripura", image: Animesh },
+  {
+    name: "Shri Manik Saha",
+    designation: "Hon'ble Chief Minister",
+    desc: "Government of Tripura",
+    image: cmImage,
+  },
+  {
+    name: "Shri Animesh Debbarma",
+    designation: "Forest & Environment Minister",
+    desc: "Government of Tripura",
+    image: Animesh,
+  },
 ];
 
 const rightDignitaries = [
-  { name: "PCCF HOFF", designation: "SFDA Chair Person", desc: "Tripura Forest Department", image: "" },
-  { name: "Shri Chaitanya Murti, IFS", designation: "PCCF CEO / PD", desc: "ELEMENT Project", image: "" },
+  {
+    name: "Shri Rabindra Kumar Samal, IFS",
+    designation: "PCCF HOFF SFDA Chair Person",
+    desc: "Tripura Forest Department",
+    image: PCCF,
+  },
+  {
+    name: "Shri Chaitanya Murti, IFS",
+    designation: "PCCF CEO / PD",
+    desc: "ELEMENT Project",
+    image: "",
+  },
 ];
 
-function DignitaryCard({ d }: { d: { name: string; designation: string; desc: string; image: string } }) {
+function DignitaryCard({
+  d,
+}: {
+  d: { name: string; designation: string; desc: string; image: string };
+}) {
   return (
     <div className="bg-card border border-border rounded-md overflow-hidden hover:border-primary/40 transition h-full flex flex-col">
       <div className="aspect-[4/3] w-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center text-primary-foreground overflow-hidden border-b border-border">
         {d.image ? (
-          <img src={d.image} alt={d.name} className="h-full w-full object-cover" />
+          <img
+            src={d.image}
+            alt={d.name}
+            className="h-full w-full object-cover"
+          />
         ) : (
           <User className="h-12 w-12" />
         )}
       </div>
       <div className="px-3 py-3 text-center border-t-2 border-accent flex-1 flex flex-col justify-center">
-        <h4 className="text-base font-bold text-foreground leading-tight">{d.name}</h4>
-        <p className="text-sm text-primary font-semibold mt-1 leading-tight">{d.designation}</p>
-        <p className="text-xs text-muted-foreground mt-1 leading-tight">{d.desc}</p>
+        <h4 className="text-base font-bold text-foreground leading-tight">
+          {d.name}
+        </h4>
+        <p className="text-sm text-primary font-semibold mt-1 leading-tight">
+          {d.designation}
+        </p>
+        <p className="text-xs text-muted-foreground mt-1 leading-tight">
+          {d.desc}
+        </p>
       </div>
     </div>
   );
@@ -213,7 +247,11 @@ function UpdatesPanel({
         {(
           [
             { key: "whatsnew", label: "What's New", icon: Bell },
-            { key: "notifications", label: t("home.notifications"), icon: Calendar },
+            {
+              key: "notifications",
+              label: t("home.notifications"),
+              icon: Calendar,
+            },
             { key: "tenders", label: t("home.tenders"), icon: Briefcase },
           ] as const
         ).map((tab) => (
@@ -238,42 +276,56 @@ function UpdatesPanel({
         className="flex-1 overflow-y-auto min-h-0 no-scrollbar"
       >
         <div className="flex flex-col">
-        {updatesTab === "whatsnew" &&
-          [...announcements, ...announcements].map((a, idx) => {
-            const Icon = getUpdateIcon(a.tag);
-            return (
-              <article key={`${a.title}-${idx}`} className="flex items-center gap-3 px-4 py-3 hover:bg-surface/60 transition border-b border-border">
-                <div className="shrink-0 text-primary self-center">
-                  <Icon className="h-5 w-5" />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-1.5 mb-1">
-                    <span className="inline-block text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-accent/15 text-accent">
-                      {a.tag}
-                    </span>
-                    <span className="ml-auto">
-                      <NewBadge show={isItemNew(a.title)} />
-                    </span>
+          {updatesTab === "whatsnew" &&
+            [...announcements, ...announcements].map((a, idx) => {
+              const Icon = getUpdateIcon(a.tag);
+              return (
+                <article
+                  key={`${a.title}-${idx}`}
+                  className="flex items-center gap-3 px-4 py-3 hover:bg-surface/60 transition border-b border-border"
+                >
+                  <div className="shrink-0 text-primary self-center">
+                    <Icon className="h-5 w-5" />
                   </div>
-                  <a href="#" className="text-sm font-semibold text-foreground hover:text-primary block leading-snug">
-                    {a.title}
-                  </a>
-                  <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
-                    {announcementDescriptions[a.tag] ?? "Latest update from the ELEMENT programme."}
-                  </p>
-                </div>
-              </article>
-            );
-          })}
-        {updatesTab === "notifications" && (
-          <>
-            {[
-              ...announcements.filter((a) => a.tag === "Notification" || a.tag === "Recruitment"),
-              ...announcements.filter((a) => a.tag === "Notification" || a.tag === "Recruitment"),
-            ].map((a, idx) => {
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-1.5 mb-1">
+                      <span className="inline-block text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-accent/15 text-accent">
+                        {a.tag}
+                      </span>
+                      <span className="ml-auto">
+                        <NewBadge show={isItemNew(a.title)} />
+                      </span>
+                    </div>
+                    <a
+                      href="#"
+                      className="text-sm font-semibold text-foreground hover:text-primary block leading-snug"
+                    >
+                      {a.title}
+                    </a>
+                    <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
+                      {announcementDescriptions[a.tag] ??
+                        "Latest update from the ELEMENT programme."}
+                    </p>
+                  </div>
+                </article>
+              );
+            })}
+          {updatesTab === "notifications" && (
+            <>
+              {[
+                ...announcements.filter(
+                  (a) => a.tag === "Notification" || a.tag === "Recruitment",
+                ),
+                ...announcements.filter(
+                  (a) => a.tag === "Notification" || a.tag === "Recruitment",
+                ),
+              ].map((a, idx) => {
                 const Icon = getUpdateIcon(a.tag);
                 return (
-                  <article key={`${a.title}-${idx}`} className="flex items-center gap-3 px-4 py-3 hover:bg-surface/60 transition border-b border-border">
+                  <article
+                    key={`${a.title}-${idx}`}
+                    className="flex items-center gap-3 px-4 py-3 hover:bg-surface/60 transition border-b border-border"
+                  >
                     <div className="shrink-0 text-primary self-center">
                       <Icon className="h-5 w-5" />
                     </div>
@@ -286,75 +338,93 @@ function UpdatesPanel({
                           <NewBadge show={isItemNew(a.title)} />
                         </span>
                       </div>
-                      <a href="#" className="text-sm font-semibold text-foreground hover:text-primary block leading-snug">
+                      <a
+                        href="#"
+                        className="text-sm font-semibold text-foreground hover:text-primary block leading-snug"
+                      >
                         {a.title}
                       </a>
                       <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
-                        {announcementDescriptions[a.tag] ?? "Official notification issued by the ELEMENT programme."}
+                        {announcementDescriptions[a.tag] ??
+                          "Official notification issued by the ELEMENT programme."}
                       </p>
                     </div>
                   </article>
                 );
               })}
-            {[...events, ...events].map((e, idx) => (
-              <article key={`${e.title}-${idx}`} className="flex items-center gap-3 px-4 py-3 hover:bg-surface/60 transition border-b border-border">
+              {[...events, ...events].map((e, idx) => (
+                <article
+                  key={`${e.title}-${idx}`}
+                  className="flex items-center gap-3 px-4 py-3 hover:bg-surface/60 transition border-b border-border"
+                >
+                  <div className="shrink-0 text-primary self-center">
+                    <Calendar className="h-5 w-5" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-1.5 mb-1">
+                      <span className="inline-block text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-accent/15 text-accent">
+                        Event
+                      </span>
+                      <span className="ml-auto">
+                        <NewBadge show={isItemNew(e.title)} />
+                      </span>
+                    </div>
+                    <a
+                      href="#"
+                      className="text-sm font-semibold text-foreground hover:text-primary block leading-snug"
+                    >
+                      {e.title}
+                    </a>
+                    <p className="text-xs text-muted-foreground mt-1 flex items-center gap-1">
+                      <MapPin className="h-3 w-3" /> {e.venue}
+                    </p>
+                  </div>
+                </article>
+              ))}
+            </>
+          )}
+          {updatesTab === "tenders" &&
+            [...procurements, ...procurements].map((p, idx) => (
+              <article
+                key={`${p.title}-${idx}`}
+                className="flex items-center gap-3 px-4 py-3 hover:bg-surface/60 transition border-b border-border"
+              >
                 <div className="shrink-0 text-primary self-center">
-                  <Calendar className="h-5 w-5" />
+                  <FileText className="h-5 w-5" />
                 </div>
                 <div className="flex-1 min-w-0">
+                  {/* Left: Tender tag.   Right (extreme): status badge + NEW. */}
                   <div className="flex items-center gap-1.5 mb-1">
                     <span className="inline-block text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-accent/15 text-accent">
-                      Event
+                      Tender
                     </span>
-                    <span className="ml-auto">
-                      <NewBadge show={isItemNew(e.title)} />
+                    <span className="ml-auto flex items-center gap-1.5">
+                      <span
+                        className={`inline-block text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm ${
+                          p.status === "Open"
+                            ? "bg-success/15 text-success"
+                            : p.status === "Closing Soon"
+                              ? "bg-accent/15 text-accent"
+                              : "bg-muted text-muted-foreground"
+                        }`}
+                      >
+                        {p.status}
+                      </span>
+                      <NewBadge show={isItemNew(p.title)} />
                     </span>
                   </div>
-                  <a href="#" className="text-sm font-semibold text-foreground hover:text-primary block leading-snug">
-                    {e.title}
+                  <a
+                    href="#"
+                    className="text-sm font-semibold text-foreground hover:text-primary block leading-snug"
+                  >
+                    {p.title}
                   </a>
-                  <p className="text-xs text-muted-foreground mt-1 flex items-center gap-1">
-                    <MapPin className="h-3 w-3" /> {e.venue}
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Deadline: {p.deadline}
                   </p>
                 </div>
               </article>
             ))}
-          </>
-        )}
-        {updatesTab === "tenders" &&
-          [...procurements, ...procurements].map((p, idx) => (
-            <article key={`${p.title}-${idx}`} className="flex items-center gap-3 px-4 py-3 hover:bg-surface/60 transition border-b border-border">
-              <div className="shrink-0 text-primary self-center">
-                <FileText className="h-5 w-5" />
-              </div>
-              <div className="flex-1 min-w-0">
-                {/* Left: Tender tag.   Right (extreme): status badge + NEW. */}
-                <div className="flex items-center gap-1.5 mb-1">
-                  <span className="inline-block text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-accent/15 text-accent">
-                    Tender
-                  </span>
-                  <span className="ml-auto flex items-center gap-1.5">
-                    <span
-                      className={`inline-block text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm ${
-                        p.status === "Open"
-                          ? "bg-success/15 text-success"
-                          : p.status === "Closing Soon"
-                            ? "bg-accent/15 text-accent"
-                            : "bg-muted text-muted-foreground"
-                      }`}
-                    >
-                      {p.status}
-                    </span>
-                    <NewBadge show={isItemNew(p.title)} />
-                  </span>
-                </div>
-                <a href="#" className="text-sm font-semibold text-foreground hover:text-primary block leading-snug">
-                  {p.title}
-                </a>
-                <p className="text-xs text-muted-foreground mt-1">Deadline: {p.deadline}</p>
-              </div>
-            </article>
-          ))}
         </div>
       </div>
       <div className="px-3 py-2 border-t border-border bg-surface flex items-center justify-between gap-2">
@@ -399,7 +469,10 @@ function ProjectHighlightsColumn() {
         <h2 className="text-[17px] font-bold text-primary flex items-center gap-2 uppercase tracking-wide">
           <Trees className="h-4 w-4 text-accent" /> Project Highlights
         </h2>
-        <Link to="/project-components" className="text-sm text-primary hover:text-accent font-semibold">
+        <Link
+          to="/project-components"
+          className="text-sm text-primary hover:text-accent font-semibold"
+        >
           View all <ArrowRight className="inline h-3.5 w-3.5" />
         </Link>
       </div>
@@ -410,10 +483,17 @@ function ProjectHighlightsColumn() {
         className="flex-1 overflow-y-auto divide-y divide-border min-h-0 no-scrollbar"
       >
         {items.map((p, idx) => (
-          <article key={`${p.title}-${idx}`} className="flex gap-3 p-4 hover:bg-surface/60 transition">
+          <article
+            key={`${p.title}-${idx}`}
+            className="flex gap-3 p-4 hover:bg-surface/60 transition"
+          >
             <div className="h-20 w-24 shrink-0 bg-gradient-to-br from-primary/20 to-primary-light/20 rounded-sm overflow-hidden flex items-center justify-center">
               {p.image ? (
-                <img src={p.image} alt={p.title} className="w-full h-full object-cover" />
+                <img
+                  src={p.image}
+                  alt={p.title}
+                  className="w-full h-full object-cover"
+                />
               ) : (
                 <Trees className="h-6 w-6 text-primary/40" />
               )}
@@ -421,15 +501,26 @@ function ProjectHighlightsColumn() {
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-1.5 mb-1 flex-wrap">
                 {p.component && (
-                  <span className="text-[11px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-accent/15 text-accent">{p.component}</span>
+                  <span className="text-[11px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-accent/15 text-accent">
+                    {p.component}
+                  </span>
                 )}
-                <span className="text-[11px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-success/15 text-success">{p.status}</span>
+                <span className="text-[11px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-success/15 text-success">
+                  {p.status}
+                </span>
               </div>
-              <h3 className="text-base font-semibold text-foreground leading-snug mb-1">{p.title}</h3>
+              <h3 className="text-base font-semibold text-foreground leading-snug mb-1">
+                {p.title}
+              </h3>
               {p.objective && (
-                <p className="text-sm text-muted-foreground line-clamp-1 mb-1">{p.objective}</p>
+                <p className="text-sm text-muted-foreground line-clamp-1 mb-1">
+                  {p.objective}
+                </p>
               )}
-              <Link to={`/projects/${slugify(p.title)}`} className="inline-flex items-center gap-1 text-sm font-semibold text-accent hover:text-accent-hover">
+              <Link
+                to={`/projects/${slugify(p.title)}`}
+                className="inline-flex items-center gap-1 text-sm font-semibold text-accent hover:text-accent-hover"
+              >
                 Read More <ArrowRight className="h-3.5 w-3.5" />
               </Link>
             </div>
@@ -449,7 +540,9 @@ function ProjectHighlightsColumn() {
 
 export default function Home() {
   const { t } = useLang();
-  const [updatesTab, setUpdatesTab] = useState<"whatsnew" | "notifications" | "tenders">("whatsnew");
+  const [updatesTab, setUpdatesTab] = useState<
+    "whatsnew" | "notifications" | "tenders"
+  >("whatsnew");
 
   return (
     <PageLayout>
@@ -462,33 +555,52 @@ export default function Home() {
             <span className="inline-block bg-accent/10 text-accent text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-3">
               Leadership
             </span>
-            <h2 className="text-2xl md:text-3xl font-bold text-primary">Welcome to Tripura ELEMENT Project</h2>
+            <h2 className="text-2xl md:text-3xl font-bold text-primary">
+              Welcome to Tripura ELEMENT Project
+            </h2>
             <p className="text-sm text-muted-foreground mt-2 max-w-xl mx-auto">
-              Programme leadership, official updates, notifications, and tenders from the ELEMENT Project.
+              Programme leadership, official updates, notifications, and tenders
+              from the ELEMENT Project.
             </p>
           </div>
 
           {/* Mobile: dignitaries first, then center tabs */}
           <div className="lg:hidden space-y-6">
             <div className="grid grid-cols-2 gap-4">
-              {leftDignitaries.map((d) => <DignitaryCard key={d.name} d={d} />)}
-              {rightDignitaries.map((d) => <DignitaryCard key={d.name} d={d} />)}
+              {leftDignitaries.map((d) => (
+                <DignitaryCard key={d.name} d={d} />
+              ))}
+              {rightDignitaries.map((d) => (
+                <DignitaryCard key={d.name} d={d} />
+              ))}
             </div>
-            <UpdatesPanel updatesTab={updatesTab} setUpdatesTab={setUpdatesTab} t={t} />
+            <UpdatesPanel
+              updatesTab={updatesTab}
+              setUpdatesTab={setUpdatesTab}
+              t={t}
+            />
           </div>
 
           {/* Desktop: 3-column layout */}
           <div className="hidden lg:grid grid-cols-[minmax(0,1fr)_minmax(0,2fr)_minmax(0,1fr)] gap-6 items-stretch">
             <div className="grid grid-cols-1 gap-4">
-              {leftDignitaries.map((d) => <DignitaryCard key={d.name} d={d} />)}
+              {leftDignitaries.map((d) => (
+                <DignitaryCard key={d.name} d={d} />
+              ))}
             </div>
             <div className="relative">
               <div className="absolute inset-0">
-                <UpdatesPanel updatesTab={updatesTab} setUpdatesTab={setUpdatesTab} t={t} />
+                <UpdatesPanel
+                  updatesTab={updatesTab}
+                  setUpdatesTab={setUpdatesTab}
+                  t={t}
+                />
               </div>
             </div>
             <div className="grid grid-cols-1 gap-4">
-              {rightDignitaries.map((d) => <DignitaryCard key={d.name} d={d} />)}
+              {rightDignitaries.map((d) => (
+                <DignitaryCard key={d.name} d={d} />
+              ))}
             </div>
           </div>
         </div>
@@ -501,28 +613,48 @@ export default function Home() {
             <span className="inline-block bg-accent/10 text-accent text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-3">
               About the Programme
             </span>
-            <h2 className="text-2xl md:text-3xl font-bold text-primary leading-tight mt-3 mb-5">What is ELEMENT?</h2>
+            <h2 className="text-2xl md:text-3xl font-bold text-primary leading-tight mt-3 mb-5">
+              What is ELEMENT?
+            </h2>
             <p className="text-muted-foreground mt-3 text-sm md:text-base max-w-2xl mx-auto mb-6">
-              A flagship initiative of the Government of Tripura and the World Bank — transforming livelihoods, landscapes, and communities across all 8 districts.
+              A flagship initiative of the Government of Tripura and the World
+              Bank — transforming livelihoods, landscapes, and communities
+              across all 8 districts.
             </p>
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10 pb-3">
             {pillars.map((p) => (
-              <div key={p.label} className="relative bg-card border border-border rounded-xl p-6 text-center shadow-card hover:shadow-lg transition-shadow group overflow-hidden">
-                <div className={`mx-auto h-16 w-16 rounded-full bg-gradient-to-br ${p.gradient} flex items-center justify-center mb-4 shadow-md group-hover:scale-110 transition-transform`}>
+              <div
+                key={p.label}
+                className="relative bg-card border border-border rounded-xl p-6 text-center shadow-card hover:shadow-lg transition-shadow group overflow-hidden"
+              >
+                <div
+                  className={`mx-auto h-16 w-16 rounded-full bg-gradient-to-br ${p.gradient} flex items-center justify-center mb-4 shadow-md group-hover:scale-110 transition-transform`}
+                >
                   <p.icon className="h-7 w-7 text-primary-foreground" />
                 </div>
-                <div className="text-3xl font-extrabold text-primary">{p.stat}</div>
-                <div className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider mt-0.5">{p.statLabel}</div>
-                <h4 className="text-base font-bold text-foreground mt-3">{p.label}</h4>
-                <p className="text-xs text-muted-foreground mt-1.5 leading-relaxed">{p.desc}</p>
+                <div className="text-3xl font-extrabold text-primary">
+                  {p.stat}
+                </div>
+                <div className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider mt-0.5">
+                  {p.statLabel}
+                </div>
+                <h4 className="text-base font-bold text-foreground mt-3">
+                  {p.label}
+                </h4>
+                <p className="text-xs text-muted-foreground mt-1.5 leading-relaxed">
+                  {p.desc}
+                </p>
               </div>
             ))}
           </div>
 
           <div className="text-center mt-8">
-            <Link to="/about" className="inline-flex items-center gap-1.5 bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-2.5 rounded font-semibold text-sm focus-ring">
+            <Link
+              to="/about"
+              className="inline-flex items-center gap-1.5 bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-2.5 rounded font-semibold text-sm focus-ring"
+            >
               Learn more about ELEMENT <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
@@ -542,7 +674,10 @@ export default function Home() {
                 <h2 className="text-[17px] font-bold text-primary flex items-center gap-2 uppercase tracking-wide">
                   <Facebook className="h-4 w-4 text-accent" /> Social Media
                 </h2>
-                <Link to="/media/social" className="text-sm text-primary hover:text-accent font-semibold">
+                <Link
+                  to="/media/social"
+                  className="text-sm text-primary hover:text-accent font-semibold"
+                >
                   View all <ArrowRight className="inline h-3.5 w-3.5" />
                 </Link>
               </div>
@@ -552,13 +687,19 @@ export default function Home() {
                   <div className="px-3 py-2 border-b border-border bg-surface flex items-center gap-2 shrink-0">
                     <Facebook className="h-4 w-4 text-primary" />
                     <span className="text-sm font-bold">Facebook</span>
-                    <span className="text-xs text-muted-foreground ml-auto">@ElementTripura</span>
+                    <span className="text-xs text-muted-foreground ml-auto">
+                      @ElementTripura
+                    </span>
                   </div>
                   <div className="p-3 flex-1 min-h-0 flex flex-col justify-center">
                     <p className="text-sm text-foreground leading-relaxed line-clamp-3">
-                      Field visit by ELEMENT team to community plantation sites in Dhalai district. Engaging with SHGs on livelihood value chains and capacity-building workshops.
+                      Field visit by ELEMENT team to community plantation sites
+                      in Dhalai district. Engaging with SHGs on livelihood value
+                      chains and capacity-building workshops.
                     </p>
-                    <p className="text-xs text-muted-foreground mt-2">2 days ago</p>
+                    <p className="text-xs text-muted-foreground mt-2">
+                      2 days ago
+                    </p>
                   </div>
                 </div>
                 {/* Twitter update */}
@@ -566,13 +707,19 @@ export default function Home() {
                   <div className="px-3 py-2 border-b border-border bg-surface flex items-center gap-2 shrink-0">
                     <Twitter className="h-4 w-4 text-primary" />
                     <span className="text-sm font-bold">Twitter / X</span>
-                    <span className="text-xs text-muted-foreground ml-auto">@ElementTripura</span>
+                    <span className="text-xs text-muted-foreground ml-auto">
+                      @ElementTripura
+                    </span>
                   </div>
                   <div className="p-3 flex-1 min-h-0 flex flex-col justify-center">
                     <p className="text-sm text-foreground leading-relaxed line-clamp-3">
-                      Honourable Forest Minister inaugurates new eco-tourism circuit under ELEMENT. A milestone for sustainable livelihoods across Tripura. #Tripura #ELEMENT
+                      Honourable Forest Minister inaugurates new eco-tourism
+                      circuit under ELEMENT. A milestone for sustainable
+                      livelihoods across Tripura. #Tripura #ELEMENT
                     </p>
-                    <p className="text-xs text-muted-foreground mt-2">5 days ago</p>
+                    <p className="text-xs text-muted-foreground mt-2">
+                      5 days ago
+                    </p>
                   </div>
                 </div>
                 {/* YouTube video */}
@@ -598,19 +745,29 @@ export default function Home() {
                 <h2 className="text-[17px] font-bold text-primary flex items-center gap-2 uppercase tracking-wide">
                   <Award className="h-4 w-4 text-accent" /> Knowledge Hub
                 </h2>
-                <Link to="/knowledge-hub/iec" className="text-sm text-primary hover:text-accent font-semibold">
+                <Link
+                  to="/knowledge-hub/iec"
+                  className="text-sm text-primary hover:text-accent font-semibold"
+                >
                   View all <ArrowRight className="inline h-3.5 w-3.5" />
                 </Link>
               </div>
               <div className="flex-1 overflow-y-auto divide-y divide-border min-h-0">
                 {knowledgeHubItems.map((k) => (
-                  <article key={k.title} className="flex items-center gap-3 p-4 hover:bg-surface/60 transition">
+                  <article
+                    key={k.title}
+                    className="flex items-center gap-3 p-4 hover:bg-surface/60 transition"
+                  >
                     <div className="h-11 w-11 shrink-0 rounded-sm bg-primary/10 border border-primary/20 flex items-center justify-center text-primary">
                       <FileText className="h-5 w-5" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <span className="text-xs font-bold uppercase tracking-wide text-accent">{k.category}</span>
-                      <h3 className="text-base font-semibold text-foreground leading-snug mt-0.5 mb-1">{k.title}</h3>
+                      <span className="text-xs font-bold uppercase tracking-wide text-accent">
+                        {k.category}
+                      </span>
+                      <h3 className="text-base font-semibold text-foreground leading-snug mt-0.5 mb-1">
+                        {k.title}
+                      </h3>
                       <div className="flex items-center gap-2 text-xs text-muted-foreground">
                         <span>{k.date}</span>
                         <span>·</span>
@@ -618,7 +775,12 @@ export default function Home() {
                         <span>·</span>
                         <span>English</span>
                         <span>·</span>
-                        <a href="#" className="text-primary font-semibold hover:text-accent">Download</a>
+                        <a
+                          href="#"
+                          className="text-primary font-semibold hover:text-accent"
+                        >
+                          Download
+                        </a>
                       </div>
                     </div>
                   </article>
