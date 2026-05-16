@@ -24,25 +24,25 @@ export default function Footer() {
             <img
               src={logoTripura}
               alt="Government of Tripura"
-              className="h-20 w-20 bg-white rounded p-1 object-contain shrink-0"
-              width={80}
-              height={80}
+              className="h-12 w-12 bg-white rounded p-1 object-contain shrink-0"
+              width={48}
+              height={48}
               loading="lazy"
             />
             <img
               src={logoForestDept}
               alt="Tripura Forest Department"
-              className="h-20 w-20 bg-white rounded p-1 object-contain shrink-0"
-              width={80}
-              height={80}
+              className="h-12 w-12 bg-white rounded p-1 object-contain shrink-0"
+              width={48}
+              height={48}
               loading="lazy"
             />
             <img
               src={logoWorldBank}
               alt="The World Bank"
-              className="h-20 w-auto bg-white rounded p-1 object-contain shrink-0"
-              width={100}
-              height={80}
+              className="h-12 w-auto bg-white rounded p-1 object-contain shrink-0"
+              width={64}
+              height={48}
               loading="lazy"
             />
           </div>
