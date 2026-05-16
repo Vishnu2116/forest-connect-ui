@@ -361,12 +361,12 @@ export default function Home() {
         <div className="gov-container-wide">
           <div className="grid lg:grid-cols-[35fr_35fr_30fr] gap-6 items-stretch lg:h-[40rem]">
             {/* Column 1: Project Highlights */}
-            <div className="bg-card border border-border rounded-md p-0 flex flex-col h-full overflow-hidden">
+            <div className="bg-card border border-border rounded-md p-0 flex flex-col h-[28rem] lg:h-full overflow-hidden">
               <div className="flex items-center justify-between px-4 py-3 border-b-2 border-primary bg-primary/5">
                 <h2 className="text-sm font-bold text-primary flex items-center gap-2 uppercase tracking-wide">
                   <Trees className="h-4 w-4 text-accent" /> Project Highlights
                 </h2>
-                <Link to="/projects" className="text-xs text-primary hover:text-accent font-semibold">
+                <Link to="/project-components" className="text-xs text-primary hover:text-accent font-semibold">
                   View all <ArrowRight className="inline h-3 w-3" />
                 </Link>
               </div>
@@ -419,10 +419,10 @@ export default function Home() {
                     <span className="text-[10px] text-muted-foreground ml-auto">@ElementTripura</span>
                   </div>
                   <div className="p-3">
-                    <p className="text-xs text-foreground leading-relaxed line-clamp-2">
-                      Field visit by ELEMENT team to community plantation sites in Dhalai district. Engaging with SHGs on livelihood value chains.
+                    <p className="text-xs text-foreground leading-relaxed line-clamp-3">
+                      Field visit by ELEMENT team to community plantation sites in Dhalai district. Engaging with SHGs on livelihood value chains and capacity-building workshops.
                     </p>
-                    <p className="text-[10px] text-muted-foreground mt-1.5">2 days ago</p>
+                    <p className="text-[10px] text-muted-foreground mt-2">2 days ago</p>
                   </div>
                 </div>
                 {/* Twitter update */}
@@ -433,32 +433,31 @@ export default function Home() {
                     <span className="text-[10px] text-muted-foreground ml-auto">@ElementTripura</span>
                   </div>
                   <div className="p-3">
-                    <p className="text-xs text-foreground leading-relaxed line-clamp-2">
-                      Honourable Forest Minister inaugurates new eco-tourism circuit under ELEMENT. A milestone for sustainable livelihoods. #Tripura #ELEMENT
+                    <p className="text-xs text-foreground leading-relaxed line-clamp-3">
+                      Honourable Forest Minister inaugurates new eco-tourism circuit under ELEMENT. A milestone for sustainable livelihoods across Tripura. #Tripura #ELEMENT
                     </p>
-                    <p className="text-[10px] text-muted-foreground mt-1.5">5 days ago</p>
+                    <p className="text-[10px] text-muted-foreground mt-2">5 days ago</p>
                   </div>
                 </div>
                 {/* YouTube video */}
                 <div className="bg-background border border-border rounded-sm overflow-hidden">
-                  <div className="relative aspect-video bg-gradient-to-br from-primary/30 to-primary-light/30 flex items-center justify-center group cursor-pointer">
+                  <div className="relative h-24 bg-gradient-to-br from-primary/30 to-primary-light/30 flex items-center justify-center group cursor-pointer">
                     <div className="absolute inset-0 bg-black/20" />
-                    <div className="relative h-10 w-10 rounded-full bg-accent flex items-center justify-center shadow-lg group-hover:scale-110 transition">
-                      <div className="w-0 h-0 border-l-[10px] border-l-accent-foreground border-y-[6px] border-y-transparent ml-0.5" />
+                    <div className="relative h-8 w-8 rounded-full bg-accent flex items-center justify-center shadow-lg group-hover:scale-110 transition">
+                      <div className="w-0 h-0 border-l-[8px] border-l-accent-foreground border-y-[5px] border-y-transparent ml-0.5" />
                     </div>
                   </div>
-                  <div className="p-3">
-                    <h4 className="text-xs font-semibold text-foreground leading-snug line-clamp-2">
-                      ELEMENT Project Overview — Community Livelihoods and Landscape Development
+                  <div className="px-3 py-2">
+                    <h4 className="text-xs font-semibold text-foreground leading-snug line-clamp-1">
+                      ELEMENT Project Overview — Community Livelihoods
                     </h4>
-                    <p className="text-[10px] text-muted-foreground mt-1">Official YouTube Video</p>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Column 3: Knowledge Hub */}
-            <div className="bg-card border border-border rounded-md p-0 flex flex-col h-full overflow-hidden">
+            <div className="bg-card border border-border rounded-md p-0 flex flex-col h-[28rem] lg:h-full overflow-hidden">
               <div className="flex items-center justify-between px-4 py-3 border-b-2 border-primary bg-primary/5">
                 <h2 className="text-sm font-bold text-primary flex items-center gap-2 uppercase tracking-wide">
                   <Award className="h-4 w-4 text-accent" /> Knowledge Hub
