@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Mail, MapPin, Phone, Facebook, Twitter, Youtube } from "lucide-react";
 import { useLang } from "@/contexts/LanguageContext";
 import logoTripura from "@/assets/logo-tripura.png";
+import logoForestDept from "@/assets/logo-tripuraforestdept.png";
 import logoWorldBank from "@/assets/logo-theworldbank.jpg";
 
 export default function Footer() {
@@ -24,6 +25,14 @@ export default function Footer() {
               src={logoTripura}
               alt="Government of Tripura"
               className="h-14 w-14 bg-white rounded p-1"
+              width={56}
+              height={56}
+              loading="lazy"
+            />
+            <img
+              src={logoForestDept}
+              alt="Tripura Forest Department"
+              className="h-14 w-14 bg-white rounded p-1 object-contain"
               width={56}
               height={56}
               loading="lazy"

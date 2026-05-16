@@ -204,3 +204,20 @@
     @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2;
   }
 }
+
+@layer utilities {
+  @keyframes marqueeY {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-50%); }
+  }
+  @keyframes badgePulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.08); opacity: 0.92; }
+  }
+  .animate-marquee-y {
+    animation: marqueeY 30s linear infinite;
+  }
+  .animate-badge-pulse {
+    animation: badgePulse 1.8s ease-in-out infinite;
+  }
+}

@@ -15,11 +15,6 @@ import { navItems } from "@/data/navigation";
 import { useLang, LANGUAGES } from "@/contexts/LanguageContext";
 import { useA11y } from "@/contexts/AccessibilityContext";
 import logoTripura from "@/assets/logo-tripura.png";
-import logoWorldBank from "@/assets/logo-worldbank.png";
-import logoForest from "@/assets/logo.png";
-import logoElement from "@/assets/logo-element.png";
-import cmImage from "@/assets/dignitaries/CM.jpeg";
-import ministerImage from "@/assets/dignitaries/Animesh.jpeg";
 import logoTheWorldBank from "@/assets/logo-theworldbank.jpg";
 import logoTripuraForestDept from "@/assets/logo-tripuraforestdept.png";
 
@@ -264,73 +259,42 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* ── DESKTOP LOGO HEADER — only at xl and above (≥ 1280px) ── */}
-      {/*
-          5-column grid:
-            col 1 → auto : left pair  (Tripura emblem + CM portrait)
-            col 2 → 1fr  : spacer     (mirrors col 4, keeps ELEMENT at true screen center)
-            col 3 → auto : ELEMENT    (centered because col 2 = col 4 = 1fr)
-            col 4 → 1fr  : World Bank (justify-center = exact midpoint between ELEMENT & right pair)
-            col 5 → auto : right pair (Forest Minister portrait + Forest Dept emblem)
+      {/* ── DESKTOP LOGO HEADER — only at xl and above (≥ 1280px) ──
+          ELEMENT is absolutely centered to the viewport. Tripura emblem
+          sits on the far left, World Bank + Forest Dept sit on the far right.
       */}
-      <div
-        className="hidden xl:grid w-full items-center py-6 px-10 min-h-[148px]"
-        style={{
-          gridTemplateColumns: "auto minmax(0,1fr) auto minmax(32px,1fr) auto",
-        }}
-      >
-        {/* Col 1 — Left pair: Tripura Govt emblem + CM */}
-        <div className="flex items-center gap-6 shrink-0">
+      <div className="hidden xl:block relative w-full py-6 px-10 min-h-[148px]">
+        {/* Left edge — Tripura Govt emblem */}
+        <div className="absolute left-10 top-1/2 -translate-y-1/2 flex items-center">
           <img
             src={logoTripura}
             alt="Government of Tripura"
             className="h-[116px] w-[116px] object-contain"
           />
-          <div className="flex flex-col items-center gap-1.5">
-            <img
-              src={cmImage}
-              alt="Hon'ble Chief Minister, Government of Tripura"
-              className="h-[96px] w-[96px] rounded-full object-cover border-2 border-primary/20"
-            />
-          </div>
         </div>
 
-        {/* Col 2 — Spacer (1fr, mirrors col 4) */}
-        <div />
-
-        {/* Col 3 — ELEMENT text block */}
-        <div className="flex flex-col items-center text-center">
+        {/* Center — ELEMENT (truly screen-centered) */}
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center text-center">
           <h1 className="text-5xl xl:text-6xl font-extrabold text-primary tracking-widest leading-none">
             ELEMENT
           </h1>
-          <p className="mt-2 text-sm font-semibold text-foreground/80">
+          <p className="mt-2 text-sm font-semibold text-foreground/80 whitespace-nowrap">
             {t("site.full")}
           </p>
           <div className="w-full border-t border-border mt-2 pt-1.5">
-            <p className="text-xs text-muted-foreground italic">
+            <p className="text-xs text-muted-foreground italic whitespace-nowrap">
               {t("site.joint")}
             </p>
           </div>
         </div>
 
-        {/* Col 4 — World Bank zone: centered = exact midpoint between ELEMENT & right pair */}
-        <div className="flex items-center justify-center">
+        {/* Right edge — World Bank + Forest Dept */}
+        <div className="absolute right-10 top-1/2 -translate-y-1/2 flex items-center gap-5">
           <img
             src={logoTheWorldBank}
             alt="The World Bank"
-            className="h-[112px] w-[162px] object-contain"
+            className="h-[100px] w-auto object-contain"
           />
-        </div>
-
-        {/* Col 5 — Right pair: Forest Minister + Forest Dept emblem */}
-        <div className="flex items-center gap-6 shrink-0">
-          <div className="flex flex-col items-center gap-1.5">
-            <img
-              src={ministerImage}
-              alt="Hon'ble Forest & Environment Minister, Tripura"
-              className="h-[96px] w-[96px] rounded-full object-cover border-2 border-primary/20"
-            />
-          </div>
           <img
             src={logoTripuraForestDept}
             alt="Tripura Forest Department"
@@ -353,7 +317,7 @@ export default function Navbar() {
               return (
                 <li
                   key={item.labelKey}
-                  className="relative flex flex-1"
+                  className="relative flex"
                   onMouseEnter={() =>
                     item.children && setOpenDropdown(item.labelKey)
                   }
@@ -361,7 +325,7 @@ export default function Navbar() {
                 >
                   {item.children ? (
                     <button
-                      className={`flex items-center justify-center gap-1 w-full px-4 py-3.5 text-sm font-medium hover:bg-primary-dark transition-colors border-b-2 ${
+                      className={`flex items-center justify-center gap-1 whitespace-nowrap px-5 py-3.5 text-sm font-medium hover:bg-primary-dark transition-colors border-b-2 ${
                         dropActive
                           ? "bg-primary-dark border-accent"
                           : "border-transparent"
@@ -374,7 +338,7 @@ export default function Navbar() {
                     <NavLink
                       to={item.to!}
                       className={({ isActive: a }) =>
-                        `flex items-center justify-center w-full px-4 py-3.5 text-sm font-medium hover:bg-primary-dark transition-colors border-b-2 ${
+                        `flex items-center justify-center whitespace-nowrap px-5 py-3.5 text-sm font-medium hover:bg-primary-dark transition-colors border-b-2 ${
                           a
                             ? "bg-primary-dark border-accent"
                             : "border-transparent"
