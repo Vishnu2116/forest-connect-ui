@@ -358,8 +358,8 @@ export default function Home() {
 
       {/* Three-column information section */}
       <section className="py-14 md:py-18 bg-surface border-t border-border">
-        <div className="gov-container">
-          <div className="grid lg:grid-cols-3 gap-6 items-stretch lg:h-[40rem]">
+        <div className="gov-container-wide">
+          <div className="grid lg:grid-cols-[35fr_35fr_30fr] gap-6 items-stretch lg:h-[40rem]">
             {/* Column 1: Project Highlights */}
             <div className="bg-card border border-border rounded-md p-0 flex flex-col h-full overflow-hidden">
               <div className="flex items-center justify-between px-4 py-3 border-b-2 border-primary bg-primary/5">
