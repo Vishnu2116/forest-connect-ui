@@ -358,16 +358,16 @@ export default function Home() {
 
       {/* Three-column information section */}
       <section className="py-14 md:py-18 bg-surface border-t border-border">
-        <div className="gov-container-wide">
-          <div className="grid lg:grid-cols-[35fr_35fr_30fr] gap-6 items-stretch lg:h-[40rem]">
+        <div className="mx-auto w-full max-w-[110rem] px-3 sm:px-4 lg:px-5">
+          <div className="grid lg:grid-cols-[35fr_35fr_30fr] gap-6 items-stretch lg:h-[46rem]">
             {/* Column 1: Project Highlights */}
             <div className="bg-card border border-border rounded-md p-0 flex flex-col h-[28rem] lg:h-full overflow-hidden">
               <div className="flex items-center justify-between px-4 py-3 border-b-2 border-primary bg-primary/5">
-                <h2 className="text-sm font-bold text-primary flex items-center gap-2 uppercase tracking-wide">
+                <h2 className="text-base font-bold text-primary flex items-center gap-2 uppercase tracking-wide">
                   <Trees className="h-4 w-4 text-accent" /> Project Highlights
                 </h2>
-                <Link to="/project-components" className="text-xs text-primary hover:text-accent font-semibold">
-                  View all <ArrowRight className="inline h-3 w-3" />
+                <Link to="/project-components" className="text-sm text-primary hover:text-accent font-semibold">
+                  View all <ArrowRight className="inline h-3.5 w-3.5" />
                 </Link>
               </div>
               <div className="flex-1 overflow-y-auto divide-y divide-border min-h-0">
@@ -383,16 +383,16 @@ export default function Home() {
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-1.5 mb-1 flex-wrap">
                         {p.component && (
-                          <span className="text-[9px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-accent/15 text-accent">{p.component}</span>
+                          <span className="text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-accent/15 text-accent">{p.component}</span>
                         )}
-                        <span className="text-[9px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-success/15 text-success">{p.status}</span>
+                        <span className="text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-success/15 text-success">{p.status}</span>
                       </div>
-                      <h3 className="text-sm font-semibold text-foreground leading-snug mb-1">{p.title}</h3>
+                      <h3 className="text-[15px] font-semibold text-foreground leading-snug mb-1">{p.title}</h3>
                       {p.objective && (
-                        <p className="text-xs text-muted-foreground line-clamp-1 mb-1">{p.objective}</p>
+                        <p className="text-[13px] text-muted-foreground line-clamp-1 mb-1">{p.objective}</p>
                       )}
-                      <Link to={`/projects/${slugify(p.title)}`} className="inline-flex items-center gap-1 text-xs font-semibold text-accent hover:text-accent-hover">
-                        Read More <ArrowRight className="h-3 w-3" />
+                      <Link to={`/projects/${slugify(p.title)}`} className="inline-flex items-center gap-1 text-[13px] font-semibold text-accent hover:text-accent-hover">
+                        Read More <ArrowRight className="h-3.5 w-3.5" />
                       </Link>
                     </div>
                   </article>
@@ -403,11 +403,11 @@ export default function Home() {
             {/* Column 2: Social Media */}
             <div className="bg-card border border-border rounded-md p-0 flex flex-col h-full overflow-hidden">
               <div className="flex items-center justify-between px-4 py-3 border-b-2 border-primary bg-primary/5">
-                <h2 className="text-sm font-bold text-primary flex items-center gap-2 uppercase tracking-wide">
+                <h2 className="text-base font-bold text-primary flex items-center gap-2 uppercase tracking-wide">
                   <Facebook className="h-4 w-4 text-accent" /> Social Media
                 </h2>
-                <Link to="/media/social" className="text-xs text-primary hover:text-accent font-semibold">
-                  View all <ArrowRight className="inline h-3 w-3" />
+                <Link to="/media/social" className="text-sm text-primary hover:text-accent font-semibold">
+                  View all <ArrowRight className="inline h-3.5 w-3.5" />
                 </Link>
               </div>
               <div className="flex-1 min-h-0 p-3 flex flex-col gap-3">
@@ -415,40 +415,40 @@ export default function Home() {
                 <div className="bg-background border border-border rounded-sm overflow-hidden flex flex-col basis-0 grow-[29] min-h-0">
                   <div className="px-3 py-2 border-b border-border bg-surface flex items-center gap-2 shrink-0">
                     <Facebook className="h-3.5 w-3.5 text-primary" />
-                    <span className="text-xs font-bold">Facebook</span>
-                    <span className="text-[10px] text-muted-foreground ml-auto">@ElementTripura</span>
+                    <span className="text-sm font-bold">Facebook</span>
+                    <span className="text-[11px] text-muted-foreground ml-auto">@ElementTripura</span>
                   </div>
                   <div className="p-3 flex-1 min-h-0 flex flex-col justify-center">
-                    <p className="text-xs text-foreground leading-relaxed line-clamp-3">
+                    <p className="text-[13px] text-foreground leading-relaxed line-clamp-3">
                       Field visit by ELEMENT team to community plantation sites in Dhalai district. Engaging with SHGs on livelihood value chains and capacity-building workshops.
                     </p>
-                    <p className="text-[10px] text-muted-foreground mt-2">2 days ago</p>
+                    <p className="text-[11px] text-muted-foreground mt-2">2 days ago</p>
                   </div>
                 </div>
                 {/* Twitter update */}
                 <div className="bg-background border border-border rounded-sm overflow-hidden flex flex-col basis-0 grow-[29] min-h-0">
                   <div className="px-3 py-2 border-b border-border bg-surface flex items-center gap-2 shrink-0">
                     <Twitter className="h-3.5 w-3.5 text-primary" />
-                    <span className="text-xs font-bold">Twitter / X</span>
-                    <span className="text-[10px] text-muted-foreground ml-auto">@ElementTripura</span>
+                    <span className="text-sm font-bold">Twitter / X</span>
+                    <span className="text-[11px] text-muted-foreground ml-auto">@ElementTripura</span>
                   </div>
                   <div className="p-3 flex-1 min-h-0 flex flex-col justify-center">
-                    <p className="text-xs text-foreground leading-relaxed line-clamp-3">
+                    <p className="text-[13px] text-foreground leading-relaxed line-clamp-3">
                       Honourable Forest Minister inaugurates new eco-tourism circuit under ELEMENT. A milestone for sustainable livelihoods across Tripura. #Tripura #ELEMENT
                     </p>
-                    <p className="text-[10px] text-muted-foreground mt-2">5 days ago</p>
+                    <p className="text-[11px] text-muted-foreground mt-2">5 days ago</p>
                   </div>
                 </div>
                 {/* YouTube video */}
                 <div className="bg-background border border-border rounded-sm overflow-hidden flex flex-col basis-0 grow-[42] min-h-0">
                   <div className="relative flex-1 min-h-0 bg-gradient-to-br from-primary/30 to-primary-light/30 flex items-center justify-center group cursor-pointer">
                     <div className="absolute inset-0 bg-black/20" />
-                    <div className="relative h-10 w-10 rounded-full bg-accent flex items-center justify-center shadow-lg group-hover:scale-110 transition">
-                      <div className="w-0 h-0 border-l-[10px] border-l-accent-foreground border-y-[6px] border-y-transparent ml-0.5" />
+                    <div className="relative h-11 w-11 rounded-full bg-accent flex items-center justify-center shadow-lg group-hover:scale-110 transition">
+                      <div className="w-0 h-0 border-l-[11px] border-l-accent-foreground border-y-[7px] border-y-transparent ml-0.5" />
                     </div>
                   </div>
                   <div className="px-3 py-2 shrink-0">
-                    <h4 className="text-xs font-semibold text-foreground leading-snug line-clamp-1">
+                    <h4 className="text-[13px] font-semibold text-foreground leading-snug line-clamp-1">
                       ELEMENT Project Overview — Community Livelihoods
                     </h4>
                   </div>
@@ -459,23 +459,23 @@ export default function Home() {
             {/* Column 3: Knowledge Hub */}
             <div className="bg-card border border-border rounded-md p-0 flex flex-col h-[28rem] lg:h-full overflow-hidden">
               <div className="flex items-center justify-between px-4 py-3 border-b-2 border-primary bg-primary/5">
-                <h2 className="text-sm font-bold text-primary flex items-center gap-2 uppercase tracking-wide">
+                <h2 className="text-base font-bold text-primary flex items-center gap-2 uppercase tracking-wide">
                   <Award className="h-4 w-4 text-accent" /> Knowledge Hub
                 </h2>
-                <Link to="/knowledge-hub/iec" className="text-xs text-primary hover:text-accent font-semibold">
-                  View all <ArrowRight className="inline h-3 w-3" />
+                <Link to="/knowledge-hub/iec" className="text-sm text-primary hover:text-accent font-semibold">
+                  View all <ArrowRight className="inline h-3.5 w-3.5" />
                 </Link>
               </div>
               <div className="flex-1 overflow-y-auto divide-y divide-border min-h-0">
                 {knowledgeHubItems.map((k) => (
                   <article key={k.title} className="flex items-center gap-3 p-4 hover:bg-surface/60 transition">
-                    <div className="h-10 w-10 shrink-0 rounded-sm bg-primary/10 border border-primary/20 flex items-center justify-center text-primary">
+                    <div className="h-11 w-11 shrink-0 rounded-sm bg-primary/10 border border-primary/20 flex items-center justify-center text-primary">
                       <FileText className="h-5 w-5" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <span className="text-[10px] font-bold uppercase tracking-wide text-accent">{k.category}</span>
-                      <h3 className="text-sm font-semibold text-foreground leading-snug mt-0.5 mb-1">{k.title}</h3>
-                      <div className="flex items-center gap-2 text-[10px] text-muted-foreground">
+                      <span className="text-[11px] font-bold uppercase tracking-wide text-accent">{k.category}</span>
+                      <h3 className="text-[15px] font-semibold text-foreground leading-snug mt-0.5 mb-1">{k.title}</h3>
+                      <div className="flex items-center gap-2 text-[11px] text-muted-foreground">
                         <span>{k.date}</span>
                         <span>·</span>
                         <span>PDF</span>
