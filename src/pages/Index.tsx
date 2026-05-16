@@ -407,7 +407,7 @@ function ProjectHighlightsColumn() {
         ref={ref}
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
-        className="flex-1 overflow-y-auto divide-y divide-border min-h-0 scroll-smooth [scrollbar-width:thin]"
+        className="flex-1 overflow-y-auto divide-y divide-border min-h-0 no-scrollbar"
       >
         {items.map((p, idx) => (
           <article key={`${p.title}-${idx}`} className="flex gap-3 p-4 hover:bg-surface/60 transition">
