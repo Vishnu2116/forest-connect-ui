@@ -412,13 +412,13 @@ export default function Home() {
               </div>
               <div className="flex-1 min-h-0 p-3 flex flex-col gap-3">
                 {/* Facebook update */}
-                <div className="bg-background border border-border rounded-sm overflow-hidden">
-                  <div className="px-3 py-2 border-b border-border bg-surface flex items-center gap-2">
+                <div className="bg-background border border-border rounded-sm overflow-hidden flex flex-col basis-0 grow-[29] min-h-0">
+                  <div className="px-3 py-2 border-b border-border bg-surface flex items-center gap-2 shrink-0">
                     <Facebook className="h-3.5 w-3.5 text-primary" />
                     <span className="text-xs font-bold">Facebook</span>
                     <span className="text-[10px] text-muted-foreground ml-auto">@ElementTripura</span>
                   </div>
-                  <div className="p-3">
+                  <div className="p-3 flex-1 min-h-0 flex flex-col justify-center">
                     <p className="text-xs text-foreground leading-relaxed line-clamp-3">
                       Field visit by ELEMENT team to community plantation sites in Dhalai district. Engaging with SHGs on livelihood value chains and capacity-building workshops.
                     </p>
@@ -426,13 +426,13 @@ export default function Home() {
                   </div>
                 </div>
                 {/* Twitter update */}
-                <div className="bg-background border border-border rounded-sm overflow-hidden">
-                  <div className="px-3 py-2 border-b border-border bg-surface flex items-center gap-2">
+                <div className="bg-background border border-border rounded-sm overflow-hidden flex flex-col basis-0 grow-[29] min-h-0">
+                  <div className="px-3 py-2 border-b border-border bg-surface flex items-center gap-2 shrink-0">
                     <Twitter className="h-3.5 w-3.5 text-primary" />
                     <span className="text-xs font-bold">Twitter / X</span>
                     <span className="text-[10px] text-muted-foreground ml-auto">@ElementTripura</span>
                   </div>
-                  <div className="p-3">
+                  <div className="p-3 flex-1 min-h-0 flex flex-col justify-center">
                     <p className="text-xs text-foreground leading-relaxed line-clamp-3">
                       Honourable Forest Minister inaugurates new eco-tourism circuit under ELEMENT. A milestone for sustainable livelihoods across Tripura. #Tripura #ELEMENT
                     </p>
@@ -440,14 +440,14 @@ export default function Home() {
                   </div>
                 </div>
                 {/* YouTube video */}
-                <div className="bg-background border border-border rounded-sm overflow-hidden">
-                  <div className="relative h-24 bg-gradient-to-br from-primary/30 to-primary-light/30 flex items-center justify-center group cursor-pointer">
+                <div className="bg-background border border-border rounded-sm overflow-hidden flex flex-col basis-0 grow-[42] min-h-0">
+                  <div className="relative flex-1 min-h-0 bg-gradient-to-br from-primary/30 to-primary-light/30 flex items-center justify-center group cursor-pointer">
                     <div className="absolute inset-0 bg-black/20" />
-                    <div className="relative h-8 w-8 rounded-full bg-accent flex items-center justify-center shadow-lg group-hover:scale-110 transition">
-                      <div className="w-0 h-0 border-l-[8px] border-l-accent-foreground border-y-[5px] border-y-transparent ml-0.5" />
+                    <div className="relative h-10 w-10 rounded-full bg-accent flex items-center justify-center shadow-lg group-hover:scale-110 transition">
+                      <div className="w-0 h-0 border-l-[10px] border-l-accent-foreground border-y-[6px] border-y-transparent ml-0.5" />
                     </div>
                   </div>
-                  <div className="px-3 py-2">
+                  <div className="px-3 py-2 shrink-0">
                     <h4 className="text-xs font-semibold text-foreground leading-snug line-clamp-1">
                       ELEMENT Project Overview — Community Livelihoods
                     </h4>
