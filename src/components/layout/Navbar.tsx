@@ -53,7 +53,8 @@ export default function Navbar() {
       <a href="#main" className="skip-link focus-ring">
         {t("common.skipMain")}
       </a>
-      {/* Top utility bar */}
+
+      {/* ── TOP UTILITY BAR — always visible ── */}
       <div className="bg-primary-dark text-primary-foreground text-xs">
         <div className="gov-container flex items-center justify-between gap-2 h-9">
           <div className="flex items-center gap-3 min-w-0">
@@ -160,7 +161,11 @@ export default function Navbar() {
                           setLang(l.code);
                           setLangOpen(false);
                         }}
-                        className={`w-full text-left px-3 py-2 text-xs hover:bg-surface ${lang === l.code ? "bg-surface text-primary font-semibold" : ""}`}
+                        className={`w-full text-left px-3 py-2 text-xs hover:bg-surface ${
+                          lang === l.code
+                            ? "bg-surface text-primary font-semibold"
+                            : ""
+                        }`}
                       >
                         {l.label}
                       </button>
@@ -171,6 +176,7 @@ export default function Navbar() {
             </div>
           </div>
         </div>
+
         {searchOpen && (
           <div className="bg-primary border-t border-primary-dark/40">
             <form
@@ -215,88 +221,12 @@ export default function Navbar() {
         )}
       </div>
 
-      {/* Desktop layout — balanced 3-group structure */}
-      <div className="hidden md:flex items-center justify-between gap-8 py-2">
-        {/* Left Group — Tripura Govt + CM */}
-        <div className="flex items-center justify-center gap-6 flex-1">
-          {/* Tripura Govt Logo */}
-          <div className="flex items-center justify-center">
-            <img
-              src={logoTripura}
-              alt="Government of Tripura emblem"
-              className="h-20 w-20 object-contain"
-            />
-          </div>
-
-          {/* CM Image */}
-          <div className="flex flex-col items-center justify-center">
-            <img
-              src={cmImage}
-              alt="Hon'ble Chief Minister, Government of Tripura"
-              className="h-20 w-20 rounded-full object-cover border-2 border-primary/20"
-            />
-            <div className="text-[10px] font-semibold text-primary mt-1 leading-tight text-center">
-              Hon'ble CM
-            </div>
-          </div>
-        </div>
-
-        {/* Center Group — ELEMENT + World Bank */}
-        <div className="flex items-center justify-center gap-6 flex-1 px-4">
-          {/* ELEMENT Section */}
-          <div className="flex flex-col items-center justify-center text-center">
-            <h1 className="text-3xl lg:text-5xl font-extrabold text-primary tracking-wide leading-none">
-              ELEMENT
-            </h1>
-
-            <p className="mt-2 text-xs lg:text-sm font-semibold text-foreground/80">
-              {t("site.full")}
-            </p>
-
-            <div className="mx-auto mt-1.5 border-t border-border pt-1">
-              <p className="text-[11px] lg:text-xs text-muted-foreground italic">
-                {t("site.joint")}
-              </p>
-            </div>
-          </div>
-
-          {/* World Bank Logo */}
-          <div className="flex items-center justify-center">
-            <img
-              src={logoTheWorldBank}
-              alt="The World Bank logo"
-              className="h-20 w-20 object-contain"
-            />
-          </div>
-        </div>
-
-        {/* Right Group — Forest Minister + Forest Dept */}
-        <div className="flex items-center justify-center gap-6 flex-1">
-          {/* Forest Minister */}
-          <div className="flex flex-col items-center justify-center">
-            <img
-              src={ministerImage}
-              alt="Hon'ble Forest & Environment Minister, Tripura"
-              className="h-20 w-20 rounded-full object-cover border-2 border-primary/20"
-            />
-            <div className="text-[10px] font-semibold text-primary mt-1 leading-tight text-center">
-              Forest Minister
-            </div>
-          </div>
-
-          {/* Forest Department Logo */}
-          <div className="flex items-center justify-center">
-            <img
-              src={logoTripuraForestDept}
-              alt="Tripura Forest Department"
-              className="h-20 w-20 object-contain"
-            />
-          </div>
-        </div>
-      </div>
-
-      {/* Mobile Header */}
-      <div className="md:hidden bg-background border-b border-border">
+      {/* ── MOBILE HEADER — only below xl (< 1280px) ── */}
+      {/*
+          xl:hidden ensures this disappears the exact moment the desktop
+          logo header appears. No gap, no overlap.
+      */}
+      <div className="xl:hidden bg-background border-b border-border">
         <div className="flex items-center justify-between px-4 py-3">
           {/* Left Logo */}
           <Link
@@ -318,11 +248,12 @@ export default function Navbar() {
             </h1>
           </div>
 
-          {/* Hamburger Button */}
+          {/* Hamburger */}
           <button
             className="p-2 rounded-md border border-border focus-ring shrink-0"
             onClick={() => setMobileOpen((v) => !v)}
             aria-label="Toggle menu"
+            aria-expanded={mobileOpen}
           >
             {mobileOpen ? (
               <X className="h-5 w-5" />
@@ -333,13 +264,92 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Main nav — equal width and equal spacing navbar */}
-      <nav className="bg-primary text-primary-foreground hidden lg:block">
+      {/* ── DESKTOP LOGO HEADER — only at xl and above (≥ 1280px) ── */}
+      {/*
+          5-column grid:
+            col 1 → auto : left pair  (Tripura emblem + CM portrait)
+            col 2 → 1fr  : spacer     (mirrors col 4, keeps ELEMENT at true screen center)
+            col 3 → auto : ELEMENT    (centered because col 2 = col 4 = 1fr)
+            col 4 → 1fr  : World Bank (justify-center = exact midpoint between ELEMENT & right pair)
+            col 5 → auto : right pair (Forest Minister portrait + Forest Dept emblem)
+      */}
+      <div
+        className="hidden xl:grid w-full items-center py-6 px-10 min-h-[148px]"
+        style={{
+          gridTemplateColumns: "auto minmax(0,1fr) auto minmax(32px,1fr) auto",
+        }}
+      >
+        {/* Col 1 — Left pair: Tripura Govt emblem + CM */}
+        <div className="flex items-center gap-6 shrink-0">
+          <img
+            src={logoTripura}
+            alt="Government of Tripura"
+            className="h-[116px] w-[116px] object-contain"
+          />
+          <div className="flex flex-col items-center gap-1.5">
+            <img
+              src={cmImage}
+              alt="Hon'ble Chief Minister, Government of Tripura"
+              className="h-[96px] w-[96px] rounded-full object-cover border-2 border-primary/20"
+            />
+          </div>
+        </div>
+
+        {/* Col 2 — Spacer (1fr, mirrors col 4) */}
+        <div />
+
+        {/* Col 3 — ELEMENT text block */}
+        <div className="flex flex-col items-center text-center">
+          <h1 className="text-5xl xl:text-6xl font-extrabold text-primary tracking-widest leading-none">
+            ELEMENT
+          </h1>
+          <p className="mt-2 text-sm font-semibold text-foreground/80">
+            {t("site.full")}
+          </p>
+          <div className="w-full border-t border-border mt-2 pt-1.5">
+            <p className="text-xs text-muted-foreground italic">
+              {t("site.joint")}
+            </p>
+          </div>
+        </div>
+
+        {/* Col 4 — World Bank zone: centered = exact midpoint between ELEMENT & right pair */}
+        <div className="flex items-center justify-center">
+          <img
+            src={logoTheWorldBank}
+            alt="The World Bank"
+            className="h-[112px] w-[162px] object-contain"
+          />
+        </div>
+
+        {/* Col 5 — Right pair: Forest Minister + Forest Dept emblem */}
+        <div className="flex items-center gap-6 shrink-0">
+          <div className="flex flex-col items-center gap-1.5">
+            <img
+              src={ministerImage}
+              alt="Hon'ble Forest & Environment Minister, Tripura"
+              className="h-[96px] w-[96px] rounded-full object-cover border-2 border-primary/20"
+            />
+          </div>
+          <img
+            src={logoTripuraForestDept}
+            alt="Tripura Forest Department"
+            className="h-[116px] w-[116px] object-contain"
+          />
+        </div>
+      </div>
+
+      {/* ── DESKTOP NAV BAR — only at xl and above (≥ 1280px) ── */}
+      {/*
+          Must match the logo header breakpoint exactly.
+          Was: hidden lg:block (caused the gap between 1024–1279px)
+          Now: hidden xl:block
+      */}
+      <nav className="bg-primary text-primary-foreground hidden xl:block">
         <div className="gov-container-wide">
           <ul className="flex items-stretch justify-between w-full">
             {navItems.map((item) => {
               const dropActive = isDropdownActive(item);
-
               return (
                 <li
                   key={item.labelKey}
@@ -358,7 +368,6 @@ export default function Navbar() {
                       }`}
                     >
                       {t(item.labelKey)}
-
                       <ChevronDown className="h-3.5 w-3.5 shrink-0" />
                     </button>
                   ) : (
@@ -403,16 +412,23 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* Mobile nav */}
+      {/* ── MOBILE NAV DRAWER — only below xl (< 1280px) ── */}
+      {/*
+          Was: lg:hidden (caused the gap between 1024–1279px where nav
+          was visible but mobile drawer was already hidden)
+          Now: xl:hidden — perfectly mirrors the mobile header
+      */}
       {mobileOpen && (
-        <nav className="lg:hidden bg-primary text-primary-foreground max-h-[70vh] overflow-y-auto">
+        <nav className="xl:hidden bg-primary text-primary-foreground max-h-[70vh] overflow-y-auto">
           <ul className="divide-y divide-primary-dark">
             {navItems.map((item) => (
               <li key={item.labelKey}>
                 {item.children ? (
                   <>
                     <button
-                      className={`w-full flex items-center justify-between px-4 py-3 text-sm font-medium ${isDropdownActive(item) ? "bg-primary-dark" : ""}`}
+                      className={`w-full flex items-center justify-between px-4 py-3 text-sm font-medium ${
+                        isDropdownActive(item) ? "bg-primary-dark" : ""
+                      }`}
                       onClick={() =>
                         setMobileSubOpen(
                           mobileSubOpen === item.labelKey
@@ -423,7 +439,9 @@ export default function Navbar() {
                     >
                       {t(item.labelKey)}
                       <ChevronDown
-                        className={`h-4 w-4 transition-transform ${mobileSubOpen === item.labelKey ? "rotate-180" : ""}`}
+                        className={`h-4 w-4 transition-transform ${
+                          mobileSubOpen === item.labelKey ? "rotate-180" : ""
+                        }`}
                       />
                     </button>
                     {mobileSubOpen === item.labelKey && (
@@ -434,7 +452,9 @@ export default function Navbar() {
                               to={c.to}
                               onClick={() => setMobileOpen(false)}
                               className={({ isActive: a }) =>
-                                `block px-8 py-2.5 text-sm hover:bg-primary ${a ? "text-accent font-semibold" : ""}`
+                                `block px-8 py-2.5 text-sm hover:bg-primary ${
+                                  a ? "text-accent font-semibold" : ""
+                                }`
                               }
                             >
                               {c.label}
@@ -449,7 +469,9 @@ export default function Navbar() {
                     to={item.to!}
                     onClick={() => setMobileOpen(false)}
                     className={({ isActive: a }) =>
-                      `block px-4 py-3 text-sm font-medium ${a ? "bg-primary-dark text-accent" : ""}`
+                      `block px-4 py-3 text-sm font-medium ${
+                        a ? "bg-primary-dark text-accent" : ""
+                      }`
                     }
                   >
                     {t(item.labelKey)}
