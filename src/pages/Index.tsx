@@ -41,6 +41,25 @@ const announcementDescriptions: Record<string, string> = {
   Report: "Progress reports published for public reference.",
 };
 
+/**
+ * Reusable "NEW" badge. Toggle via `show` prop.
+ * Later, backend/API can decide which items receive `show={true}`.
+ */
+function NewBadge({ show = true }: { show?: boolean }) {
+  if (!show) return null;
+  return (
+    <span
+      className="inline-flex items-center text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-sm bg-accent text-accent-foreground animate-badge-pulse"
+      aria-label="New item"
+    >
+      New
+    </span>
+  );
+}
+
+// Hardcoded NEW-enabled set for now. Replace with API/backend flags later.
+const isItemNew = (_title: string) => true;
+
 const pillars = [
   {
     icon: Briefcase,
@@ -155,19 +174,23 @@ function UpdatesPanel({
           </button>
         ))}
       </div>
-      <div className="flex-1 overflow-y-auto divide-y divide-border min-h-0">
+      <div className="flex-1 overflow-hidden min-h-0 relative group/scroll">
+        <div className="animate-marquee-y group-hover/scroll:[animation-play-state:paused] flex flex-col">
         {updatesTab === "whatsnew" &&
-          announcements.map((a) => {
+          [...announcements, ...announcements].map((a, idx) => {
             const Icon = getUpdateIcon(a.tag);
             return (
-              <article key={a.title} className="flex items-center gap-3 px-4 py-3 hover:bg-surface/60 transition">
+              <article key={`${a.title}-${idx}`} className="flex items-center gap-3 px-4 py-3 hover:bg-surface/60 transition border-b border-border">
                 <div className="shrink-0 text-primary self-center">
                   <Icon className="h-5 w-5" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <span className="inline-block text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-accent/15 text-accent mb-1">
-                    {a.tag}
-                  </span>
+                  <div className="flex items-center gap-1.5 mb-1 flex-wrap">
+                    <span className="inline-block text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-accent/15 text-accent">
+                      {a.tag}
+                    </span>
+                    <NewBadge show={isItemNew(a.title)} />
+                  </div>
                   <a href="#" className="text-sm font-semibold text-foreground hover:text-primary block leading-snug">
                     {a.title}
                   </a>
@@ -180,12 +203,13 @@ function UpdatesPanel({
           })}
         {updatesTab === "notifications" && (
           <>
-            {announcements
-              .filter((a) => a.tag === "Notification" || a.tag === "Recruitment")
-              .map((a) => {
+            {[
+              ...announcements.filter((a) => a.tag === "Notification" || a.tag === "Recruitment"),
+              ...announcements.filter((a) => a.tag === "Notification" || a.tag === "Recruitment"),
+            ].map((a, idx) => {
                 const Icon = getUpdateIcon(a.tag);
                 return (
-                  <article key={a.title} className="flex items-center gap-3 px-4 py-3 hover:bg-surface/60 transition">
+                  <article key={`${a.title}-${idx}`} className="flex items-center gap-3 px-4 py-3 hover:bg-surface/60 transition border-b border-border">
                     <div className="shrink-0 text-primary self-center">
                       <Icon className="h-5 w-5" />
                     </div>
@@ -203,8 +227,8 @@ function UpdatesPanel({
                   </article>
                 );
               })}
-            {events.map((e) => (
-              <article key={e.title} className="flex items-center gap-3 px-4 py-3 hover:bg-surface/60 transition">
+            {[...events, ...events].map((e, idx) => (
+              <article key={`${e.title}-${idx}`} className="flex items-center gap-3 px-4 py-3 hover:bg-surface/60 transition border-b border-border">
                 <div className="shrink-0 text-primary self-center">
                   <Calendar className="h-5 w-5" />
                 </div>
@@ -224,8 +248,8 @@ function UpdatesPanel({
           </>
         )}
         {updatesTab === "tenders" &&
-          procurements.map((p) => (
-            <article key={p.title} className="flex items-center gap-3 px-4 py-3 hover:bg-surface/60 transition">
+          [...procurements, ...procurements].map((p, idx) => (
+            <article key={`${p.title}-${idx}`} className="flex items-center gap-3 px-4 py-3 hover:bg-surface/60 transition border-b border-border">
               <div className="shrink-0 text-primary self-center">
                 <FileText className="h-5 w-5" />
               </div>
@@ -253,6 +277,7 @@ function UpdatesPanel({
               </div>
             </article>
           ))}
+        </div>
       </div>
       <div className="px-3 py-2 border-t border-border bg-surface text-center">
 
