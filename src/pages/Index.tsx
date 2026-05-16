@@ -132,7 +132,7 @@ function UpdatesPanel({
   t: (k: string) => string;
 }) {
   return (
-    <div className="bg-card border border-border rounded-md overflow-hidden lg:h-[34rem] flex flex-col">
+    <div className="bg-card border border-border rounded-md overflow-hidden h-full flex flex-col">
       <div className="grid grid-cols-3 border-b-2 border-primary bg-primary/5">
         {(
           [
@@ -309,7 +309,11 @@ export default function Home() {
             <div className="grid grid-cols-1 gap-4">
               {leftDignitaries.map((d) => <DignitaryCard key={d.name} d={d} />)}
             </div>
-            <UpdatesPanel updatesTab={updatesTab} setUpdatesTab={setUpdatesTab} t={t} />
+            <div className="relative">
+              <div className="absolute inset-0">
+                <UpdatesPanel updatesTab={updatesTab} setUpdatesTab={setUpdatesTab} t={t} />
+              </div>
+            </div>
             <div className="grid grid-cols-1 gap-4">
               {rightDignitaries.map((d) => <DignitaryCard key={d.name} d={d} />)}
             </div>
