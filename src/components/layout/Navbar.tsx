@@ -313,7 +313,7 @@ export default function Navbar() {
           Was: hidden lg:block (caused the gap between 1024–1279px)
           Now: hidden xl:block
       */}
-      <nav className="bg-primary text-primary-foreground hidden xl:block">
+      <nav className="bg-primary text-primary-foreground hidden lg:block">
         <div className="gov-container-wide">
           <ul className="flex items-stretch justify-between w-full">
             {navItems.map((item) => {
