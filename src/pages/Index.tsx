@@ -468,44 +468,7 @@ export default function Home() {
         <div className="mx-auto w-full max-w-[110rem] px-3 sm:px-4 lg:px-5">
           <div className="grid lg:grid-cols-[35fr_35fr_30fr] gap-6 items-stretch lg:h-[46rem]">
             {/* Column 1: Project Highlights */}
-            <div className="bg-card border border-border rounded-md p-0 flex flex-col h-[28rem] lg:h-full overflow-hidden">
-              <div className="flex items-center justify-between px-4 py-3 border-b-2 border-primary bg-primary/5">
-                <h2 className="text-[17px] font-bold text-primary flex items-center gap-2 uppercase tracking-wide">
-                  <Trees className="h-4 w-4 text-accent" /> Project Highlights
-                </h2>
-                <Link to="/project-components" className="text-sm text-primary hover:text-accent font-semibold">
-                  View all <ArrowRight className="inline h-3.5 w-3.5" />
-                </Link>
-              </div>
-              <div className="flex-1 overflow-y-auto divide-y divide-border min-h-0">
-                {projects.map((p) => (
-                  <article key={p.title} className="flex gap-3 p-4 hover:bg-surface/60 transition">
-                    <div className="h-20 w-24 shrink-0 bg-gradient-to-br from-primary/20 to-primary-light/20 rounded-sm overflow-hidden flex items-center justify-center">
-                      {p.image ? (
-                        <img src={p.image} alt={p.title} className="w-full h-full object-cover" />
-                      ) : (
-                        <Trees className="h-6 w-6 text-primary/40" />
-                      )}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-1.5 mb-1 flex-wrap">
-                        {p.component && (
-                          <span className="text-[11px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-accent/15 text-accent">{p.component}</span>
-                        )}
-                        <span className="text-[11px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-success/15 text-success">{p.status}</span>
-                      </div>
-                      <h3 className="text-base font-semibold text-foreground leading-snug mb-1">{p.title}</h3>
-                      {p.objective && (
-                        <p className="text-sm text-muted-foreground line-clamp-1 mb-1">{p.objective}</p>
-                      )}
-                      <Link to={`/projects/${slugify(p.title)}`} className="inline-flex items-center gap-1 text-sm font-semibold text-accent hover:text-accent-hover">
-                        Read More <ArrowRight className="h-3.5 w-3.5" />
-                      </Link>
-                    </div>
-                  </article>
-                ))}
-              </div>
-            </div>
+            <ProjectHighlightsColumn />
 
             {/* Column 2: Social Media */}
             <div className="bg-card border border-border rounded-md p-0 flex flex-col h-[34rem] lg:h-full overflow-hidden">
