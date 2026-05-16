@@ -372,7 +372,7 @@ export default function Home() {
               </div>
               <div className="flex-1 overflow-y-auto divide-y divide-border min-h-0">
                 {projects.map((p) => (
-                  <article key={p.title} className="flex gap-3 p-3 hover:bg-surface/60 transition">
+                  <article key={p.title} className="flex gap-3 p-4 hover:bg-surface/60 transition">
                     <div className="h-20 w-24 shrink-0 bg-gradient-to-br from-primary/20 to-primary-light/20 rounded-sm overflow-hidden flex items-center justify-center">
                       {p.image ? (
                         <img src={p.image} alt={p.title} className="w-full h-full object-cover" />
@@ -469,7 +469,7 @@ export default function Home() {
               </div>
               <div className="flex-1 overflow-y-auto divide-y divide-border min-h-0">
                 {knowledgeHubItems.map((k) => (
-                  <article key={k.title} className="flex gap-3 p-3 hover:bg-surface/60 transition">
+                  <article key={k.title} className="flex items-center gap-3 p-4 hover:bg-surface/60 transition">
                     <div className="h-10 w-10 shrink-0 rounded-sm bg-primary/10 border border-primary/20 flex items-center justify-center text-primary">
                       <FileText className="h-5 w-5" />
                     </div>
