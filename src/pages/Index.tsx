@@ -410,7 +410,7 @@ export default function Home() {
                   View all <ArrowRight className="inline h-3 w-3" />
                 </Link>
               </div>
-              <div className="flex-1 overflow-hidden p-3 space-y-3">
+              <div className="flex-1 min-h-0 p-3 flex flex-col gap-3">
                 {/* Facebook update */}
                 <div className="bg-background border border-border rounded-sm overflow-hidden">
                   <div className="px-3 py-2 border-b border-border bg-surface flex items-center gap-2">
