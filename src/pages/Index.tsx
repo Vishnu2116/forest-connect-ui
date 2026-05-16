@@ -363,7 +363,7 @@ export default function Home() {
             {/* Column 1: Project Highlights */}
             <div className="bg-card border border-border rounded-md p-0 flex flex-col h-[28rem] lg:h-full overflow-hidden">
               <div className="flex items-center justify-between px-4 py-3 border-b-2 border-primary bg-primary/5">
-                <h2 className="text-base font-bold text-primary flex items-center gap-2 uppercase tracking-wide">
+                <h2 className="text-[17px] font-bold text-primary flex items-center gap-2 uppercase tracking-wide">
                   <Trees className="h-4 w-4 text-accent" /> Project Highlights
                 </h2>
                 <Link to="/project-components" className="text-sm text-primary hover:text-accent font-semibold">
@@ -383,15 +383,15 @@ export default function Home() {
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-1.5 mb-1 flex-wrap">
                         {p.component && (
-                          <span className="text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-accent/15 text-accent">{p.component}</span>
+                          <span className="text-[11px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-accent/15 text-accent">{p.component}</span>
                         )}
-                        <span className="text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-success/15 text-success">{p.status}</span>
+                        <span className="text-[11px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-success/15 text-success">{p.status}</span>
                       </div>
-                      <h3 className="text-[15px] font-semibold text-foreground leading-snug mb-1">{p.title}</h3>
+                      <h3 className="text-base font-semibold text-foreground leading-snug mb-1">{p.title}</h3>
                       {p.objective && (
-                        <p className="text-[13px] text-muted-foreground line-clamp-1 mb-1">{p.objective}</p>
+                        <p className="text-sm text-muted-foreground line-clamp-1 mb-1">{p.objective}</p>
                       )}
-                      <Link to={`/projects/${slugify(p.title)}`} className="inline-flex items-center gap-1 text-[13px] font-semibold text-accent hover:text-accent-hover">
+                      <Link to={`/projects/${slugify(p.title)}`} className="inline-flex items-center gap-1 text-sm font-semibold text-accent hover:text-accent-hover">
                         Read More <ArrowRight className="h-3.5 w-3.5" />
                       </Link>
                     </div>
@@ -403,7 +403,7 @@ export default function Home() {
             {/* Column 2: Social Media */}
             <div className="bg-card border border-border rounded-md p-0 flex flex-col h-full overflow-hidden">
               <div className="flex items-center justify-between px-4 py-3 border-b-2 border-primary bg-primary/5">
-                <h2 className="text-base font-bold text-primary flex items-center gap-2 uppercase tracking-wide">
+                <h2 className="text-[17px] font-bold text-primary flex items-center gap-2 uppercase tracking-wide">
                   <Facebook className="h-4 w-4 text-accent" /> Social Media
                 </h2>
                 <Link to="/media/social" className="text-sm text-primary hover:text-accent font-semibold">
@@ -414,29 +414,29 @@ export default function Home() {
                 {/* Facebook update */}
                 <div className="bg-background border border-border rounded-sm overflow-hidden flex flex-col basis-0 grow-[29] min-h-0">
                   <div className="px-3 py-2 border-b border-border bg-surface flex items-center gap-2 shrink-0">
-                    <Facebook className="h-3.5 w-3.5 text-primary" />
+                    <Facebook className="h-4 w-4 text-primary" />
                     <span className="text-sm font-bold">Facebook</span>
-                    <span className="text-[11px] text-muted-foreground ml-auto">@ElementTripura</span>
+                    <span className="text-xs text-muted-foreground ml-auto">@ElementTripura</span>
                   </div>
                   <div className="p-3 flex-1 min-h-0 flex flex-col justify-center">
-                    <p className="text-[13px] text-foreground leading-relaxed line-clamp-3">
+                    <p className="text-sm text-foreground leading-relaxed line-clamp-3">
                       Field visit by ELEMENT team to community plantation sites in Dhalai district. Engaging with SHGs on livelihood value chains and capacity-building workshops.
                     </p>
-                    <p className="text-[11px] text-muted-foreground mt-2">2 days ago</p>
+                    <p className="text-xs text-muted-foreground mt-2">2 days ago</p>
                   </div>
                 </div>
                 {/* Twitter update */}
                 <div className="bg-background border border-border rounded-sm overflow-hidden flex flex-col basis-0 grow-[29] min-h-0">
                   <div className="px-3 py-2 border-b border-border bg-surface flex items-center gap-2 shrink-0">
-                    <Twitter className="h-3.5 w-3.5 text-primary" />
+                    <Twitter className="h-4 w-4 text-primary" />
                     <span className="text-sm font-bold">Twitter / X</span>
-                    <span className="text-[11px] text-muted-foreground ml-auto">@ElementTripura</span>
+                    <span className="text-xs text-muted-foreground ml-auto">@ElementTripura</span>
                   </div>
                   <div className="p-3 flex-1 min-h-0 flex flex-col justify-center">
-                    <p className="text-[13px] text-foreground leading-relaxed line-clamp-3">
+                    <p className="text-sm text-foreground leading-relaxed line-clamp-3">
                       Honourable Forest Minister inaugurates new eco-tourism circuit under ELEMENT. A milestone for sustainable livelihoods across Tripura. #Tripura #ELEMENT
                     </p>
-                    <p className="text-[11px] text-muted-foreground mt-2">5 days ago</p>
+                    <p className="text-xs text-muted-foreground mt-2">5 days ago</p>
                   </div>
                 </div>
                 {/* YouTube video */}
@@ -448,7 +448,7 @@ export default function Home() {
                     </div>
                   </div>
                   <div className="px-3 py-2 shrink-0">
-                    <h4 className="text-[13px] font-semibold text-foreground leading-snug line-clamp-1">
+                    <h4 className="text-sm font-semibold text-foreground leading-snug line-clamp-1">
                       ELEMENT Project Overview — Community Livelihoods
                     </h4>
                   </div>
@@ -459,7 +459,7 @@ export default function Home() {
             {/* Column 3: Knowledge Hub */}
             <div className="bg-card border border-border rounded-md p-0 flex flex-col h-[28rem] lg:h-full overflow-hidden">
               <div className="flex items-center justify-between px-4 py-3 border-b-2 border-primary bg-primary/5">
-                <h2 className="text-base font-bold text-primary flex items-center gap-2 uppercase tracking-wide">
+                <h2 className="text-[17px] font-bold text-primary flex items-center gap-2 uppercase tracking-wide">
                   <Award className="h-4 w-4 text-accent" /> Knowledge Hub
                 </h2>
                 <Link to="/knowledge-hub/iec" className="text-sm text-primary hover:text-accent font-semibold">
@@ -473,9 +473,9 @@ export default function Home() {
                       <FileText className="h-5 w-5" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <span className="text-[11px] font-bold uppercase tracking-wide text-accent">{k.category}</span>
-                      <h3 className="text-[15px] font-semibold text-foreground leading-snug mt-0.5 mb-1">{k.title}</h3>
-                      <div className="flex items-center gap-2 text-[11px] text-muted-foreground">
+                      <span className="text-xs font-bold uppercase tracking-wide text-accent">{k.category}</span>
+                      <h3 className="text-base font-semibold text-foreground leading-snug mt-0.5 mb-1">{k.title}</h3>
+                      <div className="flex items-center gap-2 text-xs text-muted-foreground">
                         <span>{k.date}</span>
                         <span>·</span>
                         <span>PDF</span>
