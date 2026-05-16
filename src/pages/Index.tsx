@@ -271,8 +271,8 @@ function UpdatesPanel({
       </div>
       <div
         ref={ref}
-        onMouseEnter={() => setPaused(true)}
-        onMouseLeave={() => setPaused(false)}
+        onPointerEnter={(e) => { if (e.pointerType === "mouse") setPaused(true); }}
+        onPointerLeave={(e) => { if (e.pointerType === "mouse") setPaused(false); }}
         className="flex-1 overflow-y-auto min-h-0 no-scrollbar"
       >
         <div className="flex flex-col">
@@ -478,8 +478,8 @@ function ProjectHighlightsColumn() {
       </div>
       <div
         ref={ref}
-        onMouseEnter={() => setPaused(true)}
-        onMouseLeave={() => setPaused(false)}
+        onPointerEnter={(e) => { if (e.pointerType === "mouse") setPaused(true); }}
+        onPointerLeave={(e) => { if (e.pointerType === "mouse") setPaused(false); }}
         className="flex-1 overflow-y-auto divide-y divide-border min-h-0 no-scrollbar"
       >
         {items.map((p, idx) => (
@@ -574,11 +574,15 @@ export default function Home() {
                 <DignitaryCard key={d.name} d={d} />
               ))}
             </div>
-            <UpdatesPanel
-              updatesTab={updatesTab}
-              setUpdatesTab={setUpdatesTab}
-              t={t}
-            />
+            {/* Fixed height on mobile/tablet so the scroll container constrains
+                its children and the auto-scroll engine can actually animate. */}
+            <div className="h-[28rem] sm:h-[32rem]">
+              <UpdatesPanel
+                updatesTab={updatesTab}
+                setUpdatesTab={setUpdatesTab}
+                t={t}
+              />
+            </div>
           </div>
 
           {/* Desktop: 3-column layout */}
