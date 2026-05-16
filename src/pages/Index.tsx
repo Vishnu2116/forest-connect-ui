@@ -235,7 +235,7 @@ function UpdatesPanel({
         ref={ref}
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
-        className="flex-1 overflow-y-auto min-h-0 scroll-smooth [scrollbar-width:thin]"
+        className="flex-1 overflow-y-auto min-h-0 no-scrollbar"
       >
         <div className="flex flex-col">
         {updatesTab === "whatsnew" &&
