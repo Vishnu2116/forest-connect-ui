@@ -223,6 +223,16 @@
   .animate-marquee-y {
     animation: marqueeY 30s linear infinite;
   }
+  /* Hide native scrollbar while preserving scroll behavior. */
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+  }
   /* "NEW" badge — strong attention-seeking pulse. */
   .animate-badge-pulse {
     animation: badgePulse 1.1s ease-in-out infinite;
