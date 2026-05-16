@@ -473,9 +473,9 @@ export default function Home() {
                       <FileText className="h-5 w-5" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <span className="text-[11px] font-bold uppercase tracking-wide text-accent">{k.category}</span>
-                      <h3 className="text-[15px] font-semibold text-foreground leading-snug mt-0.5 mb-1">{k.title}</h3>
-                      <div className="flex items-center gap-2 text-[11px] text-muted-foreground">
+                      <span className="text-xs font-bold uppercase tracking-wide text-accent">{k.category}</span>
+                      <h3 className="text-base font-semibold text-foreground leading-snug mt-0.5 mb-1">{k.title}</h3>
+                      <div className="flex items-center gap-2 text-xs text-muted-foreground">
                         <span>{k.date}</span>
                         <span>·</span>
                         <span>PDF</span>
