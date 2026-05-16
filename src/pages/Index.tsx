@@ -113,8 +113,8 @@ function UpdatesPanel({
   t: (k: string) => string;
 }) {
   return (
-    <div className="bg-card border border-border rounded-md overflow-hidden shadow-card h-full flex flex-col">
-      <div className="grid grid-cols-3 border-b border-border bg-surface">
+    <div className="bg-card border border-border rounded-md overflow-hidden h-full flex flex-col">
+      <div className="grid grid-cols-3 border-b-2 border-primary bg-primary/5">
         {(
           [
             { key: "whatsnew", label: "What's New", icon: Bell },
@@ -125,10 +125,10 @@ function UpdatesPanel({
           <button
             key={tab.key}
             onClick={() => setUpdatesTab(tab.key)}
-            className={`flex items-center justify-center gap-1.5 py-3 text-xs sm:text-sm font-semibold border-b-2 transition ${
+            className={`flex items-center justify-center gap-1.5 py-3 text-xs sm:text-sm font-semibold border-r border-border last:border-r-0 transition relative ${
               updatesTab === tab.key
-                ? "border-accent text-primary bg-card"
-                : "border-transparent text-muted-foreground hover:text-primary"
+                ? "bg-primary text-primary-foreground"
+                : "text-foreground hover:bg-primary/10"
             }`}
           >
             <tab.icon className="h-4 w-4" />
@@ -136,19 +136,18 @@ function UpdatesPanel({
           </button>
         ))}
       </div>
-      <div className="p-4 max-h-[460px] overflow-y-auto flex-1">
-        {updatesTab === "whatsnew" && (
-          <ul className="space-y-3">
-            {announcements.map((a) => (
-              <li key={a.title} className="border-b border-border last:border-0 pb-3 last:pb-0 flex gap-3 items-start">
-                <div className="bg-primary text-primary-foreground rounded-md text-center px-2.5 py-2 shrink-0 min-w-[60px]">
-                  <div className="text-[10px] uppercase opacity-90 tracking-wide">
-                    {a.date.split(" ")[1]} {a.date.split(" ")[2]}
-                  </div>
-                  <div className="text-base font-bold leading-none mt-0.5">{a.date.split(" ")[0]}</div>
+      <div className="max-h-[520px] overflow-y-auto flex-1 divide-y divide-border">
+        {updatesTab === "whatsnew" &&
+          announcements.map((a) => {
+            const [day, mon, yr] = a.date.split(" ");
+            return (
+              <article key={a.title} className="flex gap-3 px-4 py-3 hover:bg-surface/60 transition">
+                <div className="bg-primary text-primary-foreground rounded-sm text-center px-2 py-1.5 shrink-0 min-w-[58px] h-fit">
+                  <div className="text-[9px] uppercase tracking-wider font-semibold opacity-90">{mon} {yr}</div>
+                  <div className="text-lg font-bold leading-none mt-0.5">{day}</div>
                 </div>
                 <div className="flex-1 min-w-0">
-                  <span className="inline-block text-[10px] font-semibold uppercase px-1.5 py-0.5 rounded bg-accent/10 text-accent mb-1">
+                  <span className="inline-block text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-accent/15 text-accent mb-1">
                     {a.tag}
                   </span>
                   <a href="#" className="text-sm font-semibold text-foreground hover:text-primary block leading-snug">
@@ -158,62 +157,94 @@ function UpdatesPanel({
                     {announcementDescriptions[a.tag] ?? "Latest update from the ELEMENT programme."}
                   </p>
                 </div>
-              </li>
-            ))}
-          </ul>
-        )}
+              </article>
+            );
+          })}
         {updatesTab === "notifications" && (
-          <ul className="space-y-3">
+          <>
             {announcements
               .filter((a) => a.tag === "Notification" || a.tag === "Recruitment")
-              .map((a) => (
-                <li key={a.title} className="border-b border-border last:border-0 pb-2.5 last:pb-0">
-                  <div className="text-[10px] font-semibold text-accent uppercase">{a.date}</div>
-                  <a href="#" className="text-sm font-medium text-foreground hover:text-primary block mt-0.5">
-                    {a.title}
+              .map((a) => {
+                const [day, mon, yr] = a.date.split(" ");
+                return (
+                  <article key={a.title} className="flex gap-3 px-4 py-3 hover:bg-surface/60 transition">
+                    <div className="bg-primary text-primary-foreground rounded-sm text-center px-2 py-1.5 shrink-0 min-w-[58px] h-fit">
+                      <div className="text-[9px] uppercase tracking-wider font-semibold opacity-90">{mon} {yr}</div>
+                      <div className="text-lg font-bold leading-none mt-0.5">{day}</div>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <span className="inline-block text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-accent/15 text-accent mb-1">
+                        {a.tag}
+                      </span>
+                      <a href="#" className="text-sm font-semibold text-foreground hover:text-primary block leading-snug">
+                        {a.title}
+                      </a>
+                      <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
+                        {announcementDescriptions[a.tag] ?? "Official notification issued by the ELEMENT programme."}
+                      </p>
+                    </div>
+                  </article>
+                );
+              })}
+            {events.map((e) => {
+              const parts = e.date.split(" ");
+              const [day, mon, yr] = parts.length >= 3 ? parts : [parts[0] || "—", parts[1] || "", ""];
+              return (
+                <article key={e.title} className="flex gap-3 px-4 py-3 hover:bg-surface/60 transition">
+                  <div className="bg-primary text-primary-foreground rounded-sm text-center px-2 py-1.5 shrink-0 min-w-[58px] h-fit">
+                    <div className="text-[9px] uppercase tracking-wider font-semibold opacity-90">{mon} {yr}</div>
+                    <div className="text-lg font-bold leading-none mt-0.5">{day}</div>
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <span className="inline-block text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-accent/15 text-accent mb-1">
+                      Event
+                    </span>
+                    <a href="#" className="text-sm font-semibold text-foreground hover:text-primary block leading-snug">
+                      {e.title}
+                    </a>
+                    <p className="text-xs text-muted-foreground mt-1 flex items-center gap-1">
+                      <MapPin className="h-3 w-3" /> {e.venue}
+                    </p>
+                  </div>
+                </article>
+              );
+            })}
+          </>
+        )}
+        {updatesTab === "tenders" &&
+          procurements.map((p) => {
+            const [day, mon, yr] = p.date.split(" ");
+            return (
+              <article key={p.title} className="flex gap-3 px-4 py-3 hover:bg-surface/60 transition">
+                <div className="bg-primary text-primary-foreground rounded-sm text-center px-2 py-1.5 shrink-0 min-w-[58px] h-fit">
+                  <div className="text-[9px] uppercase tracking-wider font-semibold opacity-90">{mon} {yr}</div>
+                  <div className="text-lg font-bold leading-none mt-0.5">{day}</div>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-1.5 mb-1 flex-wrap">
+                    <span className="inline-block text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-accent/15 text-accent">
+                      Tender
+                    </span>
+                    <span
+                      className={`inline-block text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm ${
+                        p.status === "Open"
+                          ? "bg-success/15 text-success"
+                          : p.status === "Closing Soon"
+                            ? "bg-accent/15 text-accent"
+                            : "bg-muted text-muted-foreground"
+                      }`}
+                    >
+                      {p.status}
+                    </span>
+                  </div>
+                  <a href="#" className="text-sm font-semibold text-foreground hover:text-primary block leading-snug">
+                    {p.title}
                   </a>
-                </li>
-              ))}
-            {events.map((e) => (
-              <li key={e.title} className="border-b border-border last:border-0 pb-2.5 last:pb-0">
-                <div className="text-[10px] font-semibold text-accent uppercase">{e.date}</div>
-                <a href="#" className="text-sm font-medium text-foreground hover:text-primary block mt-0.5">
-                  {e.title}
-                </a>
-                <div className="text-xs text-muted-foreground mt-0.5 flex items-center gap-1">
-                  <MapPin className="h-3 w-3" />
-                  {e.venue}
+                  <p className="text-xs text-muted-foreground mt-1">Deadline: {p.deadline}</p>
                 </div>
-              </li>
-            ))}
-          </ul>
-        )}
-        {updatesTab === "tenders" && (
-          <ul className="space-y-3">
-            {procurements.map((p) => (
-              <li key={p.title} className="border-b border-border last:border-0 pb-2.5 last:pb-0">
-                <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-semibold text-accent uppercase">{p.date}</span>
-                  <span
-                    className={`text-[10px] font-semibold uppercase px-1.5 py-0.5 rounded ${
-                      p.status === "Open"
-                        ? "bg-success/10 text-success"
-                        : p.status === "Closing Soon"
-                          ? "bg-accent/10 text-accent"
-                          : "bg-muted text-muted-foreground"
-                    }`}
-                  >
-                    {p.status}
-                  </span>
-                </div>
-                <a href="#" className="text-sm font-medium text-foreground hover:text-primary block mt-0.5">
-                  {p.title}
-                </a>
-                <div className="text-xs text-muted-foreground mt-0.5">Deadline: {p.deadline}</div>
-              </li>
-            ))}
-          </ul>
-        )}
+              </article>
+            );
+          })}
       </div>
       <div className="p-3 border-t border-border bg-surface text-center">
         <Link
