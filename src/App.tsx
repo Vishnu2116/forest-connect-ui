@@ -14,6 +14,7 @@ import { Reports, Publications, Procurements, RFPs, Tenders } from "./pages/List
 import ComponentPage from "./pages/ComponentPage";
 import { SocialMedia, Gallery, MediaEvents, MediaEventDetail } from "./pages/Media";
 import KnowledgeHub from "./pages/KnowledgeHub";
+import ProjectComponents from "./pages/ProjectComponents";
 import PlantationMap from "./pages/PlantationMap";
 import Grievance from "./pages/Grievance";
 import RTI from "./pages/RTI";
