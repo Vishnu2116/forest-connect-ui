@@ -574,11 +574,15 @@ export default function Home() {
                 <DignitaryCard key={d.name} d={d} />
               ))}
             </div>
-            <UpdatesPanel
-              updatesTab={updatesTab}
-              setUpdatesTab={setUpdatesTab}
-              t={t}
-            />
+            {/* Fixed height on mobile/tablet so the scroll container constrains
+                its children and the auto-scroll engine can actually animate. */}
+            <div className="h-[28rem] sm:h-[32rem]">
+              <UpdatesPanel
+                updatesTab={updatesTab}
+                setUpdatesTab={setUpdatesTab}
+                t={t}
+              />
+            </div>
           </div>
 
           {/* Desktop: 3-column layout */}
