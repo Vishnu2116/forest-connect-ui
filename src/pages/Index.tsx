@@ -15,6 +15,8 @@ import {
   Handshake,
   Facebook,
   Twitter,
+  FileText,
+  UserCheck,
 } from "lucide-react";
 import PageLayout from "@/components/layout/PageLayout";
 import HeroSlider from "@/components/home/HeroSlider";
