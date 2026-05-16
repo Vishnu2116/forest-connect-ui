@@ -359,37 +359,40 @@ export default function Home() {
       {/* Three-column information section */}
       <section className="py-14 md:py-18 bg-surface border-t border-border">
         <div className="gov-container">
-          <div className="grid lg:grid-cols-3 gap-6 items-stretch">
+          <div className="grid lg:grid-cols-3 gap-6 items-stretch lg:h-[40rem]">
             {/* Column 1: Project Highlights */}
-            <div className="bg-card border border-border rounded-xl shadow-card p-5 flex flex-col h-full">
-              <div className="flex items-center justify-between mb-5">
-                <h2 className="text-lg font-bold text-primary flex items-center gap-2">
-                  <Trees className="h-5 w-5 text-accent" /> Project Highlights
+            <div className="bg-card border border-border rounded-md p-0 flex flex-col h-full overflow-hidden">
+              <div className="flex items-center justify-between px-4 py-3 border-b-2 border-primary bg-primary/5">
+                <h2 className="text-sm font-bold text-primary flex items-center gap-2 uppercase tracking-wide">
+                  <Trees className="h-4 w-4 text-accent" /> Project Highlights
                 </h2>
-                <Link to="/projects" className="text-xs text-primary hover:text-accent font-medium">
+                <Link to="/projects" className="text-xs text-primary hover:text-accent font-semibold">
                   View all <ArrowRight className="inline h-3 w-3" />
                 </Link>
               </div>
-              <div className="space-y-4 flex-1">
-                {projects.slice(0, 3).map((p) => (
-                  <article key={p.title} className="bg-background border border-border rounded-lg overflow-hidden hover:shadow-card hover:border-primary/40 transition">
-                    <div className="h-32 bg-gradient-to-br from-primary/20 to-primary-light/20 flex items-center justify-center overflow-hidden">
+              <div className="flex-1 overflow-y-auto divide-y divide-border min-h-0">
+                {projects.map((p) => (
+                  <article key={p.title} className="flex gap-3 p-3 hover:bg-surface/60 transition">
+                    <div className="h-20 w-24 shrink-0 bg-gradient-to-br from-primary/20 to-primary-light/20 rounded-sm overflow-hidden flex items-center justify-center">
                       {p.image ? (
                         <img src={p.image} alt={p.title} className="w-full h-full object-cover" />
                       ) : (
-                        <Trees className="h-10 w-10 text-primary/30" />
+                        <Trees className="h-6 w-6 text-primary/40" />
                       )}
                     </div>
-                    <div className="p-4">
-                      <div className="flex items-center gap-2 mb-2">
-                        <span className="text-[10px] font-semibold uppercase px-2 py-0.5 rounded bg-success/10 text-success">{p.status}</span>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-1.5 mb-1 flex-wrap">
                         {p.component && (
-                          <span className="text-[10px] font-semibold uppercase px-2 py-0.5 rounded bg-accent/10 text-accent">{p.component}</span>
+                          <span className="text-[9px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-accent/15 text-accent">{p.component}</span>
                         )}
+                        <span className="text-[9px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-success/15 text-success">{p.status}</span>
                       </div>
-                      <h3 className="text-sm font-bold text-primary leading-snug mb-0">{p.title}</h3>
-                      <Link to={`/projects/${slugify(p.title)}`} className="mt-2 inline-flex items-center gap-1 text-xs font-medium text-accent hover:text-accent-hover">
-                        Know More <ArrowRight className="h-3 w-3" />
+                      <h3 className="text-sm font-semibold text-foreground leading-snug mb-1">{p.title}</h3>
+                      {p.objective && (
+                        <p className="text-xs text-muted-foreground line-clamp-1 mb-1">{p.objective}</p>
+                      )}
+                      <Link to={`/projects/${slugify(p.title)}`} className="inline-flex items-center gap-1 text-xs font-semibold text-accent hover:text-accent-hover">
+                        Read More <ArrowRight className="h-3 w-3" />
                       </Link>
                     </div>
                   </article>
@@ -398,57 +401,90 @@ export default function Home() {
             </div>
 
             {/* Column 2: Social Media */}
-            <div className="bg-card border border-border rounded-xl shadow-card p-5 flex flex-col h-full">
-              <div className="flex items-center justify-between mb-5">
-                <h2 className="text-lg font-bold text-primary flex items-center gap-2">
-                  <Facebook className="h-5 w-5 text-accent" /> Social Media
+            <div className="bg-card border border-border rounded-md p-0 flex flex-col h-full overflow-hidden">
+              <div className="flex items-center justify-between px-4 py-3 border-b-2 border-primary bg-primary/5">
+                <h2 className="text-sm font-bold text-primary flex items-center gap-2 uppercase tracking-wide">
+                  <Facebook className="h-4 w-4 text-accent" /> Social Media
                 </h2>
-                <Link to="/media/social" className="text-xs text-primary hover:text-accent font-medium">
+                <Link to="/media/social" className="text-xs text-primary hover:text-accent font-semibold">
                   View all <ArrowRight className="inline h-3 w-3" />
                 </Link>
               </div>
-              <div className="space-y-4 flex-1">
-                <div className="bg-background border border-border rounded-lg overflow-hidden">
-                  <div className="px-4 py-2.5 border-b border-border bg-surface flex items-center gap-2">
-                    <Facebook className="h-4 w-4 text-primary" />
+              <div className="flex-1 overflow-hidden p-3 space-y-3">
+                {/* Facebook update */}
+                <div className="bg-background border border-border rounded-sm overflow-hidden">
+                  <div className="px-3 py-2 border-b border-border bg-surface flex items-center gap-2">
+                    <Facebook className="h-3.5 w-3.5 text-primary" />
                     <span className="text-xs font-bold">Facebook</span>
+                    <span className="text-[10px] text-muted-foreground ml-auto">@ElementTripura</span>
                   </div>
-                  <div className="aspect-[4/3] bg-muted/50 flex items-center justify-center text-muted-foreground text-xs">
-                    Facebook embed placeholder
+                  <div className="p-3">
+                    <p className="text-xs text-foreground leading-relaxed line-clamp-2">
+                      Field visit by ELEMENT team to community plantation sites in Dhalai district. Engaging with SHGs on livelihood value chains.
+                    </p>
+                    <p className="text-[10px] text-muted-foreground mt-1.5">2 days ago</p>
                   </div>
                 </div>
-                <div className="bg-background border border-border rounded-lg overflow-hidden">
-                  <div className="px-4 py-2.5 border-b border-border bg-surface flex items-center gap-2">
-                    <Twitter className="h-4 w-4 text-primary" />
+                {/* Twitter update */}
+                <div className="bg-background border border-border rounded-sm overflow-hidden">
+                  <div className="px-3 py-2 border-b border-border bg-surface flex items-center gap-2">
+                    <Twitter className="h-3.5 w-3.5 text-primary" />
                     <span className="text-xs font-bold">Twitter / X</span>
+                    <span className="text-[10px] text-muted-foreground ml-auto">@ElementTripura</span>
                   </div>
-                  <div className="aspect-[4/3] bg-muted/50 flex items-center justify-center text-muted-foreground text-xs">
-                    Twitter / X embed placeholder
+                  <div className="p-3">
+                    <p className="text-xs text-foreground leading-relaxed line-clamp-2">
+                      Honourable Forest Minister inaugurates new eco-tourism circuit under ELEMENT. A milestone for sustainable livelihoods. #Tripura #ELEMENT
+                    </p>
+                    <p className="text-[10px] text-muted-foreground mt-1.5">5 days ago</p>
+                  </div>
+                </div>
+                {/* YouTube video */}
+                <div className="bg-background border border-border rounded-sm overflow-hidden">
+                  <div className="relative aspect-video bg-gradient-to-br from-primary/30 to-primary-light/30 flex items-center justify-center group cursor-pointer">
+                    <div className="absolute inset-0 bg-black/20" />
+                    <div className="relative h-10 w-10 rounded-full bg-accent flex items-center justify-center shadow-lg group-hover:scale-110 transition">
+                      <div className="w-0 h-0 border-l-[10px] border-l-accent-foreground border-y-[6px] border-y-transparent ml-0.5" />
+                    </div>
+                  </div>
+                  <div className="p-3">
+                    <h4 className="text-xs font-semibold text-foreground leading-snug line-clamp-2">
+                      ELEMENT Project Overview — Community Livelihoods and Landscape Development
+                    </h4>
+                    <p className="text-[10px] text-muted-foreground mt-1">Official YouTube Video</p>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Column 3: Knowledge Hub */}
-            <div className="bg-card border border-border rounded-xl shadow-card p-5 flex flex-col h-full">
-              <div className="flex items-center justify-between mb-5">
-                <h2 className="text-lg font-bold text-primary flex items-center gap-2">
-                  <Award className="h-5 w-5 text-accent" /> Knowledge Hub
+            <div className="bg-card border border-border rounded-md p-0 flex flex-col h-full overflow-hidden">
+              <div className="flex items-center justify-between px-4 py-3 border-b-2 border-primary bg-primary/5">
+                <h2 className="text-sm font-bold text-primary flex items-center gap-2 uppercase tracking-wide">
+                  <Award className="h-4 w-4 text-accent" /> Knowledge Hub
                 </h2>
-                <Link to="/knowledge-hub/iec" className="text-xs text-primary hover:text-accent font-medium">
+                <Link to="/knowledge-hub/iec" className="text-xs text-primary hover:text-accent font-semibold">
                   View all <ArrowRight className="inline h-3 w-3" />
                 </Link>
               </div>
-              <div className="space-y-4 flex-1">
-                {knowledgeHubItems.slice(0, 3).map((k) => (
-                  <article key={k.title} className="bg-background border border-border rounded-lg overflow-hidden hover:shadow-card transition">
-                    <div className="h-24 bg-gradient-to-br from-primary to-primary-light flex items-center justify-center">
-                      <BookOpen className="h-8 w-8 text-primary-foreground/80" />
+              <div className="flex-1 overflow-y-auto divide-y divide-border min-h-0">
+                {knowledgeHubItems.map((k) => (
+                  <article key={k.title} className="flex gap-3 p-3 hover:bg-surface/60 transition">
+                    <div className="h-10 w-10 shrink-0 rounded-sm bg-primary/10 border border-primary/20 flex items-center justify-center text-primary">
+                      <FileText className="h-5 w-5" />
                     </div>
-                    <div className="p-4">
-                      <span className="text-[10px] font-semibold uppercase tracking-wide text-accent">{k.category}</span>
-                      <h3 className="text-sm font-semibold text-foreground mt-1 leading-snug mb-0">{k.title}</h3>
-                      <p className="text-xs text-muted-foreground mt-1.5 mb-0">{k.date}</p>
+                    <div className="flex-1 min-w-0">
+                      <span className="text-[10px] font-bold uppercase tracking-wide text-accent">{k.category}</span>
+                      <h3 className="text-sm font-semibold text-foreground leading-snug mt-0.5 mb-1">{k.title}</h3>
+                      <div className="flex items-center gap-2 text-[10px] text-muted-foreground">
+                        <span>{k.date}</span>
+                        <span>·</span>
+                        <span>PDF</span>
+                        <span>·</span>
+                        <span>English</span>
+                        <span>·</span>
+                        <a href="#" className="text-primary font-semibold hover:text-accent">Download</a>
+                      </div>
                     </div>
                   </article>
                 ))}
