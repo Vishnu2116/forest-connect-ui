@@ -113,20 +113,20 @@ export default function HeroSlider() {
           </div>
         ))}
       </div>
-      {/* Left Arrow — bottom-left, aligned with dots */}
+      {/* Left Arrow — bottom-left on mobile/tablet, centered on desktop */}
       <button
         onClick={prev}
         aria-label="Previous slide"
-        className="absolute left-4 bottom-3 bg-background/20 hover:bg-background/40 text-primary-foreground p-2.5 rounded-full backdrop-blur-md focus-ring z-30 transition-all"
+        className="absolute left-4 bottom-3 lg:bottom-auto lg:top-1/2 lg:-translate-y-1/2 bg-background/20 hover:bg-background/40 text-primary-foreground p-2.5 rounded-full backdrop-blur-md focus-ring z-30 transition-all"
       >
         <ChevronLeft className="h-5 w-5" />
       </button>
 
-      {/* Right Arrow — bottom-right, aligned with dots */}
+      {/* Right Arrow — bottom-right on mobile/tablet, centered on desktop */}
       <button
         onClick={next}
         aria-label="Next slide"
-        className="absolute right-4 bottom-3 bg-background/20 hover:bg-background/40 text-primary-foreground p-2.5 rounded-full backdrop-blur-md focus-ring z-30 transition-all"
+        className="absolute right-4 bottom-3 lg:bottom-auto lg:top-1/2 lg:-translate-y-1/2 bg-background/20 hover:bg-background/40 text-primary-foreground p-2.5 rounded-full backdrop-blur-md focus-ring z-30 transition-all"
       >
         <ChevronRight className="h-5 w-5" />
       </button>

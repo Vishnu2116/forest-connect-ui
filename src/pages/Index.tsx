@@ -17,6 +17,8 @@ import {
   Twitter,
   FileText,
   UserCheck,
+  ChevronUp,
+  ChevronDown,
 } from "lucide-react";
 import PageLayout from "@/components/layout/PageLayout";
 import HeroSlider from "@/components/home/HeroSlider";
@@ -29,9 +31,26 @@ import {
 } from "@/data/content";
 import { useLang } from "@/contexts/LanguageContext";
 import { slugify } from "./ProjectDetail";
+import { useAutoScroll } from "@/hooks/useAutoScroll";
 
 import cmImage from "@/assets/dignitaries/CM.jpeg";
 import Animesh from "@/assets/dignitaries/Animesh.jpeg";
+
+/* ────────────────────────────────────────────────────────────────────────────
+ * AUTO-SCROLL SPEEDS (pixels per second)
+ *
+ * Each constant controls the scroll speed of one auto-scrolling section on the
+ * home page. Modify the value here to change that section's speed. Setting a
+ * value to 0 effectively pauses auto-scroll.
+ *
+ * The actual scroll engine lives in:  src/hooks/useAutoScroll.ts
+ * ──────────────────────────────────────────────────────────────────────────── */
+// Controls: What's New, Notifications, Tenders (Updates panel)
+const AUTO_SCROLL_SPEED_UPDATES = 28;
+// Controls: Project Highlights column
+const AUTO_SCROLL_SPEED_PROJECTS = 24;
+// How many pixels a single up/down arrow click advances the scroller
+const MANUAL_STEP_PX = 96;
 
 const announcementDescriptions: Record<string, string> = {
   Recruitment: "Applications invited for ELEMENT programme positions.",
@@ -42,14 +61,14 @@ const announcementDescriptions: Record<string, string> = {
 };
 
 /**
- * Reusable "NEW" badge. Toggle via `show` prop.
- * Later, backend/API can decide which items receive `show={true}`.
+ * Reusable "NEW" badge — strong attention-seeking red pulse.
+ * Toggle via `show` prop. Backend/API can later decide which items get show=true.
  */
 function NewBadge({ show = true }: { show?: boolean }) {
   if (!show) return null;
   return (
     <span
-      className="inline-flex items-center text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-sm bg-accent text-accent-foreground animate-badge-pulse"
+      className="inline-flex items-center text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-sm bg-[hsl(0_85%_50%)] text-white shadow-sm animate-badge-pulse"
       aria-label="New item"
     >
       New
@@ -57,8 +76,39 @@ function NewBadge({ show = true }: { show?: boolean }) {
   );
 }
 
+/** Up / Down manual scroll arrows shown at the bottom-right of a scrolling panel. */
+function ScrollArrows({
+  onUp,
+  onDown,
+}: {
+  onUp: () => void;
+  onDown: () => void;
+}) {
+  return (
+    <div className="flex items-center gap-1">
+      <button
+        type="button"
+        onClick={onUp}
+        aria-label="Scroll up"
+        className="p-1 rounded-sm border border-border bg-background hover:bg-primary hover:text-primary-foreground transition focus-ring"
+      >
+        <ChevronUp className="h-3.5 w-3.5" />
+      </button>
+      <button
+        type="button"
+        onClick={onDown}
+        aria-label="Scroll down"
+        className="p-1 rounded-sm border border-border bg-background hover:bg-primary hover:text-primary-foreground transition focus-ring"
+      >
+        <ChevronDown className="h-3.5 w-3.5" />
+      </button>
+    </div>
+  );
+}
+
 // Hardcoded NEW-enabled set for now. Replace with API/backend flags later.
 const isItemNew = (_title: string) => true;
+
 
 const pillars = [
   {
@@ -150,6 +200,13 @@ function UpdatesPanel({
   setUpdatesTab: (k: "whatsnew" | "notifications" | "tenders") => void;
   t: (k: string) => string;
 }) {
+  const [paused, setPaused] = useState(false);
+  // Auto-scroll engine. Speed: see AUTO_SCROLL_SPEED_UPDATES (top of file).
+  const { ref, scrollByAmount } = useAutoScroll<HTMLDivElement>(
+    AUTO_SCROLL_SPEED_UPDATES,
+    paused,
+  );
+
   return (
     <div className="bg-card border border-border rounded-md overflow-hidden h-full flex flex-col">
       <div className="grid grid-cols-3 border-b-2 border-primary bg-primary/5">
@@ -174,8 +231,13 @@ function UpdatesPanel({
           </button>
         ))}
       </div>
-      <div className="flex-1 overflow-hidden min-h-0 relative group/scroll">
-        <div className="animate-marquee-y group-hover/scroll:[animation-play-state:paused] flex flex-col">
+      <div
+        ref={ref}
+        onMouseEnter={() => setPaused(true)}
+        onMouseLeave={() => setPaused(false)}
+        className="flex-1 overflow-y-auto min-h-0 scroll-smooth [scrollbar-width:thin]"
+      >
+        <div className="flex flex-col">
         {updatesTab === "whatsnew" &&
           [...announcements, ...announcements].map((a, idx) => {
             const Icon = getUpdateIcon(a.tag);
@@ -185,11 +247,13 @@ function UpdatesPanel({
                   <Icon className="h-5 w-5" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-1.5 mb-1 flex-wrap">
+                  <div className="flex items-center gap-1.5 mb-1">
                     <span className="inline-block text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-accent/15 text-accent">
                       {a.tag}
                     </span>
-                    <NewBadge show={isItemNew(a.title)} />
+                    <span className="ml-auto">
+                      <NewBadge show={isItemNew(a.title)} />
+                    </span>
                   </div>
                   <a href="#" className="text-sm font-semibold text-foreground hover:text-primary block leading-snug">
                     {a.title}
@@ -214,9 +278,14 @@ function UpdatesPanel({
                       <Icon className="h-5 w-5" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <span className="inline-block text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-accent/15 text-accent mb-1">
-                        {a.tag}
-                      </span>
+                      <div className="flex items-center gap-1.5 mb-1">
+                        <span className="inline-block text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-accent/15 text-accent">
+                          {a.tag}
+                        </span>
+                        <span className="ml-auto">
+                          <NewBadge show={isItemNew(a.title)} />
+                        </span>
+                      </div>
                       <a href="#" className="text-sm font-semibold text-foreground hover:text-primary block leading-snug">
                         {a.title}
                       </a>
@@ -233,9 +302,14 @@ function UpdatesPanel({
                   <Calendar className="h-5 w-5" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <span className="inline-block text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-accent/15 text-accent mb-1">
-                    Event
-                  </span>
+                  <div className="flex items-center gap-1.5 mb-1">
+                    <span className="inline-block text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-accent/15 text-accent">
+                      Event
+                    </span>
+                    <span className="ml-auto">
+                      <NewBadge show={isItemNew(e.title)} />
+                    </span>
+                  </div>
                   <a href="#" className="text-sm font-semibold text-foreground hover:text-primary block leading-snug">
                     {e.title}
                   </a>
@@ -254,20 +328,24 @@ function UpdatesPanel({
                 <FileText className="h-5 w-5" />
               </div>
               <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-1.5 mb-1 flex-wrap">
+                {/* Left: Tender tag.   Right (extreme): status badge + NEW. */}
+                <div className="flex items-center gap-1.5 mb-1">
                   <span className="inline-block text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-accent/15 text-accent">
                     Tender
                   </span>
-                  <span
-                    className={`inline-block text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm ${
-                      p.status === "Open"
-                        ? "bg-success/15 text-success"
-                        : p.status === "Closing Soon"
-                          ? "bg-accent/15 text-accent"
-                          : "bg-muted text-muted-foreground"
-                    }`}
-                  >
-                    {p.status}
+                  <span className="ml-auto flex items-center gap-1.5">
+                    <span
+                      className={`inline-block text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm ${
+                        p.status === "Open"
+                          ? "bg-success/15 text-success"
+                          : p.status === "Closing Soon"
+                            ? "bg-accent/15 text-accent"
+                            : "bg-muted text-muted-foreground"
+                      }`}
+                    >
+                      {p.status}
+                    </span>
+                    <NewBadge show={isItemNew(p.title)} />
                   </span>
                 </div>
                 <a href="#" className="text-sm font-semibold text-foreground hover:text-primary block leading-snug">
@@ -279,8 +357,7 @@ function UpdatesPanel({
           ))}
         </div>
       </div>
-      <div className="px-3 py-2 border-t border-border bg-surface text-center">
-
+      <div className="px-3 py-2 border-t border-border bg-surface flex items-center justify-between gap-2">
         <Link
           to={
             updatesTab === "whatsnew"
@@ -293,11 +370,82 @@ function UpdatesPanel({
         >
           View all <ArrowRight className="h-3 w-3" />
         </Link>
+        {/* Manual scroll controls (bottom-right). Pauses auto-scroll briefly via hover. */}
+        <ScrollArrows
+          onUp={() => scrollByAmount(-MANUAL_STEP_PX)}
+          onDown={() => scrollByAmount(MANUAL_STEP_PX)}
+        />
       </div>
     </div>
   );
 }
 
+/**
+ * Project Highlights column — auto-scrolling, infinite/circular, with manual
+ * up/down arrow controls. Auto-scroll speed: AUTO_SCROLL_SPEED_PROJECTS.
+ */
+function ProjectHighlightsColumn() {
+  const [paused, setPaused] = useState(false);
+  const { ref, scrollByAmount } = useAutoScroll<HTMLDivElement>(
+    AUTO_SCROLL_SPEED_PROJECTS,
+    paused,
+  );
+  // Duplicate items so the scroll wrap is seamless.
+  const items = [...projects, ...projects];
+
+  return (
+    <div className="bg-card border border-border rounded-md p-0 flex flex-col h-[28rem] lg:h-full overflow-hidden">
+      <div className="flex items-center justify-between px-4 py-3 border-b-2 border-primary bg-primary/5">
+        <h2 className="text-[17px] font-bold text-primary flex items-center gap-2 uppercase tracking-wide">
+          <Trees className="h-4 w-4 text-accent" /> Project Highlights
+        </h2>
+        <Link to="/project-components" className="text-sm text-primary hover:text-accent font-semibold">
+          View all <ArrowRight className="inline h-3.5 w-3.5" />
+        </Link>
+      </div>
+      <div
+        ref={ref}
+        onMouseEnter={() => setPaused(true)}
+        onMouseLeave={() => setPaused(false)}
+        className="flex-1 overflow-y-auto divide-y divide-border min-h-0 scroll-smooth [scrollbar-width:thin]"
+      >
+        {items.map((p, idx) => (
+          <article key={`${p.title}-${idx}`} className="flex gap-3 p-4 hover:bg-surface/60 transition">
+            <div className="h-20 w-24 shrink-0 bg-gradient-to-br from-primary/20 to-primary-light/20 rounded-sm overflow-hidden flex items-center justify-center">
+              {p.image ? (
+                <img src={p.image} alt={p.title} className="w-full h-full object-cover" />
+              ) : (
+                <Trees className="h-6 w-6 text-primary/40" />
+              )}
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-1.5 mb-1 flex-wrap">
+                {p.component && (
+                  <span className="text-[11px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-accent/15 text-accent">{p.component}</span>
+                )}
+                <span className="text-[11px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-success/15 text-success">{p.status}</span>
+              </div>
+              <h3 className="text-base font-semibold text-foreground leading-snug mb-1">{p.title}</h3>
+              {p.objective && (
+                <p className="text-sm text-muted-foreground line-clamp-1 mb-1">{p.objective}</p>
+              )}
+              <Link to={`/projects/${slugify(p.title)}`} className="inline-flex items-center gap-1 text-sm font-semibold text-accent hover:text-accent-hover">
+                Read More <ArrowRight className="h-3.5 w-3.5" />
+              </Link>
+            </div>
+          </article>
+        ))}
+      </div>
+      {/* Manual up/down scroll controls — bottom-right of column. */}
+      <div className="px-3 py-2 border-t border-border bg-surface flex items-center justify-end">
+        <ScrollArrows
+          onUp={() => scrollByAmount(-MANUAL_STEP_PX)}
+          onDown={() => scrollByAmount(MANUAL_STEP_PX)}
+        />
+      </div>
+    </div>
+  );
+}
 
 export default function Home() {
   const { t } = useLang();
@@ -386,44 +534,7 @@ export default function Home() {
         <div className="mx-auto w-full max-w-[110rem] px-3 sm:px-4 lg:px-5">
           <div className="grid lg:grid-cols-[35fr_35fr_30fr] gap-6 items-stretch lg:h-[46rem]">
             {/* Column 1: Project Highlights */}
-            <div className="bg-card border border-border rounded-md p-0 flex flex-col h-[28rem] lg:h-full overflow-hidden">
-              <div className="flex items-center justify-between px-4 py-3 border-b-2 border-primary bg-primary/5">
-                <h2 className="text-[17px] font-bold text-primary flex items-center gap-2 uppercase tracking-wide">
-                  <Trees className="h-4 w-4 text-accent" /> Project Highlights
-                </h2>
-                <Link to="/project-components" className="text-sm text-primary hover:text-accent font-semibold">
-                  View all <ArrowRight className="inline h-3.5 w-3.5" />
-                </Link>
-              </div>
-              <div className="flex-1 overflow-y-auto divide-y divide-border min-h-0">
-                {projects.map((p) => (
-                  <article key={p.title} className="flex gap-3 p-4 hover:bg-surface/60 transition">
-                    <div className="h-20 w-24 shrink-0 bg-gradient-to-br from-primary/20 to-primary-light/20 rounded-sm overflow-hidden flex items-center justify-center">
-                      {p.image ? (
-                        <img src={p.image} alt={p.title} className="w-full h-full object-cover" />
-                      ) : (
-                        <Trees className="h-6 w-6 text-primary/40" />
-                      )}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-1.5 mb-1 flex-wrap">
-                        {p.component && (
-                          <span className="text-[11px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-accent/15 text-accent">{p.component}</span>
-                        )}
-                        <span className="text-[11px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-success/15 text-success">{p.status}</span>
-                      </div>
-                      <h3 className="text-base font-semibold text-foreground leading-snug mb-1">{p.title}</h3>
-                      {p.objective && (
-                        <p className="text-sm text-muted-foreground line-clamp-1 mb-1">{p.objective}</p>
-                      )}
-                      <Link to={`/projects/${slugify(p.title)}`} className="inline-flex items-center gap-1 text-sm font-semibold text-accent hover:text-accent-hover">
-                        Read More <ArrowRight className="h-3.5 w-3.5" />
-                      </Link>
-                    </div>
-                  </article>
-                ))}
-              </div>
-            </div>
+            <ProjectHighlightsColumn />
 
             {/* Column 2: Social Media */}
             <div className="bg-card border border-border rounded-md p-0 flex flex-col h-[34rem] lg:h-full overflow-hidden">

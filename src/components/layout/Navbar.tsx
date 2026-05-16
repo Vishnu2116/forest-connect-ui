@@ -216,12 +216,8 @@ export default function Navbar() {
         )}
       </div>
 
-      {/* ── MOBILE HEADER — only below xl (< 1280px) ── */}
-      {/*
-          xl:hidden ensures this disappears the exact moment the desktop
-          logo header appears. No gap, no overlap.
-      */}
-      <div className="xl:hidden bg-background border-b border-border">
+      {/* ── MOBILE HEADER — below lg (< 1024px) ── */}
+      <div className="lg:hidden bg-background border-b border-border">
         <div className="flex items-center justify-between px-4 py-3">
           {/* Left Logo */}
           <Link
@@ -243,6 +239,13 @@ export default function Navbar() {
             </h1>
           </div>
 
+          {/* Right Logo — World Bank (kept on smaller widths, hidden on the smallest) */}
+          <img
+            src={logoTheWorldBank}
+            alt="The World Bank"
+            className="hidden sm:block h-10 w-auto object-contain shrink-0 mr-2"
+          />
+
           {/* Hamburger */}
           <button
             className="p-2 rounded-md border border-border focus-ring shrink-0"
@@ -259,46 +262,47 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* ── DESKTOP LOGO HEADER — only at xl and above (≥ 1280px) ──
-          ELEMENT is absolutely centered to the viewport. Tripura emblem
-          sits on the far left, World Bank + Forest Dept sit on the far right.
+      {/* ── DESKTOP LOGO HEADER — lg and above (≥ 1024px) ──
+          ELEMENT stays absolutely centered to the viewport. Logos scale up
+          progressively at lg / xl / 2xl. Forest Dept logo hides below xl
+          to keep alignment clean on tighter laptop widths.
       */}
-      <div className="hidden xl:block relative w-full py-6 px-10 min-h-[148px]">
+      <div className="hidden lg:block relative w-full py-4 xl:py-6 px-4 xl:px-10 min-h-[112px] xl:min-h-[148px]">
         {/* Left edge — Tripura Govt emblem */}
-        <div className="absolute left-10 top-1/2 -translate-y-1/2 flex items-center">
+        <div className="absolute left-4 xl:left-10 top-1/2 -translate-y-1/2 flex items-center">
           <img
             src={logoTripura}
             alt="Government of Tripura"
-            className="h-[116px] w-[116px] object-contain"
+            className="h-[80px] w-[80px] xl:h-[100px] xl:w-[100px] 2xl:h-[116px] 2xl:w-[116px] object-contain"
           />
         </div>
 
         {/* Center — ELEMENT (truly screen-centered) */}
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center text-center">
-          <h1 className="text-5xl xl:text-6xl font-extrabold text-primary tracking-widest leading-none">
+          <h1 className="text-4xl xl:text-5xl 2xl:text-6xl font-extrabold text-primary tracking-widest leading-none">
             ELEMENT
           </h1>
-          <p className="mt-2 text-sm font-semibold text-foreground/80 whitespace-nowrap">
+          <p className="mt-2 text-xs xl:text-sm font-semibold text-foreground/80 whitespace-nowrap">
             {t("site.full")}
           </p>
           <div className="w-full border-t border-border mt-2 pt-1.5">
-            <p className="text-xs text-muted-foreground italic whitespace-nowrap">
+            <p className="text-[11px] xl:text-xs text-muted-foreground italic whitespace-nowrap">
               {t("site.joint")}
             </p>
           </div>
         </div>
 
-        {/* Right edge — World Bank + Forest Dept */}
-        <div className="absolute right-10 top-1/2 -translate-y-1/2 flex items-center gap-5">
+        {/* Right edge — World Bank always visible, Forest Dept from xl up */}
+        <div className="absolute right-4 xl:right-10 top-1/2 -translate-y-1/2 flex items-center gap-3 xl:gap-5">
           <img
             src={logoTheWorldBank}
             alt="The World Bank"
-            className="h-[100px] w-auto object-contain"
+            className="h-[70px] xl:h-[88px] 2xl:h-[100px] w-auto object-contain"
           />
           <img
             src={logoTripuraForestDept}
             alt="Tripura Forest Department"
-            className="h-[116px] w-[116px] object-contain"
+            className="hidden xl:block xl:h-[100px] xl:w-[100px] 2xl:h-[116px] 2xl:w-[116px] object-contain"
           />
         </div>
       </div>
@@ -309,7 +313,7 @@ export default function Navbar() {
           Was: hidden lg:block (caused the gap between 1024–1279px)
           Now: hidden xl:block
       */}
-      <nav className="bg-primary text-primary-foreground hidden xl:block">
+      <nav className="bg-primary text-primary-foreground hidden lg:block">
         <div className="gov-container-wide">
           <ul className="flex items-stretch justify-between w-full">
             {navItems.map((item) => {
@@ -325,7 +329,7 @@ export default function Navbar() {
                 >
                   {item.children ? (
                     <button
-                      className={`flex items-center justify-center gap-1 whitespace-nowrap px-5 py-3.5 text-sm font-medium hover:bg-primary-dark transition-colors border-b-2 ${
+                      className={`flex items-center justify-center gap-1 whitespace-nowrap px-2.5 lg:px-3 xl:px-5 py-3 xl:py-3.5 text-[13px] xl:text-sm font-medium hover:bg-primary-dark transition-colors border-b-2 ${
                         dropActive
                           ? "bg-primary-dark border-accent"
                           : "border-transparent"
@@ -338,7 +342,7 @@ export default function Navbar() {
                     <NavLink
                       to={item.to!}
                       className={({ isActive: a }) =>
-                        `flex items-center justify-center whitespace-nowrap px-5 py-3.5 text-sm font-medium hover:bg-primary-dark transition-colors border-b-2 ${
+                        `flex items-center justify-center whitespace-nowrap px-2.5 lg:px-3 xl:px-5 py-3 xl:py-3.5 text-[13px] xl:text-sm font-medium hover:bg-primary-dark transition-colors border-b-2 ${
                           a
                             ? "bg-primary-dark border-accent"
                             : "border-transparent"
@@ -383,7 +387,7 @@ export default function Navbar() {
           Now: xl:hidden — perfectly mirrors the mobile header
       */}
       {mobileOpen && (
-        <nav className="xl:hidden bg-primary text-primary-foreground max-h-[70vh] overflow-y-auto">
+        <nav className="lg:hidden bg-primary text-primary-foreground max-h-[70vh] overflow-y-auto">
           <ul className="divide-y divide-primary-dark">
             {navItems.map((item) => (
               <li key={item.labelKey}>
