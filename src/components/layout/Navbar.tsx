@@ -387,7 +387,7 @@ export default function Navbar() {
           Now: xl:hidden — perfectly mirrors the mobile header
       */}
       {mobileOpen && (
-        <nav className="xl:hidden bg-primary text-primary-foreground max-h-[70vh] overflow-y-auto">
+        <nav className="lg:hidden bg-primary text-primary-foreground max-h-[70vh] overflow-y-auto">
           <ul className="divide-y divide-primary-dark">
             {navItems.map((item) => (
               <li key={item.labelKey}>
