@@ -329,7 +329,7 @@ export default function Navbar() {
                 >
                   {item.children ? (
                     <button
-                      className={`flex items-center justify-center gap-1 whitespace-nowrap px-5 py-3.5 text-sm font-medium hover:bg-primary-dark transition-colors border-b-2 ${
+                      className={`flex items-center justify-center gap-1 whitespace-nowrap px-2.5 lg:px-3 xl:px-5 py-3 xl:py-3.5 text-[13px] xl:text-sm font-medium hover:bg-primary-dark transition-colors border-b-2 ${
                         dropActive
                           ? "bg-primary-dark border-accent"
                           : "border-transparent"
