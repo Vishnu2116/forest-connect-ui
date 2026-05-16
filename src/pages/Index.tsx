@@ -200,6 +200,13 @@ function UpdatesPanel({
   setUpdatesTab: (k: "whatsnew" | "notifications" | "tenders") => void;
   t: (k: string) => string;
 }) {
+  const [paused, setPaused] = useState(false);
+  // Auto-scroll engine. Speed: see AUTO_SCROLL_SPEED_UPDATES (top of file).
+  const { ref, scrollByAmount } = useAutoScroll<HTMLDivElement>(
+    AUTO_SCROLL_SPEED_UPDATES,
+    paused,
+  );
+
   return (
     <div className="bg-card border border-border rounded-md overflow-hidden h-full flex flex-col">
       <div className="grid grid-cols-3 border-b-2 border-primary bg-primary/5">
@@ -224,8 +231,13 @@ function UpdatesPanel({
           </button>
         ))}
       </div>
-      <div className="flex-1 overflow-hidden min-h-0 relative group/scroll">
-        <div className="animate-marquee-y group-hover/scroll:[animation-play-state:paused] flex flex-col">
+      <div
+        ref={ref}
+        onMouseEnter={() => setPaused(true)}
+        onMouseLeave={() => setPaused(false)}
+        className="flex-1 overflow-y-auto min-h-0 scroll-smooth [scrollbar-width:thin]"
+      >
+        <div className="flex flex-col">
         {updatesTab === "whatsnew" &&
           [...announcements, ...announcements].map((a, idx) => {
             const Icon = getUpdateIcon(a.tag);
@@ -235,11 +247,13 @@ function UpdatesPanel({
                   <Icon className="h-5 w-5" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-1.5 mb-1 flex-wrap">
+                  <div className="flex items-center gap-1.5 mb-1">
                     <span className="inline-block text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-accent/15 text-accent">
                       {a.tag}
                     </span>
-                    <NewBadge show={isItemNew(a.title)} />
+                    <span className="ml-auto">
+                      <NewBadge show={isItemNew(a.title)} />
+                    </span>
                   </div>
                   <a href="#" className="text-sm font-semibold text-foreground hover:text-primary block leading-snug">
                     {a.title}
@@ -264,9 +278,14 @@ function UpdatesPanel({
                       <Icon className="h-5 w-5" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <span className="inline-block text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-accent/15 text-accent mb-1">
-                        {a.tag}
-                      </span>
+                      <div className="flex items-center gap-1.5 mb-1">
+                        <span className="inline-block text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-accent/15 text-accent">
+                          {a.tag}
+                        </span>
+                        <span className="ml-auto">
+                          <NewBadge show={isItemNew(a.title)} />
+                        </span>
+                      </div>
                       <a href="#" className="text-sm font-semibold text-foreground hover:text-primary block leading-snug">
                         {a.title}
                       </a>
@@ -283,9 +302,14 @@ function UpdatesPanel({
                   <Calendar className="h-5 w-5" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <span className="inline-block text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-accent/15 text-accent mb-1">
-                    Event
-                  </span>
+                  <div className="flex items-center gap-1.5 mb-1">
+                    <span className="inline-block text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-accent/15 text-accent">
+                      Event
+                    </span>
+                    <span className="ml-auto">
+                      <NewBadge show={isItemNew(e.title)} />
+                    </span>
+                  </div>
                   <a href="#" className="text-sm font-semibold text-foreground hover:text-primary block leading-snug">
                     {e.title}
                   </a>
@@ -304,20 +328,24 @@ function UpdatesPanel({
                 <FileText className="h-5 w-5" />
               </div>
               <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-1.5 mb-1 flex-wrap">
+                {/* Left: Tender tag.   Right (extreme): status badge + NEW. */}
+                <div className="flex items-center gap-1.5 mb-1">
                   <span className="inline-block text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-accent/15 text-accent">
                     Tender
                   </span>
-                  <span
-                    className={`inline-block text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm ${
-                      p.status === "Open"
-                        ? "bg-success/15 text-success"
-                        : p.status === "Closing Soon"
-                          ? "bg-accent/15 text-accent"
-                          : "bg-muted text-muted-foreground"
-                    }`}
-                  >
-                    {p.status}
+                  <span className="ml-auto flex items-center gap-1.5">
+                    <span
+                      className={`inline-block text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm ${
+                        p.status === "Open"
+                          ? "bg-success/15 text-success"
+                          : p.status === "Closing Soon"
+                            ? "bg-accent/15 text-accent"
+                            : "bg-muted text-muted-foreground"
+                      }`}
+                    >
+                      {p.status}
+                    </span>
+                    <NewBadge show={isItemNew(p.title)} />
                   </span>
                 </div>
                 <a href="#" className="text-sm font-semibold text-foreground hover:text-primary block leading-snug">
@@ -329,8 +357,7 @@ function UpdatesPanel({
           ))}
         </div>
       </div>
-      <div className="px-3 py-2 border-t border-border bg-surface text-center">
-
+      <div className="px-3 py-2 border-t border-border bg-surface flex items-center justify-between gap-2">
         <Link
           to={
             updatesTab === "whatsnew"
@@ -343,6 +370,11 @@ function UpdatesPanel({
         >
           View all <ArrowRight className="h-3 w-3" />
         </Link>
+        {/* Manual scroll controls (bottom-right). Pauses auto-scroll briefly via hover. */}
+        <ScrollArrows
+          onUp={() => scrollByAmount(-MANUAL_STEP_PX)}
+          onDown={() => scrollByAmount(MANUAL_STEP_PX)}
+        />
       </div>
     </div>
   );
