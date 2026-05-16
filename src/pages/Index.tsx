@@ -155,15 +155,14 @@ function UpdatesPanel({
           </button>
         ))}
       </div>
-      <div className="max-h-[520px] overflow-y-auto flex-1 divide-y divide-border">
+      <div className="flex-1 overflow-y-auto divide-y divide-border min-h-0">
         {updatesTab === "whatsnew" &&
           announcements.map((a) => {
-            const [day, mon, yr] = a.date.split(" ");
+            const Icon = getUpdateIcon(a.tag);
             return (
               <article key={a.title} className="flex gap-3 px-4 py-3 hover:bg-surface/60 transition">
-                <div className="bg-primary text-primary-foreground rounded-sm text-center px-2 py-1.5 shrink-0 min-w-[58px] h-fit">
-                  <div className="text-[9px] uppercase tracking-wider font-semibold opacity-90">{mon} {yr}</div>
-                  <div className="text-lg font-bold leading-none mt-0.5">{day}</div>
+                <div className="shrink-0 mt-0.5 text-primary">
+                  <Icon className="h-5 w-5" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <span className="inline-block text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-accent/15 text-accent mb-1">
@@ -184,12 +183,11 @@ function UpdatesPanel({
             {announcements
               .filter((a) => a.tag === "Notification" || a.tag === "Recruitment")
               .map((a) => {
-                const [day, mon, yr] = a.date.split(" ");
+                const Icon = getUpdateIcon(a.tag);
                 return (
                   <article key={a.title} className="flex gap-3 px-4 py-3 hover:bg-surface/60 transition">
-                    <div className="bg-primary text-primary-foreground rounded-sm text-center px-2 py-1.5 shrink-0 min-w-[58px] h-fit">
-                      <div className="text-[9px] uppercase tracking-wider font-semibold opacity-90">{mon} {yr}</div>
-                      <div className="text-lg font-bold leading-none mt-0.5">{day}</div>
+                    <div className="shrink-0 mt-0.5 text-primary">
+                      <Icon className="h-5 w-5" />
                     </div>
                     <div className="flex-1 min-w-0">
                       <span className="inline-block text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-accent/15 text-accent mb-1">
@@ -205,67 +203,59 @@ function UpdatesPanel({
                   </article>
                 );
               })}
-            {events.map((e) => {
-              const parts = e.date.split(" ");
-              const [day, mon, yr] = parts.length >= 3 ? parts : [parts[0] || "—", parts[1] || "", ""];
-              return (
-                <article key={e.title} className="flex gap-3 px-4 py-3 hover:bg-surface/60 transition">
-                  <div className="bg-primary text-primary-foreground rounded-sm text-center px-2 py-1.5 shrink-0 min-w-[58px] h-fit">
-                    <div className="text-[9px] uppercase tracking-wider font-semibold opacity-90">{mon} {yr}</div>
-                    <div className="text-lg font-bold leading-none mt-0.5">{day}</div>
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <span className="inline-block text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-accent/15 text-accent mb-1">
-                      Event
-                    </span>
-                    <a href="#" className="text-sm font-semibold text-foreground hover:text-primary block leading-snug">
-                      {e.title}
-                    </a>
-                    <p className="text-xs text-muted-foreground mt-1 flex items-center gap-1">
-                      <MapPin className="h-3 w-3" /> {e.venue}
-                    </p>
-                  </div>
-                </article>
-              );
-            })}
+            {events.map((e) => (
+              <article key={e.title} className="flex gap-3 px-4 py-3 hover:bg-surface/60 transition">
+                <div className="shrink-0 mt-0.5 text-primary">
+                  <Calendar className="h-5 w-5" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <span className="inline-block text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-accent/15 text-accent mb-1">
+                    Event
+                  </span>
+                  <a href="#" className="text-sm font-semibold text-foreground hover:text-primary block leading-snug">
+                    {e.title}
+                  </a>
+                  <p className="text-xs text-muted-foreground mt-1 flex items-center gap-1">
+                    <MapPin className="h-3 w-3" /> {e.venue}
+                  </p>
+                </div>
+              </article>
+            ))}
           </>
         )}
         {updatesTab === "tenders" &&
-          procurements.map((p) => {
-            const [day, mon, yr] = p.date.split(" ");
-            return (
-              <article key={p.title} className="flex gap-3 px-4 py-3 hover:bg-surface/60 transition">
-                <div className="bg-primary text-primary-foreground rounded-sm text-center px-2 py-1.5 shrink-0 min-w-[58px] h-fit">
-                  <div className="text-[9px] uppercase tracking-wider font-semibold opacity-90">{mon} {yr}</div>
-                  <div className="text-lg font-bold leading-none mt-0.5">{day}</div>
+          procurements.map((p) => (
+            <article key={p.title} className="flex gap-3 px-4 py-3 hover:bg-surface/60 transition">
+              <div className="shrink-0 mt-0.5 text-primary">
+                <FileText className="h-5 w-5" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-1.5 mb-1 flex-wrap">
+                  <span className="inline-block text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-accent/15 text-accent">
+                    Tender
+                  </span>
+                  <span
+                    className={`inline-block text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm ${
+                      p.status === "Open"
+                        ? "bg-success/15 text-success"
+                        : p.status === "Closing Soon"
+                          ? "bg-accent/15 text-accent"
+                          : "bg-muted text-muted-foreground"
+                    }`}
+                  >
+                    {p.status}
+                  </span>
                 </div>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-1.5 mb-1 flex-wrap">
-                    <span className="inline-block text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-accent/15 text-accent">
-                      Tender
-                    </span>
-                    <span
-                      className={`inline-block text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm ${
-                        p.status === "Open"
-                          ? "bg-success/15 text-success"
-                          : p.status === "Closing Soon"
-                            ? "bg-accent/15 text-accent"
-                            : "bg-muted text-muted-foreground"
-                      }`}
-                    >
-                      {p.status}
-                    </span>
-                  </div>
-                  <a href="#" className="text-sm font-semibold text-foreground hover:text-primary block leading-snug">
-                    {p.title}
-                  </a>
-                  <p className="text-xs text-muted-foreground mt-1">Deadline: {p.deadline}</p>
-                </div>
-              </article>
-            );
-          })}
+                <a href="#" className="text-sm font-semibold text-foreground hover:text-primary block leading-snug">
+                  {p.title}
+                </a>
+                <p className="text-xs text-muted-foreground mt-1">Deadline: {p.deadline}</p>
+              </div>
+            </article>
+          ))}
       </div>
-      <div className="p-3 border-t border-border bg-surface text-center">
+      <div className="px-3 py-2 border-t border-border bg-surface text-center">
+
         <Link
           to={
             updatesTab === "whatsnew"
