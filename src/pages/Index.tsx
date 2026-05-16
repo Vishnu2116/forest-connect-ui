@@ -309,7 +309,11 @@ export default function Home() {
             <div className="grid grid-cols-1 gap-4">
               {leftDignitaries.map((d) => <DignitaryCard key={d.name} d={d} />)}
             </div>
-            <UpdatesPanel updatesTab={updatesTab} setUpdatesTab={setUpdatesTab} t={t} />
+            <div className="relative">
+              <div className="absolute inset-0">
+                <UpdatesPanel updatesTab={updatesTab} setUpdatesTab={setUpdatesTab} t={t} />
+              </div>
+            </div>
             <div className="grid grid-cols-1 gap-4">
               {rightDignitaries.map((d) => <DignitaryCard key={d.name} d={d} />)}
             </div>
