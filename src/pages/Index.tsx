@@ -459,23 +459,23 @@ export default function Home() {
             {/* Column 3: Knowledge Hub */}
             <div className="bg-card border border-border rounded-md p-0 flex flex-col h-[28rem] lg:h-full overflow-hidden">
               <div className="flex items-center justify-between px-4 py-3 border-b-2 border-primary bg-primary/5">
-                <h2 className="text-sm font-bold text-primary flex items-center gap-2 uppercase tracking-wide">
+                <h2 className="text-base font-bold text-primary flex items-center gap-2 uppercase tracking-wide">
                   <Award className="h-4 w-4 text-accent" /> Knowledge Hub
                 </h2>
-                <Link to="/knowledge-hub/iec" className="text-xs text-primary hover:text-accent font-semibold">
-                  View all <ArrowRight className="inline h-3 w-3" />
+                <Link to="/knowledge-hub/iec" className="text-sm text-primary hover:text-accent font-semibold">
+                  View all <ArrowRight className="inline h-3.5 w-3.5" />
                 </Link>
               </div>
               <div className="flex-1 overflow-y-auto divide-y divide-border min-h-0">
                 {knowledgeHubItems.map((k) => (
                   <article key={k.title} className="flex items-center gap-3 p-4 hover:bg-surface/60 transition">
-                    <div className="h-10 w-10 shrink-0 rounded-sm bg-primary/10 border border-primary/20 flex items-center justify-center text-primary">
+                    <div className="h-11 w-11 shrink-0 rounded-sm bg-primary/10 border border-primary/20 flex items-center justify-center text-primary">
                       <FileText className="h-5 w-5" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <span className="text-[10px] font-bold uppercase tracking-wide text-accent">{k.category}</span>
-                      <h3 className="text-sm font-semibold text-foreground leading-snug mt-0.5 mb-1">{k.title}</h3>
-                      <div className="flex items-center gap-2 text-[10px] text-muted-foreground">
+                      <span className="text-[11px] font-bold uppercase tracking-wide text-accent">{k.category}</span>
+                      <h3 className="text-[15px] font-semibold text-foreground leading-snug mt-0.5 mb-1">{k.title}</h3>
+                      <div className="flex items-center gap-2 text-[11px] text-muted-foreground">
                         <span>{k.date}</span>
                         <span>·</span>
                         <span>PDF</span>
