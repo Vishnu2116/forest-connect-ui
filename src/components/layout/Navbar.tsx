@@ -342,7 +342,7 @@ export default function Navbar() {
                     <NavLink
                       to={item.to!}
                       className={({ isActive: a }) =>
-                        `flex items-center justify-center whitespace-nowrap px-5 py-3.5 text-sm font-medium hover:bg-primary-dark transition-colors border-b-2 ${
+                        `flex items-center justify-center whitespace-nowrap px-2.5 lg:px-3 xl:px-5 py-3 xl:py-3.5 text-[13px] xl:text-sm font-medium hover:bg-primary-dark transition-colors border-b-2 ${
                           a
                             ? "bg-primary-dark border-accent"
                             : "border-transparent"
