@@ -478,8 +478,8 @@ function ProjectHighlightsColumn() {
       </div>
       <div
         ref={ref}
-        onMouseEnter={() => setPaused(true)}
-        onMouseLeave={() => setPaused(false)}
+        onPointerEnter={(e) => { if (e.pointerType === "mouse") setPaused(true); }}
+        onPointerLeave={(e) => { if (e.pointerType === "mouse") setPaused(false); }}
         className="flex-1 overflow-y-auto divide-y divide-border min-h-0 no-scrollbar"
       >
         {items.map((p, idx) => (
