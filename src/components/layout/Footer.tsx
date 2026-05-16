@@ -20,29 +20,29 @@ export default function Footer() {
           <p className="text-xs opacity-80 mt-2.5 mb-0">
             Government of Tripura | The World Bank
           </p>
-          <div className="mt-4 flex items-center gap-3">
+          <div className="mt-4 flex items-center gap-3 flex-nowrap">
             <img
               src={logoTripura}
               alt="Government of Tripura"
-              className="h-14 w-14 bg-white rounded p-1"
-              width={56}
-              height={56}
+              className="h-20 w-20 bg-white rounded p-1 object-contain shrink-0"
+              width={80}
+              height={80}
               loading="lazy"
             />
             <img
               src={logoForestDept}
               alt="Tripura Forest Department"
-              className="h-14 w-14 bg-white rounded p-1 object-contain"
-              width={56}
-              height={56}
+              className="h-20 w-20 bg-white rounded p-1 object-contain shrink-0"
+              width={80}
+              height={80}
               loading="lazy"
             />
             <img
               src={logoWorldBank}
               alt="The World Bank"
-              className="h-14 w-auto bg-white rounded p-1"
-              width={70}
-              height={56}
+              className="h-20 w-auto bg-white rounded p-1 object-contain shrink-0"
+              width={100}
+              height={80}
               loading="lazy"
             />
           </div>
