@@ -17,6 +17,8 @@ import {
   Twitter,
   FileText,
   UserCheck,
+  ChevronUp,
+  ChevronDown,
 } from "lucide-react";
 import PageLayout from "@/components/layout/PageLayout";
 import HeroSlider from "@/components/home/HeroSlider";
@@ -29,9 +31,26 @@ import {
 } from "@/data/content";
 import { useLang } from "@/contexts/LanguageContext";
 import { slugify } from "./ProjectDetail";
+import { useAutoScroll } from "@/hooks/useAutoScroll";
 
 import cmImage from "@/assets/dignitaries/CM.jpeg";
 import Animesh from "@/assets/dignitaries/Animesh.jpeg";
+
+/* ────────────────────────────────────────────────────────────────────────────
+ * AUTO-SCROLL SPEEDS (pixels per second)
+ *
+ * Each constant controls the scroll speed of one auto-scrolling section on the
+ * home page. Modify the value here to change that section's speed. Setting a
+ * value to 0 effectively pauses auto-scroll.
+ *
+ * The actual scroll engine lives in:  src/hooks/useAutoScroll.ts
+ * ──────────────────────────────────────────────────────────────────────────── */
+// Controls: What's New, Notifications, Tenders (Updates panel)
+const AUTO_SCROLL_SPEED_UPDATES = 28;
+// Controls: Project Highlights column
+const AUTO_SCROLL_SPEED_PROJECTS = 24;
+// How many pixels a single up/down arrow click advances the scroller
+const MANUAL_STEP_PX = 96;
 
 const announcementDescriptions: Record<string, string> = {
   Recruitment: "Applications invited for ELEMENT programme positions.",
@@ -42,14 +61,14 @@ const announcementDescriptions: Record<string, string> = {
 };
 
 /**
- * Reusable "NEW" badge. Toggle via `show` prop.
- * Later, backend/API can decide which items receive `show={true}`.
+ * Reusable "NEW" badge — strong attention-seeking red pulse.
+ * Toggle via `show` prop. Backend/API can later decide which items get show=true.
  */
 function NewBadge({ show = true }: { show?: boolean }) {
   if (!show) return null;
   return (
     <span
-      className="inline-flex items-center text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-sm bg-accent text-accent-foreground animate-badge-pulse"
+      className="inline-flex items-center text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-sm bg-[hsl(0_85%_50%)] text-white shadow-sm animate-badge-pulse"
       aria-label="New item"
     >
       New
@@ -57,8 +76,39 @@ function NewBadge({ show = true }: { show?: boolean }) {
   );
 }
 
+/** Up / Down manual scroll arrows shown at the bottom-right of a scrolling panel. */
+function ScrollArrows({
+  onUp,
+  onDown,
+}: {
+  onUp: () => void;
+  onDown: () => void;
+}) {
+  return (
+    <div className="flex items-center gap-1">
+      <button
+        type="button"
+        onClick={onUp}
+        aria-label="Scroll up"
+        className="p-1 rounded-sm border border-border bg-background hover:bg-primary hover:text-primary-foreground transition focus-ring"
+      >
+        <ChevronUp className="h-3.5 w-3.5" />
+      </button>
+      <button
+        type="button"
+        onClick={onDown}
+        aria-label="Scroll down"
+        className="p-1 rounded-sm border border-border bg-background hover:bg-primary hover:text-primary-foreground transition focus-ring"
+      >
+        <ChevronDown className="h-3.5 w-3.5" />
+      </button>
+    </div>
+  );
+}
+
 // Hardcoded NEW-enabled set for now. Replace with API/backend flags later.
 const isItemNew = (_title: string) => true;
+
 
 const pillars = [
   {
