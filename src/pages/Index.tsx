@@ -282,7 +282,7 @@ export default function Home() {
             </span>
             <h2 className="text-2xl md:text-3xl font-bold text-primary">Welcome to Tripura ELEMENT Project</h2>
             <p className="text-sm text-muted-foreground mt-2 max-w-xl mx-auto">
-              Senior leaders and dignitaries guiding the ELEMENT programme.
+              Programme leadership, official updates, notifications, and tenders from the ELEMENT Project.
             </p>
           </div>
 
