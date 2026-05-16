@@ -361,12 +361,12 @@ export default function Home() {
         <div className="gov-container-wide">
           <div className="grid lg:grid-cols-[35fr_35fr_30fr] gap-6 items-stretch lg:h-[40rem]">
             {/* Column 1: Project Highlights */}
-            <div className="bg-card border border-border rounded-md p-0 flex flex-col h-full overflow-hidden">
+            <div className="bg-card border border-border rounded-md p-0 flex flex-col h-[28rem] lg:h-full overflow-hidden">
               <div className="flex items-center justify-between px-4 py-3 border-b-2 border-primary bg-primary/5">
                 <h2 className="text-sm font-bold text-primary flex items-center gap-2 uppercase tracking-wide">
                   <Trees className="h-4 w-4 text-accent" /> Project Highlights
                 </h2>
-                <Link to="/projects" className="text-xs text-primary hover:text-accent font-semibold">
+                <Link to="/project-components" className="text-xs text-primary hover:text-accent font-semibold">
                   View all <ArrowRight className="inline h-3 w-3" />
                 </Link>
               </div>
