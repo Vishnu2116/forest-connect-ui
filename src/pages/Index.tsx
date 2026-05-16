@@ -86,17 +86,19 @@ const rightDignitaries = [
 
 function DignitaryCard({ d }: { d: { name: string; designation: string; desc: string; image: string } }) {
   return (
-    <div className="bg-card border border-border rounded-xl p-4 text-center hover:shadow-md hover:border-primary/30 transition group h-full flex flex-col">
-      <div className="mx-auto aspect-square w-full max-w-[180px] rounded-lg bg-gradient-to-br from-primary to-primary-light flex items-center justify-center text-primary-foreground mb-3 overflow-hidden shadow-sm">
+    <div className="bg-card border border-border rounded-md overflow-hidden hover:border-primary/40 transition h-full flex flex-col">
+      <div className="aspect-square w-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center text-primary-foreground overflow-hidden border-b border-border">
         {d.image ? (
           <img src={d.image} alt={d.name} className="h-full w-full object-cover" />
         ) : (
-          <User className="h-12 w-12" />
+          <User className="h-14 w-14" />
         )}
       </div>
-      <h4 className="text-sm font-bold text-foreground leading-snug">{d.name}</h4>
-      <p className="text-xs text-primary font-semibold mt-1">{d.designation}</p>
-      <p className="text-[11px] text-muted-foreground mt-0.5">{d.desc}</p>
+      <div className="px-3 py-2.5 text-center border-t-2 border-accent">
+        <h4 className="text-sm font-bold text-foreground leading-tight">{d.name}</h4>
+        <p className="text-xs text-primary font-semibold mt-0.5 leading-tight">{d.designation}</p>
+        <p className="text-[11px] text-muted-foreground mt-0.5 leading-tight">{d.desc}</p>
+      </div>
     </div>
   );
 }
