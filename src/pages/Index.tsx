@@ -132,7 +132,7 @@ function UpdatesPanel({
   t: (k: string) => string;
 }) {
   return (
-    <div className="bg-card border border-border rounded-md overflow-hidden lg:h-[34rem] flex flex-col">
+    <div className="bg-card border border-border rounded-md overflow-hidden h-full flex flex-col">
       <div className="grid grid-cols-3 border-b-2 border-primary bg-primary/5">
         {(
           [
