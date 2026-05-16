@@ -414,29 +414,29 @@ export default function Home() {
                 {/* Facebook update */}
                 <div className="bg-background border border-border rounded-sm overflow-hidden flex flex-col basis-0 grow-[29] min-h-0">
                   <div className="px-3 py-2 border-b border-border bg-surface flex items-center gap-2 shrink-0">
-                    <Facebook className="h-3.5 w-3.5 text-primary" />
+                    <Facebook className="h-4 w-4 text-primary" />
                     <span className="text-sm font-bold">Facebook</span>
-                    <span className="text-[11px] text-muted-foreground ml-auto">@ElementTripura</span>
+                    <span className="text-xs text-muted-foreground ml-auto">@ElementTripura</span>
                   </div>
                   <div className="p-3 flex-1 min-h-0 flex flex-col justify-center">
-                    <p className="text-[13px] text-foreground leading-relaxed line-clamp-3">
+                    <p className="text-sm text-foreground leading-relaxed line-clamp-3">
                       Field visit by ELEMENT team to community plantation sites in Dhalai district. Engaging with SHGs on livelihood value chains and capacity-building workshops.
                     </p>
-                    <p className="text-[11px] text-muted-foreground mt-2">2 days ago</p>
+                    <p className="text-xs text-muted-foreground mt-2">2 days ago</p>
                   </div>
                 </div>
                 {/* Twitter update */}
                 <div className="bg-background border border-border rounded-sm overflow-hidden flex flex-col basis-0 grow-[29] min-h-0">
                   <div className="px-3 py-2 border-b border-border bg-surface flex items-center gap-2 shrink-0">
-                    <Twitter className="h-3.5 w-3.5 text-primary" />
+                    <Twitter className="h-4 w-4 text-primary" />
                     <span className="text-sm font-bold">Twitter / X</span>
-                    <span className="text-[11px] text-muted-foreground ml-auto">@ElementTripura</span>
+                    <span className="text-xs text-muted-foreground ml-auto">@ElementTripura</span>
                   </div>
                   <div className="p-3 flex-1 min-h-0 flex flex-col justify-center">
-                    <p className="text-[13px] text-foreground leading-relaxed line-clamp-3">
+                    <p className="text-sm text-foreground leading-relaxed line-clamp-3">
                       Honourable Forest Minister inaugurates new eco-tourism circuit under ELEMENT. A milestone for sustainable livelihoods across Tripura. #Tripura #ELEMENT
                     </p>
-                    <p className="text-[11px] text-muted-foreground mt-2">5 days ago</p>
+                    <p className="text-xs text-muted-foreground mt-2">5 days ago</p>
                   </div>
                 </div>
                 {/* YouTube video */}
@@ -448,7 +448,7 @@ export default function Home() {
                     </div>
                   </div>
                   <div className="px-3 py-2 shrink-0">
-                    <h4 className="text-[13px] font-semibold text-foreground leading-snug line-clamp-1">
+                    <h4 className="text-sm font-semibold text-foreground leading-snug line-clamp-1">
                       ELEMENT Project Overview — Community Livelihoods
                     </h4>
                   </div>
