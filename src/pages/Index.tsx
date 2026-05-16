@@ -160,8 +160,8 @@ function UpdatesPanel({
           announcements.map((a) => {
             const Icon = getUpdateIcon(a.tag);
             return (
-              <article key={a.title} className="flex gap-3 px-4 py-3 hover:bg-surface/60 transition">
-                <div className="shrink-0 mt-0.5 text-primary">
+              <article key={a.title} className="flex items-center gap-3 px-4 py-3 hover:bg-surface/60 transition">
+                <div className="shrink-0 text-primary self-center">
                   <Icon className="h-5 w-5" />
                 </div>
                 <div className="flex-1 min-w-0">
@@ -185,8 +185,8 @@ function UpdatesPanel({
               .map((a) => {
                 const Icon = getUpdateIcon(a.tag);
                 return (
-                  <article key={a.title} className="flex gap-3 px-4 py-3 hover:bg-surface/60 transition">
-                    <div className="shrink-0 mt-0.5 text-primary">
+                  <article key={a.title} className="flex items-center gap-3 px-4 py-3 hover:bg-surface/60 transition">
+                    <div className="shrink-0 text-primary self-center">
                       <Icon className="h-5 w-5" />
                     </div>
                     <div className="flex-1 min-w-0">
@@ -204,8 +204,8 @@ function UpdatesPanel({
                 );
               })}
             {events.map((e) => (
-              <article key={e.title} className="flex gap-3 px-4 py-3 hover:bg-surface/60 transition">
-                <div className="shrink-0 mt-0.5 text-primary">
+              <article key={e.title} className="flex items-center gap-3 px-4 py-3 hover:bg-surface/60 transition">
+                <div className="shrink-0 text-primary self-center">
                   <Calendar className="h-5 w-5" />
                 </div>
                 <div className="flex-1 min-w-0">
@@ -225,8 +225,8 @@ function UpdatesPanel({
         )}
         {updatesTab === "tenders" &&
           procurements.map((p) => (
-            <article key={p.title} className="flex gap-3 px-4 py-3 hover:bg-surface/60 transition">
-              <div className="shrink-0 mt-0.5 text-primary">
+            <article key={p.title} className="flex items-center gap-3 px-4 py-3 hover:bg-surface/60 transition">
+              <div className="shrink-0 text-primary self-center">
                 <FileText className="h-5 w-5" />
               </div>
               <div className="flex-1 min-w-0">
