@@ -457,7 +457,7 @@ export default function Home() {
             </div>
 
             {/* Column 3: Knowledge Hub */}
-            <div className="bg-card border border-border rounded-md p-0 flex flex-col h-full overflow-hidden">
+            <div className="bg-card border border-border rounded-md p-0 flex flex-col h-[28rem] lg:h-full overflow-hidden">
               <div className="flex items-center justify-between px-4 py-3 border-b-2 border-primary bg-primary/5">
                 <h2 className="text-sm font-bold text-primary flex items-center gap-2 uppercase tracking-wide">
                   <Award className="h-4 w-4 text-accent" /> Knowledge Hub
