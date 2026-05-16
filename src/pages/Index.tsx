@@ -363,7 +363,7 @@ export default function Home() {
             {/* Column 1: Project Highlights */}
             <div className="bg-card border border-border rounded-md p-0 flex flex-col h-[28rem] lg:h-full overflow-hidden">
               <div className="flex items-center justify-between px-4 py-3 border-b-2 border-primary bg-primary/5">
-                <h2 className="text-base font-bold text-primary flex items-center gap-2 uppercase tracking-wide">
+                <h2 className="text-[17px] font-bold text-primary flex items-center gap-2 uppercase tracking-wide">
                   <Trees className="h-4 w-4 text-accent" /> Project Highlights
                 </h2>
                 <Link to="/project-components" className="text-sm text-primary hover:text-accent font-semibold">
@@ -403,7 +403,7 @@ export default function Home() {
             {/* Column 2: Social Media */}
             <div className="bg-card border border-border rounded-md p-0 flex flex-col h-full overflow-hidden">
               <div className="flex items-center justify-between px-4 py-3 border-b-2 border-primary bg-primary/5">
-                <h2 className="text-base font-bold text-primary flex items-center gap-2 uppercase tracking-wide">
+                <h2 className="text-[17px] font-bold text-primary flex items-center gap-2 uppercase tracking-wide">
                   <Facebook className="h-4 w-4 text-accent" /> Social Media
                 </h2>
                 <Link to="/media/social" className="text-sm text-primary hover:text-accent font-semibold">
@@ -459,7 +459,7 @@ export default function Home() {
             {/* Column 3: Knowledge Hub */}
             <div className="bg-card border border-border rounded-md p-0 flex flex-col h-[28rem] lg:h-full overflow-hidden">
               <div className="flex items-center justify-between px-4 py-3 border-b-2 border-primary bg-primary/5">
-                <h2 className="text-base font-bold text-primary flex items-center gap-2 uppercase tracking-wide">
+                <h2 className="text-[17px] font-bold text-primary flex items-center gap-2 uppercase tracking-wide">
                   <Award className="h-4 w-4 text-accent" /> Knowledge Hub
                 </h2>
                 <Link to="/knowledge-hub/iec" className="text-sm text-primary hover:text-accent font-semibold">
