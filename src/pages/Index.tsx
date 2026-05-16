@@ -383,16 +383,16 @@ export default function Home() {
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-1.5 mb-1 flex-wrap">
                         {p.component && (
-                          <span className="text-[9px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-accent/15 text-accent">{p.component}</span>
+                          <span className="text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-accent/15 text-accent">{p.component}</span>
                         )}
-                        <span className="text-[9px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-success/15 text-success">{p.status}</span>
+                        <span className="text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-success/15 text-success">{p.status}</span>
                       </div>
-                      <h3 className="text-sm font-semibold text-foreground leading-snug mb-1">{p.title}</h3>
+                      <h3 className="text-[15px] font-semibold text-foreground leading-snug mb-1">{p.title}</h3>
                       {p.objective && (
-                        <p className="text-xs text-muted-foreground line-clamp-1 mb-1">{p.objective}</p>
+                        <p className="text-[13px] text-muted-foreground line-clamp-1 mb-1">{p.objective}</p>
                       )}
-                      <Link to={`/projects/${slugify(p.title)}`} className="inline-flex items-center gap-1 text-xs font-semibold text-accent hover:text-accent-hover">
-                        Read More <ArrowRight className="h-3 w-3" />
+                      <Link to={`/projects/${slugify(p.title)}`} className="inline-flex items-center gap-1 text-[13px] font-semibold text-accent hover:text-accent-hover">
+                        Read More <ArrowRight className="h-3.5 w-3.5" />
                       </Link>
                     </div>
                   </article>
