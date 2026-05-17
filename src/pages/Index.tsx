@@ -6,7 +6,7 @@ import {
   MapPin,
   Bell,
   Trees,
-  Award,
+  
   BookOpen,
   User,
   TrendingUp,
