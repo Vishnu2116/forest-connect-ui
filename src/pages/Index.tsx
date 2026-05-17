@@ -665,15 +665,27 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Three-column information section */}
+      {/* Two-column section: Programme Highlights & Social Media */}
       <section className="py-14 md:py-18 bg-surface border-t border-border">
-        <div className="mx-auto w-full max-w-[110rem] px-3 sm:px-4 lg:px-5">
-          <div className="grid lg:grid-cols-[35fr_35fr_30fr] gap-6 items-stretch lg:h-[46rem]">
+        <div className="gov-container">
+          <div className="text-center mb-8">
+            <span className="inline-block bg-accent/10 text-accent text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-3">
+              Highlights
+            </span>
+            <h2 className="text-2xl md:text-3xl font-bold text-primary">
+              Programme Highlights &amp; Social Media
+            </h2>
+            <p className="text-sm text-muted-foreground mt-2 max-w-2xl mx-auto">
+              Key project initiatives and official social media updates from the
+              ELEMENT Programme.
+            </p>
+          </div>
+          <div className="grid lg:grid-cols-[58fr_42fr] gap-6 items-stretch lg:h-[44rem]">
             {/* Column 1: Project Highlights */}
             <ProjectHighlightsColumn />
 
             {/* Column 2: Social Media */}
-            <div className="bg-card border border-border rounded-md p-0 flex flex-col h-[34rem] lg:h-full overflow-hidden">
+            <div className="bg-card border border-border rounded-md p-0 flex flex-col h-[40rem] lg:h-full overflow-hidden shadow-sm">
               <div className="flex items-center justify-between px-4 py-3 border-b-2 border-primary bg-primary/5">
                 <h2 className="text-[17px] font-bold text-primary flex items-center gap-2 uppercase tracking-wide">
                   <Facebook className="h-4 w-4 text-accent" /> Social Media
@@ -685,7 +697,7 @@ export default function Home() {
                   View all <ArrowRight className="inline h-3.5 w-3.5" />
                 </Link>
               </div>
-              <div className="flex-1 min-h-0 p-3 flex flex-col gap-3">
+              <div className="flex-1 min-h-0 p-4 flex flex-col gap-4">
                 {/* Facebook update */}
                 <div className="bg-background border border-border rounded-sm overflow-hidden flex flex-col basis-0 grow-[29] min-h-0">
                   <div className="px-3 py-2 border-b border-border bg-surface flex items-center gap-2 shrink-0">
@@ -696,7 +708,7 @@ export default function Home() {
                     </span>
                   </div>
                   <div className="p-3 flex-1 min-h-0 flex flex-col justify-center">
-                    <p className="text-sm text-foreground leading-relaxed line-clamp-3">
+                    <p className="text-[15px] text-foreground leading-relaxed line-clamp-3">
                       Field visit by ELEMENT team to community plantation sites
                       in Dhalai district. Engaging with SHGs on livelihood value
                       chains and capacity-building workshops.
@@ -716,7 +728,7 @@ export default function Home() {
                     </span>
                   </div>
                   <div className="p-3 flex-1 min-h-0 flex flex-col justify-center">
-                    <p className="text-sm text-foreground leading-relaxed line-clamp-3">
+                    <p className="text-[15px] text-foreground leading-relaxed line-clamp-3">
                       Honourable Forest Minister inaugurates new eco-tourism
                       circuit under ELEMENT. A milestone for sustainable
                       livelihoods across Tripura. #Tripura #ELEMENT
@@ -730,65 +742,16 @@ export default function Home() {
                 <div className="bg-background border border-border rounded-sm overflow-hidden flex flex-col basis-0 grow-[42] min-h-0">
                   <div className="relative flex-1 min-h-0 bg-gradient-to-br from-primary/30 to-primary-light/30 flex items-center justify-center group cursor-pointer">
                     <div className="absolute inset-0 bg-black/20" />
-                    <div className="relative h-11 w-11 rounded-full bg-accent flex items-center justify-center shadow-lg group-hover:scale-110 transition">
-                      <div className="w-0 h-0 border-l-[11px] border-l-accent-foreground border-y-[7px] border-y-transparent ml-0.5" />
+                    <div className="relative h-14 w-14 rounded-full bg-accent flex items-center justify-center shadow-lg group-hover:scale-110 transition">
+                      <div className="w-0 h-0 border-l-[14px] border-l-accent-foreground border-y-[9px] border-y-transparent ml-1" />
                     </div>
                   </div>
-                  <div className="px-3 py-2 shrink-0">
+                  <div className="px-3 py-2.5 shrink-0 border-t border-border">
                     <h4 className="text-sm font-semibold text-foreground leading-snug line-clamp-1">
                       ELEMENT Project Overview — Community Livelihoods
                     </h4>
                   </div>
                 </div>
-              </div>
-            </div>
-
-            {/* Column 3: Knowledge Hub */}
-            <div className="bg-card border border-border rounded-md p-0 flex flex-col h-[28rem] lg:h-full overflow-hidden">
-              <div className="flex items-center justify-between px-4 py-3 border-b-2 border-primary bg-primary/5">
-                <h2 className="text-[17px] font-bold text-primary flex items-center gap-2 uppercase tracking-wide">
-                  <Award className="h-4 w-4 text-accent" /> Knowledge Hub
-                </h2>
-                <Link
-                  to="/knowledge-hub/iec"
-                  className="text-sm text-primary hover:text-accent font-semibold"
-                >
-                  View all <ArrowRight className="inline h-3.5 w-3.5" />
-                </Link>
-              </div>
-              <div className="flex-1 overflow-y-auto divide-y divide-border min-h-0">
-                {knowledgeHubItems.map((k) => (
-                  <article
-                    key={k.title}
-                    className="flex items-center gap-3 p-4 hover:bg-surface/60 transition"
-                  >
-                    <div className="h-11 w-11 shrink-0 rounded-sm bg-primary/10 border border-primary/20 flex items-center justify-center text-primary">
-                      <FileText className="h-5 w-5" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <span className="text-xs font-bold uppercase tracking-wide text-accent">
-                        {k.category}
-                      </span>
-                      <h3 className="text-base font-semibold text-foreground leading-snug mt-0.5 mb-1">
-                        {k.title}
-                      </h3>
-                      <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                        <span>{k.date}</span>
-                        <span>·</span>
-                        <span>PDF</span>
-                        <span>·</span>
-                        <span>English</span>
-                        <span>·</span>
-                        <a
-                          href="#"
-                          className="text-primary font-semibold hover:text-accent"
-                        >
-                          Download
-                        </a>
-                      </div>
-                    </div>
-                  </article>
-                ))}
               </div>
             </div>
           </div>
