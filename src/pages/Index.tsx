@@ -26,7 +26,7 @@ import {
   announcements,
   events,
   projects,
-  knowledgeHubItems,
+  
   procurements,
 } from "@/data/content";
 import { useLang } from "@/contexts/LanguageContext";
