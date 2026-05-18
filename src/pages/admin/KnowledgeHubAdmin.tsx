@@ -179,12 +179,30 @@ export default function KnowledgeHubAdmin({
     }
   };
 
+  const resolveKhUploadCategory = () => {
+    if (lockedCategoryName === "Reports") return "report";
+    if (lockedCategoryName === "Publications") return "publication";
+    return "knowledge_hub";
+  };
+
   const onUploadFile = async (file: File, kind: "file" | "thumbnail") => {
+    if (kind === "file") {
+      const isPdf =
+        file.type === "application/pdf" ||
+        file.name.toLowerCase().endsWith(".pdf");
+      if (!isPdf) {
+        alert("Only PDF files are allowed for Knowledge Hub documents.");
+        return;
+      }
+    }
     setUploading(true);
     try {
       const fd = new FormData();
       fd.append("file", file);
-      fd.append("category", kind === "thumbnail" ? "thumbnail" : fileCategory);
+      fd.append(
+        "category",
+        kind === "thumbnail" ? "thumbnail" : resolveKhUploadCategory()
+      );
       const data = await fetchAdmin<any>("/api/admin/uploads", { method: "POST", body: fd });
       if (kind === "file") {
         setForm((f) => ({
@@ -192,7 +210,7 @@ export default function KnowledgeHubAdmin({
           file_id: String(data.id),
           file_url: data.file_url,
           file_name: data.original_name,
-          file_format: f.file_format || (data.file_extension || "").toUpperCase(),
+          file_format: "PDF",
         }));
       } else {
         setForm((f) => ({ ...f, thumbnail_id: String(data.id), thumbnail_url: data.file_url }));
@@ -412,7 +430,8 @@ export default function KnowledgeHubAdmin({
 
               <div className="md:col-span-2 border border-dashed border-border rounded p-3 bg-surface">
                 <Label className="flex items-center gap-2"><Upload className="h-4 w-4" /> Document File</Label>
-                <input type="file" className="mt-2 text-xs" onChange={(e) => e.target.files?.[0] && onUploadFile(e.target.files[0], "file")} disabled={uploading} />
+                <input type="file" accept="application/pdf,.pdf" className="mt-2 text-xs" onChange={(e) => e.target.files?.[0] && onUploadFile(e.target.files[0], "file")} disabled={uploading} />
+                <p className="text-[11px] mt-1 text-muted-foreground">Only PDF files are allowed for Knowledge Hub documents.</p>
                 {form.file_url && (
                   <p className="text-xs mt-2 text-muted-foreground">
                     Current: <a href={form.file_url} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">{form.file_name || "View file"}</a>
