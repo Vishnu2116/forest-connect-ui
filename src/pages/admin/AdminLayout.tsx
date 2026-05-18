@@ -21,6 +21,7 @@ export const adminMenu = [
   { to: "/admin/activities", label: "Activities & Outputs", icon: Activity },
   { to: "/admin/projects", label: "Projects", icon: Briefcase },
   { to: "/admin/hero", label: "Hero Slides", icon: SlidersHorizontal },
+  { to: "/admin/home-leadership", label: "Home Leadership", icon: Users },
   
   { to: "/admin/plantation", label: "Plantation Module", icon: TreePine },
   { to: "/admin/grievance", label: "Grievance Mgmt", icon: MessageSquare },
