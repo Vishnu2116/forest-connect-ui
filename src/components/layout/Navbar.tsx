@@ -37,6 +37,31 @@ export default function Navbar() {
     toggleHighContrast,
   } = useA11y();
 
+  const [componentChildren, setComponentChildren] = useState<{ label: string; to: string }[] | null>(null);
+
+  useEffect(() => {
+    let alive = true;
+    getNavComponentsOnce()
+      .then((items) => {
+        if (!alive || !Array.isArray(items) || items.length === 0) return;
+        setComponentChildren(
+          items.map((c) => ({
+            label: c.name || c.label || `Component ${c.component_number ?? ""}`,
+            to: `/components/${c.id}`,
+          }))
+        );
+      })
+      .catch(() => {});
+    return () => { alive = false; };
+  }, []);
+
+  const navItems = useMemo(() => {
+    if (!componentChildren) return baseNavItems;
+    return baseNavItems.map((item) =>
+      item.labelKey === "nav.components" ? { ...item, children: componentChildren } : item
+    );
+  }, [componentChildren]);
+
   const isActive = (to?: string) =>
     to && (to === "/" ? pathname === "/" : pathname.startsWith(to));
   const isDropdownActive = (item: (typeof navItems)[0]) =>
