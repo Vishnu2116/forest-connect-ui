@@ -73,7 +73,7 @@ export default function ProjectComponents() {
                       to={`/components/${c.slug}`}
                       className="inline-flex items-center gap-1.5 bg-accent hover:bg-accent-hover text-accent-foreground px-4 py-2 rounded text-sm font-semibold transition"
                     >
-                      Explore Component <ArrowRight className="h-4 w-4" />
+                      Explore Project Component <ArrowRight className="h-4 w-4" />
                     </Link>
                   </div>
                 </div>
