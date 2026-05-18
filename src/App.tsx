@@ -32,6 +32,7 @@ import {
 } from "./pages/admin/modules";
 import PlantationAdmin from "./pages/admin/PlantationAdmin";
 import ProcurementsAdmin from "./pages/admin/ProcurementsAdmin";
+import GalleryAdmin from "./pages/admin/GalleryAdmin";
 import { GrievanceAdmin, RTIAdmin } from "./pages/admin/StatusModules";
 import { UsersAdmin } from "./pages/admin/UsersAdmin";
 import SettingsAdmin from "./pages/admin/SettingsAdmin";
@@ -113,6 +114,7 @@ const App = () => (
             <Route path="events" element={<EventsAdmin />} />
             <Route path="tenders" element={<TendersAdmin />} />
             <Route path="procurements" element={<ProcurementsAdmin />} />
+            <Route path="gallery" element={<GalleryAdmin />} />
             <Route path="whoswho" element={<WhosWhoAdmin />} />
             <Route path="success-stories" element={<SuccessStoriesAdmin />} />
             <Route path="newsletters" element={<NewslettersAdmin />} />
