@@ -28,8 +28,10 @@ import AdminLayout from "./pages/admin/AdminLayout";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import {
   NotificationsAdmin, EventsAdmin, TendersAdmin, WhosWhoAdmin, SuccessStoriesAdmin,
-  NewslettersAdmin, ThematicAdmin, ReportsAdmin, IECAdmin, ActivitiesAdmin, ProjectsAdmin,
+  NewslettersAdmin, ThematicAdmin, ReportsAdmin, IECAdmin, ActivitiesAdmin,
 } from "./pages/admin/modules";
+import ProjectsManagementAdmin from "./pages/admin/ProjectsManagementAdmin";
+import ProjectComponentsAdmin from "./pages/admin/ProjectComponentsAdmin";
 import PlantationAdmin from "./pages/admin/PlantationAdmin";
 import { GrievanceAdmin, RTIAdmin } from "./pages/admin/StatusModules";
 import { UsersAdmin } from "./pages/admin/UsersAdmin";
@@ -89,7 +91,7 @@ const App = () => (
           <Route path="/procurements" element={<Procurements />} />
           <Route path="/procurements/rfps" element={<RFPs />} />
           <Route path="/procurements/tenders" element={<Tenders />} />
-          <Route path="/components/:slug" element={<ComponentPage />} />
+          <Route path="/components/:id" element={<ComponentPage />} />
           <Route path="/media/social" element={<SocialMedia />} />
           <Route path="/media/gallery" element={<Gallery />} />
           <Route path="/media/events" element={<MediaEvents />} />
@@ -123,7 +125,8 @@ const App = () => (
             <Route path="reports" element={<ReportsAdmin />} />
             <Route path="iec" element={<IECAdmin />} />
             <Route path="activities" element={<ActivitiesAdmin />} />
-            <Route path="projects" element={<ProjectsAdmin />} />
+            <Route path="projects" element={<ProjectsManagementAdmin />} />
+            <Route path="project-components" element={<ProjectComponentsAdmin />} />
             <Route path="plantation" element={<PlantationAdmin />} />
             <Route path="hero" element={<HeroManagementAdmin />} />
             <Route path="home-leadership" element={<HomeLeadershipAdmin />} />
