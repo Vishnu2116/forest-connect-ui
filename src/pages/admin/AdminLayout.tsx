@@ -13,6 +13,7 @@ export const adminMenu = [
   { to: "/admin/notifications", label: "Notifications", icon: Bell },
   { to: "/admin/events", label: "Events", icon: Calendar },
   { to: "/admin/tenders", label: "Tenders / Procurements", icon: FileText },
+  { to: "/admin/procurements", label: "Procurements (API)", icon: FileText },
   { to: "/admin/whoswho", label: "Who's Who", icon: Users },
   { to: "/admin/success-stories", label: "Success Stories", icon: Award },
   { to: "/admin/newsletters", label: "Newsletters", icon: BookOpen },
