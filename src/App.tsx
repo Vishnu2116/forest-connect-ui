@@ -37,6 +37,8 @@ import SettingsAdmin from "./pages/admin/SettingsAdmin";
 import HeroManagementAdmin from "./pages/admin/HeroManagementAdmin";
 import HomeLeadershipAdmin from "./pages/admin/HomeLeadershipAdmin";
 import HomeSocialMediaAdmin from "./pages/admin/HomeSocialMediaAdmin";
+import OfficialsAdmin from "./pages/admin/OfficialsAdmin";
+import OfficialProfile from "./pages/OfficialProfile";
 import Accessibility from "./pages/Accessibility";
 import ScreenReader from "./pages/ScreenReader";
 import Help from "./pages/Help";
@@ -69,6 +71,7 @@ const App = () => (
           <Route path="/about/mission" element={<VisionMission />} />
           <Route path="/about/memorandum" element={<Memorandum />} />
           <Route path="/about/directory" element={<OfficialDirectory />} />
+          <Route path="/about/officials/:id" element={<OfficialProfile />} />
           <Route path="/projects" element={<Projects />} />
           <Route path="/project-components" element={<ProjectComponents />} />
           <Route path="/projects/:slug" element={<ProjectDetail />} />
@@ -125,6 +128,7 @@ const App = () => (
             <Route path="hero" element={<HeroManagementAdmin />} />
             <Route path="home-leadership" element={<HomeLeadershipAdmin />} />
             <Route path="home-social-media" element={<HomeSocialMediaAdmin />} />
+            <Route path="officials" element={<OfficialsAdmin />} />
             
             <Route path="grievance" element={<GrievanceAdmin />} />
             <Route path="rti" element={<RTIAdmin />} />
