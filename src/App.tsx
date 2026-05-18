@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import ScrollToTop from "@/components/ScrollToTop";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
@@ -116,15 +116,15 @@ const App = () => (
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin" element={<AdminLayout />}>
             <Route index element={<AdminDashboard />} />
-            <Route path="notifications" element={<NotificationsAdmin />} />
+            <Route path="notifications" element={<Navigate to="/admin/knowledge-hub?type=notification" replace />} />
             <Route path="events" element={<EventsAdmin />} />
             <Route path="tenders" element={<TendersAdmin />} />
             <Route path="whoswho" element={<WhosWhoAdmin />} />
-            <Route path="success-stories" element={<SuccessStoriesAdmin />} />
-            <Route path="newsletters" element={<NewslettersAdmin />} />
-            <Route path="thematic" element={<ThematicAdmin />} />
-            <Route path="reports" element={<ReportsAdmin />} />
-            <Route path="iec" element={<IECAdmin />} />
+            <Route path="success-stories" element={<Navigate to="/admin/knowledge-hub?type=success_story" replace />} />
+            <Route path="newsletters" element={<Navigate to="/admin/knowledge-hub?type=newsletter" replace />} />
+            <Route path="thematic" element={<Navigate to="/admin/knowledge-hub?type=thematic_study" replace />} />
+            <Route path="reports" element={<Navigate to="/admin/knowledge-hub?type=report" replace />} />
+            <Route path="iec" element={<Navigate to="/admin/knowledge-hub?type=iec_material" replace />} />
             <Route path="activities" element={<ActivitiesAdmin />} />
             <Route path="projects" element={<ProjectsManagementAdmin />} />
             <Route path="project-components" element={<ProjectComponentsAdmin />} />

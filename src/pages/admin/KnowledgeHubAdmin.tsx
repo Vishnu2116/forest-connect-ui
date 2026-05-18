@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { AdminPageHeader } from "./AdminLayout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -40,8 +41,15 @@ function emptyForm(): FormState {
 }
 
 export default function KnowledgeHubAdmin() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const urlType = searchParams.get("type") as KHType | null;
   const [items, setItems] = useState<ApiKHItem[]>([]);
-  const [typeFilter, setTypeFilter] = useState<KHType | "all">("all");
+  const [typeFilter, setTypeFilter] = useState<KHType | "all">(urlType || "all");
+
+  useEffect(() => {
+    setTypeFilter(urlType || "all");
+  }, [urlType]);
+
   const [loading, setLoading] = useState(false);
   const [editing, setEditing] = useState<FormState | null>(null);
   const [saving, setSaving] = useState(false);
@@ -121,7 +129,12 @@ export default function KnowledgeHubAdmin() {
           <div className="flex items-center gap-2">
             <select
               value={typeFilter}
-              onChange={(e) => setTypeFilter(e.target.value as any)}
+              onChange={(e) => {
+                const v = e.target.value as KHType | "all";
+                setTypeFilter(v);
+                if (v === "all") setSearchParams({});
+                else setSearchParams({ type: v });
+              }}
               className="h-10 px-2 border border-input rounded text-sm bg-background"
             >
               <option value="all">All Types</option>
