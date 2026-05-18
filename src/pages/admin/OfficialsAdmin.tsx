@@ -71,8 +71,8 @@ export default function OfficialsAdmin() {
     setLoading(true);
     try {
       const [oRes, cRes] = await Promise.all([
-        fetch(`${API_BASE_URL}/api/admin/officials`, { headers: authHeaders() }),
-        fetch(`${API_BASE_URL}/api/admin/official-categories`, { headers: authHeaders() }),
+        fetch(`${API_BASE_URL}/api/admin/officials`, { headers: getAuthHeaders() }),
+        fetch(`${API_BASE_URL}/api/admin/official-categories`, { headers: getAuthHeaders() }),
       ]);
       if (oRes.ok) setOfficials(await oRes.json());
       if (cRes.ok) setCategories(await cRes.json());
@@ -147,7 +147,7 @@ export default function OfficialsAdmin() {
         : `${API_BASE_URL}/api/admin/officials`;
       const res = await fetch(url, {
         method: editing.id ? "PUT" : "POST",
-        headers: authHeaders(),
+        headers: getAuthHeaders(),
         body: fd,
       });
       if (!res.ok) throw new Error();
@@ -167,7 +167,7 @@ export default function OfficialsAdmin() {
     try {
       const res = await fetch(`${API_BASE_URL}/api/admin/officials/${o.id}`, {
         method: "DELETE",
-        headers: authHeaders(),
+        headers: getAuthHeaders(),
       });
       if (!res.ok) throw new Error();
       toast.success("Official deleted");
@@ -447,7 +447,7 @@ function CategoriesModal({
   const refresh = async () => {
     if (!USE_REAL_API) return;
     try {
-      const r = await fetch(`${API_BASE_URL}/api/admin/official-categories`, { headers: authHeaders() });
+      const r = await fetch(`${API_BASE_URL}/api/admin/official-categories`, { headers: getAuthHeaders() });
       if (r.ok) setItems(await r.json());
     } catch {}
     await onChanged();
@@ -460,7 +460,7 @@ function CategoriesModal({
     try {
       const r = await fetch(`${API_BASE_URL}/api/admin/official-categories`, {
         method: "POST",
-        headers: { ...authHeaders(), "Content-Type": "application/json" },
+        headers: getAuthJsonHeaders(),
         body: JSON.stringify({ name: newName.trim(), display_order: newOrder }),
       });
       if (!r.ok) throw new Error();
@@ -480,7 +480,7 @@ function CategoriesModal({
     try {
       const r = await fetch(`${API_BASE_URL}/api/admin/official-categories/${c.id}`, {
         method: "PUT",
-        headers: { ...authHeaders(), "Content-Type": "application/json" },
+        headers: getAuthJsonHeaders(),
         body: JSON.stringify({ name: c.name, display_order: c.display_order }),
       });
       if (!r.ok) throw new Error();
@@ -497,7 +497,7 @@ function CategoriesModal({
     try {
       const r = await fetch(`${API_BASE_URL}/api/admin/official-categories/${c.id}`, {
         method: "DELETE",
-        headers: authHeaders(),
+        headers: getAuthHeaders(),
       });
       if (!r.ok) {
         let msg = "Failed to delete category";

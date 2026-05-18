@@ -42,7 +42,7 @@ export default function HomeSocialMediaAdmin() {
     setLoading(true);
     try {
       const res = await fetch(`${API_BASE_URL}/api/home/social-media`, {
-        headers: authHeaders(),
+        headers: getAuthHeaders(),
       });
       if (!res.ok) throw new Error();
       const data = await res.json();
@@ -83,7 +83,7 @@ export default function HomeSocialMediaAdmin() {
         `${API_BASE_URL}/api/admin/home-social-media`,
         {
           method: "PUT",
-          headers: authHeaders({ "Content-Type": "application/json" }),
+          headers: getAuthJsonHeaders(),
           body: JSON.stringify(form),
         }
       );

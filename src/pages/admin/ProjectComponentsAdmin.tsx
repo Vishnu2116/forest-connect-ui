@@ -87,7 +87,7 @@ export default function ProjectComponentsAdmin() {
         : `${API_BASE_URL}/api/admin/project-components`;
       const r = await fetch(url, {
         method: editing.id ? "PUT" : "POST",
-        headers: { ...authHeaders(), "Content-Type": "application/json" },
+        headers: getAuthJsonHeaders(),
         body: JSON.stringify(body),
       });
       if (!r.ok) throw new Error();
@@ -106,7 +106,7 @@ export default function ProjectComponentsAdmin() {
     if (!USE_REAL_API) return;
     try {
       const r = await fetch(`${API_BASE_URL}/api/admin/project-components/${c.id}`, {
-        method: "DELETE", headers: authHeaders(),
+        method: "DELETE", headers: getAuthHeaders(),
       });
       if (!r.ok) {
         let msg = "Failed to delete";

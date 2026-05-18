@@ -16,7 +16,7 @@ interface Slot {
   photoPreview?: string;
 }
 
-function authHeaders(): HeadersInit {
+function getAuthHeaders(): HeadersInit {
   const token = localStorage.getItem("element_admin_token");
   return token ? { Authorization: `Bearer ${token}` } : {};
 }
@@ -51,7 +51,7 @@ export default function HomeLeadershipAdmin() {
     setLoading(true);
     try {
       const res = await fetch(`${API_BASE_URL}/api/home/leadership`, {
-        headers: authHeaders(),
+        headers: getAuthHeaders(),
       });
       if (!res.ok) throw new Error();
       const data = await res.json();
@@ -120,7 +120,7 @@ export default function HomeLeadershipAdmin() {
       if (s.photoFile) fd.append("photo", s.photoFile);
       const res = await fetch(
         `${API_BASE_URL}/api/admin/home-leadership/${s.slot_number}`,
-        { method: "PUT", headers: authHeaders(), body: fd }
+        { method: "PUT", headers: getAuthHeaders(), body: fd }
       );
       if (!res.ok) throw new Error();
       toast.success(`Slot ${s.slot_number} updated`);
