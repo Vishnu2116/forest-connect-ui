@@ -76,11 +76,6 @@ export function resolveImage(path?: string | null): string | null {
   return path;
 }
 
-// Backwards-compat: delegate to the central helper so the token is always read fresh.
-export function getAuthHeaders(): HeadersInit {
-  return getAuthHeaders();
-}
-
 export function slugify(s: string) {
   return s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
 }
