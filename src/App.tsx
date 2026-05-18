@@ -124,6 +124,7 @@ const App = () => (
             <Route path="plantation" element={<PlantationAdmin />} />
             <Route path="hero" element={<HeroManagementAdmin />} />
             <Route path="home-leadership" element={<HomeLeadershipAdmin />} />
+            <Route path="home-social-media" element={<HomeSocialMediaAdmin />} />
             
             <Route path="grievance" element={<GrievanceAdmin />} />
             <Route path="rti" element={<RTIAdmin />} />
