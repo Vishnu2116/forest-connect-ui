@@ -20,6 +20,7 @@ export const adminMenu = [
   { to: "/admin/reports", label: "Reports", icon: FileText },
   { to: "/admin/iec", label: "IEC Materials", icon: ImageIcon },
   { to: "/admin/activities", label: "Activities & Outputs", icon: Activity },
+  { to: "/admin/knowledge-hub", label: "Knowledge Hub", icon: BookOpen },
   { to: "/admin/project-components", label: "Project Components", icon: Layers },
   { to: "/admin/projects", label: "Projects", icon: Briefcase },
   { to: "/admin/hero", label: "Hero Slides", icon: SlidersHorizontal },

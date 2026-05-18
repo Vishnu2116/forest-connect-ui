@@ -40,6 +40,7 @@ import HeroManagementAdmin from "./pages/admin/HeroManagementAdmin";
 import HomeLeadershipAdmin from "./pages/admin/HomeLeadershipAdmin";
 import HomeSocialMediaAdmin from "./pages/admin/HomeSocialMediaAdmin";
 import OfficialsAdmin from "./pages/admin/OfficialsAdmin";
+import KnowledgeHubAdmin from "./pages/admin/KnowledgeHubAdmin";
 import OfficialProfile from "./pages/OfficialProfile";
 import Accessibility from "./pages/Accessibility";
 import ScreenReader from "./pages/ScreenReader";
@@ -132,6 +133,8 @@ const App = () => (
             <Route path="home-leadership" element={<HomeLeadershipAdmin />} />
             <Route path="home-social-media" element={<HomeSocialMediaAdmin />} />
             <Route path="officials" element={<OfficialsAdmin />} />
+            <Route path="knowledge-hub" element={<KnowledgeHubAdmin />} />
+            
             
             <Route path="grievance" element={<GrievanceAdmin />} />
             <Route path="rti" element={<RTIAdmin />} />
