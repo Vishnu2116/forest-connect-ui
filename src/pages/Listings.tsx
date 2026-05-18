@@ -160,17 +160,17 @@ function KnowledgeHubListing({
 }
 
 export const Reports = () => (
-  <KnowledgeHubListing
+  <KnowledgeHubApiListing
+    type="report"
     title="Reports"
     subtitle="Annual, statutory and thematic reports of the Department"
-    rows={reports}
   />
 );
 export const Publications = () => (
-  <KnowledgeHubListing
+  <KnowledgeHubApiListing
+    type="publication"
     title="Publications"
     subtitle="Books, manuals and field guides published by the Department"
-    rows={publications}
   />
 );
 export const Procurements = () => <ListingPage title="Procurements & Tenders" subtitle="Active and archived tender notices" rows={procurements} type="tender" breadcrumb={["Home", "Procurements"]} />;
