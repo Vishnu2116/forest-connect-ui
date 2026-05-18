@@ -215,16 +215,31 @@ export async function fetchComponents(): Promise<ApiProjectComponent[]> {
   }
 }
 
+function dummyComponentWithProjects(id: string): ApiProjectComponent | null {
+  const c = dummyComponents().find((x) => x.id === id);
+  if (!c) return null;
+  const all = dummyProjects();
+  const comps = dummyComponents();
+  const idx = comps.findIndex((x) => x.id === id);
+  // Round-robin distribute dummy projects across components so each has some.
+  const projects = all.filter((_, i) => i % comps.length === idx);
+  return { ...c, projects: projects.length ? projects : all };
+}
+
 export async function fetchComponent(id: string): Promise<ApiProjectComponent | null> {
-  if (!USE_REAL_API) {
-    return dummyComponents().find((c) => c.id === id) || null;
-  }
+  if (!USE_REAL_API) return dummyComponentWithProjects(id);
   try {
     const r = await fetch(`${API_BASE_URL}/api/project-components/${id}`);
     if (!r.ok) throw new Error();
-    return await r.json();
+    const data = await r.json();
+    if (!data || !data.id) return dummyComponentWithProjects(id);
+    if (!Array.isArray(data.projects) || data.projects.length === 0) {
+      const fb = dummyComponentWithProjects(id);
+      return { ...data, projects: fb?.projects ?? [] };
+    }
+    return data;
   } catch {
-    return dummyComponents().find((c) => c.id === id) || null;
+    return dummyComponentWithProjects(id);
   }
 }
 
