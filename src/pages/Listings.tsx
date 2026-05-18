@@ -97,8 +97,82 @@ export function ListingPage({
   );
 }
 
-export const Reports = () => <ListingPage title="Reports" subtitle="Annual, statutory and thematic reports of the Department" rows={reports} breadcrumb={["Home", "Reports"]} />;
-export const Publications = () => <ListingPage title="Publications" subtitle="Books, manuals and field guides published by the Department" rows={publications} breadcrumb={["Home", "Publications"]} />;
+/* Renders a document table inside the Knowledge Hub layout (with sidebar). */
+function KnowledgeHubListing({
+  title,
+  subtitle,
+  rows,
+}: {
+  title: string;
+  subtitle: string;
+  rows: Row[];
+}) {
+  return (
+    <KnowledgeHubLayout
+      title={title}
+      subtitle={subtitle}
+      breadcrumb={["Home", "Knowledge Hub", title]}
+    >
+      <div className="flex flex-wrap items-center justify-between gap-3 mb-5">
+        <div className="flex flex-wrap gap-2">
+          <input
+            type="search"
+            placeholder={`Search ${title.toLowerCase()}…`}
+            className="border border-input rounded px-3 py-2 text-sm w-full sm:w-72 focus-ring bg-card"
+          />
+          <select className="border border-input rounded px-3 py-2 text-sm bg-card focus-ring">
+            <option>All Years</option>
+            <option>2026</option>
+            <option>2025</option>
+            <option>2024</option>
+          </select>
+        </div>
+      </div>
+      <div className="overflow-x-auto">
+        <DataTable headers={["#", "Title", "Date", "File Details", "Actions"]}>
+          {rows.map((r, i) => (
+            <tr key={r.title}>
+              <td>{i + 1}</td>
+              <td className="font-medium">{r.title}</td>
+              <td>{r.date}</td>
+              <td>
+                <span className="text-[11px] text-muted-foreground">
+                  <span className="font-semibold text-primary">{r.type || "PDF"}</span>
+                  <span className="mx-1.5 opacity-50">|</span>
+                  {r.size || "—"}
+                  <span className="mx-1.5 opacity-50">|</span>
+                  English
+                </span>
+              </td>
+              <td>
+                <div className="flex gap-2">
+                  <button className="p-1.5 text-primary hover:bg-primary/10 rounded" aria-label={`View ${r.title}`}><Eye className="h-4 w-4" /></button>
+                  <button className="p-1.5 text-accent hover:bg-accent/10 rounded" aria-label={`Download ${r.title}`}><Download className="h-4 w-4" /></button>
+                </div>
+              </td>
+            </tr>
+          ))}
+        </DataTable>
+      </div>
+      <Pagination current={1} total={5} />
+    </KnowledgeHubLayout>
+  );
+}
+
+export const Reports = () => (
+  <KnowledgeHubListing
+    title="Reports"
+    subtitle="Annual, statutory and thematic reports of the Department"
+    rows={reports}
+  />
+);
+export const Publications = () => (
+  <KnowledgeHubListing
+    title="Publications"
+    subtitle="Books, manuals and field guides published by the Department"
+    rows={publications}
+  />
+);
 export const Procurements = () => <ListingPage title="Procurements & Tenders" subtitle="Active and archived tender notices" rows={procurements} type="tender" breadcrumb={["Home", "Procurements"]} />;
 
 const rfpRows = [
