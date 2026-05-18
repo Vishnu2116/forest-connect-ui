@@ -177,60 +177,6 @@ const dummyLeadershipSlots = [
   },
 ];
 
-  const [apiLeadership, setApiLeadership] = useState<any[] | null>(null);
-
-  useEffect(() => {
-    if (!USE_REAL_API) return;
-    let cancelled = false;
-    (async () => {
-      try {
-        const res = await fetch(`${API_BASE_URL}/api/home/leadership`);
-        if (!res.ok) throw new Error();
-        const data = await res.json();
-        if (!cancelled && Array.isArray(data) && data.length > 0) {
-          setApiLeadership(data);
-        }
-      } catch {
-        /* keep dummy */
-      }
-    })();
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-
-  const leadershipSlots = useMemo(() => {
-    return dummyLeadershipSlots.map((dummy) => {
-      const api = apiLeadership?.find(
-        (s) => Number(s.slot_number) === dummy.slot_number
-      );
-      if (
-        !api ||
-        (!api.name && !api.designation && !api.organisation && !api.photo_path)
-      ) {
-        return {
-          name: dummy.name,
-          designation: dummy.designation,
-          desc: dummy.organisation,
-          image: dummy.image,
-        };
-      }
-      const photo = api.photo_path
-        ? api.photo_path.startsWith("http")
-          ? api.photo_path
-          : `${API_BASE_URL ?? ""}${api.photo_path}`
-        : "";
-      return {
-        name: api.name || dummy.name,
-        designation: api.designation || dummy.designation,
-        desc: api.organisation || dummy.organisation,
-        image: photo,
-      };
-    });
-  }, [apiLeadership]);
-
-  const leftDignitaries = [leadershipSlots[0], leadershipSlots[1]];
-  const rightDignitaries = [leadershipSlots[2], leadershipSlots[3]];
 
 function DignitaryCard({
   d,
