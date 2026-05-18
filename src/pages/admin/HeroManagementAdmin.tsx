@@ -221,6 +221,14 @@ export default function HeroManagementAdmin() {
         </div>
       )}
 
+      {!loading && slides.length === 0 && (
+        <div className="bg-card border border-dashed border-border rounded-md p-10 text-center">
+          <ImageIcon className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
+          <p className="text-sm text-muted-foreground mb-3">No hero slides yet.</p>
+          <Button onClick={addSlide} className="gap-1.5"><Plus className="h-4 w-4" /> Add Slide</Button>
+        </div>
+      )}
+
       <div className="space-y-4">
         {slides.map((slide, index) => (
           <div key={slide.id} className="bg-card border border-border rounded-md overflow-hidden">
