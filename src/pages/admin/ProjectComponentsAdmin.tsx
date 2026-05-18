@@ -6,7 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Loader2, Plus, Pencil, Trash2, Save, X } from "lucide-react";
 import { toast } from "sonner";
 import { API_BASE_URL, USE_REAL_API } from "@/config/api";
-import { authHeaders, fetchComponents, type ApiProjectComponent } from "@/lib/projects";
+import { authHeaders, fetchComponentsAdmin, type ApiProjectComponent } from "@/lib/projects";
 
 interface FormState {
   id: string | null;
@@ -45,9 +45,13 @@ export default function ProjectComponentsAdmin() {
   const [saving, setSaving] = useState(false);
 
   const load = async () => {
+    if (!USE_REAL_API) { setItems([]); return; }
     setLoading(true);
     try {
-      setItems(await fetchComponents());
+      setItems(await fetchComponentsAdmin());
+    } catch (e: any) {
+      toast.error(`Failed to load components: ${e?.message || "request failed"}`);
+      setItems([]);
     } finally {
       setLoading(false);
     }

@@ -70,10 +70,13 @@ export interface ApiProjectDetail extends ApiProjectCard {
 export function resolveImage(path?: string | null): string | null {
   if (!path) return null;
   if (path.startsWith("http") || path.startsWith("data:") || path.startsWith("blob:")) return path;
-  if (path.startsWith("/")) return `${API_BASE_URL ?? ""}${path}`;
+  // Only prefix backend upload paths with API_BASE_URL.
+  if (path.startsWith("/uploads/")) return `${API_BASE_URL ?? ""}${path}`;
+  // Local Vite-imported assets or other absolute paths — return as-is.
   return path;
 }
 
+// Read token fresh on every call. Never cache.
 export function authHeaders(): HeadersInit {
   const token = localStorage.getItem("element_admin_token");
   return token ? { Authorization: `Bearer ${token}` } : {};
@@ -248,7 +251,9 @@ export async function fetchProject(slug: string): Promise<ApiProjectDetail | nul
   try {
     const r = await fetch(`${API_BASE_URL}/api/projects/${slug}`);
     if (!r.ok) throw new Error();
-    return await r.json();
+    const data = await r.json();
+    if (!data || !data.id) return dummyProjectDetail(slug);
+    return data;
   } catch {
     return dummyProjectDetail(slug);
   }
@@ -265,4 +270,25 @@ export async function fetchHighlights(): Promise<ApiProjectCard[]> {
   } catch {
     return dummyProjects().slice(0, 5);
   }
+}
+
+/* ---------- Admin fetchers (no dummy fallback, always real API) ---------- */
+export async function fetchProjectsAdmin(): Promise<ApiProjectCard[]> {
+  const r = await fetch(`${API_BASE_URL}/api/projects`, { headers: authHeaders() });
+  if (!r.ok) throw new Error(`HTTP ${r.status}`);
+  const data = await r.json();
+  return Array.isArray(data) ? data : [];
+}
+
+export async function fetchProjectAdmin(slug: string): Promise<ApiProjectDetail | null> {
+  const r = await fetch(`${API_BASE_URL}/api/projects/${slug}`, { headers: authHeaders() });
+  if (!r.ok) throw new Error(`HTTP ${r.status}`);
+  return await r.json();
+}
+
+export async function fetchComponentsAdmin(): Promise<ApiProjectComponent[]> {
+  const r = await fetch(`${API_BASE_URL}/api/project-components`, { headers: authHeaders() });
+  if (!r.ok) throw new Error(`HTTP ${r.status}`);
+  const data = await r.json();
+  return Array.isArray(data) ? data : [];
 }
