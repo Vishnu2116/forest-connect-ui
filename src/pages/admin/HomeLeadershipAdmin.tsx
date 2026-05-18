@@ -16,10 +16,6 @@ interface Slot {
   photoPreview?: string;
 }
 
-function getAuthHeaders(): HeadersInit {
-  const token = localStorage.getItem("element_admin_token");
-  return token ? { Authorization: `Bearer ${token}` } : {};
-}
 
 function emptySlots(): Slot[] {
   return [1, 2, 3, 4].map((n) => ({
