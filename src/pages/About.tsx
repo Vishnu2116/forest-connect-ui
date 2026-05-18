@@ -895,6 +895,31 @@ const directoryCategories = [
       },
     ],
   },
+  {
+    title: "ISO — Implementation Support Organization",
+    entries: [
+      { name: "Dr. A. K. Singh, IFS", designation: "ISO Team Leader", division: "ISO Cell, Aranya Bhawan, Agartala", phone: "0381-2416000", email: "iso.element@gov.in", mobile: "9000000001" },
+      { name: "Ms. Priya Nath", designation: "Sr. Specialist — Capacity Building", division: "ISO Cell, Aranya Bhawan, Agartala", phone: "", email: "priya.iso@gov.in", mobile: "9000000002" },
+      { name: "Shri Ratan Debbarma", designation: "Specialist — Community Mobilisation", division: "ISO Cell, Aranya Bhawan, Agartala", phone: "", email: "ratan.iso@gov.in", mobile: "9000000003" },
+    ],
+  },
+  {
+    title: "PMU — Project Management Unit",
+    entries: [
+      { name: "Shri R. K. Sharma, IFS", designation: "Project Manager (PMU)", division: "PMU, Aranya Bhawan, Agartala", phone: "0381-2416010", email: "pmu.element@gov.in", mobile: "9000000010" },
+      { name: "Ms. Anjali Roy", designation: "Procurement Specialist", division: "PMU, Aranya Bhawan, Agartala", phone: "", email: "procurement.pmu@gov.in", mobile: "9000000011" },
+      { name: "Shri D. Chakraborty", designation: "Finance Specialist", division: "PMU, Aranya Bhawan, Agartala", phone: "", email: "finance.pmu@gov.in", mobile: "9000000012" },
+      { name: "Ms. S. Reang", designation: "M&E Specialist", division: "PMU, Aranya Bhawan, Agartala", phone: "", email: "me.pmu@gov.in", mobile: "9000000013" },
+    ],
+  },
+  {
+    title: "PMC — Project Management Consultant",
+    entries: [
+      { name: "Shri Vivek Menon", designation: "Team Leader (PMC)", division: "PMC Office, Agartala", phone: "", email: "tl.pmc@element.gov.in", mobile: "9000000020" },
+      { name: "Ms. Kavita Iyer", designation: "Sr. Landscape Specialist", division: "PMC Office, Agartala", phone: "", email: "landscape.pmc@element.gov.in", mobile: "9000000021" },
+      { name: "Shri Amit Saha", designation: "GIS / MIS Specialist", division: "PMC Office, Agartala", phone: "", email: "gis.pmc@element.gov.in", mobile: "9000000022" },
+    ],
+  },
 ];
 
 export function OfficialDirectory() {
