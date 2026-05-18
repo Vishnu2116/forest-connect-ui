@@ -38,10 +38,6 @@ const dummySlides: Slide[] = [
   { id: 5, title: "Natural Resource Management", subtitle: "Promoting soil conservation and community-led environmental restoration.", badge: "Government of Tripura", cta1Label: "Explore Projects", cta1Link: "/projects", cta2Label: "Knowledge Hub", cta2Link: "/knowledge-hub/iec", image: "hero-nrm.jpg" },
 ];
 
-function getAuthHeaders(): HeadersInit {
-  const token = localStorage.getItem("element_admin_token");
-  return token ? { Authorization: `Bearer ${token}` } : {};
-}
 
 function mapApiToSlide(s: any): Slide {
   return {
