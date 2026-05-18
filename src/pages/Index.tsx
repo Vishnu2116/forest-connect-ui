@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { API_BASE_URL, USE_REAL_API } from "@/config/api";
 import {
   Calendar,
   ArrowRight,
@@ -145,35 +146,37 @@ const pillars = [
   },
 ];
 
-const leftDignitaries = [
+const dummyLeadershipSlots = [
   {
+    slot_number: 1,
     name: "Shri Manik Saha",
     designation: "Hon'ble Chief Minister",
-    desc: "Government of Tripura",
+    organisation: "Government of Tripura",
     image: cmImage,
   },
   {
+    slot_number: 2,
     name: "Shri Animesh Debbarma",
     designation: "Forest & Environment Minister",
-    desc: "Government of Tripura",
+    organisation: "Government of Tripura",
     image: Animesh,
   },
-];
-
-const rightDignitaries = [
   {
+    slot_number: 3,
     name: "Shri Rabindra Kumar Samal, IFS",
     designation: "PCCF HOFF SFDA Chair Person",
-    desc: "Tripura Forest Department",
+    organisation: "Tripura Forest Department",
     image: PCCF,
   },
   {
+    slot_number: 4,
     name: "Shri Chaitanya Murti, IFS",
     designation: "PCCF CEO / PD",
-    desc: "PROJECT ELEMENT",
+    organisation: "PROJECT ELEMENT",
     image: "",
   },
 ];
+
 
 function DignitaryCard({
   d,
@@ -543,6 +546,61 @@ export default function Home() {
   const [updatesTab, setUpdatesTab] = useState<
     "whatsnew" | "notifications" | "tenders"
   >("whatsnew");
+
+  const [apiLeadership, setApiLeadership] = useState<any[] | null>(null);
+
+  useEffect(() => {
+    if (!USE_REAL_API) return;
+    let cancelled = false;
+    (async () => {
+      try {
+        const res = await fetch(`${API_BASE_URL}/api/home/leadership`);
+        if (!res.ok) throw new Error();
+        const data = await res.json();
+        if (!cancelled && Array.isArray(data) && data.length > 0) {
+          setApiLeadership(data);
+        }
+      } catch {
+        /* keep dummy */
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const leadershipSlots = useMemo(() => {
+    return dummyLeadershipSlots.map((dummy) => {
+      const api = apiLeadership?.find(
+        (s) => Number(s.slot_number) === dummy.slot_number
+      );
+      if (
+        !api ||
+        (!api.name && !api.designation && !api.organisation && !api.photo_path)
+      ) {
+        return {
+          name: dummy.name,
+          designation: dummy.designation,
+          desc: dummy.organisation,
+          image: dummy.image,
+        };
+      }
+      const photo = api.photo_path
+        ? api.photo_path.startsWith("http")
+          ? api.photo_path
+          : `${API_BASE_URL ?? ""}${api.photo_path}`
+        : "";
+      return {
+        name: api.name || dummy.name,
+        designation: api.designation || dummy.designation,
+        desc: api.organisation || dummy.organisation,
+        image: photo,
+      };
+    });
+  }, [apiLeadership]);
+
+  const leftDignitaries = [leadershipSlots[0], leadershipSlots[1]];
+  const rightDignitaries = [leadershipSlots[2], leadershipSlots[3]];
 
   return (
     <PageLayout>

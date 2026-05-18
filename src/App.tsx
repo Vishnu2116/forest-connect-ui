@@ -35,6 +35,7 @@ import { GrievanceAdmin, RTIAdmin } from "./pages/admin/StatusModules";
 import { UsersAdmin } from "./pages/admin/UsersAdmin";
 import SettingsAdmin from "./pages/admin/SettingsAdmin";
 import HeroManagementAdmin from "./pages/admin/HeroManagementAdmin";
+import HomeLeadershipAdmin from "./pages/admin/HomeLeadershipAdmin";
 import Accessibility from "./pages/Accessibility";
 import ScreenReader from "./pages/ScreenReader";
 import Help from "./pages/Help";
@@ -121,6 +122,7 @@ const App = () => (
             <Route path="projects" element={<ProjectsAdmin />} />
             <Route path="plantation" element={<PlantationAdmin />} />
             <Route path="hero" element={<HeroManagementAdmin />} />
+            <Route path="home-leadership" element={<HomeLeadershipAdmin />} />
             
             <Route path="grievance" element={<GrievanceAdmin />} />
             <Route path="rti" element={<RTIAdmin />} />
