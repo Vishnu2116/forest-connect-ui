@@ -459,12 +459,23 @@ function UpdatesPanel({
  */
 function ProjectHighlightsColumn() {
   const [paused, setPaused] = useState(false);
+  const [items, setItems] = useState<any[]>([]);
   const { ref, scrollByAmount } = useAutoScroll<HTMLDivElement>(
     AUTO_SCROLL_SPEED_PROJECTS,
     paused,
   );
-  // Duplicate items so the scroll wrap is seamless.
-  const items = [...projects, ...projects];
+
+  useEffect(() => {
+    let alive = true;
+    import("@/lib/projects").then(({ fetchHighlights }) => {
+      fetchHighlights().then((data) => {
+        if (alive) setItems(data);
+      });
+    });
+    return () => { alive = false; };
+  }, []);
+
+  const looped = [...items, ...items];
 
   return (
     <div className="bg-card border border-border rounded-md p-0 flex flex-col h-[28rem] lg:h-full overflow-hidden">
@@ -485,52 +496,62 @@ function ProjectHighlightsColumn() {
         onPointerLeave={(e) => { if (e.pointerType === "mouse") setPaused(false); }}
         className="flex-1 overflow-y-auto divide-y divide-border min-h-0 no-scrollbar"
       >
-        {items.map((p, idx) => (
-          <article
-            key={`${p.title}-${idx}`}
-            className="flex gap-3 p-4 hover:bg-surface/60 transition"
-          >
-            <div className="h-20 w-24 shrink-0 bg-gradient-to-br from-primary/20 to-primary-light/20 rounded-sm overflow-hidden flex items-center justify-center">
-              {p.image ? (
-                <img
-                  src={p.image}
-                  alt={p.title}
-                  className="w-full h-full object-cover"
-                />
-              ) : (
-                <Trees className="h-6 w-6 text-primary/40" />
-              )}
-            </div>
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-1.5 mb-1 flex-wrap">
-                {p.component && (
-                  <span className="text-[11px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-accent/15 text-accent">
-                    {p.component}
-                  </span>
+        {looped.map((p, idx) => {
+          const img = p.thumbnail_image_path
+            ? (p.thumbnail_image_path.startsWith("http") || p.thumbnail_image_path.startsWith("data:")
+                ? p.thumbnail_image_path
+                : `${API_BASE_URL ?? ""}${p.thumbnail_image_path}`)
+            : null;
+          const statusCls =
+            p.status === "completed" ? "bg-muted text-muted-foreground"
+            : p.status === "pilot_phase" ? "bg-warning/15 text-warning"
+            : "bg-success/15 text-success";
+          const statusText =
+            p.status === "completed" ? "Completed"
+            : p.status === "pilot_phase" ? "Pilot Phase"
+            : "Ongoing";
+          return (
+            <article
+              key={`${p.id}-${idx}`}
+              className="flex gap-3 p-4 hover:bg-surface/60 transition"
+            >
+              <div className="h-20 w-24 shrink-0 bg-gradient-to-br from-primary/20 to-primary-light/20 rounded-sm overflow-hidden flex items-center justify-center">
+                {img ? (
+                  <img src={img} alt={p.title} className="w-full h-full object-cover" />
+                ) : (
+                  <Trees className="h-6 w-6 text-primary/40" />
                 )}
-                <span className="text-[11px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-success/15 text-success">
-                  {p.status}
-                </span>
               </div>
-              <h3 className="text-base font-semibold text-foreground leading-snug mb-1">
-                {p.title}
-              </h3>
-              {p.objective && (
-                <p className="text-sm text-muted-foreground line-clamp-1 mb-1">
-                  {p.objective}
-                </p>
-              )}
-              <Link
-                to={`/projects/${slugify(p.title)}`}
-                className="inline-flex items-center gap-1 text-sm font-semibold text-accent hover:text-accent-hover"
-              >
-                Read More <ArrowRight className="h-3.5 w-3.5" />
-              </Link>
-            </div>
-          </article>
-        ))}
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-1.5 mb-1 flex-wrap">
+                  {p.component?.label && (
+                    <span className="text-[11px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-accent/15 text-accent">
+                      {p.component.label}
+                    </span>
+                  )}
+                  <span className={`text-[11px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm ${statusCls}`}>
+                    {statusText}
+                  </span>
+                </div>
+                <h3 className="text-base font-semibold text-foreground leading-snug mb-1">
+                  {p.title}
+                </h3>
+                {p.subtitle && (
+                  <p className="text-sm text-muted-foreground line-clamp-1 mb-1">
+                    {p.subtitle}
+                  </p>
+                )}
+                <Link
+                  to={`/projects/${p.slug}`}
+                  className="inline-flex items-center gap-1 text-sm font-semibold text-accent hover:text-accent-hover"
+                >
+                  Read More <ArrowRight className="h-3.5 w-3.5" />
+                </Link>
+              </div>
+            </article>
+          );
+        })}
       </div>
-      {/* Manual up/down scroll controls — bottom-right of column. */}
       <div className="px-3 py-2 border-t border-border bg-surface flex items-center justify-end">
         <ScrollArrows
           onUp={() => scrollByAmount(-MANUAL_STEP_PX)}
