@@ -256,35 +256,107 @@ export function AboutElement() {
         </div>
 
         {/* Stakeholders */}
-        <div>
-          <h3 className="text-lg font-bold text-primary mb-3">
+        <div className="bg-card border border-border rounded-xl p-6 md:p-8 shadow-card">
+          <h3 className="text-xl md:text-2xl font-bold text-primary mb-3">
             Stakeholders of PROJECT ELEMENT
           </h3>
-          <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
+          <p className="text-sm md:text-[15px] text-muted-foreground mb-5 leading-relaxed">
             PROJECT ELEMENT is implemented through a strong partnership of
             government, development partners, technical institutions and
             community organisations — each playing a defined role in landscape
             restoration, livelihood transformation and inclusive growth.
           </p>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
-            {stakeholders.map((s) => (
-              <div
-                key={s.title}
-                className="bg-card border border-border rounded-lg p-4 hover:shadow-sm hover:border-primary/30 transition"
-              >
-                <div className="flex items-center gap-2 mb-1.5">
-                  <div className="h-8 w-8 rounded-md bg-primary/10 flex items-center justify-center shrink-0">
-                    <s.icon className="h-4 w-4 text-primary" />
-                  </div>
-                  <h4 className="text-sm font-bold text-foreground leading-tight">
-                    {s.title}
-                  </h4>
-                </div>
-                <p className="text-xs text-muted-foreground leading-relaxed">
-                  {s.desc}
-                </p>
-              </div>
-            ))}
+
+          <div className="space-y-5 text-sm md:text-[15px] text-foreground leading-relaxed">
+            <div>
+              <h4 className="font-semibold text-primary mb-1">
+                Government of Tripura
+              </h4>
+              <p className="text-muted-foreground">
+                Provides overall policy direction, governance, counterpart
+                funding, and inter-departmental coordination across all 8
+                districts of the State.
+              </p>
+            </div>
+
+            <div>
+              <h4 className="font-semibold text-primary mb-1">
+                The World Bank
+              </h4>
+              <p className="text-muted-foreground">
+                Lead development partner providing financial support, technical
+                assistance, global expertise, and result-based monitoring
+                frameworks for the project.
+              </p>
+            </div>
+
+            <div>
+              <h4 className="font-semibold text-primary mb-1">
+                Tripura Forest Department
+              </h4>
+              <p className="text-muted-foreground">
+                Nodal implementing department responsible for landscape
+                restoration, biodiversity conservation, and on-ground project
+                delivery across the State.
+              </p>
+            </div>
+
+            <div>
+              <h4 className="font-semibold text-primary mb-1">
+                State Forest Development Agency (SFDA)
+              </h4>
+              <p className="text-muted-foreground">
+                Apex implementing society channelling project funds, monitoring
+                implementation, and providing administrative oversight.
+              </p>
+            </div>
+
+            <div>
+              <h4 className="font-semibold text-primary mb-1">
+                Project Management Unit (PMU)
+              </h4>
+              <p className="text-muted-foreground">
+                Central unit handling day-to-day project management, procurement,
+                finance, M&amp;E, MIS/GIS, and coordination with field units.
+              </p>
+            </div>
+
+            <div>
+              <h4 className="font-semibold text-primary mb-1">
+                Community Institutions
+              </h4>
+              <p className="text-muted-foreground mb-2">
+                Grassroots partners driving local-level planning and
+                implementation:
+              </p>
+              <ul className="list-disc pl-5 space-y-1 text-muted-foreground">
+                <li>Joint Forest Management Committees (JFMCs)</li>
+                <li>Self-Help Groups (SHGs)</li>
+                <li>Village-Level Committees (VLCs)</li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="font-semibold text-primary mb-1">
+                Farmers, Producers &amp; Local Enterprises
+              </h4>
+              <p className="text-muted-foreground">
+                Primary beneficiaries engaged in bamboo, agar, broom-grass and
+                NTFP value chains, eco-tourism initiatives, and producer
+                collectives.
+              </p>
+            </div>
+
+            <div>
+              <h4 className="font-semibold text-primary mb-1">
+                Knowledge &amp; Technical Partners
+              </h4>
+              <p className="text-muted-foreground">
+                Research institutions, technical agencies, and NGOs supporting
+                capacity building, training programmes, IEC initiatives, and
+                thematic studies.
+              </p>
+            </div>
           </div>
         </div>
       </div>
