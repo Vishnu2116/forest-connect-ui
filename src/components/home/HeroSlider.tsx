@@ -113,6 +113,12 @@ export default function HeroSlider() {
     const t = setInterval(() => setI((p) => (p + 1) % slides.length), 6000);
     return () => clearInterval(t);
   }, [slides.length]);
+
+  // Clamp index whenever the slide set shrinks (e.g. API returns fewer than dummy).
+  useEffect(() => {
+    if (slides.length > 0 && i >= slides.length) setI(0);
+  }, [slides.length, i]);
+
   const next = () => setI((p) => (p + 1) % slides.length);
   const prev = () => setI((p) => (p - 1 + slides.length) % slides.length);
 
