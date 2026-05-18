@@ -158,8 +158,14 @@ export default function HeroManagementAdmin() {
 
   const onImagePicked = (index: number, file: File | null) => {
     if (!file) return;
-    updateField(index, "imageFile", file);
-    updateField(index, "image", file.name);
+    const newSlides = [...slides];
+    newSlides[index] = {
+      ...newSlides[index],
+      imageFile: file,
+      imagePreview: URL.createObjectURL(file),
+      image: newSlides[index].image || file.name,
+    };
+    setSlides(newSlides);
   };
 
   const saveAll = async () => {
