@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { fetchGrouped, resolvePhoto, type OfficialCategoryGroup, type ApiOfficial } from "@/lib/officials";
 import PageLayout, { PageHeader } from "@/components/layout/PageLayout";
 import {
   Phone,
