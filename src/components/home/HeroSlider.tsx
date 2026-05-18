@@ -92,7 +92,10 @@ export default function HeroSlider() {
               cta1: { label: s.cta1_label ?? "", to: s.cta1_link ?? "#" },
               cta2: { label: s.cta2_label ?? "", to: s.cta2_link ?? "#" },
             }));
-          if (mapped.length > 0) setSlides(mapped);
+          if (mapped.length > 0) {
+            setSlides(mapped);
+            setI(0); // reset to first slide so the index can't point past the new array
+          }
         }
       } catch {
         // keep dummy data
@@ -110,6 +113,12 @@ export default function HeroSlider() {
     const t = setInterval(() => setI((p) => (p + 1) % slides.length), 6000);
     return () => clearInterval(t);
   }, [slides.length]);
+
+  // Clamp index whenever the slide set shrinks (e.g. API returns fewer than dummy).
+  useEffect(() => {
+    if (slides.length > 0 && i >= slides.length) setI(0);
+  }, [slides.length, i]);
+
   const next = () => setI((p) => (p + 1) % slides.length);
   const prev = () => setI((p) => (p - 1 + slides.length) % slides.length);
 
