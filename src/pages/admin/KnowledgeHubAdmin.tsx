@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { fetchAdmin, AdminApiError, API_BASE_URL, adminAuth } from "@/lib/api";
+import { fetchAdmin, AdminApiError } from "@/lib/api";
 import { AdminPageHeader } from "./AdminLayout";
 
 type Category = {
