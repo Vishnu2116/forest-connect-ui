@@ -3,8 +3,9 @@ import KnowledgeHubLayout from "@/components/layout/KnowledgeHubLayout";
 import { DataTable, Pagination } from "@/components/common/DataTable";
 import { Download, Eye, Trash2, Pencil, Upload } from "lucide-react";
 import { reports, publications, procurements } from "@/data/content";
+import { useKnowledgeHubItems, KHItem } from "@/hooks/useKnowledgeHub";
 
-type Row = { title: string; date: string; size?: string; type?: string; deadline?: string; status?: string };
+type Row = { title: string; date: string; size?: string; type?: string; deadline?: string; status?: string; href?: string };
 
 export function ListingPage({
   title,
@@ -146,8 +147,17 @@ function KnowledgeHubListing({
               </td>
               <td>
                 <div className="flex gap-2">
-                  <button className="p-1.5 text-primary hover:bg-primary/10 rounded" aria-label={`View ${r.title}`}><Eye className="h-4 w-4" /></button>
-                  <button className="p-1.5 text-accent hover:bg-accent/10 rounded" aria-label={`Download ${r.title}`}><Download className="h-4 w-4" /></button>
+                  {r.href ? (
+                    <>
+                      <a href={r.href} target="_blank" rel="noopener noreferrer" className="p-1.5 text-primary hover:bg-primary/10 rounded" aria-label={`View ${r.title}`}><Eye className="h-4 w-4" /></a>
+                      <a href={r.href} target="_blank" rel="noopener noreferrer" className="p-1.5 text-accent hover:bg-accent/10 rounded" aria-label={`Download ${r.title}`}><Download className="h-4 w-4" /></a>
+                    </>
+                  ) : (
+                    <>
+                      <button className="p-1.5 text-primary hover:bg-primary/10 rounded" aria-label={`View ${r.title}`}><Eye className="h-4 w-4" /></button>
+                      <button className="p-1.5 text-accent hover:bg-accent/10 rounded" aria-label={`Download ${r.title}`}><Download className="h-4 w-4" /></button>
+                    </>
+                  )}
                 </div>
               </td>
             </tr>
@@ -159,20 +169,48 @@ function KnowledgeHubListing({
   );
 }
 
-export const Reports = () => (
-  <KnowledgeHubListing
-    title="Reports"
-    subtitle="Annual, statutory and thematic reports of the Department"
-    rows={reports}
-  />
-);
-export const Publications = () => (
-  <KnowledgeHubListing
-    title="Publications"
-    subtitle="Books, manuals and field guides published by the Department"
-    rows={publications}
-  />
-);
+function khItemsToRows(items: KHItem[]): Row[] {
+  return items.map((i) => ({
+    title: i.title,
+    date: i.publish_date
+      ? new Date(i.publish_date).toLocaleDateString(undefined, { day: "2-digit", month: "short", year: "numeric" })
+      : "",
+    size: i.file_size ? formatSize(i.file_size) : undefined,
+    type: i.file_format || "PDF",
+    href: i.file_url || i.external_url || undefined,
+  }));
+}
+
+function formatSize(bytes: string | number): string {
+  const n = typeof bytes === "string" ? Number(bytes) : bytes;
+  if (!n || Number.isNaN(n)) return String(bytes);
+  if (n < 1024) return `${n} B`;
+  if (n < 1024 * 1024) return `${(n / 1024).toFixed(1)} KB`;
+  return `${(n / (1024 * 1024)).toFixed(1)} MB`;
+}
+
+export const Reports = () => {
+  const { data } = useKnowledgeHubItems("Reports", []);
+  const rows = data.items.length > 0 ? khItemsToRows(data.items) : reports;
+  return (
+    <KnowledgeHubListing
+      title="Reports"
+      subtitle="Annual, statutory and thematic reports of the Department"
+      rows={rows}
+    />
+  );
+};
+export const Publications = () => {
+  const { data } = useKnowledgeHubItems("Publications", []);
+  const rows = data.items.length > 0 ? khItemsToRows(data.items) : publications;
+  return (
+    <KnowledgeHubListing
+      title="Publications"
+      subtitle="Books, manuals and field guides published by the Department"
+      rows={rows}
+    />
+  );
+};
 export const Procurements = () => <ListingPage title="Procurements & Tenders" subtitle="Active and archived tender notices" rows={procurements} type="tender" breadcrumb={["Home", "Procurements"]} />;
 
 const rfpRows = [
