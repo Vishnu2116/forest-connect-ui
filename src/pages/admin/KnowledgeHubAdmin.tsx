@@ -41,8 +41,15 @@ function emptyForm(): FormState {
 }
 
 export default function KnowledgeHubAdmin() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const urlType = searchParams.get("type") as KHType | null;
   const [items, setItems] = useState<ApiKHItem[]>([]);
-  const [typeFilter, setTypeFilter] = useState<KHType | "all">("all");
+  const [typeFilter, setTypeFilter] = useState<KHType | "all">(urlType || "all");
+
+  useEffect(() => {
+    setTypeFilter(urlType || "all");
+  }, [urlType]);
+
   const [loading, setLoading] = useState(false);
   const [editing, setEditing] = useState<FormState | null>(null);
   const [saving, setSaving] = useState(false);
