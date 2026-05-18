@@ -3,8 +3,9 @@ import KnowledgeHubLayout from "@/components/layout/KnowledgeHubLayout";
 import { DataTable, Pagination } from "@/components/common/DataTable";
 import { Download, Eye, Trash2, Pencil, Upload } from "lucide-react";
 import { reports, publications, procurements } from "@/data/content";
+import { useKnowledgeHubItems, KHItem } from "@/hooks/useKnowledgeHub";
 
-type Row = { title: string; date: string; size?: string; type?: string; deadline?: string; status?: string };
+type Row = { title: string; date: string; size?: string; type?: string; deadline?: string; status?: string; href?: string };
 
 export function ListingPage({
   title,
