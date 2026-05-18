@@ -52,7 +52,7 @@ const translations: Record<Lang, Dict> = {
     "home.stats.community": "Community Members",
     "home.stats.restoration": "Hectares Restored",
     "projects.title": "Projects",
-    "projects.subtitle": "Initiatives under the ELEMENT programme — a joint effort of the Government of Tripura and The World Bank.",
+    "projects.subtitle": "Initiatives under the PROJECT ELEMENT — a joint effort of the Government of Tripura and The World Bank.",
     "projects.objective": "Objective",
     "projects.activities": "Key Activities",
     "projects.beneficiaries": "Target Beneficiaries",
