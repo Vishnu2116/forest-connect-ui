@@ -240,17 +240,28 @@ export async function fetchProjects(): Promise<ApiProjectCard[]> {
   }
 }
 
+function dummyProjectFallback(slug: string): ApiProjectDetail | null {
+  return dummyProjectDetail(slug) || dummyProjectDetail(dummyProjects()[0]?.slug || "");
+}
+
 export async function fetchProject(slug: string): Promise<ApiProjectDetail | null> {
-  if (!USE_REAL_API) return dummyProjectDetail(slug);
+  if (!USE_REAL_API) return dummyProjectFallback(slug);
   try {
     const r = await fetch(`${API_BASE_URL}/api/projects/${slug}`);
     if (!r.ok) throw new Error();
     const data = await r.json();
-    if (!data || !data.id) return dummyProjectDetail(slug);
+    if (!data || !data.id) return dummyProjectFallback(slug);
     return data;
   } catch {
-    return dummyProjectDetail(slug);
+    return dummyProjectFallback(slug);
   }
+}
+
+/* ---------- Cached nav components fetch (one-shot) ---------- */
+let _navComponentsPromise: Promise<ApiProjectComponent[]> | null = null;
+export function getNavComponentsOnce(): Promise<ApiProjectComponent[]> {
+  if (!_navComponentsPromise) _navComponentsPromise = fetchComponents();
+  return _navComponentsPromise;
 }
 
 export async function fetchHighlights(): Promise<ApiProjectCard[]> {
