@@ -332,7 +332,7 @@ function UpdatesPanel({
       >
         <div className="flex flex-col">
           {updatesTab === "whatsnew" && apiWhatsNew.length > 0 &&
-            [...apiWhatsNew, ...apiWhatsNew].map(renderApiItem)}
+            apiWhatsNew.map(renderApiItem)}
           {updatesTab === "whatsnew" && apiWhatsNew.length === 0 &&
             [...announcements, ...announcements].map((a, idx) => {
               const Icon = getUpdateIcon(a.tag);
