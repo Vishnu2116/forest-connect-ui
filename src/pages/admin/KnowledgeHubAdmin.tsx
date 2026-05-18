@@ -243,14 +243,10 @@ function Editor({
                 {KH_TYPES.map((t) => <option key={t.value} value={t.value}>{t.label}</option>)}
               </select>
             </Field>
-            <Field label="Language">
-              <Input value={form.language} onChange={(e) => set("language", e.target.value)} />
+            <Field label="Published date">
+              <Input type="date" value={form.published_date} onChange={(e) => set("published_date", e.target.value)} />
             </Field>
           </div>
-
-          <Field label="Published date">
-            <Input type="date" value={form.published_date} onChange={(e) => set("published_date", e.target.value)} />
-          </Field>
 
           <Field label="Description">
             <Textarea rows={3} value={form.description} onChange={(e) => set("description", e.target.value)} />
