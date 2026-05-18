@@ -245,13 +245,12 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-primary/40 bg-primary">
-        <div className="gov-container py-4 text-xs opacity-90 flex flex-col md:flex-row items-center justify-between gap-2 text-center md:text-left">
-          <div>
+        <div className="gov-container py-4 px-4 sm:px-6 lg:px-10 text-xs opacity-90 flex flex-col md:flex-row items-center justify-between gap-2 text-center md:text-left">
+          <div className="md:text-left">
             © 2026 ELEMENT – Government of Tripura &amp; The World Bank. All
             rights reserved.
           </div>
-          <div>{t("footer.lastUpdated")}: 11 May 2026</div>
-          <div>{t("footer.designed")}</div>
+          <div className="md:text-right">{t("footer.designed")}</div>
         </div>
       </div>
     </footer>

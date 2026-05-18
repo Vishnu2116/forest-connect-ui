@@ -7,7 +7,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import Index from "./pages/Index.tsx";
 import NotFound from "./pages/NotFound.tsx";
-import { AboutElement, Organization, WhosWhoSection, Vision, Mission, Memorandum, OfficialDirectory } from "./pages/About";
+import { AboutElement, Organization, WhosWhoSection, VisionMission, Memorandum, OfficialDirectory } from "./pages/About";
 import Projects from "./pages/Projects";
 import ProjectDetail from "./pages/ProjectDetail";
 import { Reports, Publications, Procurements, RFPs, Tenders } from "./pages/Listings";
@@ -62,8 +62,9 @@ const App = () => (
           <Route path="/about" element={<AboutElement />} />
           <Route path="/about/organization" element={<Organization />} />
           <Route path="/about/whos-who" element={<WhosWhoSection />} />
-          <Route path="/about/vision" element={<Vision />} />
-          <Route path="/about/mission" element={<Mission />} />
+          <Route path="/about/vision-mission" element={<VisionMission />} />
+          <Route path="/about/vision" element={<VisionMission />} />
+          <Route path="/about/mission" element={<VisionMission />} />
           <Route path="/about/memorandum" element={<Memorandum />} />
           <Route path="/about/directory" element={<OfficialDirectory />} />
           <Route path="/projects" element={<Projects />} />

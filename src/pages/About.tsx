@@ -43,13 +43,12 @@ import CS from "@/assets/dignitaries/CS.jpg";
 import SanjibDas from "@/assets/dignitaries/SanjibDas.png";
 
 const aboutLinks = [
-  { to: "/about", title: "About ELEMENT" },
+  { to: "/about", title: "About PROJECT ELEMENT" },
   { to: "/about/organization", title: "Organization Structure" },
   { to: "/about/whos-who", title: "Who's Who" },
   { to: "/about/memorandum", title: "Memorandum of Association" },
   { to: "/about/directory", title: "Official Directory" },
-  { to: "/about/vision", title: "Vision & Objective" },
-  { to: "/about/mission", title: "Mission & Objective" },
+  { to: "/about/vision-mission", title: "Vision, Mission & Objectives" },
 ];
 
 function AboutLayout({
@@ -70,8 +69,8 @@ function AboutLayout({
         breadcrumb={["Home", "About", title]}
       />
       <section className="py-10">
-        <div className="gov-container grid lg:grid-cols-4 gap-8">
-          <aside className="lg:col-span-1">
+        <div className="gov-container grid lg:grid-cols-[210px_minmax(0,1fr)] gap-6 lg:gap-8">
+          <aside>
             <h3 className="text-sm font-semibold text-primary mb-3 uppercase">
               About
             </h3>
@@ -80,7 +79,7 @@ function AboutLayout({
                 <Link
                   key={l.to}
                   to={l.to}
-                  className={`block px-3 py-2 text-sm rounded border-l-2 transition ${
+                  className={`block px-3 py-2 text-[13px] rounded border-l-2 transition ${
                     pathname === l.to
                       ? "border-accent text-primary bg-surface font-semibold"
                       : "border-transparent hover:bg-surface hover:text-primary hover:border-accent"
@@ -91,130 +90,162 @@ function AboutLayout({
               ))}
             </nav>
           </aside>
-          <div className="lg:col-span-3">{children}</div>
+          <div className="min-w-0">{children}</div>
         </div>
       </section>
     </PageLayout>
   );
 }
 
-/* ---- About ELEMENT (main intro page) ---- */
+/* ---- About PROJECT ELEMENT (main intro page) ---- */
 export function AboutElement() {
+  const stakeholders = [
+    {
+      icon: Shield,
+      title: "Government of Tripura",
+      desc: "Provides overall policy direction, governance, counterpart funding, and inter-departmental coordination across all 8 districts.",
+    },
+    {
+      icon: Globe,
+      title: "The World Bank",
+      desc: "Lead development partner — providing financial support, technical assistance, global expertise, and result-based monitoring frameworks.",
+    },
+    {
+      icon: Leaf,
+      title: "Tripura Forest Department",
+      desc: "Nodal implementing department responsible for landscape restoration, biodiversity conservation and on-ground project delivery.",
+    },
+    {
+      icon: Briefcase,
+      title: "State Forest Development Agency (SFDA)",
+      desc: "Apex implementing society channelling project funds, monitoring implementation and providing administrative oversight.",
+    },
+    {
+      icon: Compass,
+      title: "Project Management Unit (PMU)",
+      desc: "Central unit handling day-to-day project management, procurement, finance, M&E, MIS/GIS, and coordination with field units.",
+    },
+    {
+      icon: Users,
+      title: "Community Institutions (JFMCs, SHGs, VLCs)",
+      desc: "Grassroots partners — Joint Forest Management Committees, Self-Help Groups and Village-Level Committees driving local implementation.",
+    },
+    {
+      icon: Sprout,
+      title: "Farmers, Producers & Local Enterprises",
+      desc: "Primary beneficiaries engaged in bamboo, agar, broom-grass and NTFP value chains, eco-tourism and producer collectives.",
+    },
+    {
+      icon: BookOpen,
+      title: "Knowledge & Technical Partners",
+      desc: "Research institutions, technical agencies and NGOs supporting capacity building, training, IEC and thematic studies.",
+    },
+  ];
+
   return (
     <AboutLayout
-      title="About ELEMENT"
+      title="About PROJECT ELEMENT"
       subtitle="A joint initiative for landscape development, livelihood generation and economic transformation"
     >
-      <div className="space-y-8">
-        {/* Grand intro */}
-        <div className="bg-gradient-to-br from-primary/5 to-accent/5 border border-border rounded-xl p-8 shadow-card text-center">
-          <span className="inline-block bg-accent/10 text-accent text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-4">
-            About the Programme
+      <div className="space-y-10">
+        {/* What is PROJECT ELEMENT? */}
+        <div className="bg-gradient-to-br from-primary/5 to-accent/5 border border-border rounded-xl p-6 md:p-8 shadow-card text-center">
+          <span className="inline-block bg-accent/10 text-accent text-[11px] font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-3">
+            About the Project
           </span>
-          <h3 className="text-2xl md:text-3xl font-bold text-primary mb-4">
-            What is ELEMENT?
+          <h3 className="text-xl md:text-2xl font-bold text-primary mb-3">
+            What is PROJECT ELEMENT?
           </h3>
-          <p className="text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-            <strong>ELEMENT</strong> (Enhancing Landscape and Ecosystem
+          <p className="text-sm md:text-[15px] text-muted-foreground leading-relaxed max-w-2xl mx-auto">
+            <strong>PROJECT ELEMENT</strong> (Enhancing Landscape and Ecosystem
             Management) is a flagship joint initiative of the{" "}
             <strong>Government of Tripura</strong> and the{" "}
             <strong>World Bank</strong> — transforming rural livelihoods,
             strengthening economic development, and building resilient
-            landscapes across all 8 districts.
+            landscapes across all 8 districts of Tripura.
           </p>
         </div>
-        {/* Pillar cards — infographic style */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {[
-            {
-              icon: Briefcase,
-              label: "Livelihood Generation",
-              stat: "25,000+",
-              statLabel: "Households",
-              desc: "Sustainable income through bamboo, agar and broom-grass value chains.",
-              gradient: "from-primary to-primary-light",
-            },
-            {
-              icon: TrendingUp,
-              label: "Economic Transformation",
-              stat: "₹45 Cr+",
-              statLabel: "Investment",
-              desc: "Enterprise development, producer collectives and market linkages.",
-              gradient: "from-accent to-accent-hover",
-            },
-            {
-              icon: Mountain,
-              label: "Landscape Restoration",
-              stat: "18,500",
-              statLabel: "Hectares",
-              desc: "Science-based restoration of degraded lands for productivity.",
-              gradient: "from-primary to-primary-light",
-            },
-            {
-              icon: Handshake,
-              label: "Community Development",
-              stat: "12,000+",
-              statLabel: "SHG Members",
-              desc: "Empowering local communities as active partners in planning.",
-              gradient: "from-accent to-accent-hover",
-            },
-            {
-              icon: Sprout,
-              label: "Sustainable Rural Economy",
-              stat: "8",
-              statLabel: "Districts",
-              desc: "Building long-term climate-resilient and inclusive growth across Tripura.",
-              gradient: "from-primary to-primary-light",
-            },
-          ].map((p) => (
-            <div
-              key={p.label}
-              className="relative bg-card border border-border rounded-xl p-6 text-center shadow-card hover:shadow-lg transition-shadow group overflow-hidden"
-            >
-              <div
-                className={`mx-auto h-16 w-16 rounded-full bg-gradient-to-br ${p.gradient} flex items-center justify-center mb-4 shadow-md group-hover:scale-110 transition-transform`}
-              >
-                <p.icon className="h-7 w-7 text-primary-foreground" />
-              </div>
-              <div className="text-3xl font-extrabold text-primary">
-                {p.stat}
-              </div>
-              <div className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider mt-0.5">
-                {p.statLabel}
-              </div>
-              <h4 className="text-base font-bold text-foreground mt-3">
-                {p.label}
-              </h4>
-              <p className="text-xs text-muted-foreground mt-1.5 leading-relaxed">
-                {p.desc}
-              </p>
-            </div>
-          ))}
-        </div>
-        {/* Key Highlights
-        <div className="bg-surface border border-border rounded-xl p-6">
-          <h3 className="text-lg font-semibold text-primary mb-4">
-            Key Highlights
+
+        {/* About PROJECT ELEMENT */}
+        <div>
+          <h3 className="text-lg font-bold text-primary mb-3">
+            About PROJECT ELEMENT
           </h3>
-          <div className="grid sm:grid-cols-2 gap-3">
+          <div className="bg-card border border-border rounded-xl p-5 md:p-6 space-y-3 text-sm text-muted-foreground leading-relaxed">
+            <p>
+              PROJECT ELEMENT is a landscape-based development project that
+              integrates ecological restoration with sustainable livelihood
+              generation. It moves beyond traditional afforestation to focus on
+              <strong> economic transformation</strong> of rural communities
+              through high-value, climate-resilient value chains.
+            </p>
+            <p>
+              The Project operates across all 8 districts of Tripura,
+              benefitting <strong>25,000+ households</strong> through bamboo,
+              agar, broom-grass and NTFP-based value chains, eco-tourism
+              enterprises, producer collectives and community-led plantation
+              projects — implemented through a multi-tier institutional
+              framework with strong community participation.
+            </p>
+          </div>
+
+          {/* Compact stats grid */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 mt-5">
             {[
-              "Covers all 8 districts of Tripura",
-              "Benefits 25,000+ households through livelihood support",
-              "12,000+ SHG members engaged in value chain activities",
-              "Focus on economic transformation, not just afforestation",
-              "Implemented by Government of Tripura with World Bank support",
-              "Landscape-based approach integrating livelihood and restoration",
-            ].map((item) => (
+              { icon: Briefcase, stat: "25,000+", label: "Households" },
+              { icon: TrendingUp, stat: "₹45 Cr+", label: "Investment" },
+              { icon: Mountain, stat: "18,500", label: "Hectares" },
+              { icon: Handshake, stat: "12,000+", label: "SHG Members" },
+              { icon: Sprout, stat: "8", label: "Districts" },
+            ].map((p) => (
               <div
-                key={item}
-                className="flex items-start gap-2 bg-card border border-border rounded-md p-3"
+                key={p.label}
+                className="bg-card border border-border rounded-lg p-3 text-center hover:shadow-sm transition"
               >
-                <ChevronRight className="h-4 w-4 text-accent mt-0.5 shrink-0" />
-                <span className="text-sm text-muted-foreground">{item}</span>
+                <p.icon className="h-5 w-5 mx-auto text-accent" />
+                <div className="text-lg font-bold text-primary mt-1.5">
+                  {p.stat}
+                </div>
+                <div className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">
+                  {p.label}
+                </div>
               </div>
             ))}
           </div>
-        </div> */}
+        </div>
+
+        {/* Stakeholders */}
+        <div>
+          <h3 className="text-lg font-bold text-primary mb-3">
+            Stakeholders of PROJECT ELEMENT
+          </h3>
+          <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
+            PROJECT ELEMENT is implemented through a strong partnership of
+            government, development partners, technical institutions and
+            community organisations — each playing a defined role in landscape
+            restoration, livelihood transformation and inclusive growth.
+          </p>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            {stakeholders.map((s) => (
+              <div
+                key={s.title}
+                className="bg-card border border-border rounded-lg p-4 hover:shadow-sm hover:border-primary/30 transition"
+              >
+                <div className="flex items-center gap-2 mb-1.5">
+                  <div className="h-8 w-8 rounded-md bg-primary/10 flex items-center justify-center shrink-0">
+                    <s.icon className="h-4 w-4 text-primary" />
+                  </div>
+                  <h4 className="text-sm font-bold text-foreground leading-tight">
+                    {s.title}
+                  </h4>
+                </div>
+                <p className="text-xs text-muted-foreground leading-relaxed">
+                  {s.desc}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </AboutLayout>
   );
@@ -284,7 +315,7 @@ export function Organization() {
   return (
     <AboutLayout
       title="Organization Structure"
-      subtitle="Governance and implementation framework of the ELEMENT programme"
+      subtitle="Governance and implementation framework of the PROJECT ELEMENT"
     >
       <div className="space-y-8">
         {/* Header intro */}
@@ -422,7 +453,7 @@ export function WhosWhoSection() {
   return (
     <AboutLayout
       title="Who's Who"
-      subtitle="Leadership team driving the ELEMENT programme"
+      subtitle="Leadership team driving the PROJECT ELEMENT"
     >
       <div className="space-y-8">
         {/* Intro */}
@@ -431,10 +462,10 @@ export function WhosWhoSection() {
             Leadership
           </span>
           <h3 className="text-xl font-bold text-primary mb-2">
-            Programme Leadership
+            Project Leadership
           </h3>
           <p className="text-sm text-muted-foreground max-w-lg mx-auto">
-            Meet the senior officials and programme leaders steering the ELEMENT
+            Meet the senior officials and project leaders steering the ELEMENT
             initiative.
           </p>
         </div>
@@ -451,10 +482,10 @@ export function WhosWhoSection() {
           </div>
         </div> */}
 
-        {/* ELEMENT Project Leadership */}
+        {/* PROJECT ELEMENT Leadership */}
         <div>
           <h3 className="text-lg font-bold text-primary mb-4 flex items-center gap-2">
-            <Briefcase className="h-5 w-5 text-accent" /> ELEMENT Project
+            <Briefcase className="h-5 w-5 text-accent" /> PROJECT ELEMENT
             Leadership
           </h3>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -558,111 +589,78 @@ export function WhosWhoSection() {
   );
 }
 
-/* ---- Vision ---- */
-export function Vision() {
+/* ---- Vision, Mission & Objectives (merged) ---- */
+export function VisionMission() {
+  const objectives = [
+    "Generate sustainable livelihoods through high-value, climate-resilient value chains.",
+    "Strengthen community-based institutions (JFMCs, SHGs, VLCs) and local governance.",
+    "Restore degraded landscapes for long-term ecological and economic productivity.",
+    "Build climate resilience through adaptive land and water management.",
+    "Improve market access, enterprise opportunities and producer collectives.",
+    "Adopt GIS, drones and digital MIS for transparent monitoring and decision-making.",
+  ];
+  const missionPillars = [
+    { title: "Livelihoods", desc: "Sustainable income for 25,000+ households through high-value product chains." },
+    { title: "Landscape Restoration", desc: "Restore degraded lands for productive use and ecological balance." },
+    { title: "Community Empowerment", desc: "Strengthen JFMCs, SHGs and village committees across all districts." },
+    { title: "Innovation & Technology", desc: "Adopt GIS, drones and digital monitoring for transparent implementation." },
+  ];
   return (
     <AboutLayout
-      title="Vision & Objective"
-      subtitle="Building a prosperous, resilient and inclusive Tripura"
+      title="Vision, Mission & Objectives"
+      subtitle="The strategic direction and action-oriented commitments of PROJECT ELEMENT"
     >
       <div className="space-y-8">
-        {/* Vision statement */}
-        <div className="bg-card border border-border rounded-xl p-6 shadow-card">
-          <span className="inline-block bg-accent/10 text-accent text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-3">
-            Our Vision
-          </span>
-          <p className="text-base text-foreground leading-relaxed font-medium">
-            To transform rural livelihoods and strengthen economic development
-            across Tripura through sustainable landscape management,
-            community-driven value chains, and inclusive growth — ensuring
-            prosperity for present and future generations.
-          </p>
+        <div className="grid md:grid-cols-2 gap-4">
+          <div className="bg-card border border-border rounded-xl p-5 md:p-6 shadow-card">
+            <div className="flex items-center gap-2 mb-3">
+              <Eye className="h-5 w-5 text-accent" />
+              <span className="text-[11px] font-semibold px-2.5 py-0.5 rounded-full uppercase tracking-wide bg-accent/10 text-accent">
+                Our Vision
+              </span>
+            </div>
+            <p className="text-sm md:text-[15px] text-foreground leading-relaxed font-medium">
+              To transform rural livelihoods and strengthen economic development
+              across Tripura through sustainable landscape management,
+              community-driven value chains, and inclusive growth — ensuring
+              prosperity for present and future generations.
+            </p>
+          </div>
+          <div className="bg-card border border-border rounded-xl p-5 md:p-6 shadow-card">
+            <div className="flex items-center gap-2 mb-3">
+              <Target className="h-5 w-5 text-primary" />
+              <span className="text-[11px] font-semibold px-2.5 py-0.5 rounded-full uppercase tracking-wide bg-primary/10 text-primary">
+                Our Mission
+              </span>
+            </div>
+            <p className="text-sm md:text-[15px] text-foreground leading-relaxed font-medium">
+              To deliver transparent, community-centric development through
+              capacity-building, technology adoption, value chain strengthening,
+              and partnerships with communities, enterprises, and institutions
+              across Tripura.
+            </p>
+          </div>
         </div>
 
-        {/* Objectives */}
         <div>
-          <h3 className="text-lg font-bold text-primary mb-4">
-            Key Objectives
-          </h3>
-          <div className="grid sm:grid-cols-2 gap-3">
-            {[
-              "Generate sustainable livelihoods through value chain development",
-              "Strengthen community-based institutions and local governance",
-              "Restore degraded landscapes for long-term economic productivity",
-              "Build climate resilience through adaptive land management",
-              "Improve market access and enterprise opportunities for rural communities",
-            ].map((obj) => (
-              <div
-                key={obj}
-                className="bg-card border border-border rounded-lg p-4 hover:shadow-sm transition"
-              >
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  {obj}
-                </p>
+          <h3 className="text-lg font-bold text-primary mb-3">Mission Pillars</h3>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
+            {missionPillars.map((p) => (
+              <div key={p.title} className="bg-card border border-border rounded-lg p-4 hover:shadow-sm transition">
+                <h4 className="text-sm font-bold text-foreground mb-1">{p.title}</h4>
+                <p className="text-xs text-muted-foreground leading-relaxed">{p.desc}</p>
               </div>
             ))}
           </div>
         </div>
-      </div>
-    </AboutLayout>
-  );
-}
 
-/* ---- Mission ---- */
-export function Mission() {
-  return (
-    <AboutLayout
-      title="Mission & Objective"
-      subtitle="Action-oriented commitments of the ELEMENT programme"
-    >
-      <div className="space-y-8">
-        {/* Mission statement */}
-        <div className="bg-card border border-border rounded-xl p-6 shadow-card">
-          <span className="inline-block bg-primary/10 text-primary text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-3">
-            Our Mission
-          </span>
-          <p className="text-base text-foreground leading-relaxed font-medium">
-            To deliver transparent, community-centric development through
-            capacity-building, technology adoption, value chain strengthening,
-            and partnerships with communities, enterprises, and institutions
-            across Tripura.
-          </p>
-        </div>
-
-        {/* Mission pillars */}
         <div>
-          <h3 className="text-lg font-bold text-primary mb-4">
-            Mission Pillars
-          </h3>
+          <h3 className="text-lg font-bold text-primary mb-3">Key Objectives of PROJECT ELEMENT</h3>
           <div className="grid sm:grid-cols-2 gap-3">
-            {[
-              {
-                title: "Livelihoods",
-                desc: "Create sustainable income for 25,000+ households through high-value product chains.",
-              },
-              {
-                title: "Landscape Restoration",
-                desc: "Restore degraded lands for productive use and ecological balance.",
-              },
-              {
-                title: "Community Empowerment",
-                desc: "Strengthen JFMCs, SHGs and village committees across all districts.",
-              },
-              {
-                title: "Innovation & Technology",
-                desc: "Adopt GIS, drones and digital monitoring for transparent implementation.",
-              },
-            ].map((p) => (
-              <div
-                key={p.title}
-                className="bg-card border border-border rounded-lg p-4 hover:shadow-sm transition"
-              >
-                <h4 className="text-sm font-bold text-foreground mb-1">
-                  {p.title}
-                </h4>
-                <p className="text-xs text-muted-foreground leading-relaxed">
-                  {p.desc}
-                </p>
+            {objectives.map((obj) => (
+              <div key={obj} className="flex items-start gap-2 bg-card border border-border rounded-lg p-3.5">
+                <ChevronRight className="h-4 w-4 text-accent mt-0.5 shrink-0" />
+                <span className="text-sm text-muted-foreground leading-relaxed">{obj}</span>
               </div>
             ))}
           </div>
@@ -689,7 +687,7 @@ export function Memorandum() {
           </h3>
           <p className="text-sm text-muted-foreground max-w-lg mx-auto">
             The founding document establishing the governance, objectives, and
-            operational framework of the ELEMENT programme.
+            operational framework of the PROJECT ELEMENT.
           </p>
         </div>
 
@@ -701,7 +699,7 @@ export function Memorandum() {
             </div>
             <div className="flex-1">
               <h4 className="text-base font-bold text-foreground">
-                ELEMENT Programme — Memorandum of Association
+                PROJECT ELEMENT — Memorandum of Association
               </h4>
               <p className="text-xs text-muted-foreground mt-1">
                 Government of Tripura · Registered under Societies Registration
@@ -709,7 +707,7 @@ export function Memorandum() {
               </p>
               <p className="text-sm text-muted-foreground mt-3 leading-relaxed">
                 This document outlines the constitution, governance structure,
-                and operational mandate of the ELEMENT programme under the aegis
+                and operational mandate of the PROJECT ELEMENT under the aegis
                 of the Government of Tripura in partnership with the World Bank.
               </p>
               <div className="flex gap-3 mt-4">
@@ -733,7 +731,7 @@ export function Memorandum() {
             {[
               {
                 title: "Registered Society",
-                desc: "Established as a registered society under the Societies Registration Act for autonomous programme management.",
+                desc: "Established as a registered society under the Societies Registration Act for autonomous project management.",
               },
               {
                 title: "Governance Structure",
@@ -816,7 +814,7 @@ const directoryCategories = [
   //   ],
   // },
   {
-    title: "ELEMENT Project Leadership",
+    title: "PROJECT ELEMENT Leadership",
     entries: [
       {
         name: "PCCF HOFF",
@@ -828,7 +826,7 @@ const directoryCategories = [
       },
       {
         name: "PCCF CEO / PD",
-        designation: "CEO & Project Director, ELEMENT Project",
+        designation: "CEO & Project Director, PROJECT ELEMENT",
         division: "Aranya Bhawan, Pt. Nehru Complex, Agartala",
         phone: "",
         email: "",
@@ -836,7 +834,7 @@ const directoryCategories = [
       },
       {
         name: "Shri Chaitanya Murti, IFS",
-        designation: "CEO & Project Director, ELEMENT Project",
+        designation: "CEO & Project Director, PROJECT ELEMENT",
         division: "Aranya Bhawan, Pt. Nehru Complex, Agartala",
         phone: "0381-2326874",
         email: "cwlw.tfd-tr@gov.in",
@@ -844,7 +842,7 @@ const directoryCategories = [
       },
       {
         name: "Dr. Honnareddy N, IFS",
-        designation: "Addl. CEO (ELEMENT Project)",
+        designation: "Addl. CEO (PROJECT ELEMENT)",
         division: "Aranya Bhawan, Pt. Nehru Complex, Agartala",
         phone: "",
         email: "honnareddy.n@gov.in",
@@ -866,7 +864,7 @@ const directoryCategories = [
       {
         name: "Shri Krishna Gopal Roy, IFS",
         designation: "Director (Community Institution, Capacity Building, KM)",
-        division: "ELEMENT Project FHQ, Aranya Bhawan, Agartala",
+        division: "PROJECT ELEMENT FHQ, Aranya Bhawan, Agartala",
         phone: "",
         email: "krishnagopalr78@gmail.com",
         mobile: "7005447409",
@@ -874,7 +872,7 @@ const directoryCategories = [
       {
         name: "Shri Amalendu Debnath, IFS",
         designation: "Director (Value Chain Innovation & Eco Tourism)",
-        division: "ELEMENT Project FHQ, Aranya Bhawan, Agartala",
+        division: "PROJECT ELEMENT FHQ, Aranya Bhawan, Agartala",
         phone: "",
         email: "elementtripuraforest@gmail.com",
         mobile: "8415924070",
@@ -882,7 +880,7 @@ const directoryCategories = [
       {
         name: "Shri Jaya Krishnan V, IFS",
         designation: "Director (Administration, Procurement & Finance)",
-        division: "ELEMENT Project",
+        division: "PROJECT ELEMENT",
         phone: "",
         email: "",
         mobile: "",
@@ -895,6 +893,31 @@ const directoryCategories = [
         email: "dcfwildlife2025@gmail.com",
         mobile: "8131843631",
       },
+    ],
+  },
+  {
+    title: "ISO — Implementation Support Organization",
+    entries: [
+      { name: "Dr. A. K. Singh, IFS", designation: "ISO Team Leader", division: "ISO Cell, Aranya Bhawan, Agartala", phone: "0381-2416000", email: "iso.element@gov.in", mobile: "9000000001" },
+      { name: "Ms. Priya Nath", designation: "Sr. Specialist — Capacity Building", division: "ISO Cell, Aranya Bhawan, Agartala", phone: "", email: "priya.iso@gov.in", mobile: "9000000002" },
+      { name: "Shri Ratan Debbarma", designation: "Specialist — Community Mobilisation", division: "ISO Cell, Aranya Bhawan, Agartala", phone: "", email: "ratan.iso@gov.in", mobile: "9000000003" },
+    ],
+  },
+  {
+    title: "PMU — Project Management Unit",
+    entries: [
+      { name: "Shri R. K. Sharma, IFS", designation: "Project Manager (PMU)", division: "PMU, Aranya Bhawan, Agartala", phone: "0381-2416010", email: "pmu.element@gov.in", mobile: "9000000010" },
+      { name: "Ms. Anjali Roy", designation: "Procurement Specialist", division: "PMU, Aranya Bhawan, Agartala", phone: "", email: "procurement.pmu@gov.in", mobile: "9000000011" },
+      { name: "Shri D. Chakraborty", designation: "Finance Specialist", division: "PMU, Aranya Bhawan, Agartala", phone: "", email: "finance.pmu@gov.in", mobile: "9000000012" },
+      { name: "Ms. S. Reang", designation: "M&E Specialist", division: "PMU, Aranya Bhawan, Agartala", phone: "", email: "me.pmu@gov.in", mobile: "9000000013" },
+    ],
+  },
+  {
+    title: "PMC — Project Management Consultant",
+    entries: [
+      { name: "Shri Vivek Menon", designation: "Team Leader (PMC)", division: "PMC Office, Agartala", phone: "", email: "tl.pmc@element.gov.in", mobile: "9000000020" },
+      { name: "Ms. Kavita Iyer", designation: "Sr. Landscape Specialist", division: "PMC Office, Agartala", phone: "", email: "landscape.pmc@element.gov.in", mobile: "9000000021" },
+      { name: "Shri Amit Saha", designation: "GIS / MIS Specialist", division: "PMC Office, Agartala", phone: "", email: "gis.pmc@element.gov.in", mobile: "9000000022" },
     ],
   },
 ];
@@ -916,7 +939,7 @@ export function OfficialDirectory() {
   return (
     <AboutLayout
       title="Official Directory"
-      subtitle="Contact details of ELEMENT programme officials"
+      subtitle="Contact details of PROJECT ELEMENT officials"
     >
       <div className="space-y-6">
         <div className="bg-gradient-to-br from-primary/5 to-accent/5 border border-border rounded-xl p-6 text-center">
@@ -927,13 +950,13 @@ export function OfficialDirectory() {
             Official Directory
           </h3>
           <p className="text-sm text-muted-foreground max-w-lg mx-auto">
-            Contact information for key ELEMENT programme officials across
+            Contact information for key PROJECT ELEMENT officials across
             departments.
           </p>
         </div>
 
-        {/* Search */}
-        <div className="relative max-w-md">
+        {/* Search — full row width */}
+        <div className="relative w-full">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <input
             type="text"
@@ -951,28 +974,24 @@ export function OfficialDirectory() {
               <Users className="h-4 w-4 text-accent" /> {cat.title}
             </h3>
             {/* Desktop table */}
-            <div className="hidden md:block overflow-x-auto rounded-xl border border-border bg-card shadow-sm">
-              <table className="w-full text-sm">
+            <div className="hidden md:block rounded-xl border border-border bg-card shadow-sm">
+              <table className="w-full text-sm table-fixed">
+                <colgroup>
+                  <col className="w-[22%]" />
+                  <col className="w-[22%]" />
+                  <col className="w-[24%]" />
+                  <col className="w-[11%]" />
+                  <col className="w-[11%]" />
+                  <col className="w-[10%]" />
+                </colgroup>
                 <thead>
                   <tr className="bg-primary/5 border-b border-border">
-                    <th className="text-left py-3 px-4 font-semibold text-primary">
-                      Official
-                    </th>
-                    <th className="text-left py-3 px-4 font-semibold text-primary">
-                      Designation
-                    </th>
-                    <th className="text-left py-3 px-4 font-semibold text-primary">
-                      Division / Office
-                    </th>
-                    <th className="text-left py-3 px-4 font-semibold text-primary">
-                      Phone
-                    </th>
-                    <th className="text-left py-3 px-4 font-semibold text-primary">
-                      Mobile
-                    </th>
-                    <th className="text-left py-3 px-4 font-semibold text-primary">
-                      Email
-                    </th>
+                    <th className="text-left py-3 px-3 font-semibold text-primary">Official</th>
+                    <th className="text-left py-3 px-3 font-semibold text-primary">Designation</th>
+                    <th className="text-left py-3 px-3 font-semibold text-primary">Division / Office</th>
+                    <th className="text-left py-3 px-3 font-semibold text-primary">Phone</th>
+                    <th className="text-left py-3 px-3 font-semibold text-primary">Mobile</th>
+                    <th className="text-left py-3 px-3 font-semibold text-primary">Email</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -981,44 +1000,30 @@ export function OfficialDirectory() {
                     return (
                       <tr
                         key={entry.name}
-                        className="border-b border-border last:border-b-0 hover:bg-muted/30 transition"
+                        className="border-b border-border last:border-b-0 hover:bg-muted/30 transition align-top"
                       >
-                        <td className="py-3 px-4">
-                          <div className="flex items-center gap-3">
-                            <div className="h-10 w-10 rounded-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center text-primary-foreground shrink-0 overflow-hidden">
+                        <td className="py-3 px-3">
+                          <div className="flex items-start gap-2.5">
+                            <div className="h-9 w-9 rounded-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center text-primary-foreground shrink-0 overflow-hidden">
                               {img ? (
-                                <img
-                                  src={img}
-                                  alt={entry.name}
-                                  className="h-full w-full object-cover"
-                                />
+                                <img src={img} alt={entry.name} className="h-full w-full object-cover" />
                               ) : (
                                 <User className="h-4 w-4" />
                               )}
                             </div>
-                            <span className="font-semibold text-foreground whitespace-nowrap">
+                            {/* Keep name + qualification on same line where space allows; allow soft wrap of whole text only */}
+                            <span className="font-semibold text-foreground break-words leading-snug">
                               {entry.name}
                             </span>
                           </div>
                         </td>
-                        <td className="py-3 px-4 text-foreground">
-                          {entry.designation}
-                        </td>
-                        <td className="py-3 px-4 text-muted-foreground">
-                          {entry.division || "—"}
-                        </td>
-                        <td className="py-3 px-4 text-muted-foreground whitespace-nowrap">
-                          {entry.phone || "—"}
-                        </td>
-                        <td className="py-3 px-4 text-muted-foreground whitespace-nowrap">
-                          {entry.mobile || "—"}
-                        </td>
-                        <td className="py-3 px-4">
+                        <td className="py-3 px-3 text-foreground break-words leading-snug">{entry.designation}</td>
+                        <td className="py-3 px-3 text-muted-foreground break-words leading-snug">{entry.division || "—"}</td>
+                        <td className="py-3 px-3 text-muted-foreground break-words">{entry.phone || "—"}</td>
+                        <td className="py-3 px-3 text-muted-foreground break-words">{entry.mobile || "—"}</td>
+                        <td className="py-3 px-3">
                           {entry.email ? (
-                            <a
-                              href={`mailto:${entry.email}`}
-                              className="text-primary hover:underline whitespace-nowrap"
-                            >
+                            <a href={`mailto:${entry.email}`} className="text-primary hover:underline break-all">
                               {entry.email}
                             </a>
                           ) : (

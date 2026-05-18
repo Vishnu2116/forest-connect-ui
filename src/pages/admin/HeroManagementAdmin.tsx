@@ -16,10 +16,10 @@ interface Slide {
 }
 
 const initialSlides: Slide[] = [
-  { id: 1, title: "Enhancing Landscape and Ecosystem Management", subtitle: "ELEMENT — a joint initiative of the Government of Tripura and The World Bank.", badge: "ELEMENT Programme", cta1Label: "Explore Projects", cta1Link: "/projects", cta2Label: "View Plantation Map", cta2Link: "/plantation-map", image: "hero-forest.jpg" },
+  { id: 1, title: "Enhancing Landscape and Ecosystem Management", subtitle: "ELEMENT — a joint initiative of the Government of Tripura and The World Bank.", badge: "PROJECT ELEMENT", cta1Label: "Explore Projects", cta1Link: "/projects", cta2Label: "View Plantation Map", cta2Link: "/plantation-map", image: "hero-forest.jpg" },
   { id: 2, title: "Transforming Rural Livelihoods Across Tripura", subtitle: "Community-led value chain development and sustainable landscape management.", badge: "Government of Tripura", cta1Label: "Learn More", cta1Link: "/about", cta2Label: "View Activities", cta2Link: "/activities", image: "hero-plantation.jpg" },
   { id: 3, title: "Building Resilient Communities & Landscapes", subtitle: "Empowering 25,000+ households through livelihood generation.", badge: "The World Bank", cta1Label: "Explore Projects", cta1Link: "/projects", cta2Label: "Knowledge Hub", cta2Link: "/knowledge-hub/iec", image: "hero-wildlife.jpg" },
-  { id: 4, title: "Watershed Development", subtitle: "Strengthening water conservation and sustainable rural landscapes.", badge: "ELEMENT Programme", cta1Label: "Learn More", cta1Link: "/about", cta2Label: "View Plantation Map", cta2Link: "/plantation-map", image: "hero-watershed.jpg" },
+  { id: 4, title: "Watershed Development", subtitle: "Strengthening water conservation and sustainable rural landscapes.", badge: "PROJECT ELEMENT", cta1Label: "Learn More", cta1Link: "/about", cta2Label: "View Plantation Map", cta2Link: "/plantation-map", image: "hero-watershed.jpg" },
   { id: 5, title: "Natural Resource Management", subtitle: "Promoting soil conservation and community-led environmental restoration.", badge: "Government of Tripura", cta1Label: "Explore Projects", cta1Link: "/projects", cta2Label: "Knowledge Hub", cta2Link: "/knowledge-hub/iec", image: "hero-nrm.jpg" },
 ];
 
@@ -48,7 +48,7 @@ export default function HeroManagementAdmin() {
   const addSlide = () => {
     const newId = Math.max(...slides.map(s => s.id), 0) + 1;
     setSlides([...slides, {
-      id: newId, title: "New Slide", subtitle: "Enter subtitle here", badge: "ELEMENT Programme",
+      id: newId, title: "New Slide", subtitle: "Enter subtitle here", badge: "PROJECT ELEMENT",
       cta1Label: "Explore Projects", cta1Link: "/projects", cta2Label: "Learn More", cta2Link: "/about", image: "",
     }]);
   };

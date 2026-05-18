@@ -329,11 +329,7 @@ export default function Navbar() {
                 >
                   {item.children ? (
                     <button
-                      className={`flex items-center justify-center gap-1 whitespace-nowrap px-2.5 lg:px-3 xl:px-5 py-3 xl:py-3.5 text-[13px] xl:text-sm font-medium hover:bg-primary-dark transition-colors border-b-2 ${
-                        dropActive
-                          ? "bg-primary-dark border-accent"
-                          : "border-transparent"
-                      }`}
+                      className={`flex items-center justify-center gap-1 whitespace-nowrap px-2.5 lg:px-3 xl:px-5 py-3 xl:py-3.5 text-[13px] xl:text-sm font-medium hover:bg-primary-dark transition-colors border-b-2 border-transparent`}
                     >
                       {t(item.labelKey)}
                       <ChevronDown className="h-3.5 w-3.5 shrink-0" />
@@ -394,9 +390,7 @@ export default function Navbar() {
                 {item.children ? (
                   <>
                     <button
-                      className={`w-full flex items-center justify-between px-4 py-3 text-sm font-medium ${
-                        isDropdownActive(item) ? "bg-primary-dark" : ""
-                      }`}
+                      className={`w-full flex items-center justify-between px-4 py-3 text-sm font-medium`}
                       onClick={() =>
                         setMobileSubOpen(
                           mobileSubOpen === item.labelKey

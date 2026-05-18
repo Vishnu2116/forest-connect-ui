@@ -5,7 +5,7 @@ import { Trees, Leaf, Users, BarChart3, ArrowRight } from "lucide-react";
 const components = [
   {
     slug: "component-1",
-    number: "Component 1",
+    number: "Project Component 1",
     name: "Landscape Management",
     description:
       "Restoring degraded landscapes, watershed management and climate-resilient interventions across Tripura.",
@@ -35,7 +35,7 @@ const components = [
     number: "Component 4",
     name: "Project Management, Monitoring & Learning",
     description:
-      "Programme management, MIS/GIS, monitoring & evaluation, and knowledge dissemination.",
+      "Project management, MIS/GIS, monitoring & evaluation, and knowledge dissemination.",
     icon: BarChart3,
     gradient: "from-primary/30 to-accent/20",
   },
@@ -46,7 +46,7 @@ export default function ProjectComponents() {
     <PageLayout>
       <PageHeader
         title="Project Components"
-        subtitle="Explore the four core components of the Tripura ELEMENT Project."
+        subtitle="Explore the four core components of the Tripura PROJECT ELEMENT."
         breadcrumb={["Home", "Project Components"]}
       />
       <section className="py-10 md:py-14">
@@ -73,7 +73,7 @@ export default function ProjectComponents() {
                       to={`/components/${c.slug}`}
                       className="inline-flex items-center gap-1.5 bg-accent hover:bg-accent-hover text-accent-foreground px-4 py-2 rounded text-sm font-semibold transition"
                     >
-                      Explore Component <ArrowRight className="h-4 w-4" />
+                      Explore Project Component <ArrowRight className="h-4 w-4" />
                     </Link>
                   </div>
                 </div>

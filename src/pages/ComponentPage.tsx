@@ -13,20 +13,20 @@ const impactStats = [
 
 const META: Record<string, { title: string; subtitle: string }> = {
   "component-1": {
-    title: "Component 1 — Landscape Restoration & Climate Resilience",
+    title: "Project Component 1 — Landscape Restoration & Climate Resilience",
     subtitle: "Restoring degraded landscapes, watershed management and climate-resilient interventions across Tripura.",
   },
   "component-2": {
-    title: "Component 2 — Biodiversity & Ecosystem Conservation",
+    title: "Project Component 2 — Biodiversity & Ecosystem Conservation",
     subtitle: "Strengthening biodiversity conservation, community plantation drives and ecosystem services.",
   },
   "component-3": {
-    title: "Component 3 — Livelihood Value Chains & Eco-Tourism",
+    title: "Project Component 3 — Livelihood Value Chains & Eco-Tourism",
     subtitle: "Developing sustainable value chains, enterprise support and community-led eco-tourism.",
   },
   "component-4": {
-    title: "Component 4 — Programme Management & Knowledge",
-    subtitle: "Programme management, MIS/GIS, monitoring & evaluation, and knowledge dissemination.",
+    title: "Project Component 4 — Project Management & Knowledge",
+    subtitle: "Project management, MIS/GIS, monitoring & evaluation, and knowledge dissemination.",
   },
 };
 
@@ -40,6 +40,7 @@ export default function ComponentPage() {
     "component-4": "Component 4",
   };
   const wanted = labelMap[slug];
+  const projectLabel = wanted ? `Project ${wanted}` : "Project Component";
   const filtered = projects.filter((p) => p.component === wanted);
   const items = filtered.length ? filtered : projects;
 
@@ -48,14 +49,14 @@ export default function ComponentPage() {
       <PageHeader
         title={meta.title}
         subtitle={meta.subtitle}
-        breadcrumb={["Home", "Components", wanted ?? "Component"]}
+        breadcrumb={["Home", "Project Components", projectLabel]}
       />
 
       <section className="bg-surface py-8 border-b border-border">
         <div className="gov-container">
           <div className="flex items-center gap-2 mb-6">
             <BarChart3 className="h-5 w-5 text-accent" />
-            <h2 className="text-lg font-bold text-primary">Programme Impact</h2>
+            <h2 className="text-lg font-bold text-primary">Project Impact</h2>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {impactStats.map((s) => (

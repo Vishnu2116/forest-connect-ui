@@ -116,5 +116,5 @@ const tenderRows = [
   { title: "Annual Vehicle Hiring — Project Offices", date: "10 Apr 2026", deadline: "05 May 2026", status: "Closed" },
 ];
 
-export const RFPs = () => <ListingPage title="RFPs" subtitle="Active Requests for Proposals under the ELEMENT programme" rows={rfpRows} type="tender" breadcrumb={["Home", "Procurements", "RFPs"]} />;
+export const RFPs = () => <ListingPage title="RFPs" subtitle="Active Requests for Proposals under the PROJECT ELEMENT" rows={rfpRows} type="tender" breadcrumb={["Home", "Procurements", "RFPs"]} />;
 export const Tenders = () => <ListingPage title="Tenders" subtitle="Active and archived tender notices" rows={tenderRows} type="tender" breadcrumb={["Home", "Procurements", "Tenders"]} />;
