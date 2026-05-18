@@ -179,12 +179,30 @@ export default function KnowledgeHubAdmin({
     }
   };
 
+  const resolveKhUploadCategory = () => {
+    if (lockedCategoryName === "Reports") return "report";
+    if (lockedCategoryName === "Publications") return "publication";
+    return "knowledge_hub";
+  };
+
   const onUploadFile = async (file: File, kind: "file" | "thumbnail") => {
+    if (kind === "file") {
+      const isPdf =
+        file.type === "application/pdf" ||
+        file.name.toLowerCase().endsWith(".pdf");
+      if (!isPdf) {
+        alert("Only PDF files are allowed for Knowledge Hub documents.");
+        return;
+      }
+    }
     setUploading(true);
     try {
       const fd = new FormData();
       fd.append("file", file);
-      fd.append("category", kind === "thumbnail" ? "thumbnail" : fileCategory);
+      fd.append(
+        "category",
+        kind === "thumbnail" ? "thumbnail" : resolveKhUploadCategory()
+      );
       const data = await fetchAdmin<any>("/api/admin/uploads", { method: "POST", body: fd });
       if (kind === "file") {
         setForm((f) => ({
@@ -192,7 +210,7 @@ export default function KnowledgeHubAdmin({
           file_id: String(data.id),
           file_url: data.file_url,
           file_name: data.original_name,
-          file_format: f.file_format || (data.file_extension || "").toUpperCase(),
+          file_format: "PDF",
         }));
       } else {
         setForm((f) => ({ ...f, thumbnail_id: String(data.id), thumbnail_url: data.file_url }));
