@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import {
   ChevronDown,
@@ -11,9 +11,10 @@ import {
   Map as MapIcon,
   Eye,
 } from "lucide-react";
-import { navItems } from "@/data/navigation";
+import { navItems as baseNavItems } from "@/data/navigation";
 import { useLang, LANGUAGES } from "@/contexts/LanguageContext";
 import { useA11y } from "@/contexts/AccessibilityContext";
+import { getNavComponentsOnce } from "@/lib/projects";
 import logoTripura from "@/assets/logo-tripura.png";
 import logoTheWorldBank from "@/assets/logo-theworldbank.jpg";
 import logoTripuraForestDept from "@/assets/logo-tripuraforestdept.png";
