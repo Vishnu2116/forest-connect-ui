@@ -70,10 +70,13 @@ export interface ApiProjectDetail extends ApiProjectCard {
 export function resolveImage(path?: string | null): string | null {
   if (!path) return null;
   if (path.startsWith("http") || path.startsWith("data:") || path.startsWith("blob:")) return path;
-  if (path.startsWith("/")) return `${API_BASE_URL ?? ""}${path}`;
+  // Only prefix backend upload paths with API_BASE_URL.
+  if (path.startsWith("/uploads/")) return `${API_BASE_URL ?? ""}${path}`;
+  // Local Vite-imported assets or other absolute paths — return as-is.
   return path;
 }
 
+// Read token fresh on every call. Never cache.
 export function authHeaders(): HeadersInit {
   const token = localStorage.getItem("element_admin_token");
   return token ? { Authorization: `Bearer ${token}` } : {};
