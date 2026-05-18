@@ -5,7 +5,7 @@ import { Trees, Leaf, Users, BarChart3, ArrowRight } from "lucide-react";
 const components = [
   {
     slug: "component-1",
-    number: "Component 1",
+    number: "Project Component 1",
     name: "Landscape Management",
     description:
       "Restoring degraded landscapes, watershed management and climate-resilient interventions across Tripura.",

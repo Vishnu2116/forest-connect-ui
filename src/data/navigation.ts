@@ -21,10 +21,10 @@ export const navItems: NavItem[] = [
   {
     labelKey: "nav.components",
     children: [
-      { label: "Component-1", to: "/components/component-1" },
-      { label: "Component-2", to: "/components/component-2" },
-      { label: "Component-3", to: "/components/component-3" },
-      { label: "Component-4", to: "/components/component-4" },
+      { label: "Project Component-1", to: "/components/component-1" },
+      { label: "Project Component-2", to: "/components/component-2" },
+      { label: "Project Component-3", to: "/components/component-3" },
+      { label: "Project Component-4", to: "/components/component-4" },
     ],
   },
   { labelKey: "nav.activities", to: "/activities" },
