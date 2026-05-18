@@ -3,7 +3,7 @@ import { AdminPageHeader } from "./AdminLayout";
 import { Button } from "@/components/ui/button";
 import { ChevronUp, ChevronDown, Trash2, Plus, Save, Image as ImageIcon, Upload, GripVertical, Loader2 } from "lucide-react";
 import { toast } from "sonner";
-import { API_BASE_URL, USE_REAL_API } from "@/config/api";
+import { API_BASE_URL, USE_REAL_API, getAuthHeaders, getAuthJsonHeaders } from "@/config/api";
 
 interface Slide {
   id: string | number;

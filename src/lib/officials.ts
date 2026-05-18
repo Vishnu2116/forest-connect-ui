@@ -1,4 +1,4 @@
-import { API_BASE_URL, USE_REAL_API } from "@/config/api";
+import { API_BASE_URL, USE_REAL_API, getAuthHeaders, getAuthJsonHeaders } from "@/config/api";
 import { elementLeadership } from "@/data/content";
 
 export interface ApiOfficial {

@@ -3,7 +3,7 @@ import { AdminPageHeader } from "./AdminLayout";
 import { Button } from "@/components/ui/button";
 import { Loader2, Save, Upload, User as UserIcon } from "lucide-react";
 import { toast } from "sonner";
-import { API_BASE_URL, USE_REAL_API } from "@/config/api";
+import { API_BASE_URL, USE_REAL_API, getAuthHeaders, getAuthJsonHeaders } from "@/config/api";
 
 interface Slot {
   slot_number: number;

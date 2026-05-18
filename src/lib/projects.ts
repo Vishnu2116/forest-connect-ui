@@ -1,4 +1,4 @@
-import { API_BASE_URL, USE_REAL_API } from "@/config/api";
+import { API_BASE_URL, USE_REAL_API, getAuthHeaders, getAuthJsonHeaders } from "@/config/api";
 import { projects as dummyProjectsRaw } from "@/data/content";
 
 export type ProjectStatus = "ongoing" | "pilot_phase" | "completed" | string;
