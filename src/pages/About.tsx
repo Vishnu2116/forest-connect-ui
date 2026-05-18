@@ -1,6 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { fetchGrouped, resolvePhoto, type OfficialCategoryGroup, type ApiOfficial } from "@/lib/officials";
+import {
+  fetchGrouped,
+  resolvePhoto,
+  type OfficialCategoryGroup,
+  type ApiOfficial,
+} from "@/lib/officials";
 import PageLayout, { PageHeader } from "@/components/layout/PageLayout";
 import {
   Phone,
@@ -317,8 +322,9 @@ export function AboutElement() {
                 Project Management Unit (PMU)
               </h4>
               <p className="text-muted-foreground">
-                Central unit handling day-to-day project management, procurement,
-                finance, M&amp;E, MIS/GIS, and coordination with field units.
+                Central unit handling day-to-day project management,
+                procurement, finance, M&amp;E, MIS/GIS, and coordination with
+                field units.
               </p>
             </div>
 
@@ -599,7 +605,9 @@ export function WhosWhoSection() {
         </div>
 
         {loading && (
-          <p className="text-sm text-muted-foreground text-center py-6">Loading…</p>
+          <p className="text-sm text-muted-foreground text-center py-6">
+            Loading…
+          </p>
         )}
 
         {groups.map((cat) => (
@@ -634,9 +642,13 @@ function ApiOfficialCard({ o }: { o: ApiOfficial }) {
         )}
       </div>
       <h3 className="mt-4 font-bold text-sm text-primary">{o.name}</h3>
-      <p className="text-xs text-foreground font-semibold mt-1">{o.designation}</p>
+      <p className="text-xs text-foreground font-semibold mt-1">
+        {o.designation}
+      </p>
       {o.organisation && (
-        <p className="text-[11px] text-muted-foreground mt-0.5">{o.organisation}</p>
+        <p className="text-[11px] text-muted-foreground mt-0.5">
+          {o.organisation}
+        </p>
       )}
       <div className="mt-3 text-xs text-accent font-semibold group-hover:underline">
         View Profile →
@@ -1111,9 +1123,12 @@ export function OfficialDirectory() {
           <span className="inline-block bg-primary/10 text-primary text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-3">
             Directory
           </span>
-          <h3 className="text-xl font-bold text-primary mb-2">Official Directory</h3>
+          <h3 className="text-xl font-bold text-primary mb-2">
+            Official Directory
+          </h3>
           <p className="text-sm text-muted-foreground max-w-lg mx-auto">
-            Contact information for key PROJECT ELEMENT officials across departments.
+            Contact information for key PROJECT ELEMENT officials across
+            departments.
           </p>
         </div>
 
@@ -1129,11 +1144,15 @@ export function OfficialDirectory() {
         </div>
 
         {loading && (
-          <p className="text-sm text-muted-foreground text-center py-6">Loading…</p>
+          <p className="text-sm text-muted-foreground text-center py-6">
+            Loading…
+          </p>
         )}
 
         {!loading && groups.length === 0 && (
-          <p className="text-sm text-muted-foreground text-center py-8">No results found.</p>
+          <p className="text-sm text-muted-foreground text-center py-8">
+            No results found.
+          </p>
         )}
 
         {groups.map((cat) => (
@@ -1143,15 +1162,35 @@ export function OfficialDirectory() {
             </h3>
             {/* Desktop table */}
             <div className="hidden md:block rounded-xl border border-border bg-card shadow-sm overflow-x-auto">
-              <table className="w-full text-sm">
+              <table className="w-full text-sm table-fixed">
+                <colgroup>
+                  <col className="w-[30%]" /> {/* Official */}
+                  <col className="w-[15%]" /> {/* Designation */}
+                  <col className="w-[15%]" /> {/* Division */}
+                  <col className="w-[12%]" /> {/* Phone */}
+                  <col className="w-[12%]" /> {/* Mobile */}
+                  <col className="w-[16%]" /> {/* Email */}
+                </colgroup>
                 <thead>
                   <tr className="bg-primary/5 border-b border-border">
-                    <th className="text-left py-3 px-3 font-semibold text-primary">Official</th>
-                    <th className="text-left py-3 px-3 font-semibold text-primary">Designation</th>
-                    <th className="text-left py-3 px-3 font-semibold text-primary">Division / Office</th>
-                    <th className="text-left py-3 px-3 font-semibold text-primary">Phone</th>
-                    <th className="text-left py-3 px-3 font-semibold text-primary">Mobile</th>
-                    <th className="text-left py-3 px-3 font-semibold text-primary">Email</th>
+                    <th className="text-left py-3 px-3 font-semibold text-primary">
+                      Official
+                    </th>
+                    <th className="text-left py-3 px-3 font-semibold text-primary">
+                      Designation
+                    </th>
+                    <th className="text-left py-3 px-3 font-semibold text-primary">
+                      Division / Office
+                    </th>
+                    <th className="text-left py-3 px-3 font-semibold text-primary">
+                      Phone
+                    </th>
+                    <th className="text-left py-3 px-3 font-semibold text-primary">
+                      Mobile
+                    </th>
+                    <th className="text-left py-3 px-3 font-semibold text-primary">
+                      Email
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -1166,23 +1205,41 @@ export function OfficialDirectory() {
                           <div className="flex items-start gap-2.5">
                             <div className="h-9 w-9 rounded-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center text-primary-foreground shrink-0 overflow-hidden">
                               {img ? (
-                                <img src={img} alt={entry.name} className="h-full w-full object-cover" />
+                                <img
+                                  src={img}
+                                  alt={entry.name}
+                                  className="h-full w-full object-cover"
+                                />
                               ) : (
                                 <User className="h-4 w-4" />
                               )}
                             </div>
-                            <Link to={`/about/officials/${entry.id}`} className="font-semibold text-foreground leading-snug hover:text-primary">
+                            <Link
+                              to={`/about/officials/${entry.id}`}
+                              className="font-semibold text-foreground leading-snug whitespace-normal break-normal hover:text-primary"
+                            >
                               {entry.name}
                             </Link>
                           </div>
                         </td>
-                        <td className="py-3 px-3 text-foreground break-words leading-snug">{entry.designation}</td>
-                        <td className="py-3 px-3 text-muted-foreground break-words leading-snug">{entry.division_office || "—"}</td>
-                        <td className="py-3 px-3 text-muted-foreground break-words">{entry.phone || "—"}</td>
-                        <td className="py-3 px-3 text-muted-foreground break-words">{entry.mobile || "—"}</td>
+                        <td className="py-3 px-3 text-foreground break-words leading-snug">
+                          {entry.designation}
+                        </td>
+                        <td className="py-3 px-3 text-muted-foreground break-words leading-snug">
+                          {entry.division_office || "—"}
+                        </td>
+                        <td className="py-3 px-3 text-muted-foreground break-words">
+                          {entry.phone || "—"}
+                        </td>
+                        <td className="py-3 px-3 text-muted-foreground break-words">
+                          {entry.mobile || "—"}
+                        </td>
                         <td className="py-3 px-3">
                           {entry.email ? (
-                            <a href={`mailto:${entry.email}`} className="text-primary hover:underline break-all">
+                            <a
+                              href={`mailto:${entry.email}`}
+                              className="text-primary hover:underline break-all"
+                            >
                               {entry.email}
                             </a>
                           ) : (
@@ -1201,20 +1258,32 @@ export function OfficialDirectory() {
               {cat.officials.map((entry) => {
                 const img = resolvePhoto(entry.photo_path);
                 return (
-                  <div key={entry.id} className="bg-card border border-border rounded-xl p-4 shadow-sm">
+                  <div
+                    key={entry.id}
+                    className="bg-card border border-border rounded-xl p-4 shadow-sm"
+                  >
                     <div className="flex items-center gap-3 mb-3">
                       <div className="h-12 w-12 rounded-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center text-primary-foreground shrink-0 overflow-hidden">
                         {img ? (
-                          <img src={img} alt={entry.name} className="h-full w-full object-cover" />
+                          <img
+                            src={img}
+                            alt={entry.name}
+                            className="h-full w-full object-cover"
+                          />
                         ) : (
                           <User className="h-5 w-5" />
                         )}
                       </div>
                       <div>
-                        <Link to={`/about/officials/${entry.id}`} className="font-semibold text-sm text-foreground hover:text-primary">
+                        <Link
+                          to={`/about/officials/${entry.id}`}
+                          className="font-semibold text-sm text-foreground hover:text-primary"
+                        >
                           {entry.name}
                         </Link>
-                        <p className="text-xs text-primary font-medium">{entry.designation}</p>
+                        <p className="text-xs text-primary font-medium">
+                          {entry.designation}
+                        </p>
                       </div>
                     </div>
                     <div className="space-y-1.5 text-xs text-muted-foreground">
@@ -1239,7 +1308,10 @@ export function OfficialDirectory() {
                       {entry.email && (
                         <div className="flex items-center gap-2">
                           <Mail className="h-3.5 w-3.5 shrink-0" />
-                          <a href={`mailto:${entry.email}`} className="text-primary hover:underline">
+                          <a
+                            href={`mailto:${entry.email}`}
+                            className="text-primary hover:underline"
+                          >
                             {entry.email}
                           </a>
                         </div>
@@ -1251,6 +1323,113 @@ export function OfficialDirectory() {
             </div>
           </div>
         ))}
+
+        {/* {directoryCategories.map((cat) => (
+          <div key={cat.title}>
+            <h3 className="text-base font-bold text-primary mb-3 flex items-center gap-2">
+              <Users className="h-4 w-4 text-accent" />
+              {cat.title}
+            </h3>
+
+            <div className="hidden md:block rounded-xl border border-border bg-card shadow-sm overflow-x-auto">
+              <table className="w-full text-sm table-fixed">
+                <colgroup>
+                  <col className="w-[30%]" />
+                  <col className="w-[20%]" />
+                  <col className="w-[20%]" />
+                  <col className="w-[10%]" />
+                  <col className="w-[10%]" />
+                  <col className="w-[10%]" />
+                </colgroup>
+
+                <thead>
+                  <tr className="bg-primary/5 border-b border-border">
+                    <th className="text-left py-3 px-3 font-semibold text-primary">
+                      Official
+                    </th>
+                    <th className="text-left py-3 px-3 font-semibold text-primary">
+                      Designation
+                    </th>
+                    <th className="text-left py-3 px-3 font-semibold text-primary">
+                      Division / Office
+                    </th>
+                    <th className="text-left py-3 px-3 font-semibold text-primary">
+                      Phone
+                    </th>
+                    <th className="text-left py-3 px-3 font-semibold text-primary">
+                      Mobile
+                    </th>
+                    <th className="text-left py-3 px-3 font-semibold text-primary">
+                      Email
+                    </th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  {cat.entries.map((entry) => {
+                    const img = govLeaderImages[entry.name] || "";
+
+                    return (
+                      <tr
+                        key={entry.name}
+                        className="border-b border-border last:border-b-0 hover:bg-muted/30 transition align-top"
+                      >
+                        <td className="py-3 px-3">
+                          <div className="flex items-start gap-2.5">
+                            <div className="h-9 w-9 rounded-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center text-primary-foreground shrink-0 overflow-hidden">
+                              {img ? (
+                                <img
+                                  src={img}
+                                  alt={entry.name}
+                                  className="h-full w-full object-cover"
+                                />
+                              ) : (
+                                <User className="h-4 w-4" />
+                              )}
+                            </div>
+
+                            <span className="font-semibold text-foreground leading-snug whitespace-normal break-normal">
+                              {entry.name}
+                            </span>
+                          </div>
+                        </td>
+
+                        <td className="py-3 px-3 text-foreground break-words leading-snug">
+                          {entry.designation}
+                        </td>
+
+                        <td className="py-3 px-3 text-muted-foreground break-words leading-snug">
+                          {entry.division || "—"}
+                        </td>
+
+                        <td className="py-3 px-3 text-muted-foreground">
+                          {entry.phone || "—"}
+                        </td>
+
+                        <td className="py-3 px-3 text-muted-foreground">
+                          {entry.mobile || "—"}
+                        </td>
+
+                        <td className="py-3 px-3">
+                          {entry.email ? (
+                            <a
+                              href={`mailto:${entry.email}`}
+                              className="text-primary hover:underline break-all"
+                            >
+                              {entry.email}
+                            </a>
+                          ) : (
+                            <span className="text-muted-foreground">—</span>
+                          )}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        ))} */}
       </div>
     </AboutLayout>
   );
