@@ -249,10 +249,21 @@ export default function HeroManagementAdmin() {
         {slides.map((slide, index) => (
           <div key={slide.id} className="bg-card border border-border rounded-md overflow-hidden">
             <div className="px-4 py-3 border-b border-border bg-surface flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <GripVertical className="h-4 w-4 text-muted-foreground" />
-                <span className="text-xs font-semibold text-muted-foreground uppercase">Slide {index + 1}</span>
-                <span className="text-sm font-medium text-primary truncate max-w-xs">{slide.title}</span>
+              <div className="flex items-center gap-3 min-w-0">
+                <GripVertical className="h-4 w-4 text-muted-foreground shrink-0" />
+                {resolveImageSrc(slide) ? (
+                  <img
+                    src={resolveImageSrc(slide)!}
+                    alt={slide.title}
+                    className="h-10 w-16 object-cover rounded border border-border shrink-0"
+                  />
+                ) : (
+                  <div className="h-10 w-16 rounded border border-border bg-muted flex items-center justify-center shrink-0">
+                    <ImageIcon className="h-4 w-4 text-muted-foreground" />
+                  </div>
+                )}
+                <span className="text-xs font-semibold text-muted-foreground uppercase shrink-0">Slide {index + 1}</span>
+                <span className="text-sm font-medium text-primary truncate">{slide.title}</span>
               </div>
               <div className="flex items-center gap-1">
                 <Button variant="ghost" size="icon" onClick={() => moveSlide(index, "up")} disabled={index === 0}>
