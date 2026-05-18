@@ -61,25 +61,29 @@ function slideToFormData(s: Slide): FormData {
 }
 
 export default function HeroManagementAdmin() {
-  const [slides, setSlides] = useState<Slide[]>(dummySlides);
+  // Admin always shows real API data (no dummy fallback). Empty array = empty state.
+  const [slides, setSlides] = useState<Slide[]>([]);
   const [editing, setEditing] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const fileInputs = useRef<Record<string, HTMLInputElement | null>>({});
 
   const loadSlides = async () => {
-    if (!USE_REAL_API) return;
+    if (!USE_REAL_API) {
+      // Preview mode: seed with dummy entries so the UI is explorable.
+      setSlides(dummySlides);
+      return;
+    }
     setLoading(true);
     try {
-      const res = await fetch(`${API_BASE_URL}/api/admin/hero-slides`, { headers: authHeaders() });
+      // Public list endpoint, but admin sends the bearer token.
+      const res = await fetch(`${API_BASE_URL}/api/hero-slides`, { headers: authHeaders() });
       if (!res.ok) throw new Error("bad status");
       const data = await res.json();
-      if (Array.isArray(data) && data.length > 0) {
-        setSlides(data.map(mapApiToSlide));
-      }
-      // else: keep dummy data as fallback
+      setSlides(Array.isArray(data) ? data.map(mapApiToSlide) : []);
     } catch {
-      toast.error("Unable to load slides — showing fallback data");
+      toast.error("Unable to load slides");
+      setSlides([]);
     } finally {
       setLoading(false);
     }
@@ -214,6 +218,14 @@ export default function HeroManagementAdmin() {
       {loading && (
         <div className="flex items-center gap-2 text-sm text-muted-foreground mb-3">
           <Loader2 className="h-4 w-4 animate-spin" /> Loading slides…
+        </div>
+      )}
+
+      {!loading && slides.length === 0 && (
+        <div className="bg-card border border-dashed border-border rounded-md p-10 text-center">
+          <ImageIcon className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
+          <p className="text-sm text-muted-foreground mb-3">No hero slides yet.</p>
+          <Button onClick={addSlide} className="gap-1.5"><Plus className="h-4 w-4" /> Add Slide</Button>
         </div>
       )}
 
