@@ -1078,17 +1078,28 @@ const directoryCategories = [
 
 export function OfficialDirectory() {
   const [search, setSearch] = useState("");
+  const [debounced, setDebounced] = useState("");
+  const [groups, setGroups] = useState<OfficialCategoryGroup[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const filteredCategories = directoryCategories
-    .map((cat) => ({
-      ...cat,
-      entries: cat.entries.filter((e) =>
-        `${e.name} ${e.designation} ${e.division}`
-          .toLowerCase()
-          .includes(search.toLowerCase()),
-      ),
-    }))
-    .filter((cat) => cat.entries.length > 0);
+  useEffect(() => {
+    const t = setTimeout(() => setDebounced(search.trim()), 500);
+    return () => clearTimeout(t);
+  }, [search]);
+
+  useEffect(() => {
+    let alive = true;
+    setLoading(true);
+    fetchGrouped("directory", debounced || undefined).then((g) => {
+      if (alive) {
+        setGroups(g);
+        setLoading(false);
+      }
+    });
+    return () => {
+      alive = false;
+    };
+  }, [debounced]);
 
   return (
     <AboutLayout
@@ -1100,16 +1111,12 @@ export function OfficialDirectory() {
           <span className="inline-block bg-primary/10 text-primary text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-3">
             Directory
           </span>
-          <h3 className="text-xl font-bold text-primary mb-2">
-            Official Directory
-          </h3>
+          <h3 className="text-xl font-bold text-primary mb-2">Official Directory</h3>
           <p className="text-sm text-muted-foreground max-w-lg mx-auto">
-            Contact information for key PROJECT ELEMENT officials across
-            departments.
+            Contact information for key PROJECT ELEMENT officials across departments.
           </p>
         </div>
 
-        {/* Search — full row width */}
         <div className="relative w-full">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <input
@@ -1121,90 +1128,61 @@ export function OfficialDirectory() {
           />
         </div>
 
-        {/* Categorized directory as tables */}
-        {filteredCategories.map((cat) => (
-          <div key={cat.title}>
+        {loading && (
+          <p className="text-sm text-muted-foreground text-center py-6">Loading…</p>
+        )}
+
+        {!loading && groups.length === 0 && (
+          <p className="text-sm text-muted-foreground text-center py-8">No results found.</p>
+        )}
+
+        {groups.map((cat) => (
+          <div key={cat.category_id || cat.category_name}>
             <h3 className="text-base font-bold text-primary mb-3 flex items-center gap-2">
-              <Users className="h-4 w-4 text-accent" /> {cat.title}
+              <Users className="h-4 w-4 text-accent" /> {cat.category_name}
             </h3>
             {/* Desktop table */}
-            <div className="hidden md:block rounded-xl border border-border bg-card shadow-sm">
-              <table className="w-full text-sm table-fixed">
-                <colgroup>
-                  <col className="w-[30%]" /> {/* Official */}
-                  <col className="w-[15%]" /> {/* Designation */}
-                  <col className="w-[15%]" /> {/* Division */}
-                  <col className="w-[12%]" /> {/* Phone */}
-                  <col className="w-[12%]" /> {/* Mobile */}
-                  <col className="w-[16%]" /> {/* Email */}
-                </colgroup>
+            <div className="hidden md:block rounded-xl border border-border bg-card shadow-sm overflow-x-auto">
+              <table className="w-full text-sm">
                 <thead>
                   <tr className="bg-primary/5 border-b border-border">
-                    <th className="text-left py-3 px-3 font-semibold text-primary">
-                      Official
-                    </th>
-                    <th className="text-left py-3 px-3 font-semibold text-primary">
-                      Designation
-                    </th>
-                    <th className="text-left py-3 px-3 font-semibold text-primary">
-                      Division / Office
-                    </th>
-                    <th className="text-left py-3 px-3 font-semibold text-primary">
-                      Phone
-                    </th>
-                    <th className="text-left py-3 px-3 font-semibold text-primary">
-                      Mobile
-                    </th>
-                    <th className="text-left py-3 px-3 font-semibold text-primary">
-                      Email
-                    </th>
+                    <th className="text-left py-3 px-3 font-semibold text-primary">Official</th>
+                    <th className="text-left py-3 px-3 font-semibold text-primary">Designation</th>
+                    <th className="text-left py-3 px-3 font-semibold text-primary">Division / Office</th>
+                    <th className="text-left py-3 px-3 font-semibold text-primary">Phone</th>
+                    <th className="text-left py-3 px-3 font-semibold text-primary">Mobile</th>
+                    <th className="text-left py-3 px-3 font-semibold text-primary">Email</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {cat.entries.map((entry) => {
-                    const img = govLeaderImages[entry.name] || "";
+                  {cat.officials.map((entry) => {
+                    const img = resolvePhoto(entry.photo_path);
                     return (
                       <tr
-                        key={entry.name}
+                        key={entry.id}
                         className="border-b border-border last:border-b-0 hover:bg-muted/30 transition align-top"
                       >
                         <td className="py-3 px-3">
                           <div className="flex items-start gap-2.5">
                             <div className="h-9 w-9 rounded-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center text-primary-foreground shrink-0 overflow-hidden">
                               {img ? (
-                                <img
-                                  src={img}
-                                  alt={entry.name}
-                                  className="h-full w-full object-cover"
-                                />
+                                <img src={img} alt={entry.name} className="h-full w-full object-cover" />
                               ) : (
                                 <User className="h-4 w-4" />
                               )}
                             </div>
-                            {/* Keep name + qualification on same line where space allows; allow soft wrap of whole text only */}
-                            <span className="font-semibold text-foreground leading-snug whitespace-normal break-normal">
+                            <Link to={`/about/officials/${entry.id}`} className="font-semibold text-foreground leading-snug hover:text-primary">
                               {entry.name}
-                            </span>
+                            </Link>
                           </div>
                         </td>
-                        <td className="py-3 px-3 text-foreground break-words leading-snug">
-                          {entry.designation}
-                        </td>
-                        <td className="py-3 px-3 text-muted-foreground break-words leading-snug">
-                          {entry.division || "—"}
-                        </td>
-                        <td className="py-3 px-3 text-muted-foreground break-words">
-                          {entry.phone || "—"}
-                        </td>
-                        <td className="py-3 px-3 text-muted-foreground break-words">
-                          {entry.mobile || "—"}
-                        </td>
+                        <td className="py-3 px-3 text-foreground break-words leading-snug">{entry.designation}</td>
+                        <td className="py-3 px-3 text-muted-foreground break-words leading-snug">{entry.division_office || "—"}</td>
+                        <td className="py-3 px-3 text-muted-foreground break-words">{entry.phone || "—"}</td>
+                        <td className="py-3 px-3 text-muted-foreground break-words">{entry.mobile || "—"}</td>
                         <td className="py-3 px-3">
                           {entry.email ? (
-                            <a
-                              href={`mailto:${entry.email}`}
-                              className="text-primary hover:underline break-all"
-                            >
+                            <a href={`mailto:${entry.email}`} className="text-primary hover:underline break-all">
                               {entry.email}
                             </a>
                           ) : (
@@ -1220,39 +1198,30 @@ export function OfficialDirectory() {
 
             {/* Mobile cards */}
             <div className="md:hidden space-y-3">
-              {cat.entries.map((entry) => {
-                const img = govLeaderImages[entry.name] || "";
+              {cat.officials.map((entry) => {
+                const img = resolvePhoto(entry.photo_path);
                 return (
-                  <div
-                    key={entry.name}
-                    className="bg-card border border-border rounded-xl p-4 shadow-sm"
-                  >
+                  <div key={entry.id} className="bg-card border border-border rounded-xl p-4 shadow-sm">
                     <div className="flex items-center gap-3 mb-3">
                       <div className="h-12 w-12 rounded-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center text-primary-foreground shrink-0 overflow-hidden">
                         {img ? (
-                          <img
-                            src={img}
-                            alt={entry.name}
-                            className="h-full w-full object-cover"
-                          />
+                          <img src={img} alt={entry.name} className="h-full w-full object-cover" />
                         ) : (
                           <User className="h-5 w-5" />
                         )}
                       </div>
                       <div>
-                        <h4 className="font-semibold text-sm text-foreground">
+                        <Link to={`/about/officials/${entry.id}`} className="font-semibold text-sm text-foreground hover:text-primary">
                           {entry.name}
-                        </h4>
-                        <p className="text-xs text-primary font-medium">
-                          {entry.designation}
-                        </p>
+                        </Link>
+                        <p className="text-xs text-primary font-medium">{entry.designation}</p>
                       </div>
                     </div>
                     <div className="space-y-1.5 text-xs text-muted-foreground">
-                      {entry.division && (
+                      {entry.division_office && (
                         <div className="flex items-start gap-2">
                           <MapPin className="h-3.5 w-3.5 shrink-0 mt-0.5" />
-                          <span>{entry.division}</span>
+                          <span>{entry.division_office}</span>
                         </div>
                       )}
                       {entry.phone && (
@@ -1270,10 +1239,7 @@ export function OfficialDirectory() {
                       {entry.email && (
                         <div className="flex items-center gap-2">
                           <Mail className="h-3.5 w-3.5 shrink-0" />
-                          <a
-                            href={`mailto:${entry.email}`}
-                            className="text-primary hover:underline"
-                          >
+                          <a href={`mailto:${entry.email}`} className="text-primary hover:underline">
                             {entry.email}
                           </a>
                         </div>
@@ -1285,11 +1251,6 @@ export function OfficialDirectory() {
             </div>
           </div>
         ))}
-        {filteredCategories.length === 0 && (
-          <p className="text-sm text-muted-foreground text-center py-8">
-            No officials found matching your search.
-          </p>
-        )}
       </div>
     </AboutLayout>
   );
