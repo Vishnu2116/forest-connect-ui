@@ -34,8 +34,15 @@ export default function AdminLayout() {
   const [open, setOpen] = useState(false);
   const adminName = sessionStorage.getItem("element_admin") || "Admin";
 
+  useEffect(() => {
+    const token = localStorage.getItem("element_admin_token");
+    if (!token) navigate("/admin/login");
+  }, [navigate]);
+
   const logout = () => {
     sessionStorage.removeItem("element_admin");
+    localStorage.removeItem("element_admin_token");
+    localStorage.removeItem("element_admin");
     navigate("/admin/login");
   };
 
