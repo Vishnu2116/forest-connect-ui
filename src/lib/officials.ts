@@ -32,10 +32,8 @@ export function resolvePhoto(photo_path?: string | null): string | null {
   return photo_path;
 }
 
-export function authHeaders(): HeadersInit {
-  const token = localStorage.getItem("element_admin_token");
-  return token ? { Authorization: `Bearer ${token}` } : {};
-}
+// Backwards-compat re-export so existing imports keep working.
+export { getAuthHeaders as authHeaders } from "@/config/api";
 
 /** Convert built-in dummy leadership into the grouped API shape, used as fallback. */
 export function dummyGrouped(): OfficialCategoryGroup[] {
