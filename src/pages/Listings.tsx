@@ -4,6 +4,7 @@ import { DataTable, Pagination } from "@/components/common/DataTable";
 import { Download, Eye, Trash2, Pencil, Upload } from "lucide-react";
 import { reports, publications, procurements } from "@/data/content";
 import { useKnowledgeHubItems, KHItem } from "@/hooks/useKnowledgeHub";
+import { usePublicProcurements, ProcurementItem, PROCUREMENT_STATUS_LABEL, formatDate } from "@/hooks/useProcurements";
 
 type Row = { title: string; date: string; size?: string; type?: string; deadline?: string; status?: string; href?: string };
 
@@ -83,8 +84,17 @@ export function ListingPage({
                   </td>
                   <td>
                     <div className="flex gap-2">
-                      <button className="p-1.5 text-primary hover:bg-primary/10 rounded" aria-label="View"><Eye className="h-4 w-4" /></button>
-                      <button className="p-1.5 text-accent hover:bg-accent/10 rounded" aria-label="Download"><Download className="h-4 w-4" /></button>
+                      {r.href ? (
+                        <>
+                          <a href={r.href} target="_blank" rel="noopener noreferrer" className="p-1.5 text-primary hover:bg-primary/10 rounded" aria-label="View"><Eye className="h-4 w-4" /></a>
+                          <a href={r.href} target="_blank" rel="noopener noreferrer" className="p-1.5 text-accent hover:bg-accent/10 rounded" aria-label="Download"><Download className="h-4 w-4" /></a>
+                        </>
+                      ) : (
+                        <>
+                          <button className="p-1.5 text-primary hover:bg-primary/10 rounded" aria-label="View"><Eye className="h-4 w-4" /></button>
+                          <button className="p-1.5 text-accent hover:bg-accent/10 rounded" aria-label="Download"><Download className="h-4 w-4" /></button>
+                        </>
+                      )}
                     </div>
                   </td>
                 </tr>
@@ -213,7 +223,7 @@ export const Publications = () => {
 };
 export const Procurements = () => <ListingPage title="Procurements & Tenders" subtitle="Active and archived tender notices" rows={procurements} type="tender" breadcrumb={["Home", "Procurements"]} />;
 
-const rfpRows = [
+const rfpRowsFallback = [
   { title: "RFP for Consultancy — Landscape Restoration Baseline Study", date: "12 May 2026", deadline: "10 Jun 2026", status: "Open" },
   { title: "RFP for Communications & Outreach Agency (ELEMENT)", date: "05 May 2026", deadline: "02 Jun 2026", status: "Open" },
   { title: "RFP for MIS/GIS Platform Implementation Partner", date: "28 Apr 2026", deadline: "25 May 2026", status: "Closing Soon" },
@@ -221,7 +231,7 @@ const rfpRows = [
   { title: "RFP for Bamboo Value-Chain Technical Advisor", date: "02 Apr 2026", deadline: "30 Apr 2026", status: "Closed" },
 ];
 
-const tenderRows = [
+const tenderRowsFallback = [
   { title: "Construction of Community Nursery Centres — Dhalai District", date: "10 May 2026", deadline: "08 Jun 2026", status: "Open" },
   { title: "Supply of Saplings & Planting Material — Phase II", date: "06 May 2026", deadline: "30 May 2026", status: "Open" },
   { title: "Procurement of Field Survey Equipment", date: "02 May 2026", deadline: "22 May 2026", status: "Closing Soon" },
@@ -229,5 +239,23 @@ const tenderRows = [
   { title: "Annual Vehicle Hiring — Project Offices", date: "10 Apr 2026", deadline: "05 May 2026", status: "Closed" },
 ];
 
-export const RFPs = () => <ListingPage title="RFPs" subtitle="Active Requests for Proposals under the PROJECT ELEMENT" rows={rfpRows} type="tender" breadcrumb={["Home", "Procurements", "RFPs"]} />;
-export const Tenders = () => <ListingPage title="Tenders" subtitle="Active and archived tender notices" rows={tenderRows} type="tender" breadcrumb={["Home", "Procurements", "Tenders"]} />;
+function procToRows(items: ProcurementItem[]): Row[] {
+  return items.map((it) => ({
+    title: it.title,
+    date: formatDate(it.published_date),
+    deadline: formatDate(it.deadline_date),
+    status: PROCUREMENT_STATUS_LABEL[it.procurement_status || ""] || it.procurement_status || "",
+    href: it.documents?.[0]?.file_url || undefined,
+  }));
+}
+
+export const RFPs = () => {
+  const { data } = usePublicProcurements("rfps", []);
+  const rows = data.items.length > 0 ? procToRows(data.items) : rfpRowsFallback;
+  return <ListingPage title="RFPs" subtitle="Active Requests for Proposals under the PROJECT ELEMENT" rows={rows} type="tender" breadcrumb={["Home", "Procurements", "RFPs"]} />;
+};
+export const Tenders = () => {
+  const { data } = usePublicProcurements("tenders", []);
+  const rows = data.items.length > 0 ? procToRows(data.items) : tenderRowsFallback;
+  return <ListingPage title="Tenders" subtitle="Active and archived tender notices" rows={rows} type="tender" breadcrumb={["Home", "Procurements", "Tenders"]} />;
+};
