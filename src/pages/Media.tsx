@@ -1,6 +1,7 @@
 import { useParams, Link } from "react-router-dom";
 import PageLayout, { PageHeader } from "@/components/layout/PageLayout";
 import { Facebook, Twitter, Youtube, ArrowRight, Calendar, MapPin, ArrowLeft } from "lucide-react";
+import { usePublicGalleryItems, formatGalleryDate } from "@/hooks/useGallery";
 
 const videos = [
   { id: "1", title: "PROJECT ELEMENT Overview" },
