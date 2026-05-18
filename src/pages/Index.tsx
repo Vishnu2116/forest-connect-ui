@@ -331,9 +331,12 @@ function UpdatesPanel({
         className="flex-1 overflow-y-auto min-h-0 no-scrollbar"
       >
         <div className="flex flex-col">
-          {updatesTab === "whatsnew" &&
+          {updatesTab === "whatsnew" && apiWhatsNew.length > 0 &&
+            [...apiWhatsNew, ...apiWhatsNew].map(renderApiItem)}
+          {updatesTab === "whatsnew" && apiWhatsNew.length === 0 &&
             [...announcements, ...announcements].map((a, idx) => {
               const Icon = getUpdateIcon(a.tag);
+
               return (
                 <article
                   key={`${a.title}-${idx}`}
