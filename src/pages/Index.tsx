@@ -238,11 +238,63 @@ function UpdatesPanel({
   t: (k: string) => string;
 }) {
   const [paused, setPaused] = useState(false);
+  const [apiWhatsNew, setApiWhatsNew] = useState<any[]>([]);
+  const [apiNotifs, setApiNotifs] = useState<any[]>([]);
   // Auto-scroll engine. Speed: see AUTO_SCROLL_SPEED_UPDATES (top of file).
   const { ref, scrollByAmount } = useAutoScroll<HTMLDivElement>(
     AUTO_SCROLL_SPEED_UPDATES,
     paused,
   );
+
+  useEffect(() => {
+    let alive = true;
+    import("@/lib/knowledgeHub").then(({ fetchWhatsNew, fetchHomeNotifications }) => {
+      Promise.all([fetchWhatsNew(), fetchHomeNotifications()]).then(([wn, nt]) => {
+        if (!alive) return;
+        setApiWhatsNew(wn);
+        setApiNotifs(nt);
+      });
+    });
+    return () => { alive = false; };
+  }, []);
+
+  const renderApiItem = (it: any, idx: number) => {
+    const created = it.created_at ? new Date(it.created_at).getTime() : 0;
+    const isNew = created && Date.now() - created < 7 * 24 * 60 * 60 * 1000;
+    const Icon = getUpdateIcon(it.type === "notification" ? "Notification" : it.type === "report" ? "Report" : "Notification");
+    const fileUrl = it.file_path
+      ? (it.file_path.startsWith("http") ? it.file_path : `${API_BASE_URL ?? ""}${it.file_path}`)
+      : null;
+    return (
+      <article
+        key={`${it.id || it.title}-${idx}`}
+        className="flex items-center gap-3 px-4 py-3 hover:bg-surface/60 transition border-b border-border"
+      >
+        <div className="shrink-0 text-primary self-center"><Icon className="h-5 w-5" /></div>
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-1.5 mb-1">
+            <span className="inline-block text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-accent/15 text-accent">
+              {String(it.type || "Update").replace(/_/g, " ")}
+            </span>
+            <span className="ml-auto"><NewBadge show={!!isNew} /></span>
+          </div>
+          <a
+            href={fileUrl || "#"}
+            target={fileUrl ? "_blank" : undefined}
+            rel="noreferrer"
+            onClick={(e) => { if (!fileUrl) e.preventDefault(); }}
+            className="text-sm font-semibold text-foreground hover:text-primary block leading-snug"
+          >
+            {it.title}
+          </a>
+          {it.description && (
+            <p className="text-xs text-muted-foreground mt-1 leading-relaxed">{it.description}</p>
+          )}
+        </div>
+      </article>
+    );
+  };
+
 
   return (
     <div className="bg-card border border-border rounded-md overflow-hidden h-full flex flex-col">
