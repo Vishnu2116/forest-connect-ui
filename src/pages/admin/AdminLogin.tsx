@@ -140,8 +140,9 @@ export default function AdminLogin() {
               className="w-full bg-accent hover:bg-accent/90 text-accent-foreground h-11 text-base font-semibold"
             >
               {loading ? "Signing in..." : "Login to Dashboard"}
+            </Button>
             <p className="text-[11px] text-center text-muted-foreground">
-              Demo only — any credentials will be accepted.
+              {USE_REAL_API ? "Use your admin credentials." : "Demo only — any credentials will be accepted."}
             </p>
           </form>
         </div>
