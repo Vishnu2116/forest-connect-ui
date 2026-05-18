@@ -1,9 +1,9 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import PageLayout, { PageHeader } from "@/components/layout/PageLayout";
-import { projects } from "@/data/content";
 import { Trees, ArrowRight, BarChart3, TrendingUp, Home, Briefcase } from "lucide-react";
 import { useLang } from "@/contexts/LanguageContext";
-import { slugify } from "./ProjectDetail";
+import { fetchProjects, resolveImage, statusBadgeClass, statusLabel, type ApiProjectCard } from "@/lib/projects";
 
 const impactStats = [
   { icon: TrendingUp, label: "Area Restored", value: "18,500 Ha", color: "text-primary" },
@@ -14,6 +14,20 @@ const impactStats = [
 
 export default function Projects() {
   const { t } = useLang();
+  const [items, setItems] = useState<ApiProjectCard[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let alive = true;
+    fetchProjects().then((d) => {
+      if (alive) {
+        setItems(d);
+        setLoading(false);
+      }
+    });
+    return () => { alive = false; };
+  }, []);
+
   return (
     <PageLayout>
       <PageHeader
@@ -22,7 +36,6 @@ export default function Projects() {
         breadcrumb={["Home", "Projects"]}
       />
 
-      {/* Impact Stats */}
       <section className="bg-surface py-8 border-b border-border">
         <div className="gov-container">
           <div className="flex items-center gap-2 mb-6">
@@ -43,37 +56,42 @@ export default function Projects() {
 
       <section className="py-10">
         <div className="gov-container">
+          {loading && <p className="text-sm text-muted-foreground">Loading…</p>}
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {projects.map((p) => (
-              <article key={p.title} className="bg-card border border-border rounded-lg overflow-hidden hover:shadow-card transition flex flex-col">
-                {/* Project image — set p.image in content.ts to use a real image */}
-                <div className="h-40 bg-gradient-to-br from-primary/20 to-primary-light/20 flex items-center justify-center overflow-hidden">
-                  {p.image ? (
-                    <img src={p.image} alt={p.title} className="w-full h-full object-cover" />
-                  ) : (
-                    <Trees className="h-10 w-10 text-primary/30" />
-                  )}
-                </div>
-                <div className="p-5 flex flex-col flex-1">
-                  <div className="flex flex-wrap items-center gap-2 mb-2">
-                    <span className="text-[10px] font-semibold uppercase px-2 py-0.5 rounded bg-success/10 text-success">{p.status}</span>
-                    {p.component && (
-                      <span className="text-[10px] font-semibold uppercase px-2 py-0.5 rounded bg-accent/10 text-accent">{p.component}</span>
+            {items.map((p) => {
+              const img = resolveImage(p.thumbnail_image_path);
+              return (
+                <article key={p.id} className="bg-card border border-border rounded-lg overflow-hidden hover:shadow-card transition flex flex-col">
+                  <div className="h-40 bg-gradient-to-br from-primary/20 to-primary-light/20 flex items-center justify-center overflow-hidden">
+                    {img ? (
+                      <img src={img} alt={p.title} className="w-full h-full object-cover" />
+                    ) : (
+                      <Trees className="h-10 w-10 text-primary/30" />
                     )}
                   </div>
-                  <h3 className="text-base font-bold text-primary leading-snug">{p.title}</h3>
-                  <p className="text-sm text-muted-foreground mt-2 line-clamp-2 leading-relaxed">{p.objective}</p>
-                  <div className="mt-auto pt-4">
-                    <Link
-                      to={`/projects/${slugify(p.title)}`}
-                      className="inline-flex items-center gap-1.5 bg-accent hover:bg-accent-hover text-accent-foreground px-4 py-2 rounded text-sm font-semibold transition"
-                    >
-                      Know More <ArrowRight className="h-4 w-4" />
-                    </Link>
+                  <div className="p-5 flex flex-col flex-1">
+                    <div className="flex flex-wrap items-center gap-2 mb-2">
+                      <span className={`text-[10px] font-semibold uppercase px-2 py-0.5 rounded ${statusBadgeClass(p.status)}`}>
+                        {statusLabel(p.status)}
+                      </span>
+                      {p.component?.label && (
+                        <span className="text-[10px] font-semibold uppercase px-2 py-0.5 rounded bg-accent/10 text-accent">{p.component.label}</span>
+                      )}
+                    </div>
+                    <h3 className="text-base font-bold text-primary leading-snug">{p.title}</h3>
+                    {p.subtitle && <p className="text-sm text-muted-foreground mt-2 line-clamp-2 leading-relaxed">{p.subtitle}</p>}
+                    <div className="mt-auto pt-4">
+                      <Link
+                        to={`/projects/${p.slug}`}
+                        className="inline-flex items-center gap-1.5 bg-accent hover:bg-accent-hover text-accent-foreground px-4 py-2 rounded text-sm font-semibold transition"
+                      >
+                        Know More <ArrowRight className="h-4 w-4" />
+                      </Link>
+                    </div>
                   </div>
-                </div>
-              </article>
-            ))}
+                </article>
+              );
+            })}
           </div>
         </div>
       </section>
