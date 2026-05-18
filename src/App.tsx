@@ -32,9 +32,6 @@ import {
 } from "./pages/admin/modules";
 import ProjectsManagementAdmin from "./pages/admin/ProjectsManagementAdmin";
 import ProjectComponentsAdmin from "./pages/admin/ProjectComponentsAdmin";
-const _unusedProjectsAdmin = {}; // placeholder
-const __unused = {
-} from "./pages/admin/modules";
 import PlantationAdmin from "./pages/admin/PlantationAdmin";
 import { GrievanceAdmin, RTIAdmin } from "./pages/admin/StatusModules";
 import { UsersAdmin } from "./pages/admin/UsersAdmin";
