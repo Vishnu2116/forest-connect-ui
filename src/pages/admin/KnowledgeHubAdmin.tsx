@@ -101,13 +101,21 @@ export default function KnowledgeHubAdmin() {
     setSaving(true);
     try {
       const fd = new FormData();
-      fd.append("title", editing.title);
+      fd.append("title", editing.title.trim());
       fd.append("type", editing.type);
       if (editing.description) fd.append("description", editing.description);
-      if (editing.language) fd.append("language", editing.language);
       if (editing.published_date) fd.append("published_date", editing.published_date);
-      if (editing.file) fd.append("file", editing.file);
-      if (editing.thumbnail) fd.append("thumbnail", editing.thumbnail);
+      if (editing.file) fd.append("file", editing.file, editing.file.name);
+      const showThumb = editing.type !== "publication" && editing.type !== "report";
+      if (showThumb && editing.thumbnail) fd.append("thumbnail", editing.thumbnail, editing.thumbnail.name);
+
+      // Debug: log FormData payload
+      console.log("[KH submit] payload:");
+      for (const [k, v] of fd.entries()) {
+        if (v instanceof File) console.log(" ", k, `File(${v.name}, ${v.size}b, ${v.type})`);
+        else console.log(" ", k, v);
+      }
+
       if (editing.id) await updateKHAdmin(editing.id, fd);
       else await createKHAdmin(fd);
       toast.success(editing.id ? "Updated" : "Created");
