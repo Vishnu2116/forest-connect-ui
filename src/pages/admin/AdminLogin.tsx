@@ -129,12 +129,17 @@ export default function AdminLogin() {
                 Forgot password?
               </a>
             </div>
+            {error && (
+              <p className="text-xs text-destructive bg-destructive/10 border border-destructive/30 rounded px-3 py-2">
+                {error}
+              </p>
+            )}
             <Button
               type="submit"
+              disabled={loading}
               className="w-full bg-accent hover:bg-accent/90 text-accent-foreground h-11 text-base font-semibold"
             >
-              Login to Dashboard
-            </Button>
+              {loading ? "Signing in..." : "Login to Dashboard"}
             <p className="text-[11px] text-center text-muted-foreground">
               Demo only — any credentials will be accepted.
             </p>
