@@ -1,4 +1,5 @@
 import PageLayout, { PageHeader } from "@/components/layout/PageLayout";
+import KnowledgeHubLayout from "@/components/layout/KnowledgeHubLayout";
 import { DataTable, Pagination } from "@/components/common/DataTable";
 import { Download, Eye, Trash2, Pencil, Upload } from "lucide-react";
 import { reports, publications, procurements } from "@/data/content";
