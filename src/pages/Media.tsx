@@ -249,11 +249,11 @@ export function MediaEventDetail() {
             <p className="text-sm md:text-base text-muted-foreground leading-relaxed">{ev.description}</p>
 
             <h2 className="text-base font-bold text-primary mt-8 mb-4">Event Gallery</h2>
-            <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 [column-fill:_balance]">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
               {ev.images.map((img, idx) => (
                 <div
                   key={idx}
-                  className={`mb-4 break-inside-avoid rounded-lg overflow-hidden border border-border bg-gradient-to-br from-primary/10 to-primary-light/10 ${img.aspect} flex items-center justify-center text-xs text-muted-foreground`}
+                  className="aspect-square rounded-lg overflow-hidden border border-border bg-gradient-to-br from-primary/10 to-primary-light/10 flex items-center justify-center text-[11px] text-muted-foreground text-center px-2"
                 >
                   {img.label}
                 </div>
