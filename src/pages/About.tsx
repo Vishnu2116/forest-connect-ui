@@ -955,8 +955,8 @@ export function OfficialDirectory() {
           </p>
         </div>
 
-        {/* Search */}
-        <div className="relative max-w-md">
+        {/* Search — full row width */}
+        <div className="relative w-full">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <input
             type="text"
@@ -974,28 +974,24 @@ export function OfficialDirectory() {
               <Users className="h-4 w-4 text-accent" /> {cat.title}
             </h3>
             {/* Desktop table */}
-            <div className="hidden md:block overflow-x-auto rounded-xl border border-border bg-card shadow-sm">
-              <table className="w-full text-sm">
+            <div className="hidden md:block rounded-xl border border-border bg-card shadow-sm">
+              <table className="w-full text-sm table-fixed">
+                <colgroup>
+                  <col className="w-[22%]" />
+                  <col className="w-[22%]" />
+                  <col className="w-[24%]" />
+                  <col className="w-[11%]" />
+                  <col className="w-[11%]" />
+                  <col className="w-[10%]" />
+                </colgroup>
                 <thead>
                   <tr className="bg-primary/5 border-b border-border">
-                    <th className="text-left py-3 px-4 font-semibold text-primary">
-                      Official
-                    </th>
-                    <th className="text-left py-3 px-4 font-semibold text-primary">
-                      Designation
-                    </th>
-                    <th className="text-left py-3 px-4 font-semibold text-primary">
-                      Division / Office
-                    </th>
-                    <th className="text-left py-3 px-4 font-semibold text-primary">
-                      Phone
-                    </th>
-                    <th className="text-left py-3 px-4 font-semibold text-primary">
-                      Mobile
-                    </th>
-                    <th className="text-left py-3 px-4 font-semibold text-primary">
-                      Email
-                    </th>
+                    <th className="text-left py-3 px-3 font-semibold text-primary">Official</th>
+                    <th className="text-left py-3 px-3 font-semibold text-primary">Designation</th>
+                    <th className="text-left py-3 px-3 font-semibold text-primary">Division / Office</th>
+                    <th className="text-left py-3 px-3 font-semibold text-primary">Phone</th>
+                    <th className="text-left py-3 px-3 font-semibold text-primary">Mobile</th>
+                    <th className="text-left py-3 px-3 font-semibold text-primary">Email</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -1004,44 +1000,30 @@ export function OfficialDirectory() {
                     return (
                       <tr
                         key={entry.name}
-                        className="border-b border-border last:border-b-0 hover:bg-muted/30 transition"
+                        className="border-b border-border last:border-b-0 hover:bg-muted/30 transition align-top"
                       >
-                        <td className="py-3 px-4">
-                          <div className="flex items-center gap-3">
-                            <div className="h-10 w-10 rounded-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center text-primary-foreground shrink-0 overflow-hidden">
+                        <td className="py-3 px-3">
+                          <div className="flex items-start gap-2.5">
+                            <div className="h-9 w-9 rounded-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center text-primary-foreground shrink-0 overflow-hidden">
                               {img ? (
-                                <img
-                                  src={img}
-                                  alt={entry.name}
-                                  className="h-full w-full object-cover"
-                                />
+                                <img src={img} alt={entry.name} className="h-full w-full object-cover" />
                               ) : (
                                 <User className="h-4 w-4" />
                               )}
                             </div>
-                            <span className="font-semibold text-foreground whitespace-nowrap">
+                            {/* Keep name + qualification on same line where space allows; allow soft wrap of whole text only */}
+                            <span className="font-semibold text-foreground break-words leading-snug">
                               {entry.name}
                             </span>
                           </div>
                         </td>
-                        <td className="py-3 px-4 text-foreground">
-                          {entry.designation}
-                        </td>
-                        <td className="py-3 px-4 text-muted-foreground">
-                          {entry.division || "—"}
-                        </td>
-                        <td className="py-3 px-4 text-muted-foreground whitespace-nowrap">
-                          {entry.phone || "—"}
-                        </td>
-                        <td className="py-3 px-4 text-muted-foreground whitespace-nowrap">
-                          {entry.mobile || "—"}
-                        </td>
-                        <td className="py-3 px-4">
+                        <td className="py-3 px-3 text-foreground break-words leading-snug">{entry.designation}</td>
+                        <td className="py-3 px-3 text-muted-foreground break-words leading-snug">{entry.division || "—"}</td>
+                        <td className="py-3 px-3 text-muted-foreground break-words">{entry.phone || "—"}</td>
+                        <td className="py-3 px-3 text-muted-foreground break-words">{entry.mobile || "—"}</td>
+                        <td className="py-3 px-3">
                           {entry.email ? (
-                            <a
-                              href={`mailto:${entry.email}`}
-                              className="text-primary hover:underline whitespace-nowrap"
-                            >
+                            <a href={`mailto:${entry.email}`} className="text-primary hover:underline break-all">
                               {entry.email}
                             </a>
                           ) : (
