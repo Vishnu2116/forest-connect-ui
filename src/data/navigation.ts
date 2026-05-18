@@ -14,8 +14,7 @@ export const navItems: NavItem[] = [
       { label: "Who's Who", to: "/about/whos-who" },
       { label: "Memorandum of Association", to: "/about/memorandum" },
       { label: "Official Directory", to: "/about/directory" },
-      { label: "Vision & Objective", to: "/about/vision" },
-      { label: "Mission & Objective", to: "/about/mission" },
+      { label: "Vision, Mission & Objectives", to: "/about/vision-mission" },
     ],
   },
   {
