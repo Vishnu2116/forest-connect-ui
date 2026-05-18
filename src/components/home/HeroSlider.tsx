@@ -92,7 +92,10 @@ export default function HeroSlider() {
               cta1: { label: s.cta1_label ?? "", to: s.cta1_link ?? "#" },
               cta2: { label: s.cta2_label ?? "", to: s.cta2_link ?? "#" },
             }));
-          if (mapped.length > 0) setSlides(mapped);
+          if (mapped.length > 0) {
+            setSlides(mapped);
+            setI(0); // reset to first slide so the index can't point past the new array
+          }
         }
       } catch {
         // keep dummy data
