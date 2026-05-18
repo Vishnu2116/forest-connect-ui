@@ -441,7 +441,7 @@ function UpdatesPanel({
             </>
           )}
           {updatesTab === "tenders" &&
-            [...procurements, ...procurements].map((p, idx) => (
+            procurements.map((p, idx) => (
               <article
                 key={`${p.title}-${idx}`}
                 className="flex items-center gap-3 px-4 py-3 hover:bg-surface/60 transition border-b border-border"
