@@ -409,7 +409,7 @@ function UpdatesPanel({
                   </article>
                 );
               })}
-              {[...events, ...events].map((e, idx) => (
+              {events.map((e, idx) => (
                 <article
                   key={`${e.title}-${idx}`}
                   className="flex items-center gap-3 px-4 py-3 hover:bg-surface/60 transition border-b border-border"
