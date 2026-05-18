@@ -76,10 +76,9 @@ export function resolveImage(path?: string | null): string | null {
   return path;
 }
 
-// Read token fresh on every call. Never cache.
+// Backwards-compat: delegate to the central helper so the token is always read fresh.
 export function authHeaders(): HeadersInit {
-  const token = localStorage.getItem("element_admin_token");
-  return token ? { Authorization: `Bearer ${token}` } : {};
+  return getAuthHeaders();
 }
 
 export function slugify(s: string) {
