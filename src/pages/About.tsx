@@ -43,13 +43,12 @@ import CS from "@/assets/dignitaries/CS.jpg";
 import SanjibDas from "@/assets/dignitaries/SanjibDas.png";
 
 const aboutLinks = [
-  { to: "/about", title: "About ELEMENT" },
+  { to: "/about", title: "About PROJECT ELEMENT" },
   { to: "/about/organization", title: "Organization Structure" },
   { to: "/about/whos-who", title: "Who's Who" },
   { to: "/about/memorandum", title: "Memorandum of Association" },
   { to: "/about/directory", title: "Official Directory" },
-  { to: "/about/vision", title: "Vision & Objective" },
-  { to: "/about/mission", title: "Mission & Objective" },
+  { to: "/about/vision-mission", title: "Vision, Mission & Objectives" },
 ];
 
 function AboutLayout({
@@ -70,8 +69,8 @@ function AboutLayout({
         breadcrumb={["Home", "About", title]}
       />
       <section className="py-10">
-        <div className="gov-container grid lg:grid-cols-4 gap-8">
-          <aside className="lg:col-span-1">
+        <div className="gov-container grid lg:grid-cols-[210px_minmax(0,1fr)] gap-6 lg:gap-8">
+          <aside>
             <h3 className="text-sm font-semibold text-primary mb-3 uppercase">
               About
             </h3>
@@ -80,7 +79,7 @@ function AboutLayout({
                 <Link
                   key={l.to}
                   to={l.to}
-                  className={`block px-3 py-2 text-sm rounded border-l-2 transition ${
+                  className={`block px-3 py-2 text-[13px] rounded border-l-2 transition ${
                     pathname === l.to
                       ? "border-accent text-primary bg-surface font-semibold"
                       : "border-transparent hover:bg-surface hover:text-primary hover:border-accent"
@@ -91,7 +90,7 @@ function AboutLayout({
               ))}
             </nav>
           </aside>
-          <div className="lg:col-span-3">{children}</div>
+          <div className="min-w-0">{children}</div>
         </div>
       </section>
     </PageLayout>
