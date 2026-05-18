@@ -97,37 +97,44 @@ export default function HomeSocialMediaAdmin() {
     }
   };
 
-  const Field = ({
-    label,
-    field,
-    placeholder,
-    textarea,
-  }: {
-    label: string;
-    field: keyof SocialForm;
-    placeholder?: string;
-    textarea?: boolean;
-  }) => (
+  const textInput = (
+    label: string,
+    field: keyof SocialForm,
+    placeholder?: string
+  ) => (
     <div>
       <label className="text-[11px] font-semibold text-muted-foreground uppercase">
         {label}
       </label>
-      {textarea ? (
-        <Textarea
-          value={form[field]}
-          onChange={(e) => update(field, e.target.value)}
-          placeholder={placeholder}
-          rows={3}
-          className="mt-1"
-        />
-      ) : (
-        <input
-          value={form[field]}
-          onChange={(e) => update(field, e.target.value)}
-          placeholder={placeholder}
-          className="w-full border border-input rounded px-2 py-1.5 text-sm bg-card focus-ring mt-1"
-        />
-      )}
+      <input
+        value={form[field]}
+        onChange={(e) =>
+          setForm((prev) => ({ ...prev, [field]: e.target.value }))
+        }
+        placeholder={placeholder}
+        className="w-full border border-input rounded px-2 py-1.5 text-sm bg-card focus-ring mt-1"
+      />
+    </div>
+  );
+
+  const textareaInput = (
+    label: string,
+    field: keyof SocialForm,
+    placeholder?: string
+  ) => (
+    <div>
+      <label className="text-[11px] font-semibold text-muted-foreground uppercase">
+        {label}
+      </label>
+      <Textarea
+        value={form[field]}
+        onChange={(e) =>
+          setForm((prev) => ({ ...prev, [field]: e.target.value }))
+        }
+        placeholder={placeholder}
+        rows={3}
+        className="mt-1"
+      />
     </div>
   );
 
@@ -157,46 +164,36 @@ export default function HomeSocialMediaAdmin() {
       <div className="grid md:grid-cols-2 gap-4">
         <div className="bg-card border border-border rounded-md p-4 space-y-3">
           <h3 className="font-semibold text-primary">Facebook</h3>
-          <Field
-            label="Handle"
-            field="facebook_handle"
-            placeholder="@ElementTripura"
-          />
-          <Field
-            label="Post text"
-            field="facebook_post_text"
-            placeholder="Latest Facebook update…"
-            textarea
-          />
+          {textInput("Handle", "facebook_handle", "@ElementTripura")}
+          {textareaInput(
+            "Post text",
+            "facebook_post_text",
+            "Latest Facebook update…"
+          )}
         </div>
 
         <div className="bg-card border border-border rounded-md p-4 space-y-3">
           <h3 className="font-semibold text-primary">Twitter / X</h3>
-          <Field
-            label="Handle"
-            field="twitter_handle"
-            placeholder="@ElementTripura"
-          />
-          <Field
-            label="Post text"
-            field="twitter_post_text"
-            placeholder="Latest Tweet…"
-            textarea
-          />
+          {textInput("Handle", "twitter_handle", "@ElementTripura")}
+          {textareaInput(
+            "Post text",
+            "twitter_post_text",
+            "Latest Tweet…"
+          )}
         </div>
 
         <div className="bg-card border border-border rounded-md p-4 space-y-3 md:col-span-2">
           <h3 className="font-semibold text-primary">YouTube</h3>
-          <Field
-            label="Video URL"
-            field="youtube_video_url"
-            placeholder="https://www.youtube.com/watch?v=…"
-          />
-          <Field
-            label="Video title"
-            field="youtube_video_title"
-            placeholder="Video title shown under the embed"
-          />
+          {textInput(
+            "Video URL",
+            "youtube_video_url",
+            "https://www.youtube.com/watch?v=…"
+          )}
+          {textInput(
+            "Video title",
+            "youtube_video_title",
+            "Video title shown under the embed"
+          )}
           <p className="text-xs text-muted-foreground">
             Leave any field empty to fall back to the default content on the
             home page.
