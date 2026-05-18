@@ -84,8 +84,17 @@ export function ListingPage({
                   </td>
                   <td>
                     <div className="flex gap-2">
-                      <button className="p-1.5 text-primary hover:bg-primary/10 rounded" aria-label="View"><Eye className="h-4 w-4" /></button>
-                      <button className="p-1.5 text-accent hover:bg-accent/10 rounded" aria-label="Download"><Download className="h-4 w-4" /></button>
+                      {r.href ? (
+                        <>
+                          <a href={r.href} target="_blank" rel="noopener noreferrer" className="p-1.5 text-primary hover:bg-primary/10 rounded" aria-label="View"><Eye className="h-4 w-4" /></a>
+                          <a href={r.href} target="_blank" rel="noopener noreferrer" className="p-1.5 text-accent hover:bg-accent/10 rounded" aria-label="Download"><Download className="h-4 w-4" /></a>
+                        </>
+                      ) : (
+                        <>
+                          <button className="p-1.5 text-primary hover:bg-primary/10 rounded" aria-label="View"><Eye className="h-4 w-4" /></button>
+                          <button className="p-1.5 text-accent hover:bg-accent/10 rounded" aria-label="Download"><Download className="h-4 w-4" /></button>
+                        </>
+                      )}
                     </div>
                   </td>
                 </tr>
