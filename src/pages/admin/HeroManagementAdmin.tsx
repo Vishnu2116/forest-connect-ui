@@ -330,14 +330,18 @@ export default function HeroManagementAdmin() {
                     onClick={() => fileInputs.current[String(slide.id)]?.click()}
                     className="mt-1 h-48 border-2 border-dashed border-border rounded-md flex flex-col items-center justify-center bg-surface group hover:border-primary/40 transition cursor-pointer"
                   >
-                    {slide.image ? (
-                      <div className="text-center">
-                        <ImageIcon className="h-8 w-8 text-primary mx-auto mb-2" />
-                        <p className="text-xs font-medium text-foreground">{slide.image}</p>
-                        <p className="text-[10px] text-muted-foreground mt-1">Recommended: 1920 × 1080 px</p>
-                        <Button variant="outline" size="sm" className="mt-2 gap-1 text-xs" type="button">
-                          <Upload className="h-3 w-3" /> Replace Image
-                        </Button>
+                    {resolveImageSrc(slide) ? (
+                      <div className="w-full h-full relative group">
+                        <img
+                          src={resolveImageSrc(slide)!}
+                          alt={slide.title}
+                          className="w-full h-full object-cover rounded"
+                        />
+                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center rounded">
+                          <Button variant="secondary" size="sm" className="gap-1 text-xs" type="button">
+                            <Upload className="h-3 w-3" /> Replace Image
+                          </Button>
+                        </div>
                       </div>
                     ) : (
                       <div className="text-center">
