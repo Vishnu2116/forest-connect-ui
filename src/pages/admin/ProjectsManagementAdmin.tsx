@@ -7,7 +7,7 @@ import { Loader2, Plus, Pencil, Trash2, Save, X, Upload, Image as ImageIcon, Tre
 import { toast } from "sonner";
 import { API_BASE_URL, USE_REAL_API, getAuthHeaders, getAuthJsonHeaders } from "@/config/api";
 import {
-  authHeaders, fetchProjectsAdmin, fetchProjectAdmin, fetchComponentsAdmin,
+  fetchProjectsAdmin, fetchProjectAdmin, fetchComponentsAdmin,
   resolveImage, statusLabel,
   type ApiProjectCard, type ApiProjectDetail, type ApiProjectComponent, type ApiGalleryImage,
 } from "@/lib/projects";
