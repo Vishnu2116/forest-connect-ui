@@ -77,7 +77,7 @@ export function resolveImage(path?: string | null): string | null {
 }
 
 // Backwards-compat: delegate to the central helper so the token is always read fresh.
-export function authHeaders(): HeadersInit {
+export function getAuthHeaders(): HeadersInit {
   return getAuthHeaders();
 }
 
@@ -273,20 +273,20 @@ export async function fetchHighlights(): Promise<ApiProjectCard[]> {
 
 /* ---------- Admin fetchers (no dummy fallback, always real API) ---------- */
 export async function fetchProjectsAdmin(): Promise<ApiProjectCard[]> {
-  const r = await fetch(`${API_BASE_URL}/api/projects`, { headers: authHeaders() });
+  const r = await fetch(`${API_BASE_URL}/api/projects`, { headers: getAuthHeaders() });
   if (!r.ok) throw new Error(`HTTP ${r.status}`);
   const data = await r.json();
   return Array.isArray(data) ? data : [];
 }
 
 export async function fetchProjectAdmin(slug: string): Promise<ApiProjectDetail | null> {
-  const r = await fetch(`${API_BASE_URL}/api/projects/${slug}`, { headers: authHeaders() });
+  const r = await fetch(`${API_BASE_URL}/api/projects/${slug}`, { headers: getAuthHeaders() });
   if (!r.ok) throw new Error(`HTTP ${r.status}`);
   return await r.json();
 }
 
 export async function fetchComponentsAdmin(): Promise<ApiProjectComponent[]> {
-  const r = await fetch(`${API_BASE_URL}/api/project-components`, { headers: authHeaders() });
+  const r = await fetch(`${API_BASE_URL}/api/project-components`, { headers: getAuthHeaders() });
   if (!r.ok) throw new Error(`HTTP ${r.status}`);
   const data = await r.json();
   return Array.isArray(data) ? data : [];
