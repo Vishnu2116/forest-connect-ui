@@ -334,7 +334,7 @@ function UpdatesPanel({
           {updatesTab === "whatsnew" && apiWhatsNew.length > 0 &&
             apiWhatsNew.map(renderApiItem)}
           {updatesTab === "whatsnew" && apiWhatsNew.length === 0 &&
-            [...announcements, ...announcements].map((a, idx) => {
+            announcements.map((a, idx) => {
               const Icon = getUpdateIcon(a.tag);
 
               return (
