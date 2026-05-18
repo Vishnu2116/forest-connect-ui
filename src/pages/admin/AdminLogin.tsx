@@ -6,17 +6,51 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import logoTripura from "@/assets/logo-tripura.png";
 import logoWorldBank from "@/assets/logo-theworldbank.jpg";
+import { API_BASE_URL, USE_REAL_API } from "@/config/api";
 
 export default function AdminLogin() {
   const navigate = useNavigate();
   const [user, setUser] = useState("");
   const [pass, setPass] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const onSubmit = (e: React.FormEvent) => {
+  const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Dummy auth — accept any credentials
-    sessionStorage.setItem("element_admin", user || "admin");
-    navigate("/admin");
+    setError("");
+
+    if (!USE_REAL_API) {
+      // Preview/dummy mode — accept any credentials
+      sessionStorage.setItem("element_admin", user || "admin");
+      localStorage.setItem("element_admin", JSON.stringify({ id: "demo", email: user || "admin", name: user || "Admin" }));
+      localStorage.setItem("element_admin_token", "demo-token");
+      navigate("/admin");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/auth/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: user, password: pass }),
+      });
+      if (res.status === 200) {
+        const data = await res.json();
+        localStorage.setItem("element_admin_token", data.token);
+        localStorage.setItem("element_admin", JSON.stringify(data.admin));
+        sessionStorage.setItem("element_admin", data.admin?.name || user);
+        navigate("/admin");
+      } else if (res.status === 401) {
+        setError("Invalid email or password");
+      } else {
+        setError("Login failed. Please try again.");
+      }
+    } catch {
+      setError("Unable to connect to server");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
