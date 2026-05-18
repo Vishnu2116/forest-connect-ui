@@ -129,7 +129,12 @@ export default function KnowledgeHubAdmin() {
           <div className="flex items-center gap-2">
             <select
               value={typeFilter}
-              onChange={(e) => setTypeFilter(e.target.value as any)}
+              onChange={(e) => {
+                const v = e.target.value as KHType | "all";
+                setTypeFilter(v);
+                if (v === "all") setSearchParams({});
+                else setSearchParams({ type: v });
+              }}
               className="h-10 px-2 border border-input rounded text-sm bg-background"
             >
               <option value="all">All Types</option>
