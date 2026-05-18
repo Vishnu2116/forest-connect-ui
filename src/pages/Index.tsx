@@ -548,6 +548,7 @@ export default function Home() {
   >("whatsnew");
 
   const [apiLeadership, setApiLeadership] = useState<any[] | null>(null);
+  const [apiSocial, setApiSocial] = useState<any | null>(null);
 
   useEffect(() => {
     if (!USE_REAL_API) return;
@@ -564,10 +565,53 @@ export default function Home() {
         /* keep dummy */
       }
     })();
+    (async () => {
+      try {
+        const res = await fetch(`${API_BASE_URL}/api/home/social-media`);
+        if (!res.ok) throw new Error();
+        const data = await res.json();
+        if (!cancelled && data && typeof data === "object") {
+          setApiSocial(data);
+        }
+      } catch {
+        /* keep dummy */
+      }
+    })();
     return () => {
       cancelled = true;
     };
   }, []);
+
+  // Dummy social media fallbacks
+  const dummySocial = {
+    facebook_handle: "@ElementTripura",
+    facebook_post_text:
+      "Field visit by ELEMENT team to community plantation sites in Dhalai district. Engaging with SHGs on livelihood value chains and capacity-building workshops.",
+    twitter_handle: "@ElementTripura",
+    twitter_post_text:
+      "Honourable Forest Minister inaugurates new eco-tourism circuit under ELEMENT. A milestone for sustainable livelihoods across Tripura. #Tripura #ELEMENT",
+    youtube_video_url: "",
+    youtube_video_title: "PROJECT ELEMENT Overview — Community Livelihoods",
+  };
+  const social = {
+    facebook_handle: apiSocial?.facebook_handle ?? dummySocial.facebook_handle,
+    facebook_post_text:
+      apiSocial?.facebook_post_text ?? dummySocial.facebook_post_text,
+    twitter_handle: apiSocial?.twitter_handle ?? dummySocial.twitter_handle,
+    twitter_post_text:
+      apiSocial?.twitter_post_text ?? dummySocial.twitter_post_text,
+    youtube_video_url:
+      apiSocial?.youtube_video_url ?? dummySocial.youtube_video_url,
+    youtube_video_title:
+      apiSocial?.youtube_video_title ?? dummySocial.youtube_video_title,
+  };
+  const youtubeEmbed = (() => {
+    const url = social.youtube_video_url;
+    if (!url) return "";
+    const m =
+      url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([\w-]{11})/);
+    return m ? `https://www.youtube.com/embed/${m[1]}` : "";
+  })();
 
   const leadershipSlots = useMemo(() => {
     return dummyLeadershipSlots.map((dummy) => {
