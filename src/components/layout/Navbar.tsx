@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import {
   ChevronDown,
@@ -11,9 +11,10 @@ import {
   Map as MapIcon,
   Eye,
 } from "lucide-react";
-import { navItems } from "@/data/navigation";
+import { navItems as baseNavItems } from "@/data/navigation";
 import { useLang, LANGUAGES } from "@/contexts/LanguageContext";
 import { useA11y } from "@/contexts/AccessibilityContext";
+import { getNavComponentsOnce } from "@/lib/projects";
 import logoTripura from "@/assets/logo-tripura.png";
 import logoTheWorldBank from "@/assets/logo-theworldbank.jpg";
 import logoTripuraForestDept from "@/assets/logo-tripuraforestdept.png";
@@ -35,6 +36,31 @@ export default function Navbar() {
     highContrast,
     toggleHighContrast,
   } = useA11y();
+
+  const [componentChildren, setComponentChildren] = useState<{ label: string; to: string }[] | null>(null);
+
+  useEffect(() => {
+    let alive = true;
+    getNavComponentsOnce()
+      .then((items) => {
+        if (!alive || !Array.isArray(items) || items.length === 0) return;
+        setComponentChildren(
+          items.map((c) => ({
+            label: c.name || c.label || `Component ${c.component_number ?? ""}`,
+            to: `/components/${c.id}`,
+          }))
+        );
+      })
+      .catch(() => {});
+    return () => { alive = false; };
+  }, []);
+
+  const navItems = useMemo(() => {
+    if (!componentChildren) return baseNavItems;
+    return baseNavItems.map((item) =>
+      item.labelKey === "nav.components" ? { ...item, children: componentChildren } : item
+    );
+  }, [componentChildren]);
 
   const isActive = (to?: string) =>
     to && (to === "/" ? pathname === "/" : pathname.startsWith(to));
