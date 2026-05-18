@@ -374,14 +374,9 @@ function UpdatesPanel({
           {updatesTab === "notifications" && apiNotifs.length === 0 && (
 
             <>
-              {[
-                ...announcements.filter(
-                  (a) => a.tag === "Notification" || a.tag === "Recruitment",
-                ),
-                ...announcements.filter(
-                  (a) => a.tag === "Notification" || a.tag === "Recruitment",
-                ),
-              ].map((a, idx) => {
+              {announcements
+                .filter((a) => a.tag === "Notification" || a.tag === "Recruitment")
+                .map((a, idx) => {
                 const Icon = getUpdateIcon(a.tag);
                 return (
                   <article
