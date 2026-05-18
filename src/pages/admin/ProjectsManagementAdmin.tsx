@@ -238,7 +238,7 @@ export default function ProjectsAdmin() {
           saving={saving}
           onGalleryChanged={async () => {
             if (!editing.id) return;
-            const detail = await fetchProject(editing.slug || "");
+            const detail = await fetchProjectAdmin(editing.slug || "").catch(() => null);
             if (detail) setEditing({ ...editing, gallery: detail.gallery || [] });
           }}
         />
