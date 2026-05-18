@@ -430,7 +430,8 @@ export default function KnowledgeHubAdmin({
 
               <div className="md:col-span-2 border border-dashed border-border rounded p-3 bg-surface">
                 <Label className="flex items-center gap-2"><Upload className="h-4 w-4" /> Document File</Label>
-                <input type="file" className="mt-2 text-xs" onChange={(e) => e.target.files?.[0] && onUploadFile(e.target.files[0], "file")} disabled={uploading} />
+                <input type="file" accept="application/pdf,.pdf" className="mt-2 text-xs" onChange={(e) => e.target.files?.[0] && onUploadFile(e.target.files[0], "file")} disabled={uploading} />
+                <p className="text-[11px] mt-1 text-muted-foreground">Only PDF files are allowed for Knowledge Hub documents.</p>
                 {form.file_url && (
                   <p className="text-xs mt-2 text-muted-foreground">
                     Current: <a href={form.file_url} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">{form.file_name || "View file"}</a>
