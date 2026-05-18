@@ -24,13 +24,6 @@ const emptyForm: SocialForm = {
   youtube_video_title: "",
 };
 
-function authHeaders(extra: HeadersInit = {}): HeadersInit {
-  const token = localStorage.getItem("element_admin_token");
-  return {
-    ...(token ? { Authorization: `Bearer ${token}` } : {}),
-    ...extra,
-  };
-}
 
 export default function HomeSocialMediaAdmin() {
   const [form, setForm] = useState<SocialForm>(emptyForm);
