@@ -1,4 +1,4 @@
-import { API_BASE_URL, USE_REAL_API } from "@/config/api";
+import { API_BASE_URL, USE_REAL_API, getAuthHeaders, getAuthJsonHeaders } from "@/config/api";
 import { projects as dummyProjectsRaw } from "@/data/content";
 
 export type ProjectStatus = "ongoing" | "pilot_phase" | "completed" | string;
@@ -74,12 +74,6 @@ export function resolveImage(path?: string | null): string | null {
   if (path.startsWith("/uploads/")) return `${API_BASE_URL ?? ""}${path}`;
   // Local Vite-imported assets or other absolute paths — return as-is.
   return path;
-}
-
-// Read token fresh on every call. Never cache.
-export function authHeaders(): HeadersInit {
-  const token = localStorage.getItem("element_admin_token");
-  return token ? { Authorization: `Bearer ${token}` } : {};
 }
 
 export function slugify(s: string) {
@@ -274,20 +268,20 @@ export async function fetchHighlights(): Promise<ApiProjectCard[]> {
 
 /* ---------- Admin fetchers (no dummy fallback, always real API) ---------- */
 export async function fetchProjectsAdmin(): Promise<ApiProjectCard[]> {
-  const r = await fetch(`${API_BASE_URL}/api/projects`, { headers: authHeaders() });
+  const r = await fetch(`${API_BASE_URL}/api/projects`, { headers: getAuthHeaders() });
   if (!r.ok) throw new Error(`HTTP ${r.status}`);
   const data = await r.json();
   return Array.isArray(data) ? data : [];
 }
 
 export async function fetchProjectAdmin(slug: string): Promise<ApiProjectDetail | null> {
-  const r = await fetch(`${API_BASE_URL}/api/projects/${slug}`, { headers: authHeaders() });
+  const r = await fetch(`${API_BASE_URL}/api/projects/${slug}`, { headers: getAuthHeaders() });
   if (!r.ok) throw new Error(`HTTP ${r.status}`);
   return await r.json();
 }
 
 export async function fetchComponentsAdmin(): Promise<ApiProjectComponent[]> {
-  const r = await fetch(`${API_BASE_URL}/api/project-components`, { headers: authHeaders() });
+  const r = await fetch(`${API_BASE_URL}/api/project-components`, { headers: getAuthHeaders() });
   if (!r.ok) throw new Error(`HTTP ${r.status}`);
   const data = await r.json();
   return Array.isArray(data) ? data : [];

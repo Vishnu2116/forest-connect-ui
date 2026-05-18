@@ -5,9 +5,9 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Loader2, Plus, Pencil, Trash2, Save, X, Upload, Image as ImageIcon, Trees } from "lucide-react";
 import { toast } from "sonner";
-import { API_BASE_URL, USE_REAL_API } from "@/config/api";
+import { API_BASE_URL, USE_REAL_API, getAuthHeaders, getAuthJsonHeaders } from "@/config/api";
 import {
-  authHeaders, fetchProjectsAdmin, fetchProjectAdmin, fetchComponentsAdmin,
+  fetchProjectsAdmin, fetchProjectAdmin, fetchComponentsAdmin,
   resolveImage, statusLabel,
   type ApiProjectCard, type ApiProjectDetail, type ApiProjectComponent, type ApiGalleryImage,
 } from "@/lib/projects";
@@ -116,7 +116,7 @@ export default function ProjectsAdmin() {
     if (!USE_REAL_API) return;
     try {
       const r = await fetch(`${API_BASE_URL}/api/admin/projects/${p.id}`, {
-        method: "DELETE", headers: authHeaders(),
+        method: "DELETE", headers: getAuthHeaders(),
       });
       if (!r.ok) throw new Error();
       toast.success("Project deleted");
@@ -160,7 +160,7 @@ export default function ProjectsAdmin() {
         : `${API_BASE_URL}/api/admin/projects`;
       const r = await fetch(url, {
         method: editing.id ? "PUT" : "POST",
-        headers: authHeaders(),
+        headers: getAuthHeaders(),
         body: fd,
       });
       if (!r.ok) throw new Error();
@@ -334,7 +334,7 @@ function Editor({ form, setForm, components, onSave, onCancel, saving, onGallery
       const fd = new FormData();
       Array.from(files).slice(0, 10).forEach((f) => fd.append("images", f));
       const r = await fetch(`${API_BASE_URL}/api/admin/projects/${form.id}/gallery`, {
-        method: "POST", headers: authHeaders(), body: fd,
+        method: "POST", headers: getAuthHeaders(), body: fd,
       });
       if (!r.ok) throw new Error();
       toast.success("Images uploaded");
@@ -351,7 +351,7 @@ function Editor({ form, setForm, components, onSave, onCancel, saving, onGallery
     if (!USE_REAL_API) return;
     try {
       const r = await fetch(`${API_BASE_URL}/api/admin/projects/gallery/${img.id}`, {
-        method: "DELETE", headers: authHeaders(),
+        method: "DELETE", headers: getAuthHeaders(),
       });
       if (!r.ok) throw new Error();
       toast.success("Image deleted");

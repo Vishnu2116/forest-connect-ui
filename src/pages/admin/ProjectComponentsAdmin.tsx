@@ -5,8 +5,8 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Loader2, Plus, Pencil, Trash2, Save, X } from "lucide-react";
 import { toast } from "sonner";
-import { API_BASE_URL, USE_REAL_API } from "@/config/api";
-import { authHeaders, fetchComponentsAdmin, type ApiProjectComponent } from "@/lib/projects";
+import { API_BASE_URL, USE_REAL_API, getAuthHeaders, getAuthJsonHeaders } from "@/config/api";
+import { fetchComponentsAdmin, type ApiProjectComponent } from "@/lib/projects";
 
 interface FormState {
   id: string | null;
@@ -87,7 +87,7 @@ export default function ProjectComponentsAdmin() {
         : `${API_BASE_URL}/api/admin/project-components`;
       const r = await fetch(url, {
         method: editing.id ? "PUT" : "POST",
-        headers: { ...authHeaders(), "Content-Type": "application/json" },
+        headers: getAuthJsonHeaders(),
         body: JSON.stringify(body),
       });
       if (!r.ok) throw new Error();
@@ -106,7 +106,7 @@ export default function ProjectComponentsAdmin() {
     if (!USE_REAL_API) return;
     try {
       const r = await fetch(`${API_BASE_URL}/api/admin/project-components/${c.id}`, {
-        method: "DELETE", headers: authHeaders(),
+        method: "DELETE", headers: getAuthHeaders(),
       });
       if (!r.ok) {
         let msg = "Failed to delete";

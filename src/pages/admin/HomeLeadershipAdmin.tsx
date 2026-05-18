@@ -3,7 +3,7 @@ import { AdminPageHeader } from "./AdminLayout";
 import { Button } from "@/components/ui/button";
 import { Loader2, Save, Upload, User as UserIcon } from "lucide-react";
 import { toast } from "sonner";
-import { API_BASE_URL, USE_REAL_API } from "@/config/api";
+import { API_BASE_URL, USE_REAL_API, getAuthHeaders, getAuthJsonHeaders } from "@/config/api";
 
 interface Slot {
   slot_number: number;
@@ -16,10 +16,6 @@ interface Slot {
   photoPreview?: string;
 }
 
-function authHeaders(): HeadersInit {
-  const token = localStorage.getItem("element_admin_token");
-  return token ? { Authorization: `Bearer ${token}` } : {};
-}
 
 function emptySlots(): Slot[] {
   return [1, 2, 3, 4].map((n) => ({
@@ -51,7 +47,7 @@ export default function HomeLeadershipAdmin() {
     setLoading(true);
     try {
       const res = await fetch(`${API_BASE_URL}/api/home/leadership`, {
-        headers: authHeaders(),
+        headers: getAuthHeaders(),
       });
       if (!res.ok) throw new Error();
       const data = await res.json();
@@ -120,7 +116,7 @@ export default function HomeLeadershipAdmin() {
       if (s.photoFile) fd.append("photo", s.photoFile);
       const res = await fetch(
         `${API_BASE_URL}/api/admin/home-leadership/${s.slot_number}`,
-        { method: "PUT", headers: authHeaders(), body: fd }
+        { method: "PUT", headers: getAuthHeaders(), body: fd }
       );
       if (!res.ok) throw new Error();
       toast.success(`Slot ${s.slot_number} updated`);

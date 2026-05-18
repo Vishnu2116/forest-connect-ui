@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Loader2, Save } from "lucide-react";
 import { toast } from "sonner";
-import { API_BASE_URL, USE_REAL_API } from "@/config/api";
+import { API_BASE_URL, USE_REAL_API, getAuthHeaders, getAuthJsonHeaders } from "@/config/api";
 
 interface SocialForm {
   facebook_handle: string;
@@ -24,13 +24,6 @@ const emptyForm: SocialForm = {
   youtube_video_title: "",
 };
 
-function authHeaders(extra: HeadersInit = {}): HeadersInit {
-  const token = localStorage.getItem("element_admin_token");
-  return {
-    ...(token ? { Authorization: `Bearer ${token}` } : {}),
-    ...extra,
-  };
-}
 
 export default function HomeSocialMediaAdmin() {
   const [form, setForm] = useState<SocialForm>(emptyForm);
@@ -42,7 +35,7 @@ export default function HomeSocialMediaAdmin() {
     setLoading(true);
     try {
       const res = await fetch(`${API_BASE_URL}/api/home/social-media`, {
-        headers: authHeaders(),
+        headers: getAuthHeaders(),
       });
       if (!res.ok) throw new Error();
       const data = await res.json();
@@ -83,7 +76,7 @@ export default function HomeSocialMediaAdmin() {
         `${API_BASE_URL}/api/admin/home-social-media`,
         {
           method: "PUT",
-          headers: authHeaders({ "Content-Type": "application/json" }),
+          headers: getAuthJsonHeaders(),
           body: JSON.stringify(form),
         }
       );

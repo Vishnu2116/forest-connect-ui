@@ -3,7 +3,7 @@ import { AdminPageHeader } from "./AdminLayout";
 import { Button } from "@/components/ui/button";
 import { ChevronUp, ChevronDown, Trash2, Plus, Save, Image as ImageIcon, Upload, GripVertical, Loader2 } from "lucide-react";
 import { toast } from "sonner";
-import { API_BASE_URL, USE_REAL_API } from "@/config/api";
+import { API_BASE_URL, USE_REAL_API, getAuthHeaders, getAuthJsonHeaders } from "@/config/api";
 
 interface Slide {
   id: string | number;
@@ -38,10 +38,6 @@ const dummySlides: Slide[] = [
   { id: 5, title: "Natural Resource Management", subtitle: "Promoting soil conservation and community-led environmental restoration.", badge: "Government of Tripura", cta1Label: "Explore Projects", cta1Link: "/projects", cta2Label: "Knowledge Hub", cta2Link: "/knowledge-hub/iec", image: "hero-nrm.jpg" },
 ];
 
-function authHeaders(): HeadersInit {
-  const token = localStorage.getItem("element_admin_token");
-  return token ? { Authorization: `Bearer ${token}` } : {};
-}
 
 function mapApiToSlide(s: any): Slide {
   return {
@@ -87,7 +83,7 @@ export default function HeroManagementAdmin() {
     setLoading(true);
     try {
       // Public list endpoint, but admin sends the bearer token.
-      const res = await fetch(`${API_BASE_URL}/api/hero-slides`, { headers: authHeaders() });
+      const res = await fetch(`${API_BASE_URL}/api/hero-slides`, { headers: getAuthHeaders() });
       if (!res.ok) throw new Error("bad status");
       const data = await res.json();
       const sorted = Array.isArray(data)
@@ -123,7 +119,7 @@ export default function HeroManagementAdmin() {
       try {
         const res = await fetch(`${API_BASE_URL}/api/admin/hero-slides/${slide.id}`, {
           method: "DELETE",
-          headers: authHeaders(),
+          headers: getAuthHeaders(),
         });
         if (!res.ok) throw new Error();
         toast.success("Slide deleted");
@@ -186,14 +182,14 @@ export default function HeroManagementAdmin() {
         if (s._new) {
           const res = await fetch(`${API_BASE_URL}/api/admin/hero-slides`, {
             method: "POST",
-            headers: authHeaders(),
+            headers: getAuthHeaders(),
             body: fd,
           });
           if (!res.ok) throw new Error("create failed");
         } else {
           const res = await fetch(`${API_BASE_URL}/api/admin/hero-slides/${s.id}`, {
             method: "PUT",
-            headers: authHeaders(),
+            headers: getAuthHeaders(),
             body: fd,
           });
           if (!res.ok) throw new Error("update failed");
@@ -208,7 +204,7 @@ export default function HeroManagementAdmin() {
       if (reorderBody.items.length > 0) {
         await fetch(`${API_BASE_URL}/api/admin/hero-slides/reorder`, {
           method: "PUT",
-          headers: { ...authHeaders(), "Content-Type": "application/json" },
+          headers: getAuthJsonHeaders(),
           body: JSON.stringify(reorderBody),
         });
       }
