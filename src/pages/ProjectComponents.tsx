@@ -35,7 +35,7 @@ const components = [
     number: "Component 4",
     name: "Project Management, Monitoring & Learning",
     description:
-      "Programme management, MIS/GIS, monitoring & evaluation, and knowledge dissemination.",
+      "Project management, MIS/GIS, monitoring & evaluation, and knowledge dissemination.",
     icon: BarChart3,
     gradient: "from-primary/30 to-accent/20",
   },
@@ -46,7 +46,7 @@ export default function ProjectComponents() {
     <PageLayout>
       <PageHeader
         title="Project Components"
-        subtitle="Explore the four core components of the Tripura ELEMENT Project."
+        subtitle="Explore the four core components of the Tripura PROJECT ELEMENT."
         breadcrumb={["Home", "Project Components"]}
       />
       <section className="py-10 md:py-14">

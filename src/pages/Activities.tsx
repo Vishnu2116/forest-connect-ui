@@ -104,7 +104,7 @@ export default function Activities() {
     <PageLayout>
       <PageHeader
         title="Activities & Outputs"
-        subtitle="Key programme activities and measurable outcomes"
+        subtitle="Key project activities and measurable outcomes"
         breadcrumb={["Home", "Activities & Outputs"]}
       />
 

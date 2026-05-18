@@ -109,7 +109,7 @@ export function AboutElement() {
         {/* Grand intro */}
         <div className="bg-gradient-to-br from-primary/5 to-accent/5 border border-border rounded-xl p-8 shadow-card text-center">
           <span className="inline-block bg-accent/10 text-accent text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-4">
-            About the Programme
+            About the Project
           </span>
           <h3 className="text-2xl md:text-3xl font-bold text-primary mb-4">
             What is ELEMENT?
@@ -284,7 +284,7 @@ export function Organization() {
   return (
     <AboutLayout
       title="Organization Structure"
-      subtitle="Governance and implementation framework of the ELEMENT programme"
+      subtitle="Governance and implementation framework of the PROJECT ELEMENT"
     >
       <div className="space-y-8">
         {/* Header intro */}
@@ -422,7 +422,7 @@ export function WhosWhoSection() {
   return (
     <AboutLayout
       title="Who's Who"
-      subtitle="Leadership team driving the ELEMENT programme"
+      subtitle="Leadership team driving the PROJECT ELEMENT"
     >
       <div className="space-y-8">
         {/* Intro */}
@@ -431,10 +431,10 @@ export function WhosWhoSection() {
             Leadership
           </span>
           <h3 className="text-xl font-bold text-primary mb-2">
-            Programme Leadership
+            Project Leadership
           </h3>
           <p className="text-sm text-muted-foreground max-w-lg mx-auto">
-            Meet the senior officials and programme leaders steering the ELEMENT
+            Meet the senior officials and project leaders steering the ELEMENT
             initiative.
           </p>
         </div>
@@ -451,10 +451,10 @@ export function WhosWhoSection() {
           </div>
         </div> */}
 
-        {/* ELEMENT Project Leadership */}
+        {/* PROJECT ELEMENT Leadership */}
         <div>
           <h3 className="text-lg font-bold text-primary mb-4 flex items-center gap-2">
-            <Briefcase className="h-5 w-5 text-accent" /> ELEMENT Project
+            <Briefcase className="h-5 w-5 text-accent" /> PROJECT ELEMENT
             Leadership
           </h3>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -613,7 +613,7 @@ export function Mission() {
   return (
     <AboutLayout
       title="Mission & Objective"
-      subtitle="Action-oriented commitments of the ELEMENT programme"
+      subtitle="Action-oriented commitments of the PROJECT ELEMENT"
     >
       <div className="space-y-8">
         {/* Mission statement */}
@@ -689,7 +689,7 @@ export function Memorandum() {
           </h3>
           <p className="text-sm text-muted-foreground max-w-lg mx-auto">
             The founding document establishing the governance, objectives, and
-            operational framework of the ELEMENT programme.
+            operational framework of the PROJECT ELEMENT.
           </p>
         </div>
 
@@ -701,7 +701,7 @@ export function Memorandum() {
             </div>
             <div className="flex-1">
               <h4 className="text-base font-bold text-foreground">
-                ELEMENT Programme — Memorandum of Association
+                PROJECT ELEMENT — Memorandum of Association
               </h4>
               <p className="text-xs text-muted-foreground mt-1">
                 Government of Tripura · Registered under Societies Registration
@@ -709,7 +709,7 @@ export function Memorandum() {
               </p>
               <p className="text-sm text-muted-foreground mt-3 leading-relaxed">
                 This document outlines the constitution, governance structure,
-                and operational mandate of the ELEMENT programme under the aegis
+                and operational mandate of the PROJECT ELEMENT under the aegis
                 of the Government of Tripura in partnership with the World Bank.
               </p>
               <div className="flex gap-3 mt-4">
@@ -733,7 +733,7 @@ export function Memorandum() {
             {[
               {
                 title: "Registered Society",
-                desc: "Established as a registered society under the Societies Registration Act for autonomous programme management.",
+                desc: "Established as a registered society under the Societies Registration Act for autonomous project management.",
               },
               {
                 title: "Governance Structure",
@@ -816,7 +816,7 @@ const directoryCategories = [
   //   ],
   // },
   {
-    title: "ELEMENT Project Leadership",
+    title: "PROJECT ELEMENT Leadership",
     entries: [
       {
         name: "PCCF HOFF",
@@ -828,7 +828,7 @@ const directoryCategories = [
       },
       {
         name: "PCCF CEO / PD",
-        designation: "CEO & Project Director, ELEMENT Project",
+        designation: "CEO & Project Director, PROJECT ELEMENT",
         division: "Aranya Bhawan, Pt. Nehru Complex, Agartala",
         phone: "",
         email: "",
@@ -836,7 +836,7 @@ const directoryCategories = [
       },
       {
         name: "Shri Chaitanya Murti, IFS",
-        designation: "CEO & Project Director, ELEMENT Project",
+        designation: "CEO & Project Director, PROJECT ELEMENT",
         division: "Aranya Bhawan, Pt. Nehru Complex, Agartala",
         phone: "0381-2326874",
         email: "cwlw.tfd-tr@gov.in",
@@ -844,7 +844,7 @@ const directoryCategories = [
       },
       {
         name: "Dr. Honnareddy N, IFS",
-        designation: "Addl. CEO (ELEMENT Project)",
+        designation: "Addl. CEO (PROJECT ELEMENT)",
         division: "Aranya Bhawan, Pt. Nehru Complex, Agartala",
         phone: "",
         email: "honnareddy.n@gov.in",
@@ -866,7 +866,7 @@ const directoryCategories = [
       {
         name: "Shri Krishna Gopal Roy, IFS",
         designation: "Director (Community Institution, Capacity Building, KM)",
-        division: "ELEMENT Project FHQ, Aranya Bhawan, Agartala",
+        division: "PROJECT ELEMENT FHQ, Aranya Bhawan, Agartala",
         phone: "",
         email: "krishnagopalr78@gmail.com",
         mobile: "7005447409",
@@ -874,7 +874,7 @@ const directoryCategories = [
       {
         name: "Shri Amalendu Debnath, IFS",
         designation: "Director (Value Chain Innovation & Eco Tourism)",
-        division: "ELEMENT Project FHQ, Aranya Bhawan, Agartala",
+        division: "PROJECT ELEMENT FHQ, Aranya Bhawan, Agartala",
         phone: "",
         email: "elementtripuraforest@gmail.com",
         mobile: "8415924070",
@@ -882,7 +882,7 @@ const directoryCategories = [
       {
         name: "Shri Jaya Krishnan V, IFS",
         designation: "Director (Administration, Procurement & Finance)",
-        division: "ELEMENT Project",
+        division: "PROJECT ELEMENT",
         phone: "",
         email: "",
         mobile: "",
@@ -916,7 +916,7 @@ export function OfficialDirectory() {
   return (
     <AboutLayout
       title="Official Directory"
-      subtitle="Contact details of ELEMENT programme officials"
+      subtitle="Contact details of PROJECT ELEMENT officials"
     >
       <div className="space-y-6">
         <div className="bg-gradient-to-br from-primary/5 to-accent/5 border border-border rounded-xl p-6 text-center">
@@ -927,7 +927,7 @@ export function OfficialDirectory() {
             Official Directory
           </h3>
           <p className="text-sm text-muted-foreground max-w-lg mx-auto">
-            Contact information for key ELEMENT programme officials across
+            Contact information for key PROJECT ELEMENT officials across
             departments.
           </p>
         </div>

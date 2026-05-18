@@ -54,10 +54,10 @@ const AUTO_SCROLL_SPEED_PROJECTS = 24;
 const MANUAL_STEP_PX = 96;
 
 const announcementDescriptions: Record<string, string> = {
-  Recruitment: "Applications invited for ELEMENT programme positions.",
+  Recruitment: "Applications invited for PROJECT ELEMENT positions.",
   Tender: "Sealed tenders for livelihood infrastructure and civil works.",
   Event: "Community engagement and stakeholder events.",
-  Notification: "Programme guidelines and circulars issued.",
+  Notification: "Project guidelines and circulars issued.",
   Report: "Progress reports published for public reference.",
 };
 
@@ -170,7 +170,7 @@ const rightDignitaries = [
   {
     name: "Shri Chaitanya Murti, IFS",
     designation: "PCCF CEO / PD",
-    desc: "ELEMENT Project",
+    desc: "PROJECT ELEMENT",
     image: "",
   },
 ];
@@ -304,7 +304,7 @@ function UpdatesPanel({
                     </a>
                     <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
                       {announcementDescriptions[a.tag] ??
-                        "Latest update from the ELEMENT programme."}
+                        "Latest update from the PROJECT ELEMENT."}
                     </p>
                   </div>
                 </article>
@@ -346,7 +346,7 @@ function UpdatesPanel({
                       </a>
                       <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
                         {announcementDescriptions[a.tag] ??
-                          "Official notification issued by the ELEMENT programme."}
+                          "Official notification issued by the PROJECT ELEMENT."}
                       </p>
                     </div>
                   </article>
@@ -548,7 +548,7 @@ export default function Home() {
     <PageLayout>
       <HeroSlider />
 
-      {/* Welcome to Tripura ELEMENT Project — left/right dignitaries + center tabs */}
+      {/* Welcome to Tripura PROJECT ELEMENT — left/right dignitaries + center tabs */}
       <section className="py-12 md:py-16 bg-surface border-b border-border">
         <div className="gov-container">
           <div className="text-center mb-8">
@@ -556,11 +556,11 @@ export default function Home() {
               Leadership
             </span>
             <h2 className="text-2xl md:text-3xl font-bold text-primary">
-              Welcome to Tripura ELEMENT Project
+              Welcome to Tripura PROJECT ELEMENT
             </h2>
             <p className="text-sm text-muted-foreground mt-2 max-w-xl mx-auto">
-              Programme leadership, official updates, notifications, and tenders
-              from the ELEMENT Project.
+              Project leadership, official updates, notifications, and tenders
+              from the PROJECT ELEMENT.
             </p>
           </div>
 
@@ -615,7 +615,7 @@ export default function Home() {
         <div className="gov-container">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <span className="inline-block bg-accent/10 text-accent text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-3">
-              About the Programme
+              About the Project
             </span>
             <h2 className="text-2xl md:text-3xl font-bold text-primary leading-tight mt-3 mb-5">
               What is ELEMENT?
@@ -665,7 +665,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Two-column section: Programme Highlights & Social Media */}
+      {/* Two-column section: Project Highlights & Social Media */}
       <section className="py-14 md:py-18 bg-surface border-t border-border">
         <div className="gov-container">
           <div className="text-center mb-8">
@@ -673,11 +673,11 @@ export default function Home() {
               Highlights
             </span>
             <h2 className="text-2xl md:text-3xl font-bold text-primary">
-              Programme Highlights &amp; Social Media
+              Project Highlights &amp; Social Media
             </h2>
             <p className="text-sm text-muted-foreground mt-2 max-w-2xl mx-auto">
               Key project initiatives and official social media updates from the
-              ELEMENT Programme.
+              PROJECT ELEMENT.
             </p>
           </div>
           <div className="grid lg:grid-cols-[58fr_42fr] gap-6 items-stretch lg:h-[44rem]">
@@ -748,7 +748,7 @@ export default function Home() {
                   </div>
                   <div className="px-3 py-2.5 shrink-0 border-t border-border">
                     <h4 className="text-sm font-semibold text-foreground leading-snug line-clamp-1">
-                      ELEMENT Project Overview — Community Livelihoods
+                      PROJECT ELEMENT Overview — Community Livelihoods
                     </h4>
                   </div>
                 </div>

@@ -17,7 +17,7 @@ export default function WhosWho() {
     <PageLayout>
       <PageHeader
         title="Who's Who"
-        subtitle="Senior officials of the ELEMENT Programme"
+        subtitle="Senior officials of the PROJECT ELEMENT"
         breadcrumb={["Home", "Who's Who"]}
       />
       <section className="py-10">
@@ -58,10 +58,10 @@ export default function WhosWho() {
             </div>
           </div>
 
-          {/* ELEMENT Project Leadership */}
+          {/* PROJECT ELEMENT Leadership */}
           <div>
             <h3 className="text-lg font-bold text-primary mb-5 flex items-center gap-2">
-              <Briefcase className="h-5 w-5 text-accent" /> ELEMENT Project
+              <Briefcase className="h-5 w-5 text-accent" /> PROJECT ELEMENT
               Leadership
             </h3>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">

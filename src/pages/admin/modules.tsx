@@ -172,7 +172,7 @@ export const ProjectsAdmin = () => (
     ]}
     columns={["title","beneficiaries","status","location"]}
     initial={[
-      { title: "Landscape Restoration Programme", objective: "Restore degraded forest landscapes.", activities: "Plantation, ANR, soil & moisture conservation.", beneficiaries: "Forest-fringe communities", status: "Ongoing", location: "All districts" },
+      { title: "Landscape Restoration Project", objective: "Restore degraded forest landscapes.", activities: "Plantation, ANR, soil & moisture conservation.", beneficiaries: "Forest-fringe communities", status: "Ongoing", location: "All districts" },
       { title: "HVFP Value Chain Development", objective: "Develop high-value forest product chains.", activities: "SHG formation, training, market linkage.", beneficiaries: "SHGs, FPOs", status: "Ongoing", location: "Khowai, Dhalai, Gomati" },
     ]}
   />

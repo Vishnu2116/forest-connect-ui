@@ -19,7 +19,7 @@ const imageSections = [
     section: "Project Thumbnails",
     recommended: "800 × 500 px",
     items: [
-      { name: "Landscape Restoration Programme", file: "" },
+      { name: "Landscape Restoration Project", file: "" },
       { name: "HVFP Value Chain Development", file: "" },
       { name: "Climate-Resilient Infrastructure", file: "" },
     ],

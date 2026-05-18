@@ -27,7 +27,7 @@ export default function Projects() {
         <div className="gov-container">
           <div className="flex items-center gap-2 mb-6">
             <BarChart3 className="h-5 w-5 text-accent" />
-            <h2 className="text-lg font-bold text-primary">Programme Impact</h2>
+            <h2 className="text-lg font-bold text-primary">Project Impact</h2>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {impactStats.map((s) => (

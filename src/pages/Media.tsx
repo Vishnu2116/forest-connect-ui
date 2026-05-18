@@ -3,7 +3,7 @@ import PageLayout, { PageHeader } from "@/components/layout/PageLayout";
 import { Facebook, Twitter, Youtube, ArrowRight, Calendar, MapPin, ArrowLeft } from "lucide-react";
 
 const videos = [
-  { id: "1", title: "ELEMENT Programme Overview" },
+  { id: "1", title: "PROJECT ELEMENT Overview" },
   { id: "2", title: "Community Plantation Drive" },
   { id: "3", title: "Bamboo Value Chain Stories" },
   { id: "4", title: "Eco-Tourism in Jampui Hills" },
@@ -16,7 +16,7 @@ export function SocialMedia() {
     <PageLayout>
       <PageHeader
         title="Social Media"
-        subtitle="Stay connected with the ELEMENT Programme on social media."
+        subtitle="Stay connected with the PROJECT ELEMENT on social media."
         breadcrumb={["Home", "Media", "Social Media"]}
       />
       <section className="py-10">
@@ -59,7 +59,7 @@ export function SocialMedia() {
                 </div>
                 <div className="p-4">
                   <h3 className="text-sm font-semibold text-foreground leading-snug mb-0">{v.title}</h3>
-                  <p className="text-xs text-muted-foreground mt-1.5 mb-0">ELEMENT Programme · Tripura</p>
+                  <p className="text-xs text-muted-foreground mt-1.5 mb-0">PROJECT ELEMENT · Tripura</p>
                 </div>
               </div>
             ))}
@@ -78,7 +78,7 @@ export const mediaEvents = [
     title: "World Bank Mission Visit — Agartala",
     venue: "Agartala, Tripura",
     description:
-      "A high-level World Bank mission visited Agartala to review the progress of the ELEMENT Programme. The team met with the Chief Secretary, Forest Department leadership, and field implementation units to review livelihood, landscape and value-chain interventions.",
+      "A high-level World Bank mission visited Agartala to review the progress of the PROJECT ELEMENT. The team met with the Chief Secretary, Forest Department leadership, and field implementation units to review livelihood, landscape and value-chain interventions.",
     images: [
       { aspect: "aspect-[4/3]", label: "Mission opening session" },
       { aspect: "aspect-square", label: "Field briefing" },
@@ -133,7 +133,7 @@ export function Gallery() {
     <PageLayout>
       <PageHeader
         title="Gallery"
-        subtitle="Photographs from ELEMENT Programme field activities, events and community engagements."
+        subtitle="Photographs from PROJECT ELEMENT field activities, events and community engagements."
         breadcrumb={["Home", "Media", "Gallery"]}
       />
       <section className="py-10">
@@ -174,7 +174,7 @@ export function MediaEvents() {
     <PageLayout>
       <PageHeader
         title="Events"
-        subtitle="Upcoming and past events of the ELEMENT Programme."
+        subtitle="Upcoming and past events of the PROJECT ELEMENT."
         breadcrumb={["Home", "Media", "Events"]}
       />
       <section className="py-10">

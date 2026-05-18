@@ -12,7 +12,7 @@ const items: Item[] = [
   { title: "Bamboo Cluster Workshop — Proceedings", category: "Event", year: 2023, date: "18 Nov 2023", size: "2.1 MB", type: "PDF" },
   { title: "Tender — Eco-tourism Infrastructure (Expired)", category: "Tender", year: 2022, date: "05 Aug 2022", size: "780 KB", type: "PDF" },
   { title: "Quarterly Bulletin Q4 2022", category: "Notice", year: 2022, date: "31 Dec 2022", size: "920 KB", type: "PDF" },
-  { title: "Mid-term Programme Review 2024", category: "Report", year: 2024, date: "15 Aug 2024", size: "5.3 MB", type: "PDF" },
+  { title: "Mid-term Project Review 2024", category: "Report", year: 2024, date: "15 Aug 2024", size: "5.3 MB", type: "PDF" },
 ];
 
 const categories = ["All", "Notice", "Event", "Tender", "Report"] as const;
