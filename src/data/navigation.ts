@@ -9,7 +9,7 @@ export const navItems: NavItem[] = [
   {
     labelKey: "nav.about",
     children: [
-      { label: "About ELEMENT", to: "/about" },
+      { label: "About PROJECT ELEMENT", to: "/about" },
       { label: "Organization Structure", to: "/about/organization" },
       { label: "Who's Who", to: "/about/whos-who" },
       { label: "Memorandum of Association", to: "/about/memorandum" },
