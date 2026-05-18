@@ -14,9 +14,19 @@ interface Slide {
   cta1Link: string;
   cta2Label: string;
   cta2Link: string;
-  image: string;       // existing image_path (relative) OR filename for dummy
+  image: string;       // image_path returned by API (e.g. "/uploads/hero/xxx.jpg")
   imageFile?: File;    // newly picked file for upload
+  imagePreview?: string; // local object URL for newly picked file
   _new?: boolean;      // not yet persisted to backend
+}
+
+// Build full image URL from API image_path. Returns null when no usable src.
+function resolveImageSrc(slide: Slide): string | null {
+  if (slide.imagePreview) return slide.imagePreview;
+  if (!slide.image) return null;
+  if (slide.image.startsWith("http") || slide.image.startsWith("blob:")) return slide.image;
+  if (slide.image.startsWith("/")) return `${API_BASE_URL ?? ""}${slide.image}`;
+  return null; // bare filename (dummy preview data) — no remote URL available
 }
 
 // Dummy fallback data — always kept as a safety net.
@@ -148,8 +158,14 @@ export default function HeroManagementAdmin() {
 
   const onImagePicked = (index: number, file: File | null) => {
     if (!file) return;
-    updateField(index, "imageFile", file);
-    updateField(index, "image", file.name);
+    const newSlides = [...slides];
+    newSlides[index] = {
+      ...newSlides[index],
+      imageFile: file,
+      imagePreview: URL.createObjectURL(file),
+      image: newSlides[index].image || file.name,
+    };
+    setSlides(newSlides);
   };
 
   const saveAll = async () => {
@@ -233,10 +249,21 @@ export default function HeroManagementAdmin() {
         {slides.map((slide, index) => (
           <div key={slide.id} className="bg-card border border-border rounded-md overflow-hidden">
             <div className="px-4 py-3 border-b border-border bg-surface flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <GripVertical className="h-4 w-4 text-muted-foreground" />
-                <span className="text-xs font-semibold text-muted-foreground uppercase">Slide {index + 1}</span>
-                <span className="text-sm font-medium text-primary truncate max-w-xs">{slide.title}</span>
+              <div className="flex items-center gap-3 min-w-0">
+                <GripVertical className="h-4 w-4 text-muted-foreground shrink-0" />
+                {resolveImageSrc(slide) ? (
+                  <img
+                    src={resolveImageSrc(slide)!}
+                    alt={slide.title}
+                    className="h-10 w-16 object-cover rounded border border-border shrink-0"
+                  />
+                ) : (
+                  <div className="h-10 w-16 rounded border border-border bg-muted flex items-center justify-center shrink-0">
+                    <ImageIcon className="h-4 w-4 text-muted-foreground" />
+                  </div>
+                )}
+                <span className="text-xs font-semibold text-muted-foreground uppercase shrink-0">Slide {index + 1}</span>
+                <span className="text-sm font-medium text-primary truncate">{slide.title}</span>
               </div>
               <div className="flex items-center gap-1">
                 <Button variant="ghost" size="icon" onClick={() => moveSlide(index, "up")} disabled={index === 0}>
@@ -303,14 +330,18 @@ export default function HeroManagementAdmin() {
                     onClick={() => fileInputs.current[String(slide.id)]?.click()}
                     className="mt-1 h-48 border-2 border-dashed border-border rounded-md flex flex-col items-center justify-center bg-surface group hover:border-primary/40 transition cursor-pointer"
                   >
-                    {slide.image ? (
-                      <div className="text-center">
-                        <ImageIcon className="h-8 w-8 text-primary mx-auto mb-2" />
-                        <p className="text-xs font-medium text-foreground">{slide.image}</p>
-                        <p className="text-[10px] text-muted-foreground mt-1">Recommended: 1920 × 1080 px</p>
-                        <Button variant="outline" size="sm" className="mt-2 gap-1 text-xs" type="button">
-                          <Upload className="h-3 w-3" /> Replace Image
-                        </Button>
+                    {resolveImageSrc(slide) ? (
+                      <div className="w-full h-full relative group">
+                        <img
+                          src={resolveImageSrc(slide)!}
+                          alt={slide.title}
+                          className="w-full h-full object-cover rounded"
+                        />
+                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center rounded">
+                          <Button variant="secondary" size="sm" className="gap-1 text-xs" type="button">
+                            <Upload className="h-3 w-3" /> Replace Image
+                          </Button>
+                        </div>
                       </div>
                     ) : (
                       <div className="text-center">
