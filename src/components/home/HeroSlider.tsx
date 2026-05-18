@@ -6,8 +6,18 @@ import hero2 from "@/assets/hero-plantation.jpg";
 import hero3 from "@/assets/hero-wildlife.jpg";
 import hero4 from "@/assets/hero-watershed.jpg";
 import hero5 from "@/assets/hero-nrm.jpg";
+import { API_BASE_URL, USE_REAL_API } from "@/config/api";
 
-const slides = [
+type Slide = {
+  img: string;
+  title: string;
+  subtitle: string;
+  badge: string;
+  cta1: { label: string; to: string };
+  cta2: { label: string; to: string };
+};
+
+const dummySlides: Slide[] = [
   {
     img: hero1,
     title: "Enhancing Landscape and Ecosystem Management",
@@ -56,11 +66,50 @@ const slides = [
 ];
 
 export default function HeroSlider() {
+  const [slides, setSlides] = useState<Slide[]>(dummySlides);
   const [i, setI] = useState(0);
+  const [loading, setLoading] = useState(USE_REAL_API);
+
+  // Fetch hero slides from API; fall back to dummy data on any failure/empty.
   useEffect(() => {
+    if (!USE_REAL_API) return;
+    let cancelled = false;
+    (async () => {
+      try {
+        const res = await fetch(`${API_BASE_URL}/api/hero-slides`);
+        if (!res.ok) throw new Error("bad status");
+        const data = await res.json();
+        if (cancelled) return;
+        if (Array.isArray(data) && data.length > 0) {
+          const mapped: Slide[] = data
+            .filter((s: any) => s.is_active !== false)
+            .sort((a: any, b: any) => (a.display_order ?? 0) - (b.display_order ?? 0))
+            .map((s: any) => ({
+              img: `${API_BASE_URL}${s.image_path}`,
+              title: s.title ?? "",
+              subtitle: s.subtitle ?? "",
+              badge: s.badge_text ?? "",
+              cta1: { label: s.cta1_label ?? "", to: s.cta1_link ?? "#" },
+              cta2: { label: s.cta2_label ?? "", to: s.cta2_link ?? "#" },
+            }));
+          if (mapped.length > 0) setSlides(mapped);
+        }
+      } catch {
+        // keep dummy data
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (slides.length === 0) return;
     const t = setInterval(() => setI((p) => (p + 1) % slides.length), 6000);
     return () => clearInterval(t);
-  }, []);
+  }, [slides.length]);
   const next = () => setI((p) => (p + 1) % slides.length);
   const prev = () => setI((p) => (p - 1 + slides.length) % slides.length);
 
