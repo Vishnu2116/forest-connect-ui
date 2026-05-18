@@ -6,7 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Loader2, Plus, Pencil, Trash2, Save, X } from "lucide-react";
 import { toast } from "sonner";
 import { API_BASE_URL, USE_REAL_API } from "@/config/api";
-import { authHeaders, fetchComponents, type ApiProjectComponent } from "@/lib/projects";
+import { authHeaders, fetchComponentsAdmin, type ApiProjectComponent } from "@/lib/projects";
 
 interface FormState {
   id: string | null;
