@@ -146,35 +146,37 @@ const pillars = [
   },
 ];
 
-const leftDignitaries = [
+const dummyLeadershipSlots = [
   {
+    slot_number: 1,
     name: "Shri Manik Saha",
     designation: "Hon'ble Chief Minister",
-    desc: "Government of Tripura",
+    organisation: "Government of Tripura",
     image: cmImage,
   },
   {
+    slot_number: 2,
     name: "Shri Animesh Debbarma",
     designation: "Forest & Environment Minister",
-    desc: "Government of Tripura",
+    organisation: "Government of Tripura",
     image: Animesh,
   },
-];
-
-const rightDignitaries = [
   {
+    slot_number: 3,
     name: "Shri Rabindra Kumar Samal, IFS",
     designation: "PCCF HOFF SFDA Chair Person",
-    desc: "Tripura Forest Department",
+    organisation: "Tripura Forest Department",
     image: PCCF,
   },
   {
+    slot_number: 4,
     name: "Shri Chaitanya Murti, IFS",
     designation: "PCCF CEO / PD",
-    desc: "PROJECT ELEMENT",
+    organisation: "PROJECT ELEMENT",
     image: "",
   },
 ];
+
 
 function DignitaryCard({
   d,
