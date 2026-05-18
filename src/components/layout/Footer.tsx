@@ -57,7 +57,7 @@ export default function Footer() {
           </h3>
           <ul className="space-y-2.5 text-sm">
             {[
-              ["About ELEMENT", "/about"],
+              ["About PROJECT ELEMENT", "/about"],
               ["Projects", "/projects"],
               ["Reports", "/reports"],
               ["Plantation Locations", "/plantation-map"],

@@ -356,6 +356,7 @@ export default function Navbar() {
                         <NavLink
                           key={c.to}
                           to={c.to}
+                          end
                           className={({ isActive: a }) =>
                             `block px-4 py-2.5 text-sm hover:bg-surface hover:text-primary border-l-2 ${
                               a
@@ -412,6 +413,7 @@ export default function Navbar() {
                           <li key={c.to}>
                             <NavLink
                               to={c.to}
+                              end
                               onClick={() => setMobileOpen(false)}
                               className={({ isActive: a }) =>
                                 `block px-8 py-2.5 text-sm hover:bg-primary ${

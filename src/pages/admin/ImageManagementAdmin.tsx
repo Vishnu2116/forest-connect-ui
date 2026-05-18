@@ -43,7 +43,7 @@ const imageSections = [
     section: "About Section",
     recommended: "1200 × 800 px",
     items: [
-      { name: "About ELEMENT Banner", file: "" },
+      { name: "About PROJECT ELEMENT Banner", file: "" },
       { name: "Organization Structure", file: "" },
     ],
   },
