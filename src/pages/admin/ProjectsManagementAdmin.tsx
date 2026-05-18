@@ -77,11 +77,21 @@ export default function ProjectsAdmin() {
   const [saving, setSaving] = useState(false);
 
   const load = async () => {
+    if (!USE_REAL_API) {
+      toast.error("Admin requires the real API. Run the backend locally.");
+      setItems([]);
+      setComponents([]);
+      return;
+    }
     setLoading(true);
     try {
-      const [p, c] = await Promise.all([fetchProjects(), fetchComponents()]);
+      const [p, c] = await Promise.all([fetchProjectsAdmin(), fetchComponentsAdmin()]);
       setItems(p);
       setComponents(c);
+    } catch (e: any) {
+      toast.error(`Failed to load projects: ${e?.message || "request failed"}`);
+      setItems([]);
+      setComponents([]);
     } finally {
       setLoading(false);
     }
@@ -92,10 +102,13 @@ export default function ProjectsAdmin() {
   const openCreate = () => setEditing(emptyForm());
 
   const openEdit = async (p: ApiProjectCard) => {
-    // Fetch full detail by slug to populate editor
-    const detail = await fetchProject(p.slug);
-    if (!detail) { toast.error("Failed to load project"); return; }
-    setEditing(detailToForm(detail));
+    try {
+      const detail = await fetchProjectAdmin(p.slug);
+      if (!detail) { toast.error("Failed to load project"); return; }
+      setEditing(detailToForm(detail));
+    } catch (e: any) {
+      toast.error(`Failed to load project: ${e?.message || "request failed"}`);
+    }
   };
 
   const remove = async (p: ApiProjectCard) => {
