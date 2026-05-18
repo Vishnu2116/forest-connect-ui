@@ -14,9 +14,19 @@ interface Slide {
   cta1Link: string;
   cta2Label: string;
   cta2Link: string;
-  image: string;       // existing image_path (relative) OR filename for dummy
+  image: string;       // image_path returned by API (e.g. "/uploads/hero/xxx.jpg")
   imageFile?: File;    // newly picked file for upload
+  imagePreview?: string; // local object URL for newly picked file
   _new?: boolean;      // not yet persisted to backend
+}
+
+// Build full image URL from API image_path. Returns null when no usable src.
+function resolveImageSrc(slide: Slide): string | null {
+  if (slide.imagePreview) return slide.imagePreview;
+  if (!slide.image) return null;
+  if (slide.image.startsWith("http") || slide.image.startsWith("blob:")) return slide.image;
+  if (slide.image.startsWith("/")) return `${API_BASE_URL ?? ""}${slide.image}`;
+  return null; // bare filename (dummy preview data) — no remote URL available
 }
 
 // Dummy fallback data — always kept as a safety net.
