@@ -56,7 +56,8 @@ export function resolveUrl(path?: string | null): string | null {
 }
 
 export function formatSizeMB(kb?: number | null): string {
-  if (!kb && kb !== 0) return "—";
+  if (kb == null) return "—";
+  if (kb < 1024) return `${kb} KB`;
   return `${(kb / 1024).toFixed(1)} MB`;
 }
 
