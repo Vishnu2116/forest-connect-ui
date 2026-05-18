@@ -66,11 +66,12 @@ const dummySlides: Slide[] = [
 ];
 
 export default function HeroSlider() {
-  const [slides, setSlides] = useState<Slide[]>(dummySlides);
+  // When using the real API, start empty so we don't flash dummy data over real slides.
+  const [slides, setSlides] = useState<Slide[]>(USE_REAL_API ? [] : dummySlides);
   const [i, setI] = useState(0);
   const [loading, setLoading] = useState(USE_REAL_API);
 
-  // Fetch hero slides from API; fall back to dummy data on any failure/empty.
+  // Fetch hero slides from API; fall back to dummy data only on failure / empty response.
   useEffect(() => {
     if (!USE_REAL_API) return;
     let cancelled = false;
@@ -94,11 +95,15 @@ export default function HeroSlider() {
             }));
           if (mapped.length > 0) {
             setSlides(mapped);
-            setI(0); // reset to first slide so the index can't point past the new array
+            setI(0);
+          } else {
+            setSlides(dummySlides);
           }
+        } else {
+          setSlides(dummySlides);
         }
       } catch {
-        // keep dummy data
+        if (!cancelled) setSlides(dummySlides);
       } finally {
         if (!cancelled) setLoading(false);
       }

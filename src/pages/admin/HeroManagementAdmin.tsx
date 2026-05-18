@@ -90,7 +90,12 @@ export default function HeroManagementAdmin() {
       const res = await fetch(`${API_BASE_URL}/api/hero-slides`, { headers: authHeaders() });
       if (!res.ok) throw new Error("bad status");
       const data = await res.json();
-      setSlides(Array.isArray(data) ? data.map(mapApiToSlide) : []);
+      const sorted = Array.isArray(data)
+        ? [...data].sort(
+            (a: any, b: any) => (a.display_order ?? 0) - (b.display_order ?? 0)
+          )
+        : [];
+      setSlides(sorted.map(mapApiToSlide));
     } catch {
       toast.error("Unable to load slides");
       setSlides([]);
