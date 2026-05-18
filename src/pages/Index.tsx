@@ -368,7 +368,11 @@ function UpdatesPanel({
                 </article>
               );
             })}
-          {updatesTab === "notifications" && (
+          {updatesTab === "notifications" && apiNotifs.length > 0 && (
+            <>{[...apiNotifs, ...apiNotifs].map(renderApiItem)}</>
+          )}
+          {updatesTab === "notifications" && apiNotifs.length === 0 && (
+
             <>
               {[
                 ...announcements.filter(
