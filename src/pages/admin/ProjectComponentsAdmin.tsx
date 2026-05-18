@@ -45,9 +45,13 @@ export default function ProjectComponentsAdmin() {
   const [saving, setSaving] = useState(false);
 
   const load = async () => {
+    if (!USE_REAL_API) { setItems([]); return; }
     setLoading(true);
     try {
-      setItems(await fetchComponents());
+      setItems(await fetchComponentsAdmin());
+    } catch (e: any) {
+      toast.error(`Failed to load components: ${e?.message || "request failed"}`);
+      setItems([]);
     } finally {
       setLoading(false);
     }
