@@ -97,123 +97,155 @@ function AboutLayout({
   );
 }
 
-/* ---- About ELEMENT (main intro page) ---- */
+/* ---- About PROJECT ELEMENT (main intro page) ---- */
 export function AboutElement() {
+  const stakeholders = [
+    {
+      icon: Shield,
+      title: "Government of Tripura",
+      desc: "Provides overall policy direction, governance, counterpart funding, and inter-departmental coordination across all 8 districts.",
+    },
+    {
+      icon: Globe,
+      title: "The World Bank",
+      desc: "Lead development partner — providing financial support, technical assistance, global expertise, and result-based monitoring frameworks.",
+    },
+    {
+      icon: Leaf,
+      title: "Tripura Forest Department",
+      desc: "Nodal implementing department responsible for landscape restoration, biodiversity conservation and on-ground project delivery.",
+    },
+    {
+      icon: Briefcase,
+      title: "State Forest Development Agency (SFDA)",
+      desc: "Apex implementing society channelling project funds, monitoring implementation and providing administrative oversight.",
+    },
+    {
+      icon: Compass,
+      title: "Project Management Unit (PMU)",
+      desc: "Central unit handling day-to-day project management, procurement, finance, M&E, MIS/GIS, and coordination with field units.",
+    },
+    {
+      icon: Users,
+      title: "Community Institutions (JFMCs, SHGs, VLCs)",
+      desc: "Grassroots partners — Joint Forest Management Committees, Self-Help Groups and Village-Level Committees driving local implementation.",
+    },
+    {
+      icon: Sprout,
+      title: "Farmers, Producers & Local Enterprises",
+      desc: "Primary beneficiaries engaged in bamboo, agar, broom-grass and NTFP value chains, eco-tourism and producer collectives.",
+    },
+    {
+      icon: BookOpen,
+      title: "Knowledge & Technical Partners",
+      desc: "Research institutions, technical agencies and NGOs supporting capacity building, training, IEC and thematic studies.",
+    },
+  ];
+
   return (
     <AboutLayout
-      title="About ELEMENT"
+      title="About PROJECT ELEMENT"
       subtitle="A joint initiative for landscape development, livelihood generation and economic transformation"
     >
-      <div className="space-y-8">
-        {/* Grand intro */}
-        <div className="bg-gradient-to-br from-primary/5 to-accent/5 border border-border rounded-xl p-8 shadow-card text-center">
-          <span className="inline-block bg-accent/10 text-accent text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-4">
+      <div className="space-y-10">
+        {/* What is PROJECT ELEMENT? */}
+        <div className="bg-gradient-to-br from-primary/5 to-accent/5 border border-border rounded-xl p-6 md:p-8 shadow-card text-center">
+          <span className="inline-block bg-accent/10 text-accent text-[11px] font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-3">
             About the Project
           </span>
-          <h3 className="text-2xl md:text-3xl font-bold text-primary mb-4">
-            What is ELEMENT?
+          <h3 className="text-xl md:text-2xl font-bold text-primary mb-3">
+            What is PROJECT ELEMENT?
           </h3>
-          <p className="text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-            <strong>ELEMENT</strong> (Enhancing Landscape and Ecosystem
+          <p className="text-sm md:text-[15px] text-muted-foreground leading-relaxed max-w-2xl mx-auto">
+            <strong>PROJECT ELEMENT</strong> (Enhancing Landscape and Ecosystem
             Management) is a flagship joint initiative of the{" "}
             <strong>Government of Tripura</strong> and the{" "}
             <strong>World Bank</strong> — transforming rural livelihoods,
             strengthening economic development, and building resilient
-            landscapes across all 8 districts.
+            landscapes across all 8 districts of Tripura.
           </p>
         </div>
-        {/* Pillar cards — infographic style */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {[
-            {
-              icon: Briefcase,
-              label: "Livelihood Generation",
-              stat: "25,000+",
-              statLabel: "Households",
-              desc: "Sustainable income through bamboo, agar and broom-grass value chains.",
-              gradient: "from-primary to-primary-light",
-            },
-            {
-              icon: TrendingUp,
-              label: "Economic Transformation",
-              stat: "₹45 Cr+",
-              statLabel: "Investment",
-              desc: "Enterprise development, producer collectives and market linkages.",
-              gradient: "from-accent to-accent-hover",
-            },
-            {
-              icon: Mountain,
-              label: "Landscape Restoration",
-              stat: "18,500",
-              statLabel: "Hectares",
-              desc: "Science-based restoration of degraded lands for productivity.",
-              gradient: "from-primary to-primary-light",
-            },
-            {
-              icon: Handshake,
-              label: "Community Development",
-              stat: "12,000+",
-              statLabel: "SHG Members",
-              desc: "Empowering local communities as active partners in planning.",
-              gradient: "from-accent to-accent-hover",
-            },
-            {
-              icon: Sprout,
-              label: "Sustainable Rural Economy",
-              stat: "8",
-              statLabel: "Districts",
-              desc: "Building long-term climate-resilient and inclusive growth across Tripura.",
-              gradient: "from-primary to-primary-light",
-            },
-          ].map((p) => (
-            <div
-              key={p.label}
-              className="relative bg-card border border-border rounded-xl p-6 text-center shadow-card hover:shadow-lg transition-shadow group overflow-hidden"
-            >
-              <div
-                className={`mx-auto h-16 w-16 rounded-full bg-gradient-to-br ${p.gradient} flex items-center justify-center mb-4 shadow-md group-hover:scale-110 transition-transform`}
-              >
-                <p.icon className="h-7 w-7 text-primary-foreground" />
-              </div>
-              <div className="text-3xl font-extrabold text-primary">
-                {p.stat}
-              </div>
-              <div className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider mt-0.5">
-                {p.statLabel}
-              </div>
-              <h4 className="text-base font-bold text-foreground mt-3">
-                {p.label}
-              </h4>
-              <p className="text-xs text-muted-foreground mt-1.5 leading-relaxed">
-                {p.desc}
-              </p>
-            </div>
-          ))}
-        </div>
-        {/* Key Highlights
-        <div className="bg-surface border border-border rounded-xl p-6">
-          <h3 className="text-lg font-semibold text-primary mb-4">
-            Key Highlights
+
+        {/* About PROJECT ELEMENT */}
+        <div>
+          <h3 className="text-lg font-bold text-primary mb-3">
+            About PROJECT ELEMENT
           </h3>
-          <div className="grid sm:grid-cols-2 gap-3">
+          <div className="bg-card border border-border rounded-xl p-5 md:p-6 space-y-3 text-sm text-muted-foreground leading-relaxed">
+            <p>
+              PROJECT ELEMENT is a landscape-based development project that
+              integrates ecological restoration with sustainable livelihood
+              generation. It moves beyond traditional afforestation to focus on
+              <strong> economic transformation</strong> of rural communities
+              through high-value, climate-resilient value chains.
+            </p>
+            <p>
+              The Project operates across all 8 districts of Tripura,
+              benefitting <strong>25,000+ households</strong> through bamboo,
+              agar, broom-grass and NTFP-based value chains, eco-tourism
+              enterprises, producer collectives and community-led plantation
+              projects — implemented through a multi-tier institutional
+              framework with strong community participation.
+            </p>
+          </div>
+
+          {/* Compact stats grid */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 mt-5">
             {[
-              "Covers all 8 districts of Tripura",
-              "Benefits 25,000+ households through livelihood support",
-              "12,000+ SHG members engaged in value chain activities",
-              "Focus on economic transformation, not just afforestation",
-              "Implemented by Government of Tripura with World Bank support",
-              "Landscape-based approach integrating livelihood and restoration",
-            ].map((item) => (
+              { icon: Briefcase, stat: "25,000+", label: "Households" },
+              { icon: TrendingUp, stat: "₹45 Cr+", label: "Investment" },
+              { icon: Mountain, stat: "18,500", label: "Hectares" },
+              { icon: Handshake, stat: "12,000+", label: "SHG Members" },
+              { icon: Sprout, stat: "8", label: "Districts" },
+            ].map((p) => (
               <div
-                key={item}
-                className="flex items-start gap-2 bg-card border border-border rounded-md p-3"
+                key={p.label}
+                className="bg-card border border-border rounded-lg p-3 text-center hover:shadow-sm transition"
               >
-                <ChevronRight className="h-4 w-4 text-accent mt-0.5 shrink-0" />
-                <span className="text-sm text-muted-foreground">{item}</span>
+                <p.icon className="h-5 w-5 mx-auto text-accent" />
+                <div className="text-lg font-bold text-primary mt-1.5">
+                  {p.stat}
+                </div>
+                <div className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">
+                  {p.label}
+                </div>
               </div>
             ))}
           </div>
-        </div> */}
+        </div>
+
+        {/* Stakeholders */}
+        <div>
+          <h3 className="text-lg font-bold text-primary mb-3">
+            Stakeholders of PROJECT ELEMENT
+          </h3>
+          <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
+            PROJECT ELEMENT is implemented through a strong partnership of
+            government, development partners, technical institutions and
+            community organisations — each playing a defined role in landscape
+            restoration, livelihood transformation and inclusive growth.
+          </p>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            {stakeholders.map((s) => (
+              <div
+                key={s.title}
+                className="bg-card border border-border rounded-lg p-4 hover:shadow-sm hover:border-primary/30 transition"
+              >
+                <div className="flex items-center gap-2 mb-1.5">
+                  <div className="h-8 w-8 rounded-md bg-primary/10 flex items-center justify-center shrink-0">
+                    <s.icon className="h-4 w-4 text-primary" />
+                  </div>
+                  <h4 className="text-sm font-bold text-foreground leading-tight">
+                    {s.title}
+                  </h4>
+                </div>
+                <p className="text-xs text-muted-foreground leading-relaxed">
+                  {s.desc}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </AboutLayout>
   );
