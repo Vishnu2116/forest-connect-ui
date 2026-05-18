@@ -297,6 +297,153 @@ export default function Activities() {
           </div>
         </div>
       </section>
+
+      {/* Structured information sections — government-project portal style */}
+      <section className="py-12 bg-surface border-t border-border">
+        <div className="gov-container space-y-10">
+          {/* Implementation Areas */}
+          <div className="bg-card border border-border rounded-lg p-6 md:p-8 shadow-card">
+            <h3 className="text-lg font-bold text-primary mb-2">
+              Implementation Areas
+            </h3>
+            <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
+              PROJECT ELEMENT is being implemented across all 8 districts of
+              Tripura, with interventions tailored to the ecological,
+              socio-economic and livelihood profile of each landscape.
+            </p>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3 text-sm">
+              {[
+                "West Tripura",
+                "Sepahijala",
+                "Khowai",
+                "Gomati",
+                "South Tripura",
+                "Dhalai",
+                "Unakoti",
+                "North Tripura",
+              ].map((d) => (
+                <div
+                  key={d}
+                  className="px-3 py-2 bg-surface border border-border rounded text-foreground"
+                >
+                  {d}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Two-column info sections */}
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="bg-card border border-border rounded-lg p-6 shadow-card">
+              <h3 className="text-base font-bold text-primary mb-3">
+                Community Participation
+              </h3>
+              <p className="text-sm text-muted-foreground leading-relaxed mb-3">
+                Participatory planning and decentralised implementation through
+                grassroots institutions ensure community ownership and
+                long-term sustainability.
+              </p>
+              <ul className="list-disc pl-5 space-y-1.5 text-sm text-muted-foreground">
+                <li>Joint Forest Management Committees (JFMCs)</li>
+                <li>Self-Help Groups (SHGs) and women collectives</li>
+                <li>Village-Level Committees (VLCs)</li>
+                <li>Farmer Producer Organisations (FPOs)</li>
+              </ul>
+            </div>
+
+            <div className="bg-card border border-border rounded-lg p-6 shadow-card">
+              <h3 className="text-base font-bold text-primary mb-3">
+                Capacity Building
+              </h3>
+              <p className="text-sm text-muted-foreground leading-relaxed mb-3">
+                Systematic skill-building and training programmes strengthen
+                community institutions, field staff and partner agencies.
+              </p>
+              <ul className="list-disc pl-5 space-y-1.5 text-sm text-muted-foreground">
+                <li>Technical training on value chains and enterprise</li>
+                <li>Leadership and institutional governance modules</li>
+                <li>Field exposure visits and peer learning</li>
+                <li>Training of Trainers (ToT) programmes</li>
+              </ul>
+            </div>
+
+            <div className="bg-card border border-border rounded-lg p-6 shadow-card">
+              <h3 className="text-base font-bold text-primary mb-3">
+                Ecosystem Restoration
+              </h3>
+              <p className="text-sm text-muted-foreground leading-relaxed mb-3">
+                Landscape-level interventions to restore degraded ecosystems,
+                enhance biodiversity, and build climate resilience.
+              </p>
+              <ul className="list-disc pl-5 space-y-1.5 text-sm text-muted-foreground">
+                <li>Restoration of degraded forest landscapes</li>
+                <li>Soil and moisture conservation works</li>
+                <li>Watershed and water resource management</li>
+                <li>Biodiversity conservation initiatives</li>
+              </ul>
+            </div>
+
+            <div className="bg-card border border-border rounded-lg p-6 shadow-card">
+              <h3 className="text-base font-bold text-primary mb-3">
+                Livelihood Enhancement
+              </h3>
+              <p className="text-sm text-muted-foreground leading-relaxed mb-3">
+                Sustainable livelihood interventions focused on high-value,
+                climate-resilient value chains and producer enterprises.
+              </p>
+              <ul className="list-disc pl-5 space-y-1.5 text-sm text-muted-foreground">
+                <li>Bamboo, agar and broom-grass value chains</li>
+                <li>NTFP collection, processing and marketing</li>
+                <li>Eco-tourism and nature-based enterprises</li>
+                <li>Micro-enterprise and market linkage support</li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Expected Outputs & Outcomes */}
+          <div className="bg-card border border-border rounded-lg p-6 md:p-8 shadow-card">
+            <h3 className="text-lg font-bold text-primary mb-2">
+              Expected Outputs &amp; Outcomes
+            </h3>
+            <p className="text-sm text-muted-foreground mb-5 leading-relaxed">
+              The project aims to deliver measurable improvements in
+              livelihoods, landscapes and institutional capacities across
+              Tripura.
+            </p>
+            <div className="grid md:grid-cols-2 gap-x-8 gap-y-3 text-sm text-muted-foreground">
+              <ul className="list-disc pl-5 space-y-1.5">
+                <li>
+                  Improved household incomes through diversified livelihood
+                  opportunities
+                </li>
+                <li>Strengthened community institutions and producer collectives</li>
+                <li>Restored landscapes with enhanced ecological functions</li>
+                <li>Increased adoption of climate-resilient practices</li>
+              </ul>
+              <ul className="list-disc pl-5 space-y-1.5">
+                <li>Higher participation of women and marginalised groups</li>
+                <li>Better access to markets, finance and technology</li>
+                <li>Improved natural resource management at landscape scale</li>
+                <li>Transparent, data-driven project monitoring</li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Monitoring & Impact */}
+          <div className="bg-card border border-border rounded-lg p-6 md:p-8 shadow-card">
+            <h3 className="text-lg font-bold text-primary mb-2">
+              Monitoring &amp; Impact
+            </h3>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              A robust monitoring and evaluation framework — supported by
+              digital MIS, GIS-based tracking, third-party assessments and
+              community feedback — ensures transparent implementation,
+              evidence-based decision-making, and continuous learning across
+              all project components.
+            </p>
+          </div>
+        </div>
+      </section>
     </PageLayout>
   );
 }
