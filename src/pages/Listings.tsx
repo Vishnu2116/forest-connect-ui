@@ -4,6 +4,7 @@ import { DataTable, Pagination } from "@/components/common/DataTable";
 import { Download, Eye, Trash2, Pencil, Upload } from "lucide-react";
 import { reports, publications, procurements } from "@/data/content";
 import { useKnowledgeHubItems, KHItem } from "@/hooks/useKnowledgeHub";
+import { usePublicProcurements, ProcurementItem, PROCUREMENT_STATUS_LABEL, formatDate } from "@/hooks/useProcurements";
 
 type Row = { title: string; date: string; size?: string; type?: string; deadline?: string; status?: string; href?: string };
 
