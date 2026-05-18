@@ -332,9 +332,9 @@ function UpdatesPanel({
       >
         <div className="flex flex-col">
           {updatesTab === "whatsnew" && apiWhatsNew.length > 0 &&
-            [...apiWhatsNew, ...apiWhatsNew].map(renderApiItem)}
+            apiWhatsNew.map(renderApiItem)}
           {updatesTab === "whatsnew" && apiWhatsNew.length === 0 &&
-            [...announcements, ...announcements].map((a, idx) => {
+            announcements.map((a, idx) => {
               const Icon = getUpdateIcon(a.tag);
 
               return (
@@ -369,19 +369,14 @@ function UpdatesPanel({
               );
             })}
           {updatesTab === "notifications" && apiNotifs.length > 0 && (
-            <>{[...apiNotifs, ...apiNotifs].map(renderApiItem)}</>
+            <>{apiNotifs.map(renderApiItem)}</>
           )}
           {updatesTab === "notifications" && apiNotifs.length === 0 && (
 
             <>
-              {[
-                ...announcements.filter(
-                  (a) => a.tag === "Notification" || a.tag === "Recruitment",
-                ),
-                ...announcements.filter(
-                  (a) => a.tag === "Notification" || a.tag === "Recruitment",
-                ),
-              ].map((a, idx) => {
+              {announcements
+                .filter((a) => a.tag === "Notification" || a.tag === "Recruitment")
+                .map((a, idx) => {
                 const Icon = getUpdateIcon(a.tag);
                 return (
                   <article
@@ -414,7 +409,7 @@ function UpdatesPanel({
                   </article>
                 );
               })}
-              {[...events, ...events].map((e, idx) => (
+              {events.map((e, idx) => (
                 <article
                   key={`${e.title}-${idx}`}
                   className="flex items-center gap-3 px-4 py-3 hover:bg-surface/60 transition border-b border-border"
@@ -446,7 +441,7 @@ function UpdatesPanel({
             </>
           )}
           {updatesTab === "tenders" &&
-            [...procurements, ...procurements].map((p, idx) => (
+            procurements.map((p, idx) => (
               <article
                 key={`${p.title}-${idx}`}
                 className="flex items-center gap-3 px-4 py-3 hover:bg-surface/60 transition border-b border-border"
