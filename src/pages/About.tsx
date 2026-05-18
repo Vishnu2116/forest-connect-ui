@@ -562,7 +562,22 @@ function OfficialCard({ o, onClick }: { o: Official; onClick?: () => void }) {
 }
 
 export function WhosWhoSection() {
-  const [selected, setSelected] = useState<Official | null>(null);
+  const [groups, setGroups] = useState<OfficialCategoryGroup[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let alive = true;
+    setLoading(true);
+    fetchGrouped("whos-who").then((g) => {
+      if (alive) {
+        setGroups(g);
+        setLoading(false);
+      }
+    });
+    return () => {
+      alive = false;
+    };
+  }, []);
 
   return (
     <AboutLayout
@@ -570,7 +585,6 @@ export function WhosWhoSection() {
       subtitle="Leadership team driving the PROJECT ELEMENT"
     >
       <div className="space-y-8">
-        {/* Intro */}
         <div className="bg-gradient-to-br from-primary/5 to-accent/5 border border-border rounded-xl p-6 text-center">
           <span className="inline-block bg-primary/10 text-primary text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-3">
             Leadership
@@ -584,122 +598,50 @@ export function WhosWhoSection() {
           </p>
         </div>
 
-        {/* Government Leadership */}
-        {/* <div>
-          <h3 className="text-lg font-bold text-primary mb-4 flex items-center gap-2">
-            <Shield className="h-5 w-5 text-accent" /> Government Leadership
-          </h3>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {govLeadersWithImages.map((o) => (
-              <OfficialCard key={o.name} o={o} />
-            ))}
-          </div>
-        </div> */}
+        {loading && (
+          <p className="text-sm text-muted-foreground text-center py-6">Loading…</p>
+        )}
 
-        {/* PROJECT ELEMENT Leadership */}
-        <div>
-          <h3 className="text-lg font-bold text-primary mb-4 flex items-center gap-2">
-            <Briefcase className="h-5 w-5 text-accent" /> PROJECT ELEMENT
-            Leadership
-          </h3>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {elementLeadership.map((o) => (
-              <OfficialCard key={o.name} o={o} onClick={() => setSelected(o)} />
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Detail overlay */}
-      {selected && (
-        <div
-          className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4"
-          onClick={() => setSelected(null)}
-        >
-          <div
-            className="bg-card rounded-xl shadow-elevated max-w-md w-full p-6 relative max-h-[90vh] overflow-y-auto"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
-              onClick={() => setSelected(null)}
-              className="absolute top-3 right-3 p-1 rounded hover:bg-surface"
-              aria-label="Close"
-            >
-              <X className="h-5 w-5 text-muted-foreground" />
-            </button>
-            <div className="text-center">
-              <div className="mx-auto h-20 w-20 rounded-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center text-primary-foreground overflow-hidden">
-                {selected.image ? (
-                  <img
-                    src={selected.image}
-                    alt={selected.name}
-                    className="h-full w-full object-cover"
-                  />
-                ) : (
-                  <User className="h-9 w-9" />
-                )}
-              </div>
-              <h3 className="mt-4 text-lg font-bold text-primary">
-                {selected.name}
-              </h3>
-              <p className="text-sm text-foreground font-semibold mt-1">
-                {selected.designation}
-              </p>
-              {selected.additionalRoles && (
-                <p className="text-xs text-muted-foreground mt-1">
-                  {selected.additionalRoles}
-                </p>
-              )}
-              <div className="mt-4 pt-4 border-t border-border space-y-2 text-sm text-muted-foreground text-left">
-                {selected.office && (
-                  <div className="flex items-start gap-2">
-                    <MapPin className="h-4 w-4 text-primary mt-0.5 shrink-0" />{" "}
-                    <span>{selected.office}</span>
-                  </div>
-                )}
-                {selected.phone && (
-                  <div className="flex items-center gap-2">
-                    <Phone className="h-4 w-4 text-primary" /> {selected.phone}
-                  </div>
-                )}
-                {selected.mobile && (
-                  <div className="flex items-center gap-2">
-                    <Smartphone className="h-4 w-4 text-primary" />{" "}
-                    {selected.mobile}
-                  </div>
-                )}
-                {selected.emails && selected.emails.length > 0 ? (
-                  <div className="flex items-start gap-2">
-                    <Mail className="h-4 w-4 text-primary mt-0.5 shrink-0" />
-                    <div className="space-y-0.5">
-                      {selected.emails.map((e) => (
-                        <a
-                          key={e}
-                          href={`mailto:${e}`}
-                          className="block text-primary hover:underline"
-                        >
-                          {e}
-                        </a>
-                      ))}
-                    </div>
-                  </div>
-                ) : selected.email ? (
-                  <div className="flex items-center gap-2">
-                    <Mail className="h-4 w-4 text-primary" />{" "}
-                    <a
-                      href={`mailto:${selected.email}`}
-                      className="text-primary hover:underline"
-                    >
-                      {selected.email}
-                    </a>
-                  </div>
-                ) : null}
-              </div>
+        {groups.map((cat) => (
+          <div key={cat.category_id || cat.category_name}>
+            <h3 className="text-lg font-bold text-primary mb-4 flex items-center gap-2">
+              <Briefcase className="h-5 w-5 text-accent" /> {cat.category_name}
+            </h3>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              {cat.officials.map((o) => (
+                <ApiOfficialCard key={o.id} o={o} />
+              ))}
             </div>
           </div>
-        </div>
-      )}
+        ))}
+      </div>
     </AboutLayout>
+  );
+}
+
+function ApiOfficialCard({ o }: { o: ApiOfficial }) {
+  const img = resolvePhoto(o.photo_path);
+  return (
+    <Link
+      to={`/about/officials/${o.id}`}
+      className="bg-card border border-border rounded-xl p-6 text-center hover:shadow-md hover:border-primary/30 transition cursor-pointer group block"
+    >
+      <div className="mx-auto h-20 w-20 rounded-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center text-primary-foreground group-hover:scale-105 transition-transform overflow-hidden">
+        {img ? (
+          <img src={img} alt={o.name} className="h-full w-full object-cover" />
+        ) : (
+          <User className="h-8 w-8" />
+        )}
+      </div>
+      <h3 className="mt-4 font-bold text-sm text-primary">{o.name}</h3>
+      <p className="text-xs text-foreground font-semibold mt-1">{o.designation}</p>
+      {o.organisation && (
+        <p className="text-[11px] text-muted-foreground mt-0.5">{o.organisation}</p>
+      )}
+      <div className="mt-3 text-xs text-accent font-semibold group-hover:underline">
+        View Profile →
+      </div>
+    </Link>
   );
 }
 
