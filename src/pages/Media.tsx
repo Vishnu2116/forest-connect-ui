@@ -1,8 +1,11 @@
+import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import PageLayout, { PageHeader } from "@/components/layout/PageLayout";
 import { Facebook, Twitter, Youtube, ArrowRight, Calendar, MapPin, ArrowLeft } from "lucide-react";
+import { USE_REAL_API } from "@/config/api";
+import { fetchGallery, fetchEvents, fetchEvent, fetchSocial, fileUrl, formatEventDate, youtubeEmbed } from "@/lib/media";
 
-const videos = [
+const dummyVideos = [
   { id: "1", title: "PROJECT ELEMENT Overview" },
   { id: "2", title: "Community Plantation Drive" },
   { id: "3", title: "Bamboo Value Chain Stories" },
@@ -12,6 +15,13 @@ const videos = [
 ];
 
 export function SocialMedia() {
+  const [data, setData] = useState<any>(null);
+  useEffect(() => { fetchSocial().then(setData).catch(() => setData(null)); }, []);
+
+  const fb = data?.embeds?.facebook_embed_code;
+  const tw = data?.embeds?.twitter_embed_code;
+  const videos = data?.videos?.length ? data.videos : null;
+
   return (
     <PageLayout>
       <PageHeader
@@ -22,25 +32,31 @@ export function SocialMedia() {
       <section className="py-10">
         <div className="gov-container">
           <div className="grid md:grid-cols-2 gap-6">
-            {/* Facebook */}
             <div className="bg-card border border-border rounded-lg overflow-hidden shadow-card flex flex-col">
               <div className="px-4 py-3 border-b border-border bg-surface flex items-center gap-2">
                 <Facebook className="h-4 w-4 text-primary" />
                 <span className="text-sm font-bold">ELEMENT — Facebook</span>
               </div>
-              <div className="aspect-[4/5] bg-muted/50 flex items-center justify-center text-muted-foreground text-sm">
-                Facebook iframe embed (ELEMENT)
-              </div>
+              {fb ? (
+                <div className="p-3" dangerouslySetInnerHTML={{ __html: fb }} />
+              ) : (
+                <div className="aspect-[4/5] bg-muted/50 flex items-center justify-center text-muted-foreground text-sm">
+                  Facebook iframe embed (ELEMENT)
+                </div>
+              )}
             </div>
-            {/* Twitter / X */}
             <div className="bg-card border border-border rounded-lg overflow-hidden shadow-card flex flex-col">
               <div className="px-4 py-3 border-b border-border bg-surface flex items-center gap-2">
                 <Twitter className="h-4 w-4 text-primary" />
                 <span className="text-sm font-bold">ELEMENT — Twitter / X</span>
               </div>
-              <div className="aspect-[4/5] bg-muted/50 flex items-center justify-center text-muted-foreground text-sm">
-                Twitter / X iframe embed (ELEMENT)
-              </div>
+              {tw ? (
+                <div className="p-3" dangerouslySetInnerHTML={{ __html: tw }} />
+              ) : (
+                <div className="aspect-[4/5] bg-muted/50 flex items-center justify-center text-muted-foreground text-sm">
+                  Twitter / X iframe embed (ELEMENT)
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -52,11 +68,23 @@ export function SocialMedia() {
             <Youtube className="h-6 w-6 text-accent" /> YouTube Videos
           </h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {videos.map((v) => (
+            {(videos || dummyVideos).map((v: any) => (
               <div key={v.id} className="bg-card border border-border rounded-lg overflow-hidden hover:shadow-card transition">
-                <div className="aspect-video bg-muted/60 flex items-center justify-center text-muted-foreground text-sm">
-                  YouTube embed placeholder
-                </div>
+                {videos && v.youtube_url ? (
+                  <div className="aspect-video">
+                    <iframe
+                      src={youtubeEmbed(v.youtube_url)}
+                      title={v.title}
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                      className="w-full h-full"
+                    />
+                  </div>
+                ) : (
+                  <div className="aspect-video bg-muted/60 flex items-center justify-center text-muted-foreground text-sm">
+                    YouTube embed placeholder
+                  </div>
+                )}
                 <div className="p-4">
                   <h3 className="text-sm font-semibold text-foreground leading-snug mb-0">{v.title}</h3>
                   <p className="text-xs text-muted-foreground mt-1.5 mb-0">PROJECT ELEMENT · Tripura</p>
@@ -70,15 +98,14 @@ export function SocialMedia() {
   );
 }
 
-/* ---- Events data (shared by Events list + Detail) ---- */
+/* ---- Dummy events fallback ---- */
 export const mediaEvents = [
   {
     slug: "world-bank-mission-visit-agartala",
     date: "10 May 2026",
     title: "World Bank Mission Visit — Agartala",
     venue: "Agartala, Tripura",
-    description:
-      "A high-level World Bank mission visited Agartala to review the progress of the PROJECT ELEMENT. The team met with the Chief Secretary, Forest Department leadership, and field implementation units to review livelihood, landscape and value-chain interventions.",
+    description: "A high-level World Bank mission visited Agartala to review the progress of the PROJECT ELEMENT.",
     images: [
       { aspect: "aspect-[4/3]", label: "Mission opening session" },
       { aspect: "aspect-square", label: "Field briefing" },
@@ -91,52 +118,25 @@ export const mediaEvents = [
     date: "02 May 2026",
     title: "ELEMENT Stakeholder Workshop — Dhalai",
     venue: "Dhalai District, Tripura",
-    description:
-      "A district-level workshop convened community institutions, line departments and partner agencies to align value-chain priorities, plantation calendars and capacity-building plans for the year.",
+    description: "A district-level workshop convened community institutions and partner agencies.",
     images: [
       { aspect: "aspect-[3/4]", label: "Workshop inauguration" },
       { aspect: "aspect-[16/9]", label: "Group discussion" },
       { aspect: "aspect-square", label: "Stakeholder presentation" },
     ],
   },
-  {
-    slug: "community-plantation-drive-gomati",
-    date: "20 Apr 2026",
-    title: "Community Plantation Drive — Gomati",
-    venue: "Gomati District, Tripura",
-    description:
-      "Hundreds of community members joined a coordinated plantation drive in Gomati district, planting livelihood-oriented species and undertaking soil & moisture conservation works.",
-    images: [
-      { aspect: "aspect-[16/9]", label: "Plantation in progress" },
-      { aspect: "aspect-square", label: "Community participation" },
-      { aspect: "aspect-[3/4]", label: "Saplings ready" },
-      { aspect: "aspect-[4/3]", label: "Field officers on-site" },
-    ],
-  },
-  {
-    slug: "bamboo-value-chain-mela-north-tripura",
-    date: "10 Apr 2026",
-    title: "Bamboo Value Chain Mela — North Tripura",
-    venue: "North Tripura District",
-    description:
-      "Artisans, FPOs and bamboo entrepreneurs showcased products, design innovations and market linkages under the ELEMENT value-chain initiative.",
-    images: [
-      { aspect: "aspect-square", label: "Bamboo handicrafts" },
-      { aspect: "aspect-[4/3]", label: "Artisan stall" },
-      { aspect: "aspect-[3/4]", label: "Mela visitors" },
-    ],
-  },
 ];
 
 export function Gallery() {
-  // Flatten all event images into a single uniform photo gallery
-  const allImages = mediaEvents.flatMap((ev) =>
-    ev.images.map((img, idx) => ({
-      id: `${ev.slug}-${idx}`,
-      label: img.label,
-      event: ev.title,
-    }))
+  const [items, setItems] = useState<any[] | null>(null);
+  useEffect(() => { fetchGallery().then(setItems).catch(() => setItems([])); }, []);
+
+  const showApi = USE_REAL_API && items !== null;
+  const fallback = mediaEvents.flatMap((ev) =>
+    ev.images.map((img, idx) => ({ id: `${ev.slug}-${idx}`, caption: img.label, image_path: null }))
   );
+  const display = showApi ? (items!.length ? items! : []) : fallback;
+  const isEmpty = showApi && display.length === 0;
 
   return (
     <PageLayout>
@@ -147,17 +147,26 @@ export function Gallery() {
       />
       <section className="py-10">
         <div className="gov-container">
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
-            {allImages.map((img) => (
-              <div
-                key={img.id}
-                className="aspect-square rounded-lg overflow-hidden border border-border bg-gradient-to-br from-primary/10 to-primary-light/10 flex items-center justify-center text-[11px] text-muted-foreground text-center px-2"
-                title={`${img.label} — ${img.event}`}
-              >
-                {img.label}
-              </div>
-            ))}
-          </div>
+          {isEmpty ? (
+            <div className="text-center text-muted-foreground py-16 text-sm">No images available yet.</div>
+          ) : (
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+              {display.map((img: any) => (
+                <figure key={img.id} className="rounded-lg overflow-hidden border border-border bg-card">
+                  <div className="aspect-square bg-gradient-to-br from-primary/10 to-primary-light/10 flex items-center justify-center text-[11px] text-muted-foreground text-center px-2">
+                    {img.image_path ? (
+                      <img src={fileUrl(img.image_path)} alt={img.caption || ""} className="w-full h-full object-cover" loading="lazy" />
+                    ) : (
+                      <span>{img.caption}</span>
+                    )}
+                  </div>
+                  {img.caption && (
+                    <figcaption className="px-2 py-1.5 text-[11px] text-muted-foreground truncate">{img.caption}</figcaption>
+                  )}
+                </figure>
+              ))}
+            </div>
+          )}
         </div>
       </section>
     </PageLayout>
@@ -165,6 +174,13 @@ export function Gallery() {
 }
 
 export function MediaEvents() {
+  const [items, setItems] = useState<any[] | null>(null);
+  useEffect(() => { fetchEvents().then(setItems).catch(() => setItems([])); }, []);
+
+  const display: any[] = USE_REAL_API && items && items.length
+    ? items
+    : mediaEvents.map((e) => ({ id: e.slug, slug: e.slug, title: e.title, event_date: e.date, description: e.description, cover_image_path: null }));
+
   return (
     <PageLayout>
       <PageHeader
@@ -175,25 +191,25 @@ export function MediaEvents() {
       <section className="py-10">
         <div className="gov-container">
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {mediaEvents.map((ev) => (
+            {display.map((ev) => (
               <Link
-                key={ev.slug}
+                key={ev.id || ev.slug}
                 to={`/media/events/${ev.slug}`}
                 className="group bg-card border border-border rounded-xl overflow-hidden hover:shadow-card hover:border-primary/40 transition flex flex-col"
               >
-                <div className="aspect-video bg-gradient-to-br from-primary/15 to-primary-light/15 flex items-center justify-center text-xs text-muted-foreground">
-                  Event cover
+                <div className="aspect-video bg-gradient-to-br from-primary/15 to-primary-light/15 flex items-center justify-center text-xs text-muted-foreground overflow-hidden">
+                  {ev.cover_image_path ? (
+                    <img src={fileUrl(ev.cover_image_path)} alt={ev.title} className="w-full h-full object-cover" loading="lazy" />
+                  ) : (
+                    "Event cover"
+                  )}
                 </div>
                 <div className="p-5 flex-1 flex flex-col">
                   <div className="flex items-center gap-2 text-[11px] text-accent font-semibold uppercase tracking-wide mb-2">
-                    <Calendar className="h-3 w-3" /> {ev.date}
+                    <Calendar className="h-3 w-3" /> {ev.event_date?.includes("-") ? formatEventDate(ev.event_date) : ev.event_date}
                   </div>
-                  <h3 className="text-base font-bold text-foreground leading-snug mb-2 group-hover:text-primary">
-                    {ev.title}
-                  </h3>
-                  <p className="text-xs text-muted-foreground leading-relaxed line-clamp-3">
-                    {ev.description}
-                  </p>
+                  <h3 className="text-base font-bold text-foreground leading-snug mb-2 group-hover:text-primary">{ev.title}</h3>
+                  <p className="text-xs text-muted-foreground leading-relaxed line-clamp-3">{ev.description}</p>
                   <span className="mt-4 inline-flex items-center gap-1 text-xs font-semibold text-accent">
                     View details <ArrowRight className="h-3 w-3" />
                   </span>
@@ -209,9 +225,22 @@ export function MediaEvents() {
 
 export function MediaEventDetail() {
   const { slug } = useParams();
-  const ev = mediaEvents.find((e) => e.slug === slug);
+  const [ev, setEv] = useState<any | null>(null);
+  const [loaded, setLoaded] = useState(false);
 
-  if (!ev) {
+  useEffect(() => {
+    if (!slug) return;
+    fetchEvent(slug).then((d) => { setEv(d); setLoaded(true); }).catch(() => setLoaded(true));
+  }, [slug]);
+
+  const dummy = mediaEvents.find((e) => e.slug === slug);
+  const display: any = ev || (dummy ? {
+    title: dummy.title, event_date: dummy.date, description: dummy.description,
+    venue: dummy.venue,
+    images: dummy.images.map((i, idx) => ({ id: idx, caption: i.label, image_path: null })),
+  } : null);
+
+  if (loaded && !display) {
     return (
       <PageLayout>
         <PageHeader title="Event not found" breadcrumb={["Home", "Media", "Events"]} />
@@ -226,12 +255,14 @@ export function MediaEventDetail() {
     );
   }
 
+  if (!display) return <PageLayout><div className="py-20 text-center text-sm text-muted-foreground">Loading…</div></PageLayout>;
+
   return (
     <PageLayout>
       <PageHeader
-        title={ev.title}
-        subtitle={`${ev.date} · ${ev.venue}`}
-        breadcrumb={["Home", "Media", "Events", ev.title]}
+        title={display.title}
+        subtitle={`${display.event_date?.includes("-") ? formatEventDate(display.event_date) : display.event_date}${display.venue ? ` · ${display.venue}` : ""}`}
+        breadcrumb={["Home", "Media", "Events", display.title]}
       />
       <section className="py-10">
         <div className="gov-container max-w-5xl">
@@ -241,24 +272,36 @@ export function MediaEventDetail() {
 
           <div className="bg-card border border-border rounded-xl p-6 shadow-card">
             <div className="flex items-center gap-3 text-xs text-accent font-semibold uppercase tracking-wide mb-3">
-              <Calendar className="h-3.5 w-3.5" /> {ev.date}
-              <span className="text-muted-foreground/60">·</span>
-              <MapPin className="h-3.5 w-3.5" /> {ev.venue}
+              <Calendar className="h-3.5 w-3.5" />
+              {display.event_date?.includes("-") ? formatEventDate(display.event_date) : display.event_date}
+              {display.venue && (<><span className="text-muted-foreground/60">·</span><MapPin className="h-3.5 w-3.5" /> {display.venue}</>)}
             </div>
-            <h1 className="text-2xl md:text-3xl font-bold text-primary mb-4">{ev.title}</h1>
-            <p className="text-sm md:text-base text-muted-foreground leading-relaxed">{ev.description}</p>
+            <h1 className="text-2xl md:text-3xl font-bold text-primary mb-4">{display.title}</h1>
+            {display.description && (
+              <p className="text-sm md:text-base text-muted-foreground leading-relaxed">{display.description}</p>
+            )}
 
-            <h2 className="text-base font-bold text-primary mt-8 mb-4">Event Gallery</h2>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
-              {ev.images.map((img, idx) => (
-                <div
-                  key={idx}
-                  className="aspect-square rounded-lg overflow-hidden border border-border bg-gradient-to-br from-primary/10 to-primary-light/10 flex items-center justify-center text-[11px] text-muted-foreground text-center px-2"
-                >
-                  {img.label}
+            {display.images?.length > 0 && (
+              <>
+                <h2 className="text-base font-bold text-primary mt-8 mb-4">Event Gallery</h2>
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+                  {display.images.map((img: any) => (
+                    <figure key={img.id} className="rounded-lg overflow-hidden border border-border bg-card">
+                      <div className="aspect-square bg-gradient-to-br from-primary/10 to-primary-light/10 flex items-center justify-center text-[11px] text-muted-foreground text-center px-2">
+                        {img.image_path ? (
+                          <img src={fileUrl(img.image_path)} alt={img.caption || ""} className="w-full h-full object-cover" loading="lazy" />
+                        ) : (
+                          <span>{img.caption}</span>
+                        )}
+                      </div>
+                      {img.caption && (
+                        <figcaption className="px-2 py-1.5 text-[11px] text-muted-foreground truncate">{img.caption}</figcaption>
+                      )}
+                    </figure>
+                  ))}
                 </div>
-              ))}
-            </div>
+              </>
+            )}
           </div>
         </div>
       </section>

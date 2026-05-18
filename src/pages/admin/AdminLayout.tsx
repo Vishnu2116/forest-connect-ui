@@ -10,6 +10,8 @@ import logoTripura from "@/assets/logo-tripura.png";
 export const adminMenu = [
   { to: "/admin", label: "Dashboard", icon: LayoutDashboard, end: true },
   { to: "/admin/events", label: "Events", icon: Calendar },
+  { to: "/admin/gallery", label: "Gallery", icon: ImageIcon },
+  { to: "/admin/social-media", label: "Social Media", icon: MessageSquare },
   { to: "/admin/tenders", label: "Tenders / Procurements", icon: FileText },
   { to: "/admin/whoswho", label: "Who's Who", icon: Users },
   { to: "/admin/officials", label: "Officials & Directory", icon: Users },
