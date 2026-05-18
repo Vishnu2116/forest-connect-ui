@@ -106,6 +106,14 @@ export default function AdminLayout() {
             <div className="h-8 w-8 rounded-full bg-accent text-accent-foreground flex items-center justify-center text-xs font-bold">
               {adminName.slice(0, 1).toUpperCase()}
             </div>
+            <button
+              onClick={logout}
+              className="ml-1 inline-flex items-center gap-1.5 px-3 py-1.5 rounded border border-border text-xs font-semibold text-primary hover:bg-surface"
+              aria-label="Logout"
+            >
+              <LogOut className="h-3.5 w-3.5" />
+              Logout
+            </button>
           </div>
         </header>
         <main className="flex-1 p-4 md:p-6 overflow-x-auto">
