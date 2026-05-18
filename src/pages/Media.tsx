@@ -129,6 +129,15 @@ export const mediaEvents = [
 ];
 
 export function Gallery() {
+  // Flatten all event images into a single uniform photo gallery
+  const allImages = mediaEvents.flatMap((ev) =>
+    ev.images.map((img, idx) => ({
+      id: `${ev.slug}-${idx}`,
+      label: img.label,
+      event: ev.title,
+    }))
+  );
+
   return (
     <PageLayout>
       <PageHeader
@@ -137,32 +146,18 @@ export function Gallery() {
         breadcrumb={["Home", "Media", "Gallery"]}
       />
       <section className="py-10">
-        <div className="gov-container space-y-12">
-          {mediaEvents.map((ev) => (
-            <article key={ev.slug} className="bg-card border border-border rounded-xl p-5 md:p-6 shadow-card">
-              <header className="mb-5">
-                <div className="flex items-center gap-2 text-xs text-accent font-semibold uppercase tracking-wide">
-                  <Calendar className="h-3.5 w-3.5" /> {ev.date}
-                  <span className="text-muted-foreground/60">·</span>
-                  <MapPin className="h-3.5 w-3.5" /> {ev.venue}
-                </div>
-                <h2 className="text-xl md:text-2xl font-bold text-primary mt-2 mb-2">{ev.title}</h2>
-                <p className="text-sm text-muted-foreground max-w-3xl">{ev.description}</p>
-              </header>
-
-              {/* Masonry-style varied image grid */}
-              <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 [column-fill:_balance]">
-                {ev.images.map((img, idx) => (
-                  <div
-                    key={idx}
-                    className={`mb-4 break-inside-avoid rounded-lg overflow-hidden border border-border bg-gradient-to-br from-primary/10 to-primary-light/10 ${img.aspect} flex items-center justify-center text-xs text-muted-foreground`}
-                  >
-                    {img.label}
-                  </div>
-                ))}
+        <div className="gov-container">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+            {allImages.map((img) => (
+              <div
+                key={img.id}
+                className="aspect-square rounded-lg overflow-hidden border border-border bg-gradient-to-br from-primary/10 to-primary-light/10 flex items-center justify-center text-[11px] text-muted-foreground text-center px-2"
+                title={`${img.label} — ${img.event}`}
+              >
+                {img.label}
               </div>
-            </article>
-          ))}
+            ))}
+          </div>
         </div>
       </section>
     </PageLayout>
