@@ -806,17 +806,12 @@ export default function Home() {
                     <Facebook className="h-4 w-4 text-primary" />
                     <span className="text-sm font-bold">Facebook</span>
                     <span className="text-xs text-muted-foreground ml-auto">
-                      @ElementTripura
+                      {social.facebook_handle}
                     </span>
                   </div>
                   <div className="p-3 flex-1 min-h-0 flex flex-col justify-center">
                     <p className="text-[15px] text-foreground leading-relaxed line-clamp-3">
-                      Field visit by ELEMENT team to community plantation sites
-                      in Dhalai district. Engaging with SHGs on livelihood value
-                      chains and capacity-building workshops.
-                    </p>
-                    <p className="text-xs text-muted-foreground mt-2">
-                      2 days ago
+                      {social.facebook_post_text}
                     </p>
                   </div>
                 </div>
@@ -826,31 +821,38 @@ export default function Home() {
                     <Twitter className="h-4 w-4 text-primary" />
                     <span className="text-sm font-bold">Twitter / X</span>
                     <span className="text-xs text-muted-foreground ml-auto">
-                      @ElementTripura
+                      {social.twitter_handle}
                     </span>
                   </div>
                   <div className="p-3 flex-1 min-h-0 flex flex-col justify-center">
                     <p className="text-[15px] text-foreground leading-relaxed line-clamp-3">
-                      Honourable Forest Minister inaugurates new eco-tourism
-                      circuit under ELEMENT. A milestone for sustainable
-                      livelihoods across Tripura. #Tripura #ELEMENT
-                    </p>
-                    <p className="text-xs text-muted-foreground mt-2">
-                      5 days ago
+                      {social.twitter_post_text}
                     </p>
                   </div>
                 </div>
                 {/* YouTube video */}
                 <div className="bg-background border border-border rounded-sm overflow-hidden flex flex-col basis-0 grow-[42] min-h-0">
                   <div className="relative flex-1 min-h-0 bg-gradient-to-br from-primary/30 to-primary-light/30 flex items-center justify-center group cursor-pointer">
-                    <div className="absolute inset-0 bg-black/20" />
-                    <div className="relative h-14 w-14 rounded-full bg-accent flex items-center justify-center shadow-lg group-hover:scale-110 transition">
-                      <div className="w-0 h-0 border-l-[14px] border-l-accent-foreground border-y-[9px] border-y-transparent ml-1" />
-                    </div>
+                    {youtubeEmbed ? (
+                      <iframe
+                        src={youtubeEmbed}
+                        title={social.youtube_video_title}
+                        className="absolute inset-0 w-full h-full"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                      />
+                    ) : (
+                      <>
+                        <div className="absolute inset-0 bg-black/20" />
+                        <div className="relative h-14 w-14 rounded-full bg-accent flex items-center justify-center shadow-lg group-hover:scale-110 transition">
+                          <div className="w-0 h-0 border-l-[14px] border-l-accent-foreground border-y-[9px] border-y-transparent ml-1" />
+                        </div>
+                      </>
+                    )}
                   </div>
                   <div className="px-3 py-2.5 shrink-0 border-t border-border">
                     <h4 className="text-sm font-semibold text-foreground leading-snug line-clamp-1">
-                      PROJECT ELEMENT Overview — Community Livelihoods
+                      {social.youtube_video_title}
                     </h4>
                   </div>
                 </div>
