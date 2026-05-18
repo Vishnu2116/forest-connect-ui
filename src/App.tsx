@@ -32,6 +32,7 @@ import {
 } from "./pages/admin/modules";
 import PlantationAdmin from "./pages/admin/PlantationAdmin";
 import ProcurementsAdmin from "./pages/admin/ProcurementsAdmin";
+import GalleryAdmin from "./pages/admin/GalleryAdmin";
 import { GrievanceAdmin, RTIAdmin } from "./pages/admin/StatusModules";
 import { UsersAdmin } from "./pages/admin/UsersAdmin";
 import SettingsAdmin from "./pages/admin/SettingsAdmin";
