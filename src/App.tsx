@@ -28,7 +28,12 @@ import AdminLayout from "./pages/admin/AdminLayout";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import {
   NotificationsAdmin, EventsAdmin, TendersAdmin, WhosWhoAdmin, SuccessStoriesAdmin,
-  NewslettersAdmin, ThematicAdmin, ReportsAdmin, IECAdmin, ActivitiesAdmin, ProjectsAdmin,
+  NewslettersAdmin, ThematicAdmin, ReportsAdmin, IECAdmin, ActivitiesAdmin,
+} from "./pages/admin/modules";
+import ProjectsManagementAdmin from "./pages/admin/ProjectsManagementAdmin";
+import ProjectComponentsAdmin from "./pages/admin/ProjectComponentsAdmin";
+const _unusedProjectsAdmin = {}; // placeholder
+const __unused = {
 } from "./pages/admin/modules";
 import PlantationAdmin from "./pages/admin/PlantationAdmin";
 import { GrievanceAdmin, RTIAdmin } from "./pages/admin/StatusModules";
