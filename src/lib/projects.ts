@@ -251,7 +251,9 @@ export async function fetchProject(slug: string): Promise<ApiProjectDetail | nul
   try {
     const r = await fetch(`${API_BASE_URL}/api/projects/${slug}`);
     if (!r.ok) throw new Error();
-    return await r.json();
+    const data = await r.json();
+    if (!data || !data.id) return dummyProjectDetail(slug);
+    return data;
   } catch {
     return dummyProjectDetail(slug);
   }
@@ -268,4 +270,25 @@ export async function fetchHighlights(): Promise<ApiProjectCard[]> {
   } catch {
     return dummyProjects().slice(0, 5);
   }
+}
+
+/* ---------- Admin fetchers (no dummy fallback, always real API) ---------- */
+export async function fetchProjectsAdmin(): Promise<ApiProjectCard[]> {
+  const r = await fetch(`${API_BASE_URL}/api/projects`, { headers: authHeaders() });
+  if (!r.ok) throw new Error(`HTTP ${r.status}`);
+  const data = await r.json();
+  return Array.isArray(data) ? data : [];
+}
+
+export async function fetchProjectAdmin(slug: string): Promise<ApiProjectDetail | null> {
+  const r = await fetch(`${API_BASE_URL}/api/projects/${slug}`, { headers: authHeaders() });
+  if (!r.ok) throw new Error(`HTTP ${r.status}`);
+  return await r.json();
+}
+
+export async function fetchComponentsAdmin(): Promise<ApiProjectComponent[]> {
+  const r = await fetch(`${API_BASE_URL}/api/project-components`, { headers: authHeaders() });
+  if (!r.ok) throw new Error(`HTTP ${r.status}`);
+  const data = await r.json();
+  return Array.isArray(data) ? data : [];
 }
