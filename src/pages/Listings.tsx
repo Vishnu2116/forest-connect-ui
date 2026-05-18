@@ -161,6 +161,130 @@ function KnowledgeHubListing({
   );
 }
 
+function KnowledgeHubApiListing({
+  type, title, subtitle,
+}: { type: KHType; title: string; subtitle: string }) {
+  const [items, setItems] = useState<ApiKHItem[]>([]);
+  const [search, setSearch] = useState("");
+  const [debounced, setDebounced] = useState("");
+  const [year, setYear] = useState("");
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const id = setTimeout(() => setDebounced(search), 500);
+    return () => clearTimeout(id);
+  }, [search]);
+
+  useEffect(() => {
+    let alive = true;
+    setLoading(true);
+    fetchKnowledgeHub({ type, search: debounced || undefined, year: year || undefined, page, limit: 10 })
+      .then((res) => {
+        if (!alive) return;
+        setItems(res.data);
+        setTotalPages(res.pagination?.totalPages || 1);
+      })
+      .finally(() => alive && setLoading(false));
+    return () => { alive = false; };
+  }, [type, debounced, year, page]);
+
+  const years = useMemo(() => {
+    const ys = new Set<string>();
+    for (let y = new Date().getFullYear(); y >= 2020; y--) ys.add(String(y));
+    return Array.from(ys);
+  }, []);
+
+  return (
+    <KnowledgeHubLayout title={title} subtitle={subtitle} breadcrumb={["Home", "Knowledge Hub", title]}>
+      <div className="flex flex-wrap items-center justify-between gap-3 mb-5">
+        <div className="flex flex-wrap gap-2">
+          <input
+            type="search"
+            value={search}
+            onChange={(e) => { setSearch(e.target.value); setPage(1); }}
+            placeholder={`Search ${title.toLowerCase()}…`}
+            className="border border-input rounded px-3 py-2 text-sm w-full sm:w-72 focus-ring bg-card"
+          />
+          <select
+            value={year}
+            onChange={(e) => { setYear(e.target.value); setPage(1); }}
+            className="border border-input rounded px-3 py-2 text-sm bg-card focus-ring"
+          >
+            <option value="">All Years</option>
+            {years.map((y) => <option key={y} value={y}>{y}</option>)}
+          </select>
+        </div>
+      </div>
+      <div className="overflow-x-auto">
+        <DataTable headers={["#", "Title", "Date", "File Details", "Actions"]}>
+          {items.map((r, i) => {
+            const url = resolveUrl(r.file_path);
+            return (
+              <tr key={r.id}>
+                <td>{(page - 1) * 10 + i + 1}</td>
+                <td className="font-medium">{r.title}</td>
+                <td>{formatMonthYear(r.published_date)}</td>
+                <td>
+                  <span className="text-[11px] text-muted-foreground">
+                    <span className="font-semibold text-primary">{r.file_type || "PDF"}</span>
+                    <span className="mx-1.5 opacity-50">|</span>
+                    {formatSizeMB(r.file_size)}
+                    <span className="mx-1.5 opacity-50">|</span>
+                    {r.language || "English"}
+                  </span>
+                </td>
+                <td>
+                  <div className="flex gap-2">
+                    <a
+                      href={url || "#"}
+                      target="_blank"
+                      rel="noreferrer"
+                      onClick={(e) => { if (!url) e.preventDefault(); }}
+                      className="p-1.5 text-primary hover:bg-primary/10 rounded inline-flex"
+                      aria-label={`View ${r.title}`}
+                    >
+                      <Eye className="h-4 w-4" />
+                    </a>
+                    <a
+                      href={url || "#"}
+                      download
+                      onClick={(e) => { if (!url) e.preventDefault(); }}
+                      className="p-1.5 text-accent hover:bg-accent/10 rounded inline-flex"
+                      aria-label={`Download ${r.title}`}
+                    >
+                      <Download className="h-4 w-4" />
+                    </a>
+                  </div>
+                </td>
+              </tr>
+            );
+          })}
+          {!loading && items.length === 0 && (
+            <tr><td colSpan={5} className="text-center text-muted-foreground py-6">No items found.</td></tr>
+          )}
+        </DataTable>
+      </div>
+      <div className="mt-4 flex items-center justify-between text-sm">
+        <span className="text-muted-foreground">Page {page} of {totalPages}</span>
+        <div className="flex gap-1">
+          <button
+            disabled={page <= 1}
+            onClick={() => setPage((p) => Math.max(1, p - 1))}
+            className="px-3 py-1.5 rounded border border-border disabled:opacity-50 hover:bg-surface"
+          >Previous</button>
+          <button
+            disabled={page >= totalPages}
+            onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+            className="px-3 py-1.5 rounded border border-border disabled:opacity-50 hover:bg-surface"
+          >Next</button>
+        </div>
+      </div>
+    </KnowledgeHubLayout>
+  );
+}
+
 export const Reports = () => (
   <KnowledgeHubApiListing
     type="report"
