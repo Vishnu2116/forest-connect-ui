@@ -413,6 +413,7 @@ export default function Navbar() {
                           <li key={c.to}>
                             <NavLink
                               to={c.to}
+                              end
                               onClick={() => setMobileOpen(false)}
                               className={({ isActive: a }) =>
                                 `block px-8 py-2.5 text-sm hover:bg-primary ${
