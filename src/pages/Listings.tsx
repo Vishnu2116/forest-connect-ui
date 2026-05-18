@@ -3,10 +3,8 @@ import KnowledgeHubLayout from "@/components/layout/KnowledgeHubLayout";
 import { DataTable, Pagination } from "@/components/common/DataTable";
 import { Download, Eye, Trash2, Pencil, Upload } from "lucide-react";
 import { reports, publications, procurements } from "@/data/content";
-import { useKnowledgeHubItems, KHItem } from "@/hooks/useKnowledgeHub";
-import { usePublicProcurements, ProcurementItem, PROCUREMENT_STATUS_LABEL, formatDate } from "@/hooks/useProcurements";
 
-type Row = { title: string; date: string; size?: string; type?: string; deadline?: string; status?: string; href?: string };
+type Row = { title: string; date: string; size?: string; type?: string; deadline?: string; status?: string };
 
 export function ListingPage({
   title,
@@ -84,17 +82,8 @@ export function ListingPage({
                   </td>
                   <td>
                     <div className="flex gap-2">
-                      {r.href ? (
-                        <>
-                          <a href={r.href} target="_blank" rel="noopener noreferrer" className="p-1.5 text-primary hover:bg-primary/10 rounded" aria-label="View"><Eye className="h-4 w-4" /></a>
-                          <a href={r.href} target="_blank" rel="noopener noreferrer" className="p-1.5 text-accent hover:bg-accent/10 rounded" aria-label="Download"><Download className="h-4 w-4" /></a>
-                        </>
-                      ) : (
-                        <>
-                          <button className="p-1.5 text-primary hover:bg-primary/10 rounded" aria-label="View"><Eye className="h-4 w-4" /></button>
-                          <button className="p-1.5 text-accent hover:bg-accent/10 rounded" aria-label="Download"><Download className="h-4 w-4" /></button>
-                        </>
-                      )}
+                      <button className="p-1.5 text-primary hover:bg-primary/10 rounded" aria-label="View"><Eye className="h-4 w-4" /></button>
+                      <button className="p-1.5 text-accent hover:bg-accent/10 rounded" aria-label="Download"><Download className="h-4 w-4" /></button>
                     </div>
                   </td>
                 </tr>
@@ -157,17 +146,8 @@ function KnowledgeHubListing({
               </td>
               <td>
                 <div className="flex gap-2">
-                  {r.href ? (
-                    <>
-                      <a href={r.href} target="_blank" rel="noopener noreferrer" className="p-1.5 text-primary hover:bg-primary/10 rounded" aria-label={`View ${r.title}`}><Eye className="h-4 w-4" /></a>
-                      <a href={r.href} target="_blank" rel="noopener noreferrer" className="p-1.5 text-accent hover:bg-accent/10 rounded" aria-label={`Download ${r.title}`}><Download className="h-4 w-4" /></a>
-                    </>
-                  ) : (
-                    <>
-                      <button className="p-1.5 text-primary hover:bg-primary/10 rounded" aria-label={`View ${r.title}`}><Eye className="h-4 w-4" /></button>
-                      <button className="p-1.5 text-accent hover:bg-accent/10 rounded" aria-label={`Download ${r.title}`}><Download className="h-4 w-4" /></button>
-                    </>
-                  )}
+                  <button className="p-1.5 text-primary hover:bg-primary/10 rounded" aria-label={`View ${r.title}`}><Eye className="h-4 w-4" /></button>
+                  <button className="p-1.5 text-accent hover:bg-accent/10 rounded" aria-label={`Download ${r.title}`}><Download className="h-4 w-4" /></button>
                 </div>
               </td>
             </tr>
@@ -179,51 +159,23 @@ function KnowledgeHubListing({
   );
 }
 
-function khItemsToRows(items: KHItem[]): Row[] {
-  return items.map((i) => ({
-    title: i.title,
-    date: i.publish_date
-      ? new Date(i.publish_date).toLocaleDateString(undefined, { day: "2-digit", month: "short", year: "numeric" })
-      : "",
-    size: i.file_size ? formatSize(i.file_size) : undefined,
-    type: i.file_format || "PDF",
-    href: i.file_url || i.external_url || undefined,
-  }));
-}
-
-function formatSize(bytes: string | number): string {
-  const n = typeof bytes === "string" ? Number(bytes) : bytes;
-  if (!n || Number.isNaN(n)) return String(bytes);
-  if (n < 1024) return `${n} B`;
-  if (n < 1024 * 1024) return `${(n / 1024).toFixed(1)} KB`;
-  return `${(n / (1024 * 1024)).toFixed(1)} MB`;
-}
-
-export const Reports = () => {
-  const { data } = useKnowledgeHubItems("Reports", []);
-  const rows = data.items.length > 0 ? khItemsToRows(data.items) : reports;
-  return (
-    <KnowledgeHubListing
-      title="Reports"
-      subtitle="Annual, statutory and thematic reports of the Department"
-      rows={rows}
-    />
-  );
-};
-export const Publications = () => {
-  const { data } = useKnowledgeHubItems("Publications", []);
-  const rows = data.items.length > 0 ? khItemsToRows(data.items) : publications;
-  return (
-    <KnowledgeHubListing
-      title="Publications"
-      subtitle="Books, manuals and field guides published by the Department"
-      rows={rows}
-    />
-  );
-};
+export const Reports = () => (
+  <KnowledgeHubListing
+    title="Reports"
+    subtitle="Annual, statutory and thematic reports of the Department"
+    rows={reports}
+  />
+);
+export const Publications = () => (
+  <KnowledgeHubListing
+    title="Publications"
+    subtitle="Books, manuals and field guides published by the Department"
+    rows={publications}
+  />
+);
 export const Procurements = () => <ListingPage title="Procurements & Tenders" subtitle="Active and archived tender notices" rows={procurements} type="tender" breadcrumb={["Home", "Procurements"]} />;
 
-const rfpRowsFallback = [
+const rfpRows = [
   { title: "RFP for Consultancy — Landscape Restoration Baseline Study", date: "12 May 2026", deadline: "10 Jun 2026", status: "Open" },
   { title: "RFP for Communications & Outreach Agency (ELEMENT)", date: "05 May 2026", deadline: "02 Jun 2026", status: "Open" },
   { title: "RFP for MIS/GIS Platform Implementation Partner", date: "28 Apr 2026", deadline: "25 May 2026", status: "Closing Soon" },
@@ -231,7 +183,7 @@ const rfpRowsFallback = [
   { title: "RFP for Bamboo Value-Chain Technical Advisor", date: "02 Apr 2026", deadline: "30 Apr 2026", status: "Closed" },
 ];
 
-const tenderRowsFallback = [
+const tenderRows = [
   { title: "Construction of Community Nursery Centres — Dhalai District", date: "10 May 2026", deadline: "08 Jun 2026", status: "Open" },
   { title: "Supply of Saplings & Planting Material — Phase II", date: "06 May 2026", deadline: "30 May 2026", status: "Open" },
   { title: "Procurement of Field Survey Equipment", date: "02 May 2026", deadline: "22 May 2026", status: "Closing Soon" },
@@ -239,23 +191,5 @@ const tenderRowsFallback = [
   { title: "Annual Vehicle Hiring — Project Offices", date: "10 Apr 2026", deadline: "05 May 2026", status: "Closed" },
 ];
 
-function procToRows(items: ProcurementItem[]): Row[] {
-  return items.map((it) => ({
-    title: it.title,
-    date: formatDate(it.published_date),
-    deadline: formatDate(it.deadline_date),
-    status: PROCUREMENT_STATUS_LABEL[it.procurement_status || ""] || it.procurement_status || "",
-    href: it.documents?.[0]?.file_url || undefined,
-  }));
-}
-
-export const RFPs = () => {
-  const { data } = usePublicProcurements("rfps", []);
-  const rows = data.items.length > 0 ? procToRows(data.items) : rfpRowsFallback;
-  return <ListingPage title="RFPs" subtitle="Active Requests for Proposals under the PROJECT ELEMENT" rows={rows} type="tender" breadcrumb={["Home", "Procurements", "RFPs"]} />;
-};
-export const Tenders = () => {
-  const { data } = usePublicProcurements("tenders", []);
-  const rows = data.items.length > 0 ? procToRows(data.items) : tenderRowsFallback;
-  return <ListingPage title="Tenders" subtitle="Active and archived tender notices" rows={rows} type="tender" breadcrumb={["Home", "Procurements", "Tenders"]} />;
-};
+export const RFPs = () => <ListingPage title="RFPs" subtitle="Active Requests for Proposals under the PROJECT ELEMENT" rows={rfpRows} type="tender" breadcrumb={["Home", "Procurements", "RFPs"]} />;
+export const Tenders = () => <ListingPage title="Tenders" subtitle="Active and archived tender notices" rows={tenderRows} type="tender" breadcrumb={["Home", "Procurements", "Tenders"]} />;

@@ -1,7 +1,6 @@
 import { useParams, Link } from "react-router-dom";
 import PageLayout, { PageHeader } from "@/components/layout/PageLayout";
 import { Facebook, Twitter, Youtube, ArrowRight, Calendar, MapPin, ArrowLeft } from "lucide-react";
-import { usePublicGalleryItems, formatGalleryDate } from "@/hooks/useGallery";
 
 const videos = [
   { id: "1", title: "PROJECT ELEMENT Overview" },
@@ -130,18 +129,14 @@ export const mediaEvents = [
 ];
 
 export function Gallery() {
-  // Flatten all event images for static fallback
-  const fallbackImages = mediaEvents.flatMap((ev) =>
+  // Flatten all event images into a single uniform photo gallery
+  const allImages = mediaEvents.flatMap((ev) =>
     ev.images.map((img, idx) => ({
       id: `${ev.slug}-${idx}`,
       label: img.label,
       event: ev.title,
     }))
   );
-
-  const { data, loading } = usePublicGalleryItems([]);
-  const apiItems = data.items || [];
-  const hasApiItems = apiItems.length > 0;
 
   return (
     <PageLayout>
@@ -152,56 +147,17 @@ export function Gallery() {
       />
       <section className="py-10">
         <div className="gov-container">
-          {loading && !hasApiItems ? (
-            <div className="text-center text-sm text-muted-foreground py-12">Loading gallery…</div>
-          ) : hasApiItems ? (
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
-              {apiItems.map((item) => {
-                const altText = item.alt_text || item.title || item.caption || "Gallery image";
-                const date = formatGalleryDate(item.taken_at);
-                return (
-                  <figure
-                    key={item.id}
-                    className="aspect-square rounded-lg overflow-hidden border border-border bg-muted/40 relative group"
-                    title={`${item.title || item.caption || ""}${date ? " — " + date : ""}`}
-                  >
-                    {item.media_type === "video" ? (
-                      <video
-                        src={item.file_url}
-                        className="w-full h-full object-cover"
-                        controls
-                        preload="metadata"
-                      />
-                    ) : (
-                      <img
-                        src={item.file_url}
-                        alt={altText}
-                        loading="lazy"
-                        className="w-full h-full object-cover transition-transform group-hover:scale-105"
-                      />
-                    )}
-                    {(item.title || item.caption) && (
-                      <figcaption className="absolute inset-x-0 bottom-0 bg-black/50 text-white text-[11px] px-2 py-1 line-clamp-2">
-                        {item.title || item.caption}
-                      </figcaption>
-                    )}
-                  </figure>
-                );
-              })}
-            </div>
-          ) : (
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
-              {fallbackImages.map((img) => (
-                <div
-                  key={img.id}
-                  className="aspect-square rounded-lg overflow-hidden border border-border bg-gradient-to-br from-primary/10 to-primary-light/10 flex items-center justify-center text-[11px] text-muted-foreground text-center px-2"
-                  title={`${img.label} — ${img.event}`}
-                >
-                  {img.label}
-                </div>
-              ))}
-            </div>
-          )}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+            {allImages.map((img) => (
+              <div
+                key={img.id}
+                className="aspect-square rounded-lg overflow-hidden border border-border bg-gradient-to-br from-primary/10 to-primary-light/10 flex items-center justify-center text-[11px] text-muted-foreground text-center px-2"
+                title={`${img.label} — ${img.event}`}
+              >
+                {img.label}
+              </div>
+            ))}
+          </div>
         </div>
       </section>
     </PageLayout>

@@ -1,14 +1,12 @@
 import { Link } from "react-router-dom";
 import { Mail, MapPin, Phone, Facebook, Twitter, Youtube } from "lucide-react";
 import { useLang } from "@/contexts/LanguageContext";
-import { useSiteSettings } from "@/hooks/useSiteSettings";
 import logoTripura from "@/assets/logo-tripura.png";
 import logoForestDept from "@/assets/logo-tripuraforestdept.png";
 import logoWorldBank from "@/assets/logo-theworldbank.jpg";
 
 export default function Footer() {
   const { t } = useLang();
-  const s = useSiteSettings();
   return (
     <footer className="bg-primary-dark text-primary-foreground mt-16">
       <div className="gov-container py-12 md:py-14 grid gap-10 md:gap-12 sm:grid-cols-2 lg:grid-cols-4">
@@ -187,21 +185,33 @@ export default function Footer() {
               {t("footer.address")}
             </div>
             <div className="flex items-center gap-2">
-              <Phone className="h-4 w-4 shrink-0 text-accent" /> {s.contact_phone || "+91 381 2416403"}
+              <Phone className="h-4 w-4 shrink-0 text-accent" /> +91 381 2416403
             </div>
             <div className="flex items-center gap-2">
               <Mail className="h-4 w-4 shrink-0 text-accent" />{" "}
-              {s.contact_email || "info@element.tripura.gov.in"}
+              info@element.tripura.gov.in
             </div>
           </div>
           <div className="flex gap-3 mt-4">
-            <a href={s.facebook_url || "#"} target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="p-2 bg-primary rounded-md hover:bg-accent">
+            <a
+              href="#"
+              aria-label="Facebook"
+              className="p-2 bg-primary rounded-md hover:bg-accent"
+            >
               <Facebook className="h-4 w-4" />
             </a>
-            <a href={s.twitter_url || "#"} target="_blank" rel="noopener noreferrer" aria-label="Twitter" className="p-2 bg-primary rounded-md hover:bg-accent">
+            <a
+              href="#"
+              aria-label="Twitter"
+              className="p-2 bg-primary rounded-md hover:bg-accent"
+            >
               <Twitter className="h-4 w-4" />
             </a>
-            <a href={s.youtube_url || "#"} target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="p-2 bg-primary rounded-md hover:bg-accent">
+            <a
+              href="#"
+              aria-label="YouTube"
+              className="p-2 bg-primary rounded-md hover:bg-accent"
+            >
               <Youtube className="h-4 w-4" />
             </a>
           </div>
@@ -210,7 +220,7 @@ export default function Footer() {
             <span className="font-semibold text-accent">12,48,936</span>
           </div>
           <div className="mt-2 text-xs opacity-80">
-            {t("footer.lastUpdated")}: {s.last_updated_date}
+            {t("footer.lastUpdated")}: 28 April 2026
           </div>
         </div>
       </div>

@@ -1,6 +1,5 @@
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useState } from "react";
 import { Link, NavLink, useNavigate, Outlet } from "react-router-dom";
-import { API_BASE_URL, adminAuth, fetchAdmin } from "@/lib/api";
 import {
   LayoutDashboard, Bell, Calendar, FileText, Users, Award, BookOpen, FolderKanban,
   Image as ImageIcon, Activity, Briefcase, TreePine, MessageSquare, FileQuestion,
@@ -13,8 +12,6 @@ export const adminMenu = [
   { to: "/admin/notifications", label: "Notifications", icon: Bell },
   { to: "/admin/events", label: "Events", icon: Calendar },
   { to: "/admin/tenders", label: "Tenders / Procurements", icon: FileText },
-  { to: "/admin/procurements", label: "Procurements (API)", icon: FileText },
-  { to: "/admin/gallery", label: "Gallery (API)", icon: ImageIcon },
   { to: "/admin/whoswho", label: "Who's Who", icon: Users },
   { to: "/admin/success-stories", label: "Success Stories", icon: Award },
   { to: "/admin/newsletters", label: "Newsletters", icon: BookOpen },
@@ -35,39 +32,9 @@ export const adminMenu = [
 export default function AdminLayout() {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
-  const [adminName, setAdminName] = useState<string>(
-    adminAuth.getUser<any>()?.name || sessionStorage.getItem("element_admin") || "Admin"
-  );
+  const adminName = sessionStorage.getItem("element_admin") || "Admin";
 
-  // Verify session on mount; redirect to login if invalid.
-  useEffect(() => {
-    let cancelled = false;
-    (async () => {
-      try {
-        const me = await fetchAdmin<any>("/api/admin/auth/me");
-        if (cancelled) return;
-        adminAuth.setUser(me);
-        setAdminName(me?.name || me?.username || "Admin");
-        sessionStorage.setItem("element_admin", me?.name || me?.username || "Admin");
-      } catch {
-        /* fetchAdmin already redirects on 401; ignore other errors */
-      }
-    })();
-    return () => { cancelled = true; };
-  }, []);
-
-  const logout = async () => {
-    const token = adminAuth.getToken();
-    try {
-      if (token) {
-        await fetch(`${API_BASE_URL}/api/admin/auth/logout`, {
-          method: "POST",
-          headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
-          body: "{}",
-        });
-      }
-    } catch { /* always clear locally regardless */ }
-    adminAuth.clear();
+  const logout = () => {
     sessionStorage.removeItem("element_admin");
     navigate("/admin/login");
   };
