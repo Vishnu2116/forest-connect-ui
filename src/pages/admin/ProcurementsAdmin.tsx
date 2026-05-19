@@ -19,6 +19,7 @@ interface FormState {
   status: ProcStatus;
   file: File | null;
   existing_file_path: string | null;
+  existing_file_size: number | null;
 }
 
 function emptyForm(): FormState {
