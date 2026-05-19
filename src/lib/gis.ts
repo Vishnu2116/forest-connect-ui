@@ -140,11 +140,10 @@ export async function deleteKml(kmlId: string): Promise<void> {
 }
 
 /* ---------- Google Maps loader ---------- */
-let mapsLoaderPromise: Promise<typeof google | null> | null = null;
+let mapsLoaderPromise: Promise<any> | null = null;
 
-export function loadGoogleMaps(apiKey: string): Promise<typeof google | null> {
+export function loadGoogleMaps(apiKey: string): Promise<any> {
   if (typeof window === "undefined") return Promise.resolve(null);
-  // @ts-ignore
   if ((window as any).google?.maps) return Promise.resolve((window as any).google);
   if (mapsLoaderPromise) return mapsLoaderPromise;
   mapsLoaderPromise = new Promise((resolve) => {
