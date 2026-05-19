@@ -30,6 +30,7 @@ import {
   NotificationsAdmin, EventsAdmin, TendersAdmin, WhosWhoAdmin, SuccessStoriesAdmin,
   NewslettersAdmin, ThematicAdmin, ReportsAdmin, IECAdmin, ActivitiesAdmin,
 } from "./pages/admin/modules";
+import ProcurementsAdmin from "./pages/admin/ProcurementsAdmin";
 import ProjectsManagementAdmin from "./pages/admin/ProjectsManagementAdmin";
 import ProjectComponentsAdmin from "./pages/admin/ProjectComponentsAdmin";
 import PlantationAdmin from "./pages/admin/PlantationAdmin";
