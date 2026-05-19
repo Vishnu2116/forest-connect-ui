@@ -26,7 +26,7 @@ function emptyForm(): FormState {
   return {
     id: null, title: "", type: "tender",
     published_date: "", deadline: "", status: "open",
-    file: null, existing_file_path: null,
+    file: null, existing_file_path: null, existing_file_size: null,
   };
 }
 
