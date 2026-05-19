@@ -363,9 +363,10 @@ function ProcurementApiListing({
               </select>
             </div>
           </div>
-          <DataTable headers={["#", "Title", "Published", "Deadline", "Status", "Actions"]}>
+          <DataTable headers={["#", "Title", "Published", "Deadline", "Status", "File Details", "Actions"]}>
             {items.map((r, i) => {
               const url = resolveProcUrl(r.file_path);
+              const size = formatProcSize(r.file_size);
               return (
                 <tr key={r.id}>
                   <td>{(page - 1) * 10 + i + 1}</td>
@@ -375,6 +376,12 @@ function ProcurementApiListing({
                   <td>
                     <span className={`text-[10px] font-semibold px-2 py-0.5 rounded ${statusClass(r.status)}`}>
                       {statusLabel(r.status)}
+                    </span>
+                  </td>
+                  <td>
+                    <span className="text-[11px] text-muted-foreground">
+                      <span className="font-semibold text-primary">PDF</span>
+                      {size && <><span className="mx-1.5 opacity-50">·</span>{size}</>}
                     </span>
                   </td>
                   <td>
