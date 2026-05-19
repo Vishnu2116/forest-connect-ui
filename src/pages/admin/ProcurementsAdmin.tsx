@@ -7,7 +7,7 @@ import { toast } from "sonner";
 import {
   TYPE_OPTIONS, STATUS_OPTIONS, type ProcType, type ProcStatus, type ApiProcurement,
   fetchProcAdmin, createProcAdmin, updateProcAdmin, deleteProcAdmin,
-  formatDate, statusClass, statusLabel, typeLabel, resolveUrl,
+  formatDate, formatSize, statusClass, statusLabel, typeLabel, resolveUrl,
 } from "@/lib/procurements";
 
 interface FormState {
