@@ -6,7 +6,7 @@ import { Download, Eye, Trash2, Pencil, Upload } from "lucide-react";
 
 import { fetchKnowledgeHub, formatMonthYear, formatSizeMB, resolveUrl, type KHType, type ApiKHItem } from "@/lib/knowledgeHub";
 import {
-  fetchProcurements, formatDate as formatProcDate, resolveUrl as resolveProcUrl,
+  fetchProcurements, formatDate as formatProcDate, formatSize as formatProcSize, resolveUrl as resolveProcUrl,
   statusClass, statusLabel, type ProcType, type ApiProcurement,
 } from "@/lib/procurements";
 
