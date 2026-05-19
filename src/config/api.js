@@ -5,7 +5,7 @@ const isEC2 = hostname === '18.61.78.224';
 export const USE_REAL_API = isLocalhost || isEC2;
 
 export const API_BASE_URL = isEC2
-  ? 'http://18.61.78.224:3000'
+  ? 'http://18.61.78.224'
   : 'http://localhost:3000';
 
 // Always reads the token fresh from localStorage. Never cache the return value.
