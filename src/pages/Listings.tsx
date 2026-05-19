@@ -5,6 +5,10 @@ import { DataTable, Pagination } from "@/components/common/DataTable";
 import { Download, Eye, Trash2, Pencil, Upload } from "lucide-react";
 import { procurements } from "@/data/content";
 import { fetchKnowledgeHub, formatMonthYear, formatSizeMB, resolveUrl, type KHType, type ApiKHItem } from "@/lib/knowledgeHub";
+import {
+  fetchProcurements, formatDate as formatProcDate, resolveUrl as resolveProcUrl,
+  statusClass, statusLabel, type ProcType, type ApiProcurement,
+} from "@/lib/procurements";
 
 type Row = { title: string; date: string; size?: string; type?: string; deadline?: string; status?: string };
 
