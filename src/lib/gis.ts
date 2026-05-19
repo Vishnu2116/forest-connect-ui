@@ -1,4 +1,30 @@
 import { API_BASE_URL, USE_REAL_API, getAuthHeaders, getAuthJsonHeaders, handleApiResponse } from "@/config/api";
+import { plantations as dummyPlantations } from "@/data/content";
+
+function dummySites(year?: number, district?: string): GisSite[] {
+  const all: GisSite[] = dummyPlantations.map((p) => ({
+    id: `dummy-${p.id}`,
+    name: p.name,
+    district: p.district,
+    year: p.year,
+    area_covered: `${p.area} hectares`,
+    species_products: p.species,
+    description: null,
+    kml_files: [],
+  }));
+  return all.filter((s) =>
+    (year == null || s.year === year) &&
+    (!district || district === "All Districts" || s.district === district)
+  );
+}
+
+function dummyYears(): number[] {
+  return Array.from(new Set(dummyPlantations.map((p) => p.year))).sort((a, b) => b - a);
+}
+
+function dummyDistricts(): string[] {
+  return Array.from(new Set(dummyPlantations.map((p) => p.district))).sort();
+}
 
 export interface GisKmlFile {
   id: string;
@@ -48,35 +74,38 @@ export async function fetchMapKey(): Promise<string | null> {
 }
 
 export async function fetchGisYears(): Promise<number[]> {
-  if (!USE_REAL_API) return [];
+  if (!USE_REAL_API) return dummyYears();
   try {
     const r = await fetch(`${API_BASE_URL}/api/gis/years`);
-    if (!r.ok) return [];
+    if (!r.ok) return dummyYears();
     const j = await r.json();
-    return Array.isArray(j) ? j : [];
-  } catch { return []; }
+    const arr = Array.isArray(j) ? j : [];
+    return arr.length ? arr : dummyYears();
+  } catch { return dummyYears(); }
 }
 
 export async function fetchGisDistricts(): Promise<string[]> {
-  if (!USE_REAL_API) return [];
+  if (!USE_REAL_API) return dummyDistricts();
   try {
     const r = await fetch(`${API_BASE_URL}/api/gis/districts`);
-    if (!r.ok) return [];
+    if (!r.ok) return dummyDistricts();
     const j = await r.json();
-    return Array.isArray(j) ? j : [];
-  } catch { return []; }
+    const arr = Array.isArray(j) ? j : [];
+    return arr.length ? arr : dummyDistricts();
+  } catch { return dummyDistricts(); }
 }
 
 export async function fetchGisSites(year: number, district?: string): Promise<GisSite[]> {
-  if (!USE_REAL_API) return [];
+  if (!USE_REAL_API) return dummySites(year, district);
   try {
     const qs = new URLSearchParams({ year: String(year) });
     if (district && district !== "All Districts") qs.set("district", district);
     const r = await fetch(`${API_BASE_URL}/api/gis/sites?${qs.toString()}`);
-    if (!r.ok) return [];
+    if (!r.ok) return dummySites(year, district);
     const j = await r.json();
-    return Array.isArray(j) ? j : [];
-  } catch { return []; }
+    const arr = Array.isArray(j) ? j : [];
+    return arr.length ? arr : dummySites(year, district);
+  } catch { return dummySites(year, district); }
 }
 
 /* ---------- Admin ---------- */
