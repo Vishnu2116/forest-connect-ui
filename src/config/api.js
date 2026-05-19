@@ -1,8 +1,12 @@
-const isLocalhost = window.location.hostname === 'localhost';
+const hostname = window.location.hostname;
+const isLocalhost = hostname === 'localhost';
+const isEC2 = hostname === '18.61.78.224';
 
-export const API_BASE_URL = isLocalhost ? 'http://localhost:3000' : null;
+export const USE_REAL_API = isLocalhost || isEC2;
 
-export const USE_REAL_API = isLocalhost;
+export const API_BASE_URL = isEC2
+  ? 'http://18.61.78.224:3000'
+  : 'http://localhost:3000';
 
 // Always reads the token fresh from localStorage. Never cache the return value.
 // Use for multipart/form-data (file uploads) — do NOT set Content-Type, the
