@@ -6,7 +6,7 @@ import { Download, Eye, Trash2, Pencil, Upload } from "lucide-react";
 
 import { fetchKnowledgeHub, formatMonthYear, formatSizeMB, resolveUrl, type KHType, type ApiKHItem } from "@/lib/knowledgeHub";
 import {
-  fetchProcurements, formatDate as formatProcDate, resolveUrl as resolveProcUrl,
+  fetchProcurements, formatDate as formatProcDate, formatSize as formatProcSize, resolveUrl as resolveProcUrl,
   statusClass, statusLabel, type ProcType, type ApiProcurement,
 } from "@/lib/procurements";
 
@@ -363,9 +363,10 @@ function ProcurementApiListing({
               </select>
             </div>
           </div>
-          <DataTable headers={["#", "Title", "Published", "Deadline", "Status", "Actions"]}>
+          <DataTable headers={["#", "Title", "Published", "Deadline", "Status", "File Details", "Actions"]}>
             {items.map((r, i) => {
               const url = resolveProcUrl(r.file_path);
+              const size = formatProcSize(r.file_size);
               return (
                 <tr key={r.id}>
                   <td>{(page - 1) * 10 + i + 1}</td>
@@ -375,6 +376,12 @@ function ProcurementApiListing({
                   <td>
                     <span className={`text-[10px] font-semibold px-2 py-0.5 rounded ${statusClass(r.status)}`}>
                       {statusLabel(r.status)}
+                    </span>
+                  </td>
+                  <td>
+                    <span className="text-[11px] text-muted-foreground">
+                      <span className="font-semibold text-primary">PDF</span>
+                      {size && <><span className="mx-1.5 opacity-50">·</span>{size}</>}
                     </span>
                   </td>
                   <td>
@@ -400,7 +407,7 @@ function ProcurementApiListing({
               );
             })}
             {!loading && items.length === 0 && (
-              <tr><td colSpan={6} className="text-center text-muted-foreground py-6">No items found.</td></tr>
+              <tr><td colSpan={7} className="text-center text-muted-foreground py-6">No items found.</td></tr>
             )}
           </DataTable>
           <div className="mt-4 flex items-center justify-between text-sm">

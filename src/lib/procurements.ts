@@ -12,6 +12,7 @@ export interface ApiProcurement {
   deadline?: string | null;
   status?: ProcStatus | string | null;
   file_path?: string | null;
+  file_size?: number | null;
   is_active?: boolean;
   created_at?: string;
 }
@@ -45,6 +46,12 @@ export function formatDate(date?: string | null): string {
   const d = new Date(date);
   if (Number.isNaN(d.getTime())) return date;
   return d.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" });
+}
+
+export function formatSize(kb?: number | null): string {
+  if (kb == null) return "";
+  if (kb < 1024) return `${kb} KB`;
+  return `${(kb / 1024).toFixed(1)} MB`;
 }
 
 export function statusLabel(s?: string | null): string {

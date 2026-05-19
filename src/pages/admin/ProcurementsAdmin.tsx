@@ -7,7 +7,7 @@ import { toast } from "sonner";
 import {
   TYPE_OPTIONS, STATUS_OPTIONS, type ProcType, type ProcStatus, type ApiProcurement,
   fetchProcAdmin, createProcAdmin, updateProcAdmin, deleteProcAdmin,
-  formatDate, statusClass, statusLabel, typeLabel, resolveUrl,
+  formatDate, formatSize, statusClass, statusLabel, typeLabel, resolveUrl,
 } from "@/lib/procurements";
 
 interface FormState {
@@ -19,13 +19,14 @@ interface FormState {
   status: ProcStatus;
   file: File | null;
   existing_file_path: string | null;
+  existing_file_size: number | null;
 }
 
 function emptyForm(): FormState {
   return {
     id: null, title: "", type: "tender",
     published_date: "", deadline: "", status: "open",
-    file: null, existing_file_path: null,
+    file: null, existing_file_path: null, existing_file_size: null,
   };
 }
 
@@ -61,6 +62,7 @@ export default function ProcurementsAdmin() {
     status: (i.status as ProcStatus) || "open",
     file: null,
     existing_file_path: i.file_path || null,
+    existing_file_size: i.file_size ?? null,
   });
 
   const remove = async (i: ApiProcurement) => {
@@ -134,11 +136,15 @@ export default function ProcurementsAdmin() {
               <th className="py-2 px-3">Published</th>
               <th className="py-2 px-3">Deadline</th>
               <th className="py-2 px-3">Status</th>
+              <th className="py-2 px-3">File</th>
               <th className="py-2 px-3 w-28">Actions</th>
             </tr>
           </thead>
           <tbody>
-            {items.map((i) => (
+            {items.map((i) => {
+              const fname = i.file_path?.split("/").pop() || "—";
+              const size = formatSize(i.file_size);
+              return (
               <tr key={i.id} className="border-t border-border align-top">
                 <td className="py-2 px-3 font-semibold">{i.title}</td>
                 <td className="py-2 px-3 text-muted-foreground">{typeLabel(i.type)}</td>
@@ -149,6 +155,13 @@ export default function ProcurementsAdmin() {
                     {statusLabel(i.status)}
                   </span>
                 </td>
+                <td className="py-2 px-3 text-xs text-muted-foreground">
+                  {i.file_path ? (
+                    <span className="truncate inline-block max-w-[180px] align-middle" title={fname}>
+                      {fname}{size && <span className="opacity-70"> ({size})</span>}
+                    </span>
+                  ) : "—"}
+                </td>
                 <td className="py-2 px-3">
                   <div className="flex gap-1">
                     <Button size="sm" variant="outline" onClick={() => openEdit(i)}><Pencil className="h-3 w-3" /></Button>
@@ -156,9 +169,10 @@ export default function ProcurementsAdmin() {
                   </div>
                 </td>
               </tr>
-            ))}
+              );
+            })}
             {!loading && items.length === 0 && (
-              <tr><td colSpan={6} className="text-center text-muted-foreground py-6">No procurements yet.</td></tr>
+              <tr><td colSpan={7} className="text-center text-muted-foreground py-6">No procurements yet.</td></tr>
             )}
           </tbody>
         </table>
@@ -248,6 +262,12 @@ function Editor({
                 >View</a>
               )}
             </div>
+            {form.existing_file_path && !form.file && (
+              <p className="text-xs text-muted-foreground mt-1">
+                Current file: {form.existing_file_path.split("/").pop()}
+                {formatSize(form.existing_file_size) && ` (${formatSize(form.existing_file_size)})`}
+              </p>
+            )}
           </Field>
         </div>
 
