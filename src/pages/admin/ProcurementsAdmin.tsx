@@ -136,11 +136,15 @@ export default function ProcurementsAdmin() {
               <th className="py-2 px-3">Published</th>
               <th className="py-2 px-3">Deadline</th>
               <th className="py-2 px-3">Status</th>
+              <th className="py-2 px-3">File</th>
               <th className="py-2 px-3 w-28">Actions</th>
             </tr>
           </thead>
           <tbody>
-            {items.map((i) => (
+            {items.map((i) => {
+              const fname = i.file_path?.split("/").pop() || "—";
+              const size = formatSize(i.file_size);
+              return (
               <tr key={i.id} className="border-t border-border align-top">
                 <td className="py-2 px-3 font-semibold">{i.title}</td>
                 <td className="py-2 px-3 text-muted-foreground">{typeLabel(i.type)}</td>
@@ -150,6 +154,13 @@ export default function ProcurementsAdmin() {
                   <span className={`text-[10px] font-semibold px-2 py-0.5 rounded ${statusClass(i.status)}`}>
                     {statusLabel(i.status)}
                   </span>
+                </td>
+                <td className="py-2 px-3 text-xs text-muted-foreground">
+                  {i.file_path ? (
+                    <span className="truncate inline-block max-w-[180px] align-middle" title={fname}>
+                      {fname}{size && <span className="opacity-70"> ({size})</span>}
+                    </span>
+                  ) : "—"}
                 </td>
                 <td className="py-2 px-3">
                   <div className="flex gap-1">
