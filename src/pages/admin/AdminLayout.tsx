@@ -23,6 +23,7 @@ export const adminMenu = [
   { to: "/admin/home-leadership", label: "Home Leadership", icon: Users },
   { to: "/admin/home-social-media", label: "Home Social Media", icon: MessageSquare },
   { to: "/admin/plantation", label: "Plantation Module", icon: TreePine },
+  { to: "/admin/gis", label: "GIS / MIS", icon: TreePine },
   { to: "/admin/grievance", label: "Grievance Mgmt", icon: MessageSquare },
   { to: "/admin/rti", label: "RTI Mgmt", icon: FileQuestion },
   { to: "/admin/users", label: "User Management", icon: UserCog },

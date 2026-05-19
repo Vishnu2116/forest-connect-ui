@@ -45,6 +45,7 @@ import KnowledgeHubAdmin from "./pages/admin/KnowledgeHubAdmin";
 import GalleryAdmin from "./pages/admin/GalleryAdmin";
 import EventsMediaAdmin from "./pages/admin/EventsMediaAdmin";
 import SocialMediaAdmin from "./pages/admin/SocialMediaAdmin";
+import GisAdmin from "./pages/admin/GisAdmin";
 import OfficialProfile from "./pages/OfficialProfile";
 import Accessibility from "./pages/Accessibility";
 import ScreenReader from "./pages/ScreenReader";
@@ -102,6 +103,7 @@ const App = () => (
           <Route path="/media/events" element={<MediaEvents />} />
           <Route path="/media/events/:slug" element={<MediaEventDetail />} />
           <Route path="/plantation-map" element={<PlantationMap />} />
+          <Route path="/mis-gis" element={<PlantationMap />} />
           <Route path="/grievance" element={<Grievance />} />
           <Route path="/rti" element={<RTI />} />
           <Route path="/contact" element={<Contact />} />
@@ -136,6 +138,7 @@ const App = () => (
             <Route path="projects" element={<ProjectsManagementAdmin />} />
             <Route path="project-components" element={<ProjectComponentsAdmin />} />
             <Route path="plantation" element={<PlantationAdmin />} />
+            <Route path="gis" element={<GisAdmin />} />
             <Route path="hero" element={<HeroManagementAdmin />} />
             <Route path="home-leadership" element={<HomeLeadershipAdmin />} />
             <Route path="home-social-media" element={<HomeSocialMediaAdmin />} />
