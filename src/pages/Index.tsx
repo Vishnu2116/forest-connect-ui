@@ -568,7 +568,7 @@ function ProjectHighlightsColumn() {
     return () => { alive = false; };
   }, []);
 
-  const looped = [...items, ...items];
+  const looped = items;
 
   return (
     <div className="bg-card border border-border rounded-md p-0 flex flex-col h-[28rem] lg:h-full overflow-hidden">
