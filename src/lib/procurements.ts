@@ -12,6 +12,7 @@ export interface ApiProcurement {
   deadline?: string | null;
   status?: ProcStatus | string | null;
   file_path?: string | null;
+  file_size?: number | null;
   is_active?: boolean;
   created_at?: string;
 }
