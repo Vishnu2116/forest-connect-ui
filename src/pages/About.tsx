@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   fetchGrouped,
   resolvePhoto,
@@ -48,14 +48,6 @@ import Animesh from "@/assets/dignitaries/Animesh.jpeg";
 import CS from "@/assets/dignitaries/CS.jpg";
 import SanjibDas from "@/assets/dignitaries/SanjibDas.png";
 
-const aboutLinks = [
-  { to: "/about", title: "About PROJECT ELEMENT" },
-  { to: "/about/organization", title: "Organization Structure" },
-  { to: "/about/whos-who", title: "Who's Who" },
-  { to: "/about/memorandum", title: "Memorandum of Association" },
-  { to: "/about/directory", title: "Official Directory" },
-  { to: "/about/vision-mission", title: "Vision, Mission & Objectives" },
-];
 
 function AboutLayout({
   title,
