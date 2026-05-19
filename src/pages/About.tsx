@@ -66,7 +66,6 @@ function AboutLayout({
   subtitle?: string;
   children?: React.ReactNode;
 }) {
-  const { pathname } = useLocation();
   return (
     <PageLayout>
       <PageHeader
@@ -75,33 +74,14 @@ function AboutLayout({
         breadcrumb={["Home", "About", title]}
       />
       <section className="py-10">
-        <div className="gov-container grid lg:grid-cols-[210px_minmax(0,1fr)] gap-6 lg:gap-8">
-          <aside>
-            <h3 className="text-sm font-semibold text-primary mb-3 uppercase">
-              About
-            </h3>
-            <nav className="space-y-1">
-              {aboutLinks.map((l) => (
-                <Link
-                  key={l.to}
-                  to={l.to}
-                  className={`block px-3 py-2 text-[13px] rounded border-l-2 transition ${
-                    pathname === l.to
-                      ? "border-accent text-primary bg-surface font-semibold"
-                      : "border-transparent hover:bg-surface hover:text-primary hover:border-accent"
-                  }`}
-                >
-                  {l.title}
-                </Link>
-              ))}
-            </nav>
-          </aside>
+        <div className="gov-container">
           <div className="min-w-0">{children}</div>
         </div>
       </section>
     </PageLayout>
   );
 }
+
 
 /* ---- About PROJECT ELEMENT (main intro page) ---- */
 export function AboutElement() {
