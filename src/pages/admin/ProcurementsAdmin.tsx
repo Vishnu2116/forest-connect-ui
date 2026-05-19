@@ -62,6 +62,7 @@ export default function ProcurementsAdmin() {
     status: (i.status as ProcStatus) || "open",
     file: null,
     existing_file_path: i.file_path || null,
+    existing_file_size: i.file_size ?? null,
   });
 
   const remove = async (i: ApiProcurement) => {
