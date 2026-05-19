@@ -3,7 +3,7 @@ import PageLayout, { PageHeader } from "@/components/layout/PageLayout";
 import KnowledgeHubLayout from "@/components/layout/KnowledgeHubLayout";
 import { DataTable, Pagination } from "@/components/common/DataTable";
 import { Download, Eye, Trash2, Pencil, Upload } from "lucide-react";
-import { procurements } from "@/data/content";
+
 import { fetchKnowledgeHub, formatMonthYear, formatSizeMB, resolveUrl, type KHType, type ApiKHItem } from "@/lib/knowledgeHub";
 import {
   fetchProcurements, formatDate as formatProcDate, resolveUrl as resolveProcUrl,
