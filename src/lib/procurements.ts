@@ -48,6 +48,12 @@ export function formatDate(date?: string | null): string {
   return d.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" });
 }
 
+export function formatSize(kb?: number | null): string {
+  if (kb == null) return "";
+  if (kb < 1024) return `${kb} KB`;
+  return `${(kb / 1024).toFixed(1)} MB`;
+}
+
 export function statusLabel(s?: string | null): string {
   if (!s) return "—";
   const f = STATUS_OPTIONS.find((o) => o.value === s);
