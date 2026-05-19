@@ -444,48 +444,83 @@ function UpdatesPanel({
               ))}
             </>
           )}
-          {updatesTab === "tenders" &&
-            procurements.map((p, idx) => (
-              <article
-                key={`${p.title}-${idx}`}
-                className="flex items-center gap-3 px-4 py-3 hover:bg-surface/60 transition border-b border-border"
-              >
-                <div className="shrink-0 text-primary self-center">
-                  <FileText className="h-5 w-5" />
-                </div>
-                <div className="flex-1 min-w-0">
-                  {/* Left: Tender tag.   Right (extreme): status badge + NEW. */}
-                  <div className="flex items-center gap-1.5 mb-1">
-                    <span className="inline-block text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-accent/15 text-accent">
-                      Tender
-                    </span>
-                    <span className="ml-auto flex items-center gap-1.5">
-                      <span
-                        className={`inline-block text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm ${
-                          p.status === "Open"
-                            ? "bg-success/15 text-success"
-                            : p.status === "Closing Soon"
-                              ? "bg-accent/15 text-accent"
-                              : "bg-muted text-muted-foreground"
-                        }`}
-                      >
-                        {p.status}
-                      </span>
-                      <NewBadge show={isItemNew(p.title)} />
-                    </span>
+          {updatesTab === "tenders" && (() => {
+            const useApi = apiTenders.length > 0;
+            const list = useApi
+              ? apiTenders.map((t) => ({
+                  id: t.id,
+                  title: t.title,
+                  status: t.status,
+                  deadline: t.deadline,
+                  created_at: t.created_at,
+                  file_path: t.file_path,
+                }))
+              : procurements.map((p, i) => ({
+                  id: `dummy-${i}`,
+                  title: p.title,
+                  status: p.status === "Open" ? "open" : p.status === "Closing Soon" ? "closing_soon" : p.status === "Closed" ? "closed" : "open",
+                  deadline: p.deadline,
+                  created_at: undefined,
+                  file_path: null as string | null,
+                }));
+            const statusUi = (s: string) => {
+              if (s === "open") return { label: "Open", cls: "bg-success/15 text-success" };
+              if (s === "closing_soon") return { label: "Closing Soon", cls: "bg-accent/15 text-accent" };
+              if (s === "closed") return { label: "Closed", cls: "bg-muted text-muted-foreground" };
+              if (s === "cancelled") return { label: "Cancelled", cls: "bg-destructive/15 text-destructive" };
+              return { label: s, cls: "bg-muted text-muted-foreground" };
+            };
+            const fmtDeadline = (d?: string) => {
+              if (!d) return "—";
+              const dt = new Date(d);
+              if (Number.isNaN(dt.getTime())) return d;
+              return dt.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" });
+            };
+            return list.map((p, idx) => {
+              const isNewItem = useApi
+                ? (p.created_at && Date.now() - new Date(p.created_at).getTime() < 7 * 24 * 60 * 60 * 1000)
+                : isItemNew(p.title);
+              const fileUrl = p.file_path
+                ? (p.file_path.startsWith("http") ? p.file_path : `${API_BASE_URL ?? ""}${p.file_path}`)
+                : null;
+              const sUi = statusUi(p.status as string);
+              return (
+                <article
+                  key={`${p.id}-${idx}`}
+                  className="flex items-center gap-3 px-4 py-3 hover:bg-surface/60 transition border-b border-border"
+                >
+                  <div className="shrink-0 text-primary self-center">
+                    <FileText className="h-5 w-5" />
                   </div>
-                  <a
-                    href="#"
-                    className="text-sm font-semibold text-foreground hover:text-primary block leading-snug"
-                  >
-                    {p.title}
-                  </a>
-                  <p className="text-xs text-muted-foreground mt-1">
-                    Deadline: {p.deadline}
-                  </p>
-                </div>
-              </article>
-            ))}
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-1.5 mb-1">
+                      <span className="inline-block text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-accent/15 text-accent">
+                        Tender
+                      </span>
+                      <span className="ml-auto flex items-center gap-1.5">
+                        <span className={`inline-block text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm ${sUi.cls}`}>
+                          {sUi.label}
+                        </span>
+                        <NewBadge show={!!isNewItem} />
+                      </span>
+                    </div>
+                    <a
+                      href={fileUrl || "#"}
+                      target={fileUrl ? "_blank" : undefined}
+                      rel="noreferrer"
+                      onClick={(e) => { if (!fileUrl) e.preventDefault(); }}
+                      className="text-sm font-semibold text-foreground hover:text-primary block leading-snug"
+                    >
+                      {p.title}
+                    </a>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Deadline: {fmtDeadline(p.deadline)}
+                    </p>
+                  </div>
+                </article>
+              );
+            });
+          })()}
         </div>
       </div>
       <div className="px-3 py-2 border-t border-border bg-surface flex items-center justify-between gap-2">
