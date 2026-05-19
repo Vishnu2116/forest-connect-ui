@@ -265,7 +265,12 @@ function UpdatesPanel({
   const renderApiItem = (it: any, idx: number) => {
     const created = it.created_at ? new Date(it.created_at).getTime() : 0;
     const isNew = created && Date.now() - created < 7 * 24 * 60 * 60 * 1000;
-    const Icon = getUpdateIcon(it.type === "notification" ? "Notification" : it.type === "report" ? "Report" : "Notification");
+    const itemType = it.item_type || it.type || "update";
+    const typeMap: Record<string, string> = {
+      notification: "Notification", report: "Report", tender: "Tender", rfp: "RFP",
+      event: "Event", project: "Project", publication: "Publication",
+    };
+    const Icon = getUpdateIcon(typeMap[itemType] || "Notification");
     const fileUrl = it.file_path
       ? (it.file_path.startsWith("http") ? it.file_path : `${API_BASE_URL ?? ""}${it.file_path}`)
       : null;
@@ -278,7 +283,7 @@ function UpdatesPanel({
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-1.5 mb-1">
             <span className="inline-block text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-accent/15 text-accent">
-              {String(it.type || "Update").replace(/_/g, " ")}
+              {String(itemType).replace(/_/g, " ")}
             </span>
             <span className="ml-auto"><NewBadge show={!!isNew} /></span>
           </div>
@@ -568,7 +573,7 @@ function ProjectHighlightsColumn() {
     return () => { alive = false; };
   }, []);
 
-  const looped = [...items, ...items];
+  const looped = items;
 
   return (
     <div className="bg-card border border-border rounded-md p-0 flex flex-col h-[28rem] lg:h-full overflow-hidden">
