@@ -3,8 +3,12 @@ import PageLayout, { PageHeader } from "@/components/layout/PageLayout";
 import KnowledgeHubLayout from "@/components/layout/KnowledgeHubLayout";
 import { DataTable, Pagination } from "@/components/common/DataTable";
 import { Download, Eye, Trash2, Pencil, Upload } from "lucide-react";
-import { procurements } from "@/data/content";
+
 import { fetchKnowledgeHub, formatMonthYear, formatSizeMB, resolveUrl, type KHType, type ApiKHItem } from "@/lib/knowledgeHub";
+import {
+  fetchProcurements, formatDate as formatProcDate, resolveUrl as resolveProcUrl,
+  statusClass, statusLabel, type ProcType, type ApiProcurement,
+} from "@/lib/procurements";
 
 type Row = { title: string; date: string; size?: string; type?: string; deadline?: string; status?: string };
 
@@ -299,23 +303,134 @@ export const Publications = () => (
     subtitle="Books, manuals and field guides published by the Department"
   />
 );
-export const Procurements = () => <ListingPage title="Procurements & Tenders" subtitle="Active and archived tender notices" rows={procurements} type="tender" breadcrumb={["Home", "Procurements"]} />;
 
-const rfpRows = [
-  { title: "RFP for Consultancy — Landscape Restoration Baseline Study", date: "12 May 2026", deadline: "10 Jun 2026", status: "Open" },
-  { title: "RFP for Communications & Outreach Agency (ELEMENT)", date: "05 May 2026", deadline: "02 Jun 2026", status: "Open" },
-  { title: "RFP for MIS/GIS Platform Implementation Partner", date: "28 Apr 2026", deadline: "25 May 2026", status: "Closing Soon" },
-  { title: "RFP for Third-Party Monitoring & Evaluation Agency", date: "15 Apr 2026", deadline: "12 May 2026", status: "Closed" },
-  { title: "RFP for Bamboo Value-Chain Technical Advisor", date: "02 Apr 2026", deadline: "30 Apr 2026", status: "Closed" },
-];
+function ProcurementApiListing({
+  type, title, subtitle, breadcrumb,
+}: { type: ProcType; title: string; subtitle: string; breadcrumb: string[] }) {
+  const [items, setItems] = useState<ApiProcurement[]>([]);
+  const [search, setSearch] = useState("");
+  const [debounced, setDebounced] = useState("");
+  const [year, setYear] = useState("");
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [loading, setLoading] = useState(false);
 
-const tenderRows = [
-  { title: "Construction of Community Nursery Centres — Dhalai District", date: "10 May 2026", deadline: "08 Jun 2026", status: "Open" },
-  { title: "Supply of Saplings & Planting Material — Phase II", date: "06 May 2026", deadline: "30 May 2026", status: "Open" },
-  { title: "Procurement of Field Survey Equipment", date: "02 May 2026", deadline: "22 May 2026", status: "Closing Soon" },
-  { title: "Civil Works — Eco-Tourism Cluster, Jampui Hills", date: "20 Apr 2026", deadline: "18 May 2026", status: "Closing Soon" },
-  { title: "Annual Vehicle Hiring — Project Offices", date: "10 Apr 2026", deadline: "05 May 2026", status: "Closed" },
-];
+  useEffect(() => {
+    const id = setTimeout(() => setDebounced(search), 500);
+    return () => clearTimeout(id);
+  }, [search]);
 
-export const RFPs = () => <ListingPage title="RFPs" subtitle="Active Requests for Proposals under the PROJECT ELEMENT" rows={rfpRows} type="tender" breadcrumb={["Home", "Procurements", "RFPs"]} />;
-export const Tenders = () => <ListingPage title="Tenders" subtitle="Active and archived tender notices" rows={tenderRows} type="tender" breadcrumb={["Home", "Procurements", "Tenders"]} />;
+  useEffect(() => {
+    let alive = true;
+    setLoading(true);
+    fetchProcurements({ type, search: debounced || undefined, year: year || undefined, page, limit: 10 })
+      .then((res) => {
+        if (!alive) return;
+        setItems(res.data);
+        setTotalPages(res.pagination?.totalPages || 1);
+      })
+      .finally(() => alive && setLoading(false));
+    return () => { alive = false; };
+  }, [type, debounced, year, page]);
+
+  const years = useMemo(() => {
+    const ys: string[] = [];
+    for (let y = new Date().getFullYear(); y >= 2020; y--) ys.push(String(y));
+    return ys;
+  }, []);
+
+  return (
+    <PageLayout>
+      <PageHeader title={title} subtitle={subtitle} breadcrumb={breadcrumb} />
+      <section className="py-10">
+        <div className="gov-container">
+          <div className="flex flex-wrap items-center justify-between gap-3 mb-5">
+            <div className="flex flex-wrap gap-2">
+              <input
+                type="search"
+                value={search}
+                onChange={(e) => { setSearch(e.target.value); setPage(1); }}
+                placeholder={`Search ${title.toLowerCase()}…`}
+                className="border border-input rounded px-3 py-2 text-sm w-72 focus-ring bg-card"
+              />
+              <select
+                value={year}
+                onChange={(e) => { setYear(e.target.value); setPage(1); }}
+                className="border border-input rounded px-3 py-2 text-sm bg-card focus-ring"
+              >
+                <option value="">All Years</option>
+                {years.map((y) => <option key={y} value={y}>{y}</option>)}
+              </select>
+            </div>
+          </div>
+          <DataTable headers={["#", "Title", "Published", "Deadline", "Status", "Actions"]}>
+            {items.map((r, i) => {
+              const url = resolveProcUrl(r.file_path);
+              return (
+                <tr key={r.id}>
+                  <td>{(page - 1) * 10 + i + 1}</td>
+                  <td className="font-medium">{r.title}</td>
+                  <td>{formatProcDate(r.published_date)}</td>
+                  <td>{formatProcDate(r.deadline)}</td>
+                  <td>
+                    <span className={`text-[10px] font-semibold px-2 py-0.5 rounded ${statusClass(r.status)}`}>
+                      {statusLabel(r.status)}
+                    </span>
+                  </td>
+                  <td>
+                    <div className="flex gap-2">
+                      <a
+                        href={url || "#"}
+                        target="_blank"
+                        rel="noreferrer"
+                        onClick={(e) => { if (!url) e.preventDefault(); }}
+                        className="p-1.5 text-primary hover:bg-primary/10 rounded inline-flex"
+                        aria-label={`View ${r.title}`}
+                      ><Eye className="h-4 w-4" /></a>
+                      <a
+                        href={url || "#"}
+                        download
+                        onClick={(e) => { if (!url) e.preventDefault(); }}
+                        className="p-1.5 text-accent hover:bg-accent/10 rounded inline-flex"
+                        aria-label={`Download ${r.title}`}
+                      ><Download className="h-4 w-4" /></a>
+                    </div>
+                  </td>
+                </tr>
+              );
+            })}
+            {!loading && items.length === 0 && (
+              <tr><td colSpan={6} className="text-center text-muted-foreground py-6">No items found.</td></tr>
+            )}
+          </DataTable>
+          <div className="mt-4 flex items-center justify-between text-sm">
+            <span className="text-muted-foreground">Page {page} of {totalPages}</span>
+            <div className="flex gap-1">
+              <button
+                disabled={page <= 1}
+                onClick={() => setPage((p) => Math.max(1, p - 1))}
+                className="px-3 py-1.5 rounded border border-border disabled:opacity-50 hover:bg-surface"
+              >Previous</button>
+              <button
+                disabled={page >= totalPages}
+                onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                className="px-3 py-1.5 rounded border border-border disabled:opacity-50 hover:bg-surface"
+              >Next</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </PageLayout>
+  );
+}
+
+export const Procurements = () => (
+  <ProcurementApiListing type="tender" title="Procurements & Tenders" subtitle="Active and archived tender notices" breadcrumb={["Home", "Procurements"]} />
+);
+export const Tenders = () => (
+  <ProcurementApiListing type="tender" title="Tenders" subtitle="Active and archived tender notices" breadcrumb={["Home", "Procurements", "Tenders"]} />
+);
+export const RFPs = () => (
+  <ProcurementApiListing type="rfp" title="RFPs" subtitle="Active Requests for Proposals under the PROJECT ELEMENT" breadcrumb={["Home", "Procurements", "RFPs"]} />
+);
+
