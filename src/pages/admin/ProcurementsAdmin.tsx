@@ -262,6 +262,12 @@ function Editor({
                 >View</a>
               )}
             </div>
+            {form.existing_file_path && !form.file && (
+              <p className="text-xs text-muted-foreground mt-1">
+                Current file: {form.existing_file_path.split("/").pop()}
+                {formatSize(form.existing_file_size) && ` (${formatSize(form.existing_file_size)})`}
+              </p>
+            )}
           </Field>
         </div>
 
