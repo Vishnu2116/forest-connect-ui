@@ -240,6 +240,7 @@ function UpdatesPanel({
   const [paused, setPaused] = useState(false);
   const [apiWhatsNew, setApiWhatsNew] = useState<any[]>([]);
   const [apiNotifs, setApiNotifs] = useState<any[]>([]);
+  const [apiTenders, setApiTenders] = useState<any[]>([]);
   // Auto-scroll engine. Speed: see AUTO_SCROLL_SPEED_UPDATES (top of file).
   const { ref, scrollByAmount } = useAutoScroll<HTMLDivElement>(
     AUTO_SCROLL_SPEED_UPDATES,
@@ -254,6 +255,9 @@ function UpdatesPanel({
         setApiWhatsNew(wn);
         setApiNotifs(nt);
       });
+    });
+    import("@/lib/procurements").then(({ fetchHomeTenders }) => {
+      fetchHomeTenders().then((t) => { if (alive) setApiTenders(t); });
     });
     return () => { alive = false; };
   }, []);
