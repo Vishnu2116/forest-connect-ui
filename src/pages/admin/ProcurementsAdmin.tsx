@@ -169,9 +169,10 @@ export default function ProcurementsAdmin() {
                   </div>
                 </td>
               </tr>
-            ))}
+              );
+            })}
             {!loading && items.length === 0 && (
-              <tr><td colSpan={6} className="text-center text-muted-foreground py-6">No procurements yet.</td></tr>
+              <tr><td colSpan={7} className="text-center text-muted-foreground py-6">No procurements yet.</td></tr>
             )}
           </tbody>
         </table>
