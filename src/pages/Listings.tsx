@@ -407,7 +407,7 @@ function ProcurementApiListing({
               );
             })}
             {!loading && items.length === 0 && (
-              <tr><td colSpan={6} className="text-center text-muted-foreground py-6">No items found.</td></tr>
+              <tr><td colSpan={7} className="text-center text-muted-foreground py-6">No items found.</td></tr>
             )}
           </DataTable>
           <div className="mt-4 flex items-center justify-between text-sm">
