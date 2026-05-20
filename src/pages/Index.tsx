@@ -7,7 +7,6 @@ import {
   MapPin,
   Bell,
   Trees,
-  
   BookOpen,
   User,
   TrendingUp,
@@ -23,13 +22,7 @@ import {
 } from "lucide-react";
 import PageLayout from "@/components/layout/PageLayout";
 import HeroSlider from "@/components/home/HeroSlider";
-import {
-  announcements,
-  events,
-  projects,
-  
-  procurements,
-} from "@/data/content";
+import { announcements, events, projects, procurements } from "@/data/content";
 import { useLang } from "@/contexts/LanguageContext";
 import { slugify } from "./ProjectDetail";
 import { useAutoScroll } from "@/hooks/useAutoScroll";
@@ -177,7 +170,6 @@ const dummyLeadershipSlots = [
   },
 ];
 
-
 function DignitaryCard({
   d,
 }: {
@@ -249,17 +241,25 @@ function UpdatesPanel({
 
   useEffect(() => {
     let alive = true;
-    import("@/lib/knowledgeHub").then(({ fetchWhatsNew, fetchHomeNotifications }) => {
-      Promise.all([fetchWhatsNew(), fetchHomeNotifications()]).then(([wn, nt]) => {
-        if (!alive) return;
-        setApiWhatsNew(wn);
-        setApiNotifs(nt);
+    import("@/lib/knowledgeHub").then(
+      ({ fetchWhatsNew, fetchHomeNotifications }) => {
+        Promise.all([fetchWhatsNew(), fetchHomeNotifications()]).then(
+          ([wn, nt]) => {
+            if (!alive) return;
+            setApiWhatsNew(wn);
+            setApiNotifs(nt);
+          },
+        );
+      },
+    );
+    import("@/lib/procurements").then(({ fetchHomeTenders }) => {
+      fetchHomeTenders().then((t) => {
+        if (alive) setApiTenders(t);
       });
     });
-    import("@/lib/procurements").then(({ fetchHomeTenders }) => {
-      fetchHomeTenders().then((t) => { if (alive) setApiTenders(t); });
-    });
-    return () => { alive = false; };
+    return () => {
+      alive = false;
+    };
   }, []);
 
   const renderApiItem = (it: any, idx: number) => {
@@ -267,43 +267,57 @@ function UpdatesPanel({
     const isNew = created && Date.now() - created < 7 * 24 * 60 * 60 * 1000;
     const itemType = it.item_type || it.type || "update";
     const typeMap: Record<string, string> = {
-      notification: "Notification", report: "Report", tender: "Tender", rfp: "RFP",
-      event: "Event", project: "Project", publication: "Publication",
+      notification: "Notification",
+      report: "Report",
+      tender: "Tender",
+      rfp: "RFP",
+      event: "Event",
+      project: "Project",
+      publication: "Publication",
     };
     const Icon = getUpdateIcon(typeMap[itemType] || "Notification");
     const fileUrl = it.file_path
-      ? (it.file_path.startsWith("http") ? it.file_path : `${API_BASE_URL ?? ""}${it.file_path}`)
+      ? it.file_path.startsWith("http")
+        ? it.file_path
+        : `${API_BASE_URL ?? ""}${it.file_path}`
       : null;
     return (
       <article
         key={`${it.id || it.title}-${idx}`}
         className="flex items-center gap-3 px-4 py-3 hover:bg-surface/60 transition border-b border-border"
       >
-        <div className="shrink-0 text-primary self-center"><Icon className="h-5 w-5" /></div>
+        <div className="shrink-0 text-primary self-center">
+          <Icon className="h-5 w-5" />
+        </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-1.5 mb-1">
             <span className="inline-block text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-accent/15 text-accent">
               {String(itemType).replace(/_/g, " ")}
             </span>
-            <span className="ml-auto"><NewBadge show={!!isNew} /></span>
+            <span className="ml-auto">
+              <NewBadge show={!!isNew} />
+            </span>
           </div>
           <a
             href={fileUrl || "#"}
             target={fileUrl ? "_blank" : undefined}
             rel="noreferrer"
-            onClick={(e) => { if (!fileUrl) e.preventDefault(); }}
+            onClick={(e) => {
+              if (!fileUrl) e.preventDefault();
+            }}
             className="text-sm font-semibold text-foreground hover:text-primary block leading-snug"
           >
             {it.title}
           </a>
           {it.description && (
-            <p className="text-xs text-muted-foreground mt-1 leading-relaxed">{it.description}</p>
+            <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
+              {it.description}
+            </p>
           )}
         </div>
       </article>
     );
   };
-
 
   return (
     <div className="bg-card border border-border rounded-md overflow-hidden h-full flex flex-col">
@@ -335,59 +349,28 @@ function UpdatesPanel({
       </div>
       <div
         ref={ref}
-        onPointerEnter={(e) => { if (e.pointerType === "mouse") setPaused(true); }}
-        onPointerLeave={(e) => { if (e.pointerType === "mouse") setPaused(false); }}
+        onPointerEnter={(e) => {
+          if (e.pointerType === "mouse") setPaused(true);
+        }}
+        onPointerLeave={(e) => {
+          if (e.pointerType === "mouse") setPaused(false);
+        }}
         className="flex-1 overflow-y-auto min-h-0 no-scrollbar"
       >
         {Array.from({ length: shouldScroll ? 2 : 1 }).map((_, copyIdx) => (
-        <div key={copyIdx} className="flex flex-col" aria-hidden={copyIdx === 1 || undefined}>
-          {updatesTab === "whatsnew" && apiWhatsNew.length > 0 &&
-            apiWhatsNew.map(renderApiItem)}
-          {updatesTab === "whatsnew" && apiWhatsNew.length === 0 &&
-            announcements.map((a, idx) => {
-              const Icon = getUpdateIcon(a.tag);
-
-              return (
-                <article
-                  key={`${a.title}-${idx}`}
-                  className="flex items-center gap-3 px-4 py-3 hover:bg-surface/60 transition border-b border-border"
-                >
-                  <div className="shrink-0 text-primary self-center">
-                    <Icon className="h-5 w-5" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-1.5 mb-1">
-                      <span className="inline-block text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-accent/15 text-accent">
-                        {a.tag}
-                      </span>
-                      <span className="ml-auto">
-                        <NewBadge show={isItemNew(a.title)} />
-                      </span>
-                    </div>
-                    <a
-                      href="#"
-                      className="text-sm font-semibold text-foreground hover:text-primary block leading-snug"
-                    >
-                      {a.title}
-                    </a>
-                    <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
-                      {announcementDescriptions[a.tag] ??
-                        "Latest update from the PROJECT ELEMENT."}
-                    </p>
-                  </div>
-                </article>
-              );
-            })}
-          {updatesTab === "notifications" && apiNotifs.length > 0 && (
-            <>{apiNotifs.map(renderApiItem)}</>
-          )}
-          {updatesTab === "notifications" && apiNotifs.length === 0 && (
-
-            <>
-              {announcements
-                .filter((a) => a.tag === "Notification" || a.tag === "Recruitment")
-                .map((a, idx) => {
+          <div
+            key={copyIdx}
+            className="flex flex-col"
+            aria-hidden={copyIdx === 1 || undefined}
+          >
+            {updatesTab === "whatsnew" &&
+              apiWhatsNew.length > 0 &&
+              apiWhatsNew.map(renderApiItem)}
+            {updatesTab === "whatsnew" &&
+              apiWhatsNew.length === 0 &&
+              announcements.map((a, idx) => {
                 const Icon = getUpdateIcon(a.tag);
+
                 return (
                   <article
                     key={`${a.title}-${idx}`}
@@ -413,121 +396,196 @@ function UpdatesPanel({
                       </a>
                       <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
                         {announcementDescriptions[a.tag] ??
-                          "Official notification issued by the PROJECT ELEMENT."}
+                          "Latest update from the PROJECT ELEMENT."}
                       </p>
                     </div>
                   </article>
                 );
               })}
-              {events.map((e, idx) => (
-                <article
-                  key={`${e.title}-${idx}`}
-                  className="flex items-center gap-3 px-4 py-3 hover:bg-surface/60 transition border-b border-border"
-                >
-                  <div className="shrink-0 text-primary self-center">
-                    <Calendar className="h-5 w-5" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-1.5 mb-1">
-                      <span className="inline-block text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-accent/15 text-accent">
-                        Event
-                      </span>
-                      <span className="ml-auto">
-                        <NewBadge show={isItemNew(e.title)} />
-                      </span>
+            {updatesTab === "notifications" && apiNotifs.length > 0 && (
+              <>{apiNotifs.map(renderApiItem)}</>
+            )}
+            {updatesTab === "notifications" && apiNotifs.length === 0 && (
+              <>
+                {announcements
+                  .filter(
+                    (a) => a.tag === "Notification" || a.tag === "Recruitment",
+                  )
+                  .map((a, idx) => {
+                    const Icon = getUpdateIcon(a.tag);
+                    return (
+                      <article
+                        key={`${a.title}-${idx}`}
+                        className="flex items-center gap-3 px-4 py-3 hover:bg-surface/60 transition border-b border-border"
+                      >
+                        <div className="shrink-0 text-primary self-center">
+                          <Icon className="h-5 w-5" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-1.5 mb-1">
+                            <span className="inline-block text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-accent/15 text-accent">
+                              {a.tag}
+                            </span>
+                            <span className="ml-auto">
+                              <NewBadge show={isItemNew(a.title)} />
+                            </span>
+                          </div>
+                          <a
+                            href="#"
+                            className="text-sm font-semibold text-foreground hover:text-primary block leading-snug"
+                          >
+                            {a.title}
+                          </a>
+                          <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
+                            {announcementDescriptions[a.tag] ??
+                              "Official notification issued by the PROJECT ELEMENT."}
+                          </p>
+                        </div>
+                      </article>
+                    );
+                  })}
+                {events.map((e, idx) => (
+                  <article
+                    key={`${e.title}-${idx}`}
+                    className="flex items-center gap-3 px-4 py-3 hover:bg-surface/60 transition border-b border-border"
+                  >
+                    <div className="shrink-0 text-primary self-center">
+                      <Calendar className="h-5 w-5" />
                     </div>
-                    <a
-                      href="#"
-                      className="text-sm font-semibold text-foreground hover:text-primary block leading-snug"
-                    >
-                      {e.title}
-                    </a>
-                    <p className="text-xs text-muted-foreground mt-1 flex items-center gap-1">
-                      <MapPin className="h-3 w-3" /> {e.venue}
-                    </p>
-                  </div>
-                </article>
-              ))}
-            </>
-          )}
-          {updatesTab === "tenders" && (() => {
-            const useApi = apiTenders.length > 0;
-            const list = useApi
-              ? apiTenders.map((t) => ({
-                  id: t.id,
-                  title: t.title,
-                  status: t.status,
-                  deadline: t.deadline,
-                  created_at: t.created_at,
-                  file_path: t.file_path,
-                }))
-              : procurements.map((p, i) => ({
-                  id: `dummy-${i}`,
-                  title: p.title,
-                  status: p.status === "Open" ? "open" : p.status === "Closing Soon" ? "closing_soon" : p.status === "Closed" ? "closed" : "open",
-                  deadline: p.deadline,
-                  created_at: undefined,
-                  file_path: null as string | null,
-                }));
-            const statusUi = (s: string) => {
-              if (s === "open") return { label: "Open", cls: "bg-success/15 text-success" };
-              if (s === "closing_soon") return { label: "Closing Soon", cls: "bg-accent/15 text-accent" };
-              if (s === "closed") return { label: "Closed", cls: "bg-muted text-muted-foreground" };
-              if (s === "cancelled") return { label: "Cancelled", cls: "bg-destructive/15 text-destructive" };
-              return { label: s, cls: "bg-muted text-muted-foreground" };
-            };
-            const fmtDeadline = (d?: string) => {
-              if (!d) return "—";
-              const dt = new Date(d);
-              if (Number.isNaN(dt.getTime())) return d;
-              return dt.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" });
-            };
-            return list.map((p, idx) => {
-              const isNewItem = useApi
-                ? (p.created_at && Date.now() - new Date(p.created_at).getTime() < 7 * 24 * 60 * 60 * 1000)
-                : isItemNew(p.title);
-              const fileUrl = p.file_path
-                ? (p.file_path.startsWith("http") ? p.file_path : `${API_BASE_URL ?? ""}${p.file_path}`)
-                : null;
-              const sUi = statusUi(p.status as string);
-              return (
-                <article
-                  key={`${p.id}-${idx}`}
-                  className="flex items-center gap-3 px-4 py-3 hover:bg-surface/60 transition border-b border-border"
-                >
-                  <div className="shrink-0 text-primary self-center">
-                    <FileText className="h-5 w-5" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-1.5 mb-1">
-                      <span className="inline-block text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-accent/15 text-accent">
-                        Tender
-                      </span>
-                      <span className="ml-auto flex items-center gap-1.5">
-                        <span className={`inline-block text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm ${sUi.cls}`}>
-                          {sUi.label}
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-1.5 mb-1">
+                        <span className="inline-block text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-accent/15 text-accent">
+                          Event
                         </span>
-                        <NewBadge show={!!isNewItem} />
-                      </span>
+                        <span className="ml-auto">
+                          <NewBadge show={isItemNew(e.title)} />
+                        </span>
+                      </div>
+                      <a
+                        href="#"
+                        className="text-sm font-semibold text-foreground hover:text-primary block leading-snug"
+                      >
+                        {e.title}
+                      </a>
+                      <p className="text-xs text-muted-foreground mt-1 flex items-center gap-1">
+                        <MapPin className="h-3 w-3" /> {e.venue}
+                      </p>
                     </div>
-                    <a
-                      href={fileUrl || "#"}
-                      target={fileUrl ? "_blank" : undefined}
-                      rel="noreferrer"
-                      onClick={(e) => { if (!fileUrl) e.preventDefault(); }}
-                      className="text-sm font-semibold text-foreground hover:text-primary block leading-snug"
+                  </article>
+                ))}
+              </>
+            )}
+            {updatesTab === "tenders" &&
+              (() => {
+                const useApi = apiTenders.length > 0;
+                const list = useApi
+                  ? apiTenders.map((t) => ({
+                      id: t.id,
+                      title: t.title,
+                      status: t.status,
+                      deadline: t.deadline,
+                      created_at: t.created_at,
+                      file_path: t.file_path,
+                    }))
+                  : procurements.map((p, i) => ({
+                      id: `dummy-${i}`,
+                      title: p.title,
+                      status:
+                        p.status === "Open"
+                          ? "open"
+                          : p.status === "Closing Soon"
+                            ? "closing_soon"
+                            : p.status === "Closed"
+                              ? "closed"
+                              : "open",
+                      deadline: p.deadline,
+                      created_at: undefined,
+                      file_path: null as string | null,
+                    }));
+                const statusUi = (s: string) => {
+                  if (s === "open")
+                    return { label: "Open", cls: "bg-success/15 text-success" };
+                  if (s === "closing_soon")
+                    return {
+                      label: "Closing Soon",
+                      cls: "bg-accent/15 text-accent",
+                    };
+                  if (s === "closed")
+                    return {
+                      label: "Closed",
+                      cls: "bg-muted text-muted-foreground",
+                    };
+                  if (s === "cancelled")
+                    return {
+                      label: "Cancelled",
+                      cls: "bg-destructive/15 text-destructive",
+                    };
+                  return { label: s, cls: "bg-muted text-muted-foreground" };
+                };
+                const fmtDeadline = (d?: string) => {
+                  if (!d) return "—";
+                  const dt = new Date(d);
+                  if (Number.isNaN(dt.getTime())) return d;
+                  return dt.toLocaleDateString("en-GB", {
+                    day: "2-digit",
+                    month: "short",
+                    year: "numeric",
+                  });
+                };
+                return list.map((p, idx) => {
+                  const isNewItem = useApi
+                    ? p.created_at &&
+                      Date.now() - new Date(p.created_at).getTime() <
+                        7 * 24 * 60 * 60 * 1000
+                    : isItemNew(p.title);
+                  const fileUrl = p.file_path
+                    ? p.file_path.startsWith("http")
+                      ? p.file_path
+                      : `${API_BASE_URL ?? ""}${p.file_path}`
+                    : null;
+                  const sUi = statusUi(p.status as string);
+                  return (
+                    <article
+                      key={`${p.id}-${idx}`}
+                      className="flex items-center gap-3 px-4 py-3 hover:bg-surface/60 transition border-b border-border"
                     >
-                      {p.title}
-                    </a>
-                    <p className="text-xs text-muted-foreground mt-1">
-                      Deadline: {fmtDeadline(p.deadline)}
-                    </p>
-                  </div>
-                </article>
-              );
-            });
-          })()}
-        </div>
+                      <div className="shrink-0 text-primary self-center">
+                        <FileText className="h-5 w-5" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-1.5 mb-1">
+                          <span className="inline-block text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-accent/15 text-accent">
+                            Tender
+                          </span>
+                          <span className="ml-auto flex items-center gap-1.5">
+                            <span
+                              className={`inline-block text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm ${sUi.cls}`}
+                            >
+                              {sUi.label}
+                            </span>
+                            <NewBadge show={!!isNewItem} />
+                          </span>
+                        </div>
+                        <a
+                          href={fileUrl || "#"}
+                          target={fileUrl ? "_blank" : undefined}
+                          rel="noreferrer"
+                          onClick={(e) => {
+                            if (!fileUrl) e.preventDefault();
+                          }}
+                          className="text-sm font-semibold text-foreground hover:text-primary block leading-snug"
+                        >
+                          {p.title}
+                        </a>
+                        <p className="text-xs text-muted-foreground mt-1">
+                          Deadline: {fmtDeadline(p.deadline)}
+                        </p>
+                      </div>
+                    </article>
+                  );
+                });
+              })()}
+          </div>
         ))}
       </div>
       <div className="px-3 py-2 border-t border-border bg-surface flex items-center justify-between gap-2">
@@ -557,9 +615,152 @@ function UpdatesPanel({
  * Project Highlights column — continuous slow ticker-style upward scroll.
  * Pauses on hover; list is duplicated for seamless looping.
  */
+// function ProjectHighlightsColumn() {
+//   const [items, setItems] = useState<any[]>([]);
+//   const scrollRef = useRef<HTMLDivElement | null>(null);
+
+//   useEffect(() => {
+//     let alive = true;
+//     import("@/lib/projects").then(({ fetchHighlights }) => {
+//       fetchHighlights().then((data) => {
+//         if (alive) setItems(data);
+//       });
+//     });
+//     return () => {
+//       alive = false;
+//     };
+//   }, []);
+
+//   useEffect(() => {
+//     const el = scrollRef.current;
+//     if (!el || items.length === 0) return;
+//     let animId: number;
+//     let paused = false;
+
+//     const scroll = () => {
+//       if (!paused) {
+//         el.scrollTop += 0.4;
+//         if (el.scrollTop >= el.scrollHeight / 2) {
+//           el.scrollTop = 0;
+//         }
+//       }
+//       animId = requestAnimationFrame(scroll);
+//     };
+
+//     animId = requestAnimationFrame(scroll);
+
+//     const pause = () => {
+//       paused = true;
+//     };
+//     const resume = () => {
+//       paused = false;
+//     };
+//     const parent = el.parentElement;
+//     parent?.addEventListener("mouseenter", pause);
+//     parent?.addEventListener("mouseleave", resume);
+
+//     return () => {
+//       cancelAnimationFrame(animId);
+//       parent?.removeEventListener("mouseenter", pause);
+//       parent?.removeEventListener("mouseleave", resume);
+//     };
+//   }, [items]);
+
+//   const looped = items.length > 0 ? [...items, ...items] : items;
+
+//   return (
+//     <div className="bg-card border border-border rounded-md p-0 flex flex-col h-[480px] lg:h-[520px] overflow-hidden">
+//       <div className="flex items-center justify-between px-4 py-3 border-b-2 border-primary bg-primary/5">
+//         <h2 className="text-[17px] font-bold text-primary flex items-center gap-2 uppercase tracking-wide">
+//           <Trees className="h-4 w-4 text-accent" /> Project Highlights
+//         </h2>
+//         <Link
+//           to="/project-components"
+//           className="text-sm text-primary hover:text-accent font-semibold"
+//         >
+//           View all <ArrowRight className="inline h-3.5 w-3.5" />
+//         </Link>
+//       </div>
+//       <div
+//         ref={scrollRef}
+//         className="flex-1 overflow-y-auto divide-y divide-border min-h-0 no-scrollbar"
+//       >
+//         {looped.map((p, idx) => {
+//           const raw: string | null = p.thumbnail_image_path ?? null;
+//           const img = raw
+//             ? raw.startsWith("/uploads/")
+//               ? `${API_BASE_URL ?? ""}${raw}`
+//               : raw
+//             : null;
+//           const statusCls =
+//             p.status === "completed"
+//               ? "bg-muted text-muted-foreground"
+//               : p.status === "pilot_phase"
+//                 ? "bg-warning/15 text-warning"
+//                 : "bg-success/15 text-success";
+//           const statusText =
+//             p.status === "completed"
+//               ? "Completed"
+//               : p.status === "pilot_phase"
+//                 ? "Pilot Phase"
+//                 : "Ongoing";
+//           return (
+//             <article
+//               key={`${p.id}-${idx}`}
+//               className="flex items-center gap-2.5 px-2.5 py-2 hover:bg-surface/60 transition"
+//             >
+//               <div className="h-14 w-16 shrink-0 bg-gradient-to-br from-primary/20 to-primary-light/20 rounded-sm overflow-hidden flex items-center justify-center">
+//                 {img ? (
+//                   <img
+//                     src={img}
+//                     alt={p.title}
+//                     className="w-full h-full object-cover"
+//                   />
+//                 ) : (
+//                   <Trees className="h-5 w-5 text-primary/40" />
+//                 )}
+//               </div>
+//               <div className="flex-1 min-w-0">
+//                 <div className="flex items-center gap-1 mb-0.5">
+//                   {p.component?.label && (
+//                     <span className="text-[8px] font-semibold uppercase tracking-wide px-1 py-0.5 rounded-sm bg-accent/15 text-accent">
+//                       {p.component.label}
+//                     </span>
+//                   )}
+//                   <span
+//                     className={`text-[8px] font-semibold uppercase tracking-wide px-1 py-0.5 rounded-sm shrink-0 ${statusCls}`}
+//                   >
+//                     {statusText}
+//                   </span>
+//                 </div>
+//                 <h3 className="text-[13px] font-semibold text-foreground leading-tight line-clamp-1">
+//                   {p.title}
+//                 </h3>
+//                 <Link
+//                   to={`/projects/${p.slug}`}
+//                   className="inline-flex items-center gap-1 text-[11px] font-semibold text-accent hover:text-accent-hover"
+//                 >
+//                   Read More <ArrowRight className="h-3 w-3" />
+//                 </Link>
+//               </div>
+//             </article>
+//           );
+//         })}
+//       </div>
+//     </div>
+//   );
+// }
+
 function ProjectHighlightsColumn() {
   const [items, setItems] = useState<any[]>([]);
-  const scrollRef = useRef<HTMLDivElement | null>(null);
+  const [paused, setPaused] = useState(false);
+
+  // Auto-scroll engine — same hook as UpdatesPanel.
+  // Speed: see AUTO_SCROLL_SPEED_PROJECTS (top of file).
+  const { ref, scrollByAmount, shouldScroll } = useAutoScroll<HTMLDivElement>(
+    AUTO_SCROLL_SPEED_PROJECTS,
+    paused,
+  );
 
   useEffect(() => {
     let alive = true;
@@ -568,41 +769,10 @@ function ProjectHighlightsColumn() {
         if (alive) setItems(data);
       });
     });
-    return () => { alive = false; };
-  }, []);
-
-  useEffect(() => {
-    const el = scrollRef.current;
-    if (!el || items.length === 0) return;
-    let animId: number;
-    let paused = false;
-
-    const scroll = () => {
-      if (!paused) {
-        el.scrollTop += 0.4;
-        if (el.scrollTop >= el.scrollHeight / 2) {
-          el.scrollTop = 0;
-        }
-      }
-      animId = requestAnimationFrame(scroll);
-    };
-
-    animId = requestAnimationFrame(scroll);
-
-    const pause = () => { paused = true; };
-    const resume = () => { paused = false; };
-    const parent = el.parentElement;
-    parent?.addEventListener("mouseenter", pause);
-    parent?.addEventListener("mouseleave", resume);
-
     return () => {
-      cancelAnimationFrame(animId);
-      parent?.removeEventListener("mouseenter", pause);
-      parent?.removeEventListener("mouseleave", resume);
+      alive = false;
     };
-  }, [items]);
-
-  const looped = items.length > 0 ? [...items, ...items] : items;
+  }, []);
 
   return (
     <div className="bg-card border border-border rounded-md p-0 flex flex-col h-[480px] lg:h-[520px] overflow-hidden">
@@ -610,71 +780,101 @@ function ProjectHighlightsColumn() {
         <h2 className="text-[17px] font-bold text-primary flex items-center gap-2 uppercase tracking-wide">
           <Trees className="h-4 w-4 text-accent" /> Project Highlights
         </h2>
+      </div>
+
+      <div
+        ref={ref}
+        onPointerEnter={(e) => {
+          if (e.pointerType === "mouse") setPaused(true);
+        }}
+        onPointerLeave={(e) => {
+          if (e.pointerType === "mouse") setPaused(false);
+        }}
+        className="flex-1 overflow-y-auto min-h-0 no-scrollbar"
+      >
+        {Array.from({ length: shouldScroll ? 2 : 1 }).map((_, copyIdx) => (
+          <div key={copyIdx} aria-hidden={copyIdx === 1 || undefined}>
+            {items.map((p, idx) => {
+              const raw: string | null = p.thumbnail_image_path ?? null;
+              const img = raw
+                ? raw.startsWith("/uploads/")
+                  ? `${API_BASE_URL ?? ""}${raw}`
+                  : raw
+                : null;
+              const statusCls =
+                p.status === "completed"
+                  ? "bg-muted text-muted-foreground"
+                  : p.status === "pilot_phase"
+                    ? "bg-warning/15 text-warning"
+                    : "bg-success/15 text-success";
+              const statusText =
+                p.status === "completed"
+                  ? "Completed"
+                  : p.status === "pilot_phase"
+                    ? "Pilot Phase"
+                    : "Ongoing";
+              return (
+                <article
+                  key={`${p.id}-${idx}`}
+                  className="flex items-center gap-2.5 px-2.5 py-2 hover:bg-surface/60 transition border-b border-border"
+                >
+                  <div className="h-14 w-16 shrink-0 bg-gradient-to-br from-primary/20 to-primary-light/20 rounded-sm overflow-hidden flex items-center justify-center">
+                    {img ? (
+                      <img
+                        src={img}
+                        alt={p.title}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <Trees className="h-5 w-5 text-primary/40" />
+                    )}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-1 mb-0.5">
+                      {p.component?.label && (
+                        <span className="text-[8px] font-semibold uppercase tracking-wide px-1 py-0.5 rounded-sm bg-accent/15 text-accent">
+                          {p.component.label}
+                        </span>
+                      )}
+                      <span
+                        className={`text-[8px] font-semibold uppercase tracking-wide px-1 py-0.5 rounded-sm shrink-0 ml-auto ${statusCls}`}
+                      >
+                        {statusText}
+                      </span>
+                    </div>
+                    <h3 className="text-[13px] font-semibold text-foreground leading-tight line-clamp-1">
+                      {p.title}
+                    </h3>
+                    <Link
+                      to={`/projects/${p.slug}`}
+                      className="inline-flex items-center gap-1 text-[11px] font-semibold text-accent hover:text-accent-hover"
+                    >
+                      Read More <ArrowRight className="h-3 w-3" />
+                    </Link>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        ))}
+      </div>
+
+      {/* Footer — mirrors UpdatesPanel: View all link + manual scroll arrows */}
+      <div className="px-3 py-2 border-t border-border bg-surface flex items-center justify-between gap-2">
         <Link
           to="/project-components"
-          className="text-sm text-primary hover:text-accent font-semibold"
+          className="text-xs font-semibold text-primary hover:text-accent inline-flex items-center gap-1"
         >
-          View all <ArrowRight className="inline h-3.5 w-3.5" />
+          View all <ArrowRight className="h-3 w-3" />
         </Link>
-      </div>
-      <div
-        ref={scrollRef}
-        className="flex-1 overflow-y-auto divide-y divide-border min-h-0 no-scrollbar"
-      >
-        {looped.map((p, idx) => {
-          const raw: string | null = p.thumbnail_image_path ?? null;
-          const img = raw
-            ? (raw.startsWith("/uploads/") ? `${API_BASE_URL ?? ""}${raw}` : raw)
-            : null;
-          const statusCls =
-            p.status === "completed" ? "bg-muted text-muted-foreground"
-            : p.status === "pilot_phase" ? "bg-warning/15 text-warning"
-            : "bg-success/15 text-success";
-          const statusText =
-            p.status === "completed" ? "Completed"
-            : p.status === "pilot_phase" ? "Pilot Phase"
-            : "Ongoing";
-          return (
-            <article
-              key={`${p.id}-${idx}`}
-              className="flex items-center gap-2.5 px-2.5 py-2 hover:bg-surface/60 transition"
-            >
-              <div className="h-14 w-16 shrink-0 bg-gradient-to-br from-primary/20 to-primary-light/20 rounded-sm overflow-hidden flex items-center justify-center">
-                {img ? (
-                  <img src={img} alt={p.title} className="w-full h-full object-cover" />
-                ) : (
-                  <Trees className="h-5 w-5 text-primary/40" />
-                )}
-              </div>
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-1 mb-0.5">
-                  {p.component?.label && (
-                    <span className="text-[8px] font-semibold uppercase tracking-wide px-1 py-0.5 rounded-sm bg-accent/15 text-accent">
-                      {p.component.label}
-                    </span>
-                  )}
-                  <span className={`text-[8px] font-semibold uppercase tracking-wide px-1 py-0.5 rounded-sm shrink-0 ${statusCls}`}>
-                    {statusText}
-                  </span>
-                </div>
-                <h3 className="text-[13px] font-semibold text-foreground leading-tight line-clamp-1">
-                  {p.title}
-                </h3>
-                <Link
-                  to={`/projects/${p.slug}`}
-                  className="inline-flex items-center gap-1 text-[11px] font-semibold text-accent hover:text-accent-hover"
-                >
-                  Read More <ArrowRight className="h-3 w-3" />
-                </Link>
-              </div>
-            </article>
-          );
-        })}
+        <ScrollArrows
+          onUp={() => scrollByAmount(-MANUAL_STEP_PX)}
+          onDown={() => scrollByAmount(MANUAL_STEP_PX)}
+        />
       </div>
     </div>
   );
 }
-
 
 export default function Home() {
   const { t } = useLang();
@@ -743,15 +943,16 @@ export default function Home() {
   const youtubeEmbed = (() => {
     const url = social.youtube_video_url;
     if (!url) return "";
-    const m =
-      url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([\w-]{11})/);
+    const m = url.match(
+      /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([\w-]{11})/,
+    );
     return m ? `https://www.youtube.com/embed/${m[1]}` : "";
   })();
 
   const leadershipSlots = useMemo(() => {
     return dummyLeadershipSlots.map((dummy) => {
       const api = apiLeadership?.find(
-        (s) => Number(s.slot_number) === dummy.slot_number
+        (s) => Number(s.slot_number) === dummy.slot_number,
       );
       if (
         !api ||
