@@ -5,8 +5,7 @@ const links = [
   { to: "/about/organization", title: "Organization Structure", desc: "Hierarchy and structure of the Department." },
   { to: "/about/memorandum", title: "Memorandum of Association", desc: "Founding documents and governance." },
   { to: "/about/directory", title: "Official Directory", desc: "Contact details of officials." },
-  { to: "/about/vision", title: "Vision & Objective", desc: "Long-term vision of the Department." },
-  { to: "/about/mission", title: "Mission & Objective", desc: "Mission statements and objectives." },
+  { to: "/about/objectives", title: "Objectives", desc: "Key objectives of the Project." },
 ];
 
 export default function AboutPage({ title, subtitle, children }: { title: string; subtitle?: string; children?: React.ReactNode }) {

@@ -629,7 +629,7 @@ function ApiOfficialCard({ o }: { o: ApiOfficial }) {
   );
 }
 
-/* ---- Vision, Mission & Objectives (merged) ---- */
+/* ---- Objectives ---- */
 export function VisionMission() {
   const objectives = [
     "Generate sustainable livelihoods through high-value, climate-resilient value chains.",
@@ -639,99 +639,37 @@ export function VisionMission() {
     "Improve market access, enterprise opportunities and producer collectives.",
     "Adopt GIS, drones and digital MIS for transparent monitoring and decision-making.",
   ];
-  const missionPillars = [
-    {
-      title: "Livelihoods",
-      desc: "Sustainable income for 25,000+ households through high-value product chains.",
-    },
-    {
-      title: "Landscape Restoration",
-      desc: "Restore degraded lands for productive use and ecological balance.",
-    },
-    {
-      title: "Community Empowerment",
-      desc: "Strengthen JFMCs, SHGs and village committees across all districts.",
-    },
-    {
-      title: "Innovation & Technology",
-      desc: "Adopt GIS, drones and digital monitoring for transparent implementation.",
-    },
-  ];
   return (
     <AboutLayout
-      title="Vision, Mission & Objectives"
-      subtitle="The strategic direction and action-oriented commitments of PROJECT ELEMENT"
+      title="Objectives"
+      subtitle="Key objectives driving PROJECT ELEMENT implementation across Tripura"
     >
       <div className="space-y-8">
-        <div className="grid md:grid-cols-2 gap-4">
-          <div className="bg-card border border-border rounded-xl p-5 md:p-6 shadow-card">
-            <div className="flex items-center gap-2 mb-3">
-              <Eye className="h-5 w-5 text-accent" />
-              <span className="text-[11px] font-semibold px-2.5 py-0.5 rounded-full uppercase tracking-wide bg-accent/10 text-accent">
-                Our Vision
-              </span>
-            </div>
-            <p className="text-sm md:text-[15px] text-foreground leading-relaxed font-medium">
-              To transform rural livelihoods and strengthen economic development
-              across Tripura through sustainable landscape management,
-              community-driven value chains, and inclusive growth — ensuring
-              prosperity for present and future generations.
-            </p>
-          </div>
-          <div className="bg-card border border-border rounded-xl p-5 md:p-6 shadow-card">
-            <div className="flex items-center gap-2 mb-3">
-              <Target className="h-5 w-5 text-primary" />
-              <span className="text-[11px] font-semibold px-2.5 py-0.5 rounded-full uppercase tracking-wide bg-primary/10 text-primary">
-                Our Mission
-              </span>
-            </div>
-            <p className="text-sm md:text-[15px] text-foreground leading-relaxed font-medium">
-              To deliver transparent, community-centric development through
-              capacity-building, technology adoption, value chain strengthening,
-              and partnerships with communities, enterprises, and institutions
-              across Tripura.
-            </p>
-          </div>
-        </div>
-
-        <div>
-          <h3 className="text-lg font-bold text-primary mb-3">
-            Mission Pillars
-          </h3>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
-            {missionPillars.map((p) => (
-              <div
-                key={p.title}
-                className="bg-card border border-border rounded-lg p-4 hover:shadow-sm transition"
-              >
-                <h4 className="text-sm font-bold text-foreground mb-1">
-                  {p.title}
-                </h4>
-                <p className="text-xs text-muted-foreground leading-relaxed">
-                  {p.desc}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div>
-          <h3 className="text-lg font-bold text-primary mb-3">
+        <div className="bg-gradient-to-br from-primary/5 to-accent/5 border border-border rounded-xl p-6 text-center">
+          <span className="inline-block bg-accent/10 text-accent text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-3">
+            Objectives
+          </span>
+          <h3 className="text-xl font-bold text-primary mb-2">
             Key Objectives of PROJECT ELEMENT
           </h3>
-          <div className="grid sm:grid-cols-2 gap-3">
-            {objectives.map((obj) => (
-              <div
-                key={obj}
-                className="flex items-start gap-2 bg-card border border-border rounded-lg p-3.5"
-              >
-                <ChevronRight className="h-4 w-4 text-accent mt-0.5 shrink-0" />
-                <span className="text-sm text-muted-foreground leading-relaxed">
-                  {obj}
-                </span>
-              </div>
-            ))}
-          </div>
+          <p className="text-sm text-muted-foreground max-w-2xl mx-auto">
+            The action-oriented commitments guiding landscape restoration,
+            livelihood transformation and inclusive development across Tripura.
+          </p>
+        </div>
+
+        <div className="grid sm:grid-cols-2 gap-3">
+          {objectives.map((obj) => (
+            <div
+              key={obj}
+              className="flex items-start gap-2 bg-card border border-border rounded-lg p-3.5"
+            >
+              <ChevronRight className="h-4 w-4 text-accent mt-0.5 shrink-0" />
+              <span className="text-sm text-muted-foreground leading-relaxed">
+                {obj}
+              </span>
+            </div>
+          ))}
         </div>
       </div>
     </AboutLayout>
