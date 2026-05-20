@@ -1,44 +1,59 @@
-import { useEffect, useRef, useCallback } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 /**
- * useAutoScroll — shared smooth auto-scroll engine.
+ * useAutoScroll — smooth circular auto-scroll engine.
  *
- * Used by (src/pages/Index.tsx):
- *   - UpdatesPanel         (What's New / Notifications / Tenders)
- *   - ProjectHighlightsColumn
+ * Behavior:
+ *  - Detects whether content actually overflows the container.
+ *  - If NOT overflowing → content stays static, no auto-scroll, arrows no-op.
+ *  - If overflowing     → infinite circular auto-scroll starts immediately
+ *    after render, pauses on hover, resumes on un-hover. Arrows tween
+ *    smoothly via rAF without fighting the loop.
  *
- * SPEED is controlled at the call site:
- *   - AUTO_SCROLL_SPEED_UPDATES  (Index.tsx)
- *   - AUTO_SCROLL_SPEED_PROJECTS (Index.tsx)
- *
- * The list rendered inside the scroll container MUST be duplicated
- * (rendered twice back-to-back) so wrapping scrollTop back to 0 looks seamless.
- *
- * Smoothness notes:
- *   - We drive scrollTop on every animation frame using a sub-pixel accumulator,
- *     so motion stays continuous even at low speeds.
- *   - The CSS `scroll-behavior: smooth` MUST NOT be applied to the container,
- *     because it would interpolate every per-frame scrollTop write and cause
- *     jitter. Manual arrow clicks animate themselves (rAF tween) and briefly
- *     pause the auto-scroll loop to avoid fighting.
+ * Consumer contract:
+ *  - The hook returns `shouldScroll`. When `shouldScroll === true`, the
+ *    consumer MUST render the list duplicated back-to-back so the wrap
+ *    from scrollHeight/2 back to 0 looks seamless. When `false`, the
+ *    consumer should render the list once.
  */
 export function useAutoScroll<T extends HTMLElement>(
   pixelsPerSecond = 30,
   paused = false,
 ) {
   const ref = useRef<T | null>(null);
-  // Sub-pixel position accumulator so slow speeds still move smoothly.
   const posRef = useRef(0);
-  // Auto-scroll is suppressed while a manual tween is running.
   const manualActiveRef = useRef(false);
+  const [shouldScroll, setShouldScroll] = useState(false);
 
+  // Measure overflow. When the consumer is rendering duplicated content the
+  // "natural" content height is scrollHeight / 2; when single, it's scrollHeight.
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    // Keep accumulator in sync if something else moved the scroll position.
-    posRef.current = el.scrollTop;
+    const measure = () => {
+      const naturalHeight = shouldScroll ? el.scrollHeight / 2 : el.scrollHeight;
+      const overflows = naturalHeight > el.clientHeight + 4;
+      setShouldScroll((prev) => (prev === overflows ? prev : overflows));
+    };
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    Array.from(el.children).forEach((c) => ro.observe(c));
+    return () => ro.disconnect();
+  }, [shouldScroll]);
+
+  // Auto-scroll loop — only runs when overflow exists and not paused.
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (!shouldScroll) {
+      el.scrollTop = 0;
+      posRef.current = 0;
+      return;
+    }
     if (paused) return;
 
+    posRef.current = el.scrollTop;
     let raf = 0;
     let last = performance.now();
     const tick = (now: number) => {
@@ -55,7 +70,6 @@ export function useAutoScroll<T extends HTMLElement>(
           el2.scrollTop = next;
         }
       } else if (el2) {
-        // While manual tween runs, keep accumulator aligned with DOM.
         posRef.current = el2.scrollTop;
         last = now;
       }
@@ -63,14 +77,11 @@ export function useAutoScroll<T extends HTMLElement>(
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, [pixelsPerSecond, paused]);
+  }, [shouldScroll, paused, pixelsPerSecond]);
 
-  // Smooth manual scroll using a self-managed rAF tween (so it works even
-  // when the container has no native `scroll-behavior: smooth`, and so we
-  // can pause the auto-scroll loop during the tween).
   const scrollByAmount = useCallback((delta: number) => {
     const el = ref.current;
-    if (!el) return;
+    if (!el || !shouldScroll) return;
     const half = el.scrollHeight / 2 || el.scrollHeight || 1;
     const start = el.scrollTop;
     const wrap = (v: number) => {
@@ -80,7 +91,6 @@ export function useAutoScroll<T extends HTMLElement>(
       return n;
     };
     const end = wrap(start + delta);
-    // Pick the shortest direction around the circular buffer.
     let travel = end - start;
     if (travel > half / 2) travel -= half;
     if (travel < -half / 2) travel += half;
@@ -88,22 +98,17 @@ export function useAutoScroll<T extends HTMLElement>(
     const duration = Math.min(450, 180 + Math.abs(travel) * 1.2);
     const startTime = performance.now();
     manualActiveRef.current = true;
-
-    const ease = (t: number) => 1 - Math.pow(1 - t, 3); // easeOutCubic
-
+    const ease = (t: number) => 1 - Math.pow(1 - t, 3);
     const step = (now: number) => {
       const t = Math.min(1, (now - startTime) / duration);
       const v = wrap(start + travel * ease(t));
       posRef.current = v;
       if (ref.current) ref.current.scrollTop = v;
-      if (t < 1) {
-        requestAnimationFrame(step);
-      } else {
-        manualActiveRef.current = false;
-      }
+      if (t < 1) requestAnimationFrame(step);
+      else manualActiveRef.current = false;
     };
     requestAnimationFrame(step);
-  }, []);
+  }, [shouldScroll]);
 
-  return { ref, scrollByAmount };
+  return { ref, scrollByAmount, shouldScroll };
 }
