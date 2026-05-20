@@ -339,9 +339,8 @@ function UpdatesPanel({
         onPointerLeave={(e) => { if (e.pointerType === "mouse") setPaused(false); }}
         className="flex-1 overflow-y-auto min-h-0 no-scrollbar"
       >
-        <div className="flex flex-col">
-
-
+        {Array.from({ length: shouldScroll ? 2 : 1 }).map((_, copyIdx) => (
+        <div key={copyIdx} className="flex flex-col" aria-hidden={copyIdx === 1 || undefined}>
           {updatesTab === "whatsnew" && apiWhatsNew.length > 0 &&
             apiWhatsNew.map(renderApiItem)}
           {updatesTab === "whatsnew" && apiWhatsNew.length === 0 &&
