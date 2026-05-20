@@ -1000,28 +1000,39 @@ const directoryCategories = [
 
 export function OfficialDirectory() {
   const [search, setSearch] = useState("");
-  const [debounced, setDebounced] = useState("");
   const [groups, setGroups] = useState<OfficialCategoryGroup[]>([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const t = setTimeout(() => setDebounced(search.trim()), 120);
-    return () => clearTimeout(t);
-  }, [search]);
-
+  // Fetch full list once; filtering happens client-side for real-time UX.
   useEffect(() => {
     let alive = true;
     setLoading(true);
-    fetchGrouped("directory", debounced || undefined).then((g) => {
+    fetchGrouped("directory").then((g) => {
       if (alive) {
         setGroups(g);
         setLoading(false);
       }
     });
-    return () => {
-      alive = false;
-    };
-  }, [debounced]);
+    return () => { alive = false; };
+  }, []);
+
+  const filtered = useMemo(() => {
+    const q = search.trim().toLowerCase();
+    if (!q) return groups;
+    return groups
+      .map((cat) => {
+        const catMatch = (cat.category_name || "").toLowerCase().includes(q);
+        const officials = catMatch
+          ? cat.officials
+          : cat.officials.filter((o) =>
+              [o.name, o.designation, o.organisation, o.division_office, o.email, o.mobile, o.phone]
+                .filter(Boolean)
+                .some((v) => String(v).toLowerCase().includes(q)),
+            );
+        return { ...cat, officials };
+      })
+      .filter((cat) => cat.officials.length > 0);
+  }, [groups, search]);
 
   return (
     <AboutLayout
