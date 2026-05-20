@@ -15,6 +15,7 @@ import {
   Handshake,
   Facebook,
   Twitter,
+  Youtube,
   FileText,
   UserCheck,
   ChevronUp,
