@@ -54,10 +54,12 @@ function AboutLayout({
   title,
   subtitle,
   children,
+  backgroundImage,
 }: {
   title: string;
   subtitle?: string;
   children?: React.ReactNode;
+  backgroundImage?: string;
 }) {
   return (
     <PageLayout>
@@ -66,7 +68,20 @@ function AboutLayout({
         subtitle={subtitle}
         breadcrumb={["Home", "About", title]}
       />
-      <section className="py-10">
+      <section
+        className="py-10 relative"
+        style={
+          backgroundImage
+            ? {
+                backgroundImage: `linear-gradient(to bottom, hsl(var(--background) / 0.82), hsl(var(--background) / 0.88)), url(${backgroundImage})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                backgroundAttachment: "fixed",
+                backgroundRepeat: "no-repeat",
+              }
+            : undefined
+        }
+      >
         <div className="gov-container">
           <div className="min-w-0">{children}</div>
         </div>
