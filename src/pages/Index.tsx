@@ -528,6 +528,7 @@ function UpdatesPanel({
             });
           })()}
         </div>
+        ))}
       </div>
       <div className="px-3 py-2 border-t border-border bg-surface flex items-center justify-between gap-2">
         <Link
