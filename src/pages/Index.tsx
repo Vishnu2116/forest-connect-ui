@@ -560,7 +560,7 @@ function UpdatesPanel({
 function ProjectHighlightsColumn() {
   const [paused, setPaused] = useState(false);
   const [items, setItems] = useState<any[]>([]);
-  const { ref, scrollByAmount } = useAutoScroll<HTMLDivElement>(
+  const { ref, scrollByAmount, shouldScroll } = useAutoScroll<HTMLDivElement>(
     AUTO_SCROLL_SPEED_PROJECTS,
     paused,
   );
@@ -575,10 +575,10 @@ function ProjectHighlightsColumn() {
     return () => { alive = false; };
   }, []);
 
-  const looped = items;
+  const looped = shouldScroll ? [...items, ...items] : items;
 
   return (
-    <div className="bg-card border border-border rounded-md p-0 flex flex-col h-[28rem] lg:h-full overflow-hidden">
+    <div className="bg-card border border-border rounded-md p-0 flex flex-col h-[24rem] lg:h-full overflow-hidden">
       <div className="flex items-center justify-between px-4 py-3 border-b-2 border-primary bg-primary/5">
         <h2 className="text-[17px] font-bold text-primary flex items-center gap-2 uppercase tracking-wide">
           <Trees className="h-4 w-4 text-accent" /> Project Highlights
@@ -613,39 +613,39 @@ function ProjectHighlightsColumn() {
           return (
             <article
               key={`${p.id}-${idx}`}
-              className="flex gap-3 p-4 hover:bg-surface/60 transition"
+              className="flex gap-2.5 p-2.5 hover:bg-surface/60 transition"
             >
-              <div className="h-20 w-24 shrink-0 bg-gradient-to-br from-primary/20 to-primary-light/20 rounded-sm overflow-hidden flex items-center justify-center">
+              <div className="h-14 w-16 shrink-0 bg-gradient-to-br from-primary/20 to-primary-light/20 rounded-sm overflow-hidden flex items-center justify-center">
                 {img ? (
                   <img src={img} alt={p.title} className="w-full h-full object-cover" />
                 ) : (
-                  <Trees className="h-6 w-6 text-primary/40" />
+                  <Trees className="h-5 w-5 text-primary/40" />
                 )}
               </div>
               <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-1.5 mb-1 flex-wrap">
+                <div className="flex items-center gap-1 mb-0.5 flex-wrap">
                   {p.component?.label && (
-                    <span className="text-[11px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-accent/15 text-accent">
+                    <span className="text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-accent/15 text-accent">
                       {p.component.label}
                     </span>
                   )}
-                  <span className={`text-[11px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm ${statusCls}`}>
+                  <span className={`text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm ${statusCls}`}>
                     {statusText}
                   </span>
                 </div>
-                <h3 className="text-base font-semibold text-foreground leading-snug mb-1">
+                <h3 className="text-sm font-semibold text-foreground leading-snug line-clamp-1">
                   {p.title}
                 </h3>
                 {p.subtitle && (
-                  <p className="text-sm text-muted-foreground line-clamp-1 mb-1">
+                  <p className="text-xs text-muted-foreground line-clamp-1">
                     {p.subtitle}
                   </p>
                 )}
                 <Link
                   to={`/projects/${p.slug}`}
-                  className="inline-flex items-center gap-1 text-sm font-semibold text-accent hover:text-accent-hover"
+                  className="inline-flex items-center gap-1 text-xs font-semibold text-accent hover:text-accent-hover mt-0.5"
                 >
-                  Read More <ArrowRight className="h-3.5 w-3.5" />
+                  Read More <ArrowRight className="h-3 w-3" />
                 </Link>
               </div>
             </article>
