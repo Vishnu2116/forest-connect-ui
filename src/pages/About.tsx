@@ -49,7 +49,6 @@ import CS from "@/assets/dignitaries/CS.jpg";
 import SanjibDas from "@/assets/dignitaries/SanjibDas.png";
 import forestBg from "@/assets/hero-forest.jpg";
 
-
 function AboutLayout({
   title,
   subtitle,
@@ -68,12 +67,14 @@ function AboutLayout({
         subtitle={subtitle}
         breadcrumb={["Home", "About", title]}
       />
+      {/* Background sits on the <section> so it is truly full-bleed —
+          no container padding or child margin can create white gaps */}
       <section
-        className="py-10 relative"
+        className="py-12 relative"
         style={
           backgroundImage
             ? {
-                backgroundImage: `linear-gradient(to bottom, hsl(var(--background) / 0.82), hsl(var(--background) / 0.88)), url(${backgroundImage})`,
+                backgroundImage: `url(${backgroundImage})`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
                 backgroundAttachment: "fixed",
@@ -82,14 +83,20 @@ function AboutLayout({
             : undefined
         }
       >
-        <div className="gov-container">
+        {/* Scrim — only visible in the gaps between cards, never behind text */}
+        {backgroundImage && (
+          <div
+            className="absolute inset-0 bg-black/35 pointer-events-none"
+            aria-hidden="true"
+          />
+        )}
+        <div className="gov-container relative">
           <div className="min-w-0">{children}</div>
         </div>
       </section>
     </PageLayout>
   );
 }
-
 
 /* ---- About PROJECT ELEMENT (main intro page) ---- */
 export function AboutElement() {
@@ -140,20 +147,18 @@ export function AboutElement() {
     <AboutLayout
       title="About PROJECT ELEMENT"
       subtitle="A joint initiative for landscape development, livelihood generation and economic transformation"
-      backgroundImage="https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=2400&q=80"
+      backgroundImage={forestBg}
     >
-      <div className="relative space-y-10">
-        <div className="bg-card/95 backdrop-blur-sm border border-border rounded-xl p-6 md:p-8 shadow-card">
-          <div className="text-center">
-            <span className="inline-block bg-accent/10 text-accent text-[11px] font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-4">
-              About the Project
-            </span>
+      <div className="space-y-10">
+        {/* What is PROJECT ELEMENT? */}
+        <div className="bg-card border border-border rounded-xl p-6 md:p-8 shadow-card">
+          <span className="inline-block bg-accent/10 text-accent text-[11px] font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-4">
+            About the Project
+          </span>
 
-            <h3 className="text-2xl md:text-3xl font-bold text-primary mb-5">
-              What is PROJECT ELEMENT?
-            </h3>
-          </div>
-
+          <h3 className="text-2xl md:text-3xl font-bold text-primary mb-5">
+            What is PROJECT ELEMENT?
+          </h3>
 
           <div className="space-y-4 text-sm md:text-[15px] text-muted-foreground leading-relaxed">
             <p>
@@ -192,7 +197,6 @@ export function AboutElement() {
               <p className="font-semibold text-foreground mb-2">
                 Key focus areas include:
               </p>
-
               <ul className="list-disc pl-5 space-y-1.5">
                 <li>Landscape restoration and ecosystem conservation</li>
                 <li>Climate resilience and watershed management</li>
@@ -213,7 +217,7 @@ export function AboutElement() {
         </div>
 
         {/* Compact stats grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 mt-5">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
           {[
             { icon: Briefcase, stat: "25,000+", label: "Households" },
             { icon: TrendingUp, stat: "₹45 Cr+", label: "Investment" },
@@ -793,35 +797,6 @@ const govLeaderImages: Record<string, string> = {
 };
 
 const directoryCategories = [
-  // {
-  //   title: "Senior Government Leadership",
-  //   entries: [
-  //     {
-  //       name: "Shri Manik Saha",
-  //       designation: "Hon'ble Chief Minister",
-  //       division: "Government of Tripura",
-  //       phone: "",
-  //       email: "",
-  //       mobile: "",
-  //     },
-  //     {
-  //       name: "Shri Animesh Debbarma",
-  //       designation: "Forest & Environment Minister",
-  //       division: "Government of Tripura",
-  //       phone: "",
-  //       email: "",
-  //       mobile: "",
-  //     },
-  //     {
-  //       name: "Shri J.K. Sinha, IAS",
-  //       designation: "Chief Secretary",
-  //       division: "Government of Tripura",
-  //       phone: "",
-  //       email: "",
-  //       mobile: "",
-  //     },
-  //   ],
-  // },
   {
     title: "PROJECT ELEMENT Leadership",
     entries: [
@@ -1006,7 +981,6 @@ export function OfficialDirectory() {
   const [groups, setGroups] = useState<OfficialCategoryGroup[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // Fetch full list once; filtering happens client-side for real-time UX.
   useEffect(() => {
     let alive = true;
     setLoading(true);
@@ -1016,7 +990,9 @@ export function OfficialDirectory() {
         setLoading(false);
       }
     });
-    return () => { alive = false; };
+    return () => {
+      alive = false;
+    };
   }, []);
 
   const filtered = useMemo(() => {
@@ -1028,7 +1004,15 @@ export function OfficialDirectory() {
         const officials = catMatch
           ? cat.officials
           : cat.officials.filter((o) =>
-              [o.name, o.designation, o.organisation, o.division_office, o.email, o.mobile, o.phone]
+              [
+                o.name,
+                o.designation,
+                o.organisation,
+                o.division_office,
+                o.email,
+                o.mobile,
+                o.phone,
+              ]
                 .filter(Boolean)
                 .some((v) => String(v).toLowerCase().includes(q)),
             );
@@ -1088,12 +1072,12 @@ export function OfficialDirectory() {
             <div className="hidden md:block rounded-xl border border-border bg-card shadow-sm overflow-x-auto">
               <table className="w-full text-sm table-fixed">
                 <colgroup>
-                  <col className="w-[30%]" /> {/* Official */}
-                  <col className="w-[15%]" /> {/* Designation */}
-                  <col className="w-[15%]" /> {/* Division */}
-                  <col className="w-[12%]" /> {/* Phone */}
-                  <col className="w-[12%]" /> {/* Mobile */}
-                  <col className="w-[16%]" /> {/* Email */}
+                  <col className="w-[30%]" />
+                  <col className="w-[15%]" />
+                  <col className="w-[15%]" />
+                  <col className="w-[12%]" />
+                  <col className="w-[12%]" />
+                  <col className="w-[16%]" />
                 </colgroup>
                 <thead>
                   <tr className="bg-primary/5 border-b border-border">
@@ -1247,113 +1231,6 @@ export function OfficialDirectory() {
             </div>
           </div>
         ))}
-
-        {/* {directoryCategories.map((cat) => (
-          <div key={cat.title}>
-            <h3 className="text-base font-bold text-primary mb-3 flex items-center gap-2">
-              <Users className="h-4 w-4 text-accent" />
-              {cat.title}
-            </h3>
-
-            <div className="hidden md:block rounded-xl border border-border bg-card shadow-sm overflow-x-auto">
-              <table className="w-full text-sm table-fixed">
-                <colgroup>
-                  <col className="w-[30%]" />
-                  <col className="w-[20%]" />
-                  <col className="w-[20%]" />
-                  <col className="w-[10%]" />
-                  <col className="w-[10%]" />
-                  <col className="w-[10%]" />
-                </colgroup>
-
-                <thead>
-                  <tr className="bg-primary/5 border-b border-border">
-                    <th className="text-left py-3 px-3 font-semibold text-primary">
-                      Official
-                    </th>
-                    <th className="text-left py-3 px-3 font-semibold text-primary">
-                      Designation
-                    </th>
-                    <th className="text-left py-3 px-3 font-semibold text-primary">
-                      Division / Office
-                    </th>
-                    <th className="text-left py-3 px-3 font-semibold text-primary">
-                      Phone
-                    </th>
-                    <th className="text-left py-3 px-3 font-semibold text-primary">
-                      Mobile
-                    </th>
-                    <th className="text-left py-3 px-3 font-semibold text-primary">
-                      Email
-                    </th>
-                  </tr>
-                </thead>
-
-                <tbody>
-                  {cat.entries.map((entry) => {
-                    const img = govLeaderImages[entry.name] || "";
-
-                    return (
-                      <tr
-                        key={entry.name}
-                        className="border-b border-border last:border-b-0 hover:bg-muted/30 transition align-top"
-                      >
-                        <td className="py-3 px-3">
-                          <div className="flex items-start gap-2.5">
-                            <div className="h-9 w-9 rounded-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center text-primary-foreground shrink-0 overflow-hidden">
-                              {img ? (
-                                <img
-                                  src={img}
-                                  alt={entry.name}
-                                  className="h-full w-full object-cover"
-                                />
-                              ) : (
-                                <User className="h-4 w-4" />
-                              )}
-                            </div>
-
-                            <span className="font-semibold text-foreground leading-snug whitespace-normal break-normal">
-                              {entry.name}
-                            </span>
-                          </div>
-                        </td>
-
-                        <td className="py-3 px-3 text-foreground break-words leading-snug">
-                          {entry.designation}
-                        </td>
-
-                        <td className="py-3 px-3 text-muted-foreground break-words leading-snug">
-                          {entry.division || "—"}
-                        </td>
-
-                        <td className="py-3 px-3 text-muted-foreground">
-                          {entry.phone || "—"}
-                        </td>
-
-                        <td className="py-3 px-3 text-muted-foreground">
-                          {entry.mobile || "—"}
-                        </td>
-
-                        <td className="py-3 px-3">
-                          {entry.email ? (
-                            <a
-                              href={`mailto:${entry.email}`}
-                              className="text-primary hover:underline break-all"
-                            >
-                              {entry.email}
-                            </a>
-                          ) : (
-                            <span className="text-muted-foreground">—</span>
-                          )}
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        ))} */}
       </div>
     </AboutLayout>
   );
