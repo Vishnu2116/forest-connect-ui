@@ -1005,7 +1005,7 @@ export function OfficialDirectory() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const t = setTimeout(() => setDebounced(search.trim()), 500);
+    const t = setTimeout(() => setDebounced(search.trim()), 120);
     return () => clearTimeout(t);
   }, [search]);
 
