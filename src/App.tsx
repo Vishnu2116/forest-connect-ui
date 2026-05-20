@@ -74,9 +74,10 @@ const App = () => (
           <Route path="/about" element={<AboutElement />} />
           <Route path="/about/organization" element={<Organization />} />
           <Route path="/about/whos-who" element={<WhosWhoSection />} />
-          <Route path="/about/vision-mission" element={<VisionMission />} />
-          <Route path="/about/vision" element={<VisionMission />} />
-          <Route path="/about/mission" element={<VisionMission />} />
+          <Route path="/about/objectives" element={<VisionMission />} />
+          <Route path="/about/vision-mission" element={<Navigate to="/about/objectives" replace />} />
+          <Route path="/about/vision" element={<Navigate to="/about/objectives" replace />} />
+          <Route path="/about/mission" element={<Navigate to="/about/objectives" replace />} />
           <Route path="/about/memorandum" element={<Memorandum />} />
           <Route path="/about/directory" element={<OfficialDirectory />} />
           <Route path="/about/officials/:id" element={<OfficialProfile />} />

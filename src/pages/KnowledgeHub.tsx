@@ -35,12 +35,10 @@ export default function KnowledgeHub({ initialCategory = "IEC Materials" }: { in
 
   return (
     <KnowledgeHubLayout
-      title="Knowledge Hub"
+      title={active}
       subtitle="Resources, reports, studies and notifications curated for stakeholders"
       breadcrumb={["Home", "Knowledge Hub", active]}
     >
-      <h2 className="section-title mb-6">{active}</h2>
-
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
         {items.length === 0 && <p className="text-muted-foreground text-sm">No items in this category yet.</p>}
         {items.map((k) => {

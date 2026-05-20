@@ -47,6 +47,7 @@ import cmImage from "@/assets/dignitaries/CM.jpeg";
 import Animesh from "@/assets/dignitaries/Animesh.jpeg";
 import CS from "@/assets/dignitaries/CS.jpg";
 import SanjibDas from "@/assets/dignitaries/SanjibDas.png";
+import forestBg from "@/assets/hero-forest.jpg";
 
 
 function AboutLayout({
@@ -125,7 +126,15 @@ export function AboutElement() {
       title="About PROJECT ELEMENT"
       subtitle="A joint initiative for landscape development, livelihood generation and economic transformation"
     >
-      <div className="space-y-10">
+      <div
+        className="relative space-y-10 -mx-4 sm:-mx-6 px-4 sm:px-6 py-6 rounded-lg overflow-hidden"
+        style={{
+          backgroundImage: `linear-gradient(to bottom, hsl(var(--background) / 0.92), hsl(var(--background) / 0.96)), url(${forestBg})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundAttachment: "fixed",
+        }}
+      >
         {/* What is PROJECT ELEMENT? */}
         {/* <div className="bg-gradient-to-br from-primary/5 to-accent/5 border border-border rounded-xl p-6 md:p-8 shadow-card text-center">
           <span className="inline-block bg-accent/10 text-accent text-[11px] font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-3">
@@ -412,7 +421,7 @@ export function Organization() {
       <div className="space-y-8">
         {/* Header intro */}
         <div className="bg-gradient-to-br from-primary/5 to-accent/5 border border-border rounded-xl p-6 text-center">
-          <span className="inline-block bg-primary/10 text-primary text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-3">
+          <span className="inline-block bg-accent/10 text-accent text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-3">
             Institutional Framework
           </span>
           <h3 className="text-xl font-bold text-primary mb-2">
@@ -564,7 +573,7 @@ export function WhosWhoSection() {
     >
       <div className="space-y-8">
         <div className="bg-gradient-to-br from-primary/5 to-accent/5 border border-border rounded-xl p-6 text-center">
-          <span className="inline-block bg-primary/10 text-primary text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-3">
+          <span className="inline-block bg-accent/10 text-accent text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-3">
             Leadership
           </span>
           <h3 className="text-xl font-bold text-primary mb-2">
@@ -629,7 +638,7 @@ function ApiOfficialCard({ o }: { o: ApiOfficial }) {
   );
 }
 
-/* ---- Vision, Mission & Objectives (merged) ---- */
+/* ---- Objectives ---- */
 export function VisionMission() {
   const objectives = [
     "Generate sustainable livelihoods through high-value, climate-resilient value chains.",
@@ -639,99 +648,37 @@ export function VisionMission() {
     "Improve market access, enterprise opportunities and producer collectives.",
     "Adopt GIS, drones and digital MIS for transparent monitoring and decision-making.",
   ];
-  const missionPillars = [
-    {
-      title: "Livelihoods",
-      desc: "Sustainable income for 25,000+ households through high-value product chains.",
-    },
-    {
-      title: "Landscape Restoration",
-      desc: "Restore degraded lands for productive use and ecological balance.",
-    },
-    {
-      title: "Community Empowerment",
-      desc: "Strengthen JFMCs, SHGs and village committees across all districts.",
-    },
-    {
-      title: "Innovation & Technology",
-      desc: "Adopt GIS, drones and digital monitoring for transparent implementation.",
-    },
-  ];
   return (
     <AboutLayout
-      title="Vision, Mission & Objectives"
-      subtitle="The strategic direction and action-oriented commitments of PROJECT ELEMENT"
+      title="Objectives"
+      subtitle="Key objectives driving PROJECT ELEMENT implementation across Tripura"
     >
       <div className="space-y-8">
-        <div className="grid md:grid-cols-2 gap-4">
-          <div className="bg-card border border-border rounded-xl p-5 md:p-6 shadow-card">
-            <div className="flex items-center gap-2 mb-3">
-              <Eye className="h-5 w-5 text-accent" />
-              <span className="text-[11px] font-semibold px-2.5 py-0.5 rounded-full uppercase tracking-wide bg-accent/10 text-accent">
-                Our Vision
-              </span>
-            </div>
-            <p className="text-sm md:text-[15px] text-foreground leading-relaxed font-medium">
-              To transform rural livelihoods and strengthen economic development
-              across Tripura through sustainable landscape management,
-              community-driven value chains, and inclusive growth — ensuring
-              prosperity for present and future generations.
-            </p>
-          </div>
-          <div className="bg-card border border-border rounded-xl p-5 md:p-6 shadow-card">
-            <div className="flex items-center gap-2 mb-3">
-              <Target className="h-5 w-5 text-primary" />
-              <span className="text-[11px] font-semibold px-2.5 py-0.5 rounded-full uppercase tracking-wide bg-primary/10 text-primary">
-                Our Mission
-              </span>
-            </div>
-            <p className="text-sm md:text-[15px] text-foreground leading-relaxed font-medium">
-              To deliver transparent, community-centric development through
-              capacity-building, technology adoption, value chain strengthening,
-              and partnerships with communities, enterprises, and institutions
-              across Tripura.
-            </p>
-          </div>
-        </div>
-
-        <div>
-          <h3 className="text-lg font-bold text-primary mb-3">
-            Mission Pillars
-          </h3>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
-            {missionPillars.map((p) => (
-              <div
-                key={p.title}
-                className="bg-card border border-border rounded-lg p-4 hover:shadow-sm transition"
-              >
-                <h4 className="text-sm font-bold text-foreground mb-1">
-                  {p.title}
-                </h4>
-                <p className="text-xs text-muted-foreground leading-relaxed">
-                  {p.desc}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div>
-          <h3 className="text-lg font-bold text-primary mb-3">
+        <div className="bg-gradient-to-br from-primary/5 to-accent/5 border border-border rounded-xl p-6 text-center">
+          <span className="inline-block bg-accent/10 text-accent text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-3">
+            Objectives
+          </span>
+          <h3 className="text-xl font-bold text-primary mb-2">
             Key Objectives of PROJECT ELEMENT
           </h3>
-          <div className="grid sm:grid-cols-2 gap-3">
-            {objectives.map((obj) => (
-              <div
-                key={obj}
-                className="flex items-start gap-2 bg-card border border-border rounded-lg p-3.5"
-              >
-                <ChevronRight className="h-4 w-4 text-accent mt-0.5 shrink-0" />
-                <span className="text-sm text-muted-foreground leading-relaxed">
-                  {obj}
-                </span>
-              </div>
-            ))}
-          </div>
+          <p className="text-sm text-muted-foreground max-w-2xl mx-auto">
+            The action-oriented commitments guiding landscape restoration,
+            livelihood transformation and inclusive development across Tripura.
+          </p>
+        </div>
+
+        <div className="grid sm:grid-cols-2 gap-3">
+          {objectives.map((obj) => (
+            <div
+              key={obj}
+              className="flex items-start gap-2 bg-card border border-border rounded-lg p-3.5"
+            >
+              <ChevronRight className="h-4 w-4 text-accent mt-0.5 shrink-0" />
+              <span className="text-sm text-muted-foreground leading-relaxed">
+                {obj}
+              </span>
+            </div>
+          ))}
         </div>
       </div>
     </AboutLayout>
@@ -747,7 +694,7 @@ export function Memorandum() {
     >
       <div className="space-y-8">
         <div className="bg-gradient-to-br from-primary/5 to-accent/5 border border-border rounded-xl p-6 text-center">
-          <span className="inline-block bg-primary/10 text-primary text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-3">
+          <span className="inline-block bg-accent/10 text-accent text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-3">
             Official Document
           </span>
           <h3 className="text-xl font-bold text-primary mb-2">
@@ -1062,28 +1009,39 @@ const directoryCategories = [
 
 export function OfficialDirectory() {
   const [search, setSearch] = useState("");
-  const [debounced, setDebounced] = useState("");
   const [groups, setGroups] = useState<OfficialCategoryGroup[]>([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const t = setTimeout(() => setDebounced(search.trim()), 500);
-    return () => clearTimeout(t);
-  }, [search]);
-
+  // Fetch full list once; filtering happens client-side for real-time UX.
   useEffect(() => {
     let alive = true;
     setLoading(true);
-    fetchGrouped("directory", debounced || undefined).then((g) => {
+    fetchGrouped("directory").then((g) => {
       if (alive) {
         setGroups(g);
         setLoading(false);
       }
     });
-    return () => {
-      alive = false;
-    };
-  }, [debounced]);
+    return () => { alive = false; };
+  }, []);
+
+  const filtered = useMemo(() => {
+    const q = search.trim().toLowerCase();
+    if (!q) return groups;
+    return groups
+      .map((cat) => {
+        const catMatch = (cat.category_name || "").toLowerCase().includes(q);
+        const officials = catMatch
+          ? cat.officials
+          : cat.officials.filter((o) =>
+              [o.name, o.designation, o.organisation, o.division_office, o.email, o.mobile, o.phone]
+                .filter(Boolean)
+                .some((v) => String(v).toLowerCase().includes(q)),
+            );
+        return { ...cat, officials };
+      })
+      .filter((cat) => cat.officials.length > 0);
+  }, [groups, search]);
 
   return (
     <AboutLayout
@@ -1092,7 +1050,7 @@ export function OfficialDirectory() {
     >
       <div className="space-y-6">
         <div className="bg-gradient-to-br from-primary/5 to-accent/5 border border-border rounded-xl p-6 text-center">
-          <span className="inline-block bg-primary/10 text-primary text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-3">
+          <span className="inline-block bg-accent/10 text-accent text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-3">
             Directory
           </span>
           <h3 className="text-xl font-bold text-primary mb-2">
@@ -1121,13 +1079,13 @@ export function OfficialDirectory() {
           </p>
         )}
 
-        {!loading && groups.length === 0 && (
+        {!loading && filtered.length === 0 && (
           <p className="text-sm text-muted-foreground text-center py-8">
             No results found.
           </p>
         )}
 
-        {groups.map((cat) => (
+        {filtered.map((cat) => (
           <div key={cat.category_id || cat.category_name}>
             <h3 className="text-base font-bold text-primary mb-3 flex items-center gap-2">
               <Users className="h-4 w-4 text-accent" /> {cat.category_name}

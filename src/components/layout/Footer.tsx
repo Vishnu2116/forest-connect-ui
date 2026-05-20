@@ -58,9 +58,9 @@ export default function Footer() {
           <ul className="space-y-2.5 text-sm">
             {[
               ["About PROJECT ELEMENT", "/about"],
-              ["Projects", "/projects"],
+              ["Project Components", "/project-components"],
               ["Reports", "/reports"],
-              ["Plantation Locations", "/plantation-map"],
+              ["MIS / GIS", "/mis-gis"],
               ["Activities & Outputs", "/activities"],
               ["Contact Us", "/contact"],
             ].map(([l, h]) => (
