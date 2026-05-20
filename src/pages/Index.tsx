@@ -15,6 +15,7 @@ import {
   Handshake,
   Facebook,
   Twitter,
+  Youtube,
   FileText,
   UserCheck,
   ChevronUp,
@@ -1168,26 +1169,35 @@ export default function Home() {
                 </div>
                 {/* YouTube video */}
                 <div className="bg-background border border-border rounded-sm overflow-hidden flex flex-col basis-0 grow-[42] min-h-0">
-                  <div className="relative flex-1 min-h-0 bg-gradient-to-br from-primary/30 to-primary-light/30 flex items-center justify-center group cursor-pointer">
-                    {youtubeEmbed ? (
-                      <iframe
-                        src={youtubeEmbed}
-                        title={social.youtube_video_title}
-                        className="absolute inset-0 w-full h-full"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                      />
-                    ) : (
-                      <>
-                        <div className="absolute inset-0 bg-black/20" />
-                        <div className="relative h-14 w-14 rounded-full bg-accent flex items-center justify-center shadow-lg group-hover:scale-110 transition">
-                          <div className="w-0 h-0 border-l-[14px] border-l-accent-foreground border-y-[9px] border-y-transparent ml-1" />
-                        </div>
-                      </>
-                    )}
+                  <div className="px-3 py-2 border-b border-border bg-surface flex items-center gap-2 shrink-0">
+                    <Youtube className="h-4 w-4 text-primary" />
+                    <span className="text-sm font-bold">YouTube</span>
                   </div>
-                  <div className="px-3 py-2.5 shrink-0 border-t border-border">
-                    <h4 className="text-sm font-semibold text-foreground leading-snug line-clamp-1">
+                  <div className="p-3 flex flex-col gap-2">
+                    <div
+                      className="relative w-full max-w-full overflow-hidden rounded-lg bg-gradient-to-br from-primary/30 to-primary-light/30 group cursor-pointer"
+                      style={{ aspectRatio: "16 / 9" }}
+                    >
+                      {youtubeEmbed ? (
+                        <iframe
+                          src={youtubeEmbed}
+                          title={social.youtube_video_title}
+                          className="absolute inset-0 w-full h-full rounded-lg"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen
+                        />
+                      ) : (
+                        <>
+                          <div className="absolute inset-0 bg-black/20" />
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <div className="h-14 w-14 rounded-full bg-accent flex items-center justify-center shadow-lg group-hover:scale-110 transition">
+                              <div className="w-0 h-0 border-l-[14px] border-l-accent-foreground border-y-[9px] border-y-transparent ml-1" />
+                            </div>
+                          </div>
+                        </>
+                      )}
+                    </div>
+                    <h4 className="text-sm font-semibold text-foreground leading-snug line-clamp-2">
                       {social.youtube_video_title}
                     </h4>
                   </div>
