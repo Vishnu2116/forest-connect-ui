@@ -912,12 +912,12 @@ export default function Home() {
               PROJECT ELEMENT.
             </p>
           </div>
-          <div className="grid lg:grid-cols-[58fr_42fr] gap-6 items-stretch lg:h-[28rem]">
+          <div className="grid lg:grid-cols-[58fr_42fr] gap-6 items-stretch lg:h-[30rem]">
             {/* Column 1: Project Highlights */}
             <ProjectHighlightsColumn />
 
             {/* Column 2: Social Media */}
-            <div className="bg-card border border-border rounded-md p-0 flex flex-col h-[28rem] lg:h-full overflow-hidden shadow-sm">
+            <div className="bg-card border border-border rounded-md p-0 flex flex-col h-[30rem] lg:h-full overflow-hidden shadow-sm">
               <div className="flex items-center justify-between px-4 py-3 border-b-2 border-primary bg-primary/5">
                 <h2 className="text-[17px] font-bold text-primary flex items-center gap-2 uppercase tracking-wide">
                   <Facebook className="h-4 w-4 text-accent" /> Social Media
