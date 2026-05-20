@@ -47,6 +47,7 @@ import cmImage from "@/assets/dignitaries/CM.jpeg";
 import Animesh from "@/assets/dignitaries/Animesh.jpeg";
 import CS from "@/assets/dignitaries/CS.jpg";
 import SanjibDas from "@/assets/dignitaries/SanjibDas.png";
+import forestBg from "@/assets/hero-forest.jpg";
 
 
 function AboutLayout({
@@ -125,7 +126,15 @@ export function AboutElement() {
       title="About PROJECT ELEMENT"
       subtitle="A joint initiative for landscape development, livelihood generation and economic transformation"
     >
-      <div className="space-y-10">
+      <div
+        className="relative space-y-10 -mx-4 sm:-mx-6 px-4 sm:px-6 py-6 rounded-lg overflow-hidden"
+        style={{
+          backgroundImage: `linear-gradient(to bottom, hsl(var(--background) / 0.92), hsl(var(--background) / 0.96)), url(${forestBg})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundAttachment: "fixed",
+        }}
+      >
         {/* What is PROJECT ELEMENT? */}
         {/* <div className="bg-gradient-to-br from-primary/5 to-accent/5 border border-border rounded-xl p-6 md:p-8 shadow-card text-center">
           <span className="inline-block bg-accent/10 text-accent text-[11px] font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-3">
