@@ -1115,12 +1115,12 @@ export default function Home() {
               PROJECT ELEMENT.
             </p>
           </div>
-          <div className="grid lg:grid-cols-[58fr_42fr] gap-6 items-stretch lg:h-[30rem]">
+          <div className="grid lg:grid-cols-[58fr_42fr] gap-6 items-stretch lg:h-[520px]">
             {/* Column 1: Project Highlights */}
             <ProjectHighlightsColumn />
 
             {/* Column 2: Social Media */}
-            <div className="bg-card border border-border rounded-md p-0 flex flex-col h-[30rem] lg:h-full overflow-hidden shadow-sm">
+            <div className="bg-card border border-border rounded-md p-0 flex flex-col h-[520px] lg:h-full overflow-hidden shadow-sm">
               <div className="flex items-center justify-between px-4 py-3 border-b-2 border-primary bg-primary/5">
                 <h2 className="text-[17px] font-bold text-primary flex items-center gap-2 uppercase tracking-wide">
                   <Facebook className="h-4 w-4 text-accent" /> Social Media
@@ -1132,76 +1132,81 @@ export default function Home() {
                   View all <ArrowRight className="inline h-3.5 w-3.5" />
                 </Link>
               </div>
-              <div className="flex-1 min-h-0 p-4 flex flex-col gap-4">
-                {/* Facebook update */}
-                <div className="bg-background border border-border rounded-sm overflow-hidden flex flex-col basis-0 grow-[29] min-h-0">
-                  <div className="px-3 py-2 border-b border-border bg-surface flex items-center gap-2 shrink-0">
-                    <Facebook className="h-4 w-4 text-primary" />
-                    <span className="text-sm font-bold">Facebook</span>
-                    <span className="text-xs text-muted-foreground ml-auto">
+              <div className="flex-1 min-h-0 p-4 flex flex-col gap-2">
+                {/* Facebook link button */}
+                <a
+                  href={social.facebook_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 px-3 py-2 rounded-md bg-[hsl(214_100%_95%)] hover:bg-[hsl(214_100%_92%)] border border-border transition-colors shrink-0"
+                >
+                  <div className="h-9 w-9 rounded-full bg-[hsl(221_44%_41%)] flex items-center justify-center shrink-0">
+                    <Facebook className="h-5 w-5 text-white" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="text-sm font-bold text-foreground truncate">
                       {social.facebook_handle}
-                    </span>
-                  </div>
-                  <div className="p-3 flex-1 min-h-0 flex flex-col justify-center">
-                    <p className="text-[15px] text-foreground leading-relaxed line-clamp-3">
-                      {social.facebook_post_text}
-                    </p>
-                  </div>
-                </div>
-                {/* Twitter update */}
-                <div className="bg-background border border-border rounded-sm overflow-hidden flex flex-col basis-0 grow-[29] min-h-0">
-                  <div className="px-3 py-2 border-b border-border bg-surface flex items-center gap-2 shrink-0">
-                    <Twitter className="h-4 w-4 text-primary" />
-                    <span className="text-sm font-bold">Twitter / X</span>
-                    <span className="text-xs text-muted-foreground ml-auto">
-                      {social.twitter_handle}
-                    </span>
-                  </div>
-                  <div className="p-3 flex-1 min-h-0 flex flex-col justify-center">
-                    <p className="text-[15px] text-foreground leading-relaxed line-clamp-3">
-                      {social.twitter_post_text}
-                    </p>
-                  </div>
-                </div>
-                {/* YouTube video */}
-                <div className="bg-background border border-border rounded-sm overflow-hidden flex flex-col basis-0 grow-[42] min-h-0">
-                  <div className="px-3 py-2 border-b border-border bg-surface flex items-center gap-2 shrink-0">
-                    <Youtube className="h-4 w-4 text-primary" />
-                    <span className="text-sm font-bold">YouTube</span>
-                  </div>
-                  <div className="p-3 flex flex-col gap-2">
-                    <div
-                      className="relative w-full max-w-full overflow-hidden rounded-lg bg-gradient-to-br from-primary/30 to-primary-light/30 group cursor-pointer"
-                      style={{ aspectRatio: "16 / 9" }}
-                    >
-                      {youtubeEmbed ? (
-                        <iframe
-                          src={youtubeEmbed}
-                          title={social.youtube_video_title}
-                          className="absolute inset-0 w-full h-full rounded-lg"
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                          allowFullScreen
-                        />
-                      ) : (
-                        <>
-                          <div className="absolute inset-0 bg-black/20" />
-                          <div className="absolute inset-0 flex items-center justify-center">
-                            <div className="h-14 w-14 rounded-full bg-accent flex items-center justify-center shadow-lg group-hover:scale-110 transition">
-                              <div className="w-0 h-0 border-l-[14px] border-l-accent-foreground border-y-[9px] border-y-transparent ml-1" />
-                            </div>
-                          </div>
-                        </>
-                      )}
                     </div>
-                    <h4 className="text-sm font-semibold text-foreground leading-snug line-clamp-2">
+                    <div className="text-[11px] text-muted-foreground">
+                      Visit our Facebook Page
+                    </div>
+                  </div>
+                  <ArrowRight className="h-4 w-4 text-muted-foreground shrink-0" />
+                </a>
+
+                {/* Twitter link button */}
+                <a
+                  href={social.twitter_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 px-3 py-2 rounded-md bg-[hsl(210_16%_93%)] hover:bg-[hsl(210_16%_90%)] border border-border transition-colors shrink-0"
+                >
+                  <div className="h-9 w-9 rounded-full bg-foreground flex items-center justify-center shrink-0">
+                    <Twitter className="h-5 w-5 text-background" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="text-sm font-bold text-foreground truncate">
+                      {social.twitter_handle}
+                    </div>
+                    <div className="text-[11px] text-muted-foreground">
+                      Visit our Twitter Feed
+                    </div>
+                  </div>
+                  <ArrowRight className="h-4 w-4 text-muted-foreground shrink-0" />
+                </a>
+
+                {/* YouTube embed */}
+                <div className="flex-1 min-h-0 flex flex-col gap-2 mt-1">
+                  <div className="flex items-center gap-2 shrink-0">
+                    <Youtube className="h-4 w-4 text-primary" />
+                    <span className="text-xs font-bold uppercase tracking-wide text-foreground">
+                      YouTube
+                    </span>
+                    <div className="flex-1 h-px bg-border" />
+                  </div>
+                  <div
+                    className="relative w-full max-w-full overflow-hidden rounded-lg bg-muted shrink-0"
+                    style={{ aspectRatio: "16 / 9" }}
+                  >
+                    {youtubeEmbed && (
+                      <iframe
+                        src={youtubeEmbed}
+                        title={social.youtube_video_title}
+                        className="absolute inset-0 w-full h-full rounded-lg"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                      />
+                    )}
+                  </div>
+                  {social.youtube_video_title && (
+                    <h4 className="text-xs font-semibold text-foreground leading-snug line-clamp-2">
                       {social.youtube_video_title}
                     </h4>
-                  </div>
+                  )}
                 </div>
               </div>
             </div>
           </div>
-        </div>
       </section>
     </PageLayout>
   );
