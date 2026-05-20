@@ -242,7 +242,7 @@ function UpdatesPanel({
   const [apiNotifs, setApiNotifs] = useState<any[]>([]);
   const [apiTenders, setApiTenders] = useState<any[]>([]);
   // Auto-scroll engine. Speed: see AUTO_SCROLL_SPEED_UPDATES (top of file).
-  const { ref, scrollByAmount } = useAutoScroll<HTMLDivElement>(
+  const { ref, scrollByAmount, shouldScroll } = useAutoScroll<HTMLDivElement>(
     AUTO_SCROLL_SPEED_UPDATES,
     paused,
   );
@@ -777,7 +777,7 @@ export default function Home() {
               Leadership
             </span>
             <h2 className="text-2xl md:text-3xl font-bold text-primary">
-              Welcome to Tripura PROJECT ELEMENT
+              Welcome to Project ELEMENT, Tripura
             </h2>
             <p className="text-sm text-muted-foreground mt-2 max-w-xl mx-auto">
               Project leadership, official updates, notifications, and tenders
