@@ -889,7 +889,7 @@ export default function Home() {
       </section>
 
       {/* Two-column section: Project Highlights & Social Media */}
-      <section className="py-14 md:py-18 bg-surface border-t border-border">
+      <section className="py-10 md:py-12 bg-surface border-t border-border">
         <div className="gov-container">
           <div className="text-center mb-8">
             <span className="inline-block bg-accent/10 text-accent text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-3">
@@ -903,12 +903,12 @@ export default function Home() {
               PROJECT ELEMENT.
             </p>
           </div>
-          <div className="grid lg:grid-cols-[58fr_42fr] gap-6 items-stretch lg:h-[44rem]">
+          <div className="grid lg:grid-cols-[58fr_42fr] gap-6 items-stretch lg:h-[28rem]">
             {/* Column 1: Project Highlights */}
             <ProjectHighlightsColumn />
 
             {/* Column 2: Social Media */}
-            <div className="bg-card border border-border rounded-md p-0 flex flex-col h-[40rem] lg:h-full overflow-hidden shadow-sm">
+            <div className="bg-card border border-border rounded-md p-0 flex flex-col h-[28rem] lg:h-full overflow-hidden shadow-sm">
               <div className="flex items-center justify-between px-4 py-3 border-b-2 border-primary bg-primary/5">
                 <h2 className="text-[17px] font-bold text-primary flex items-center gap-2 uppercase tracking-wide">
                   <Facebook className="h-4 w-4 text-accent" /> Social Media
