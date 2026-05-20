@@ -279,16 +279,45 @@ export function getNavComponentsOnce(): Promise<ApiProjectComponent[]> {
   return _navComponentsPromise;
 }
 
+function dummyHighlights(): ApiProjectCard[] {
+  const all = dummyProjects();
+  const byTitle = (t: string) => all.find((p) => p.title === t);
+  const pick = (title: string, componentLabel: string, status: ProjectStatus, fallbackIdx: number): ApiProjectCard => {
+    const base = byTitle(title) ?? all[fallbackIdx % all.length];
+    return {
+      ...base,
+      id: `highlight-${slugify(title)}`,
+      title,
+      slug: base?.slug ?? slugify(title),
+      status,
+      thumbnail_image_path: base?.thumbnail_image_path ?? null,
+      component: { id: "", name: componentLabel, label: componentLabel, component_number: 0 },
+    };
+  };
+  return [
+    pick("Landscape Restoration and Productive Land Management", "Component 1 — Landscape Management", "ongoing", 0),
+    pick("Biodiversity Conservation & Ecosystem Services", "Component 2 — Biodiversity & Ecosystem Services", "ongoing", 1),
+    pick("Community Livelihood & Value Chain Development", "Component 3 — Livelihood Development", "ongoing", 2),
+    pick("Eco-Tourism & Enterprise Development", "Component 3 — Livelihood Development", "pilot_phase", 3),
+    pick("Climate Resilience & Watershed Management", "Component 1 — Landscape Management", "ongoing", 4),
+    pick("Watershed Development & Water Conservation", "Component 1 — Landscape Management", "ongoing", 4),
+    pick("Community Forest Management", "Component 2 — Biodiversity & Ecosystem Services", "ongoing", 5),
+    pick("Rural Enterprise & Value Chain Support", "Component 3 — Livelihood Development", "completed", 2),
+    pick("Soil Conservation & Land Restoration", "Component 1 — Landscape Management", "ongoing", 0),
+    pick("Biodiversity Monitoring & Ecosystem Services", "Component 2 — Biodiversity & Ecosystem Services", "pilot_phase", 1),
+  ];
+}
+
 export async function fetchHighlights(): Promise<ApiProjectCard[]> {
-  if (!USE_REAL_API) return dummyProjects().slice(0, 5);
+  if (!USE_REAL_API) return dummyHighlights();
   try {
     const r = await fetch(`${API_BASE_URL}/api/home/project-highlights`);
     if (!r.ok) throw new Error();
     const data = await r.json();
-    if (Array.isArray(data) && data.length) return data.slice(0, 5);
-    return dummyProjects().slice(0, 5);
+    if (Array.isArray(data) && data.length) return data;
+    return dummyHighlights();
   } catch {
-    return dummyProjects().slice(0, 5);
+    return dummyHighlights();
   }
 }
 
