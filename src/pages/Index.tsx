@@ -1198,11 +1198,6 @@ export default function Home() {
                       />
                     )}
                   </div>
-                  {social.youtube_video_title && (
-                    <h4 className="text-xs font-semibold text-foreground leading-snug line-clamp-2">
-                      {social.youtube_video_title}
-                    </h4>
-                  )}
                 </div>
               </div>
             </div>
