@@ -412,7 +412,7 @@ export function Organization() {
       <div className="space-y-8">
         {/* Header intro */}
         <div className="bg-gradient-to-br from-primary/5 to-accent/5 border border-border rounded-xl p-6 text-center">
-          <span className="inline-block bg-primary/10 text-primary text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-3">
+          <span className="inline-block bg-accent/10 text-accent text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-3">
             Institutional Framework
           </span>
           <h3 className="text-xl font-bold text-primary mb-2">
@@ -564,7 +564,7 @@ export function WhosWhoSection() {
     >
       <div className="space-y-8">
         <div className="bg-gradient-to-br from-primary/5 to-accent/5 border border-border rounded-xl p-6 text-center">
-          <span className="inline-block bg-primary/10 text-primary text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-3">
+          <span className="inline-block bg-accent/10 text-accent text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-3">
             Leadership
           </span>
           <h3 className="text-xl font-bold text-primary mb-2">
@@ -747,7 +747,7 @@ export function Memorandum() {
     >
       <div className="space-y-8">
         <div className="bg-gradient-to-br from-primary/5 to-accent/5 border border-border rounded-xl p-6 text-center">
-          <span className="inline-block bg-primary/10 text-primary text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-3">
+          <span className="inline-block bg-accent/10 text-accent text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-3">
             Official Document
           </span>
           <h3 className="text-xl font-bold text-primary mb-2">
@@ -1092,7 +1092,7 @@ export function OfficialDirectory() {
     >
       <div className="space-y-6">
         <div className="bg-gradient-to-br from-primary/5 to-accent/5 border border-border rounded-xl p-6 text-center">
-          <span className="inline-block bg-primary/10 text-primary text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-3">
+          <span className="inline-block bg-accent/10 text-accent text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-3">
             Directory
           </span>
           <h3 className="text-xl font-bold text-primary mb-2">
