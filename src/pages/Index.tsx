@@ -921,21 +921,17 @@ export default function Home() {
   // Dummy social media fallbacks
   const dummySocial = {
     facebook_handle: "@ElementTripura",
-    facebook_post_text:
-      "Field visit by ELEMENT team to community plantation sites in Dhalai district. Engaging with SHGs on livelihood value chains and capacity-building workshops.",
+    facebook_url: "https://facebook.com",
     twitter_handle: "@ElementTripura",
-    twitter_post_text:
-      "Honourable Forest Minister inaugurates new eco-tourism circuit under ELEMENT. A milestone for sustainable livelihoods across Tripura. #Tripura #ELEMENT",
-    youtube_video_url: "",
+    twitter_url: "https://twitter.com",
+    youtube_video_url: "https://www.youtube.com/embed/dQw4w9WgXcQ",
     youtube_video_title: "PROJECT ELEMENT Overview — Community Livelihoods",
   };
   const social = {
     facebook_handle: apiSocial?.facebook_handle ?? dummySocial.facebook_handle,
-    facebook_post_text:
-      apiSocial?.facebook_post_text ?? dummySocial.facebook_post_text,
+    facebook_url: apiSocial?.facebook_url ?? dummySocial.facebook_url,
     twitter_handle: apiSocial?.twitter_handle ?? dummySocial.twitter_handle,
-    twitter_post_text:
-      apiSocial?.twitter_post_text ?? dummySocial.twitter_post_text,
+    twitter_url: apiSocial?.twitter_url ?? dummySocial.twitter_url,
     youtube_video_url:
       apiSocial?.youtube_video_url ?? dummySocial.youtube_video_url,
     youtube_video_title:
