@@ -16,7 +16,7 @@ import { useLang, LANGUAGES } from "@/contexts/LanguageContext";
 import { useA11y } from "@/contexts/AccessibilityContext";
 import { getNavComponentsOnce } from "@/lib/projects";
 import logoTripura from "@/assets/logo-tripura.png";
-import logoTheWorldBank from "@/assets/logo-theworldbank.jpg";
+import logoTheWorldBank from "@/assets/logo-theworldbankOrg.jpg";
 import logoTripuraForestDept from "@/assets/logo-tripuraforestdept.png";
 
 export default function Navbar() {
@@ -37,7 +37,9 @@ export default function Navbar() {
     toggleHighContrast,
   } = useA11y();
 
-  const [componentChildren, setComponentChildren] = useState<{ label: string; to: string }[] | null>(null);
+  const [componentChildren, setComponentChildren] = useState<
+    { label: string; to: string }[] | null
+  >(null);
 
   useEffect(() => {
     let alive = true;
@@ -48,17 +50,21 @@ export default function Navbar() {
           items.map((c) => ({
             label: c.name || c.label || `Component ${c.component_number ?? ""}`,
             to: `/components/${c.id}`,
-          }))
+          })),
         );
       })
       .catch(() => {});
-    return () => { alive = false; };
+    return () => {
+      alive = false;
+    };
   }, []);
 
   const navItems = useMemo(() => {
     if (!componentChildren) return baseNavItems;
     return baseNavItems.map((item) =>
-      item.labelKey === "nav.components" ? { ...item, children: componentChildren } : item
+      item.labelKey === "nav.components"
+        ? { ...item, children: componentChildren }
+        : item,
     );
   }, [componentChildren]);
 
