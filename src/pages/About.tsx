@@ -54,10 +54,12 @@ function AboutLayout({
   title,
   subtitle,
   children,
+  backgroundImage,
 }: {
   title: string;
   subtitle?: string;
   children?: React.ReactNode;
+  backgroundImage?: string;
 }) {
   return (
     <PageLayout>
@@ -66,7 +68,20 @@ function AboutLayout({
         subtitle={subtitle}
         breadcrumb={["Home", "About", title]}
       />
-      <section className="py-10">
+      <section
+        className="py-10 relative"
+        style={
+          backgroundImage
+            ? {
+                backgroundImage: `linear-gradient(to bottom, hsl(var(--background) / 0.82), hsl(var(--background) / 0.88)), url(${backgroundImage})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                backgroundAttachment: "fixed",
+                backgroundRepeat: "no-repeat",
+              }
+            : undefined
+        }
+      >
         <div className="gov-container">
           <div className="min-w-0">{children}</div>
         </div>
@@ -125,41 +140,20 @@ export function AboutElement() {
     <AboutLayout
       title="About PROJECT ELEMENT"
       subtitle="A joint initiative for landscape development, livelihood generation and economic transformation"
+      backgroundImage="https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=2400&q=80"
     >
-      <div
-        className="relative space-y-10 -mx-4 sm:-mx-6 px-4 sm:px-6 py-6 rounded-lg overflow-hidden"
-        style={{
-          backgroundImage: `linear-gradient(to bottom, hsl(var(--background) / 0.92), hsl(var(--background) / 0.96)), url(${forestBg})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundAttachment: "fixed",
-        }}
-      >
-        {/* What is PROJECT ELEMENT? */}
-        {/* <div className="bg-gradient-to-br from-primary/5 to-accent/5 border border-border rounded-xl p-6 md:p-8 shadow-card text-center">
-          <span className="inline-block bg-accent/10 text-accent text-[11px] font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-3">
-            About the Project
-          </span>
-          <h3 className="text-xl md:text-2xl font-bold text-primary mb-3">
-            What is PROJECT ELEMENT?
-          </h3>
-          <p className="text-sm md:text-[15px] text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-            <strong>PROJECT ELEMENT</strong> (Enhancing Landscape and Ecosystem
-            Management) is a flagship joint initiative of the{" "}
-            <strong>Government of Tripura</strong> and the{" "}
-            <strong>World Bank</strong> — transforming rural livelihoods,
-            strengthening economic development, and building resilient
-            landscapes across all 8 districts of Tripura.
-          </p>
-        </div> */}
-        <div className="bg-gradient-to-br from-primary/5 to-accent/5 border border-border rounded-xl p-6 md:p-8 shadow-card">
-          <span className="inline-block bg-accent/10 text-accent text-[11px] font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-4">
-            About the Project
-          </span>
+      <div className="relative space-y-10">
+        <div className="bg-card/95 backdrop-blur-sm border border-border rounded-xl p-6 md:p-8 shadow-card">
+          <div className="text-center">
+            <span className="inline-block bg-accent/10 text-accent text-[11px] font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-4">
+              About the Project
+            </span>
 
-          <h3 className="text-2xl md:text-3xl font-bold text-primary mb-5">
-            What is PROJECT ELEMENT?
-          </h3>
+            <h3 className="text-2xl md:text-3xl font-bold text-primary mb-5">
+              What is PROJECT ELEMENT?
+            </h3>
+          </div>
+
 
           <div className="space-y-4 text-sm md:text-[15px] text-muted-foreground leading-relaxed">
             <p>
