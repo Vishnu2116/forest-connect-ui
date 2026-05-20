@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { API_BASE_URL, USE_REAL_API } from "@/config/api";
 import {
   Calendar,
@@ -554,20 +554,12 @@ function UpdatesPanel({
 }
 
 /**
- * Project Highlights column — auto-scrolling, infinite/circular, with manual
- * up/down arrow controls. Auto-scroll speed: AUTO_SCROLL_SPEED_PROJECTS.
+ * Project Highlights column — continuous slow ticker-style upward scroll.
+ * Pauses on hover; list is duplicated for seamless looping.
  */
-const HIGHLIGHT_CARD_PX = 64;
-const HIGHLIGHT_AUTO_STEP_MS = 3000;
-
 function ProjectHighlightsColumn() {
-  const [paused, setPaused] = useState(false);
   const [items, setItems] = useState<any[]>([]);
-  // Pass 0 for continuous speed — we step one card at a time via interval below.
-  const { ref, scrollByAmount, shouldScroll } = useAutoScroll<HTMLDivElement>(
-    0,
-    paused,
-  );
+  const scrollRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     let alive = true;
@@ -579,19 +571,41 @@ function ProjectHighlightsColumn() {
     return () => { alive = false; };
   }, []);
 
-  // Auto-advance: scroll down one card every HIGHLIGHT_AUTO_STEP_MS, pause on hover.
   useEffect(() => {
-    if (!shouldScroll || paused) return;
-    const id = window.setInterval(() => {
-      scrollByAmount(HIGHLIGHT_CARD_PX);
-    }, HIGHLIGHT_AUTO_STEP_MS);
-    return () => window.clearInterval(id);
-  }, [shouldScroll, paused, scrollByAmount]);
+    const el = scrollRef.current;
+    if (!el || items.length === 0) return;
+    let animId: number;
+    let paused = false;
 
-  const looped = shouldScroll ? [...items, ...items] : items;
+    const scroll = () => {
+      if (!paused) {
+        el.scrollTop += 0.4;
+        if (el.scrollTop >= el.scrollHeight / 2) {
+          el.scrollTop = 0;
+        }
+      }
+      animId = requestAnimationFrame(scroll);
+    };
+
+    animId = requestAnimationFrame(scroll);
+
+    const pause = () => { paused = true; };
+    const resume = () => { paused = false; };
+    const parent = el.parentElement;
+    parent?.addEventListener("mouseenter", pause);
+    parent?.addEventListener("mouseleave", resume);
+
+    return () => {
+      cancelAnimationFrame(animId);
+      parent?.removeEventListener("mouseenter", pause);
+      parent?.removeEventListener("mouseleave", resume);
+    };
+  }, [items]);
+
+  const looped = items.length > 0 ? [...items, ...items] : items;
 
   return (
-    <div className="bg-card border border-border rounded-md p-0 flex flex-col h-[30rem] lg:h-full overflow-hidden">
+    <div className="bg-card border border-border rounded-md p-0 flex flex-col h-[480px] lg:h-[520px] overflow-hidden">
       <div className="flex items-center justify-between px-4 py-3 border-b-2 border-primary bg-primary/5">
         <h2 className="text-[17px] font-bold text-primary flex items-center gap-2 uppercase tracking-wide">
           <Trees className="h-4 w-4 text-accent" /> Project Highlights
@@ -604,16 +618,13 @@ function ProjectHighlightsColumn() {
         </Link>
       </div>
       <div
-        ref={ref}
-        onPointerEnter={(e) => { if (e.pointerType === "mouse") setPaused(true); }}
-        onPointerLeave={(e) => { if (e.pointerType === "mouse") setPaused(false); }}
+        ref={scrollRef}
         className="flex-1 overflow-y-auto divide-y divide-border min-h-0 no-scrollbar"
       >
         {looped.map((p, idx) => {
-          const img = p.thumbnail_image_path
-            ? (p.thumbnail_image_path.startsWith("http") || p.thumbnail_image_path.startsWith("data:")
-                ? p.thumbnail_image_path
-                : `${API_BASE_URL ?? ""}${p.thumbnail_image_path}`)
+          const raw: string | null = p.thumbnail_image_path ?? null;
+          const img = raw
+            ? (raw.startsWith("/uploads/") ? `${API_BASE_URL ?? ""}${raw}` : raw)
             : null;
           const statusCls =
             p.status === "completed" ? "bg-muted text-muted-foreground"
@@ -626,8 +637,7 @@ function ProjectHighlightsColumn() {
           return (
             <article
               key={`${p.id}-${idx}`}
-              style={{ height: HIGHLIGHT_CARD_PX }}
-              className="flex items-center gap-2.5 px-2.5 hover:bg-surface/60 transition"
+              className="flex items-center gap-2.5 px-2.5 py-2 hover:bg-surface/60 transition"
             >
               <div className="h-14 w-16 shrink-0 bg-gradient-to-br from-primary/20 to-primary-light/20 rounded-sm overflow-hidden flex items-center justify-center">
                 {img ? (
@@ -639,11 +649,11 @@ function ProjectHighlightsColumn() {
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-1 mb-0.5">
                   {p.component?.label && (
-                    <span className="text-[9px] font-bold uppercase tracking-wide px-1 py-0.5 rounded-sm bg-accent/15 text-accent truncate max-w-[55%]">
+                    <span className="text-[8px] font-semibold uppercase tracking-wide px-1 py-0.5 rounded-sm bg-accent/15 text-accent">
                       {p.component.label}
                     </span>
                   )}
-                  <span className={`text-[9px] font-bold uppercase tracking-wide px-1 py-0.5 rounded-sm shrink-0 ${statusCls}`}>
+                  <span className={`text-[8px] font-semibold uppercase tracking-wide px-1 py-0.5 rounded-sm shrink-0 ${statusCls}`}>
                     {statusText}
                   </span>
                 </div>
@@ -661,15 +671,10 @@ function ProjectHighlightsColumn() {
           );
         })}
       </div>
-      <div className="px-3 py-2 border-t border-border bg-surface flex items-center justify-end">
-        <ScrollArrows
-          onUp={() => scrollByAmount(-HIGHLIGHT_CARD_PX)}
-          onDown={() => scrollByAmount(HIGHLIGHT_CARD_PX)}
-        />
-      </div>
     </div>
   );
 }
+
 
 export default function Home() {
   const { t } = useLang();
