@@ -805,7 +805,7 @@ function ProjectHighlightsColumn() {
                 p.status === "completed"
                   ? "bg-muted text-muted-foreground"
                   : p.status === "pilot_phase"
-                    ? "bg-warning/15 text-warning"
+                    ? "bg-accent/15 text-accent"
                     : "bg-success/15 text-success";
               const statusText =
                 p.status === "completed"
