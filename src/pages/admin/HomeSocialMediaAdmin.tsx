@@ -1,25 +1,24 @@
 import { useEffect, useState } from "react";
 import { AdminPageHeader } from "./AdminLayout";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
 import { Loader2, Save } from "lucide-react";
 import { toast } from "sonner";
 import { API_BASE_URL, USE_REAL_API, getAuthHeaders, getAuthJsonHeaders } from "@/config/api";
 
 interface SocialForm {
   facebook_handle: string;
-  facebook_post_text: string;
+  facebook_url: string;
   twitter_handle: string;
-  twitter_post_text: string;
+  twitter_url: string;
   youtube_video_url: string;
   youtube_video_title: string;
 }
 
 const emptyForm: SocialForm = {
   facebook_handle: "",
-  facebook_post_text: "",
+  facebook_url: "",
   twitter_handle: "",
-  twitter_post_text: "",
+  twitter_url: "",
   youtube_video_url: "",
   youtube_video_title: "",
 };
@@ -42,9 +41,9 @@ export default function HomeSocialMediaAdmin() {
       if (data && typeof data === "object") {
         setForm({
           facebook_handle: data.facebook_handle ?? "",
-          facebook_post_text: data.facebook_post_text ?? "",
+          facebook_url: data.facebook_url ?? "",
           twitter_handle: data.twitter_handle ?? "",
-          twitter_post_text: data.twitter_post_text ?? "",
+          twitter_url: data.twitter_url ?? "",
           youtube_video_url: data.youtube_video_url ?? "",
           youtube_video_title: data.youtube_video_title ?? "",
         });
@@ -60,10 +59,6 @@ export default function HomeSocialMediaAdmin() {
     load();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const update = (field: keyof SocialForm, value: string) => {
-    setForm((f) => ({ ...f, [field]: value }));
-  };
 
   const save = async () => {
     if (!USE_REAL_API) {
@@ -110,27 +105,6 @@ export default function HomeSocialMediaAdmin() {
     </div>
   );
 
-  const textareaInput = (
-    label: string,
-    field: keyof SocialForm,
-    placeholder?: string
-  ) => (
-    <div>
-      <label className="text-[11px] font-semibold text-muted-foreground uppercase">
-        {label}
-      </label>
-      <Textarea
-        value={form[field]}
-        onChange={(e) =>
-          setForm((prev) => ({ ...prev, [field]: e.target.value }))
-        }
-        placeholder={placeholder}
-        rows={3}
-        className="mt-1"
-      />
-    </div>
-  );
-
   return (
     <>
       <AdminPageHeader
@@ -158,21 +132,13 @@ export default function HomeSocialMediaAdmin() {
         <div className="bg-card border border-border rounded-md p-4 space-y-3">
           <h3 className="font-semibold text-primary">Facebook</h3>
           {textInput("Handle", "facebook_handle", "@ElementTripura")}
-          {textareaInput(
-            "Post text",
-            "facebook_post_text",
-            "Latest Facebook update…"
-          )}
+          {textInput("Page URL", "facebook_url", "https://facebook.com/ElementTripura")}
         </div>
 
         <div className="bg-card border border-border rounded-md p-4 space-y-3">
           <h3 className="font-semibold text-primary">Twitter / X</h3>
           {textInput("Handle", "twitter_handle", "@ElementTripura")}
-          {textareaInput(
-            "Post text",
-            "twitter_post_text",
-            "Latest Tweet…"
-          )}
+          {textInput("Profile URL", "twitter_url", "https://twitter.com/ElementTripura")}
         </div>
 
         <div className="bg-card border border-border rounded-md p-4 space-y-3 md:col-span-2">
