@@ -557,11 +557,15 @@ function UpdatesPanel({
  * Project Highlights column — auto-scrolling, infinite/circular, with manual
  * up/down arrow controls. Auto-scroll speed: AUTO_SCROLL_SPEED_PROJECTS.
  */
+const HIGHLIGHT_CARD_PX = 64;
+const HIGHLIGHT_AUTO_STEP_MS = 3000;
+
 function ProjectHighlightsColumn() {
   const [paused, setPaused] = useState(false);
   const [items, setItems] = useState<any[]>([]);
+  // Pass 0 for continuous speed — we step one card at a time via interval below.
   const { ref, scrollByAmount, shouldScroll } = useAutoScroll<HTMLDivElement>(
-    AUTO_SCROLL_SPEED_PROJECTS,
+    0,
     paused,
   );
 
@@ -575,10 +579,19 @@ function ProjectHighlightsColumn() {
     return () => { alive = false; };
   }, []);
 
+  // Auto-advance: scroll down one card every HIGHLIGHT_AUTO_STEP_MS, pause on hover.
+  useEffect(() => {
+    if (!shouldScroll || paused) return;
+    const id = window.setInterval(() => {
+      scrollByAmount(HIGHLIGHT_CARD_PX);
+    }, HIGHLIGHT_AUTO_STEP_MS);
+    return () => window.clearInterval(id);
+  }, [shouldScroll, paused, scrollByAmount]);
+
   const looped = shouldScroll ? [...items, ...items] : items;
 
   return (
-    <div className="bg-card border border-border rounded-md p-0 flex flex-col h-[24rem] lg:h-full overflow-hidden">
+    <div className="bg-card border border-border rounded-md p-0 flex flex-col h-[30rem] lg:h-full overflow-hidden">
       <div className="flex items-center justify-between px-4 py-3 border-b-2 border-primary bg-primary/5">
         <h2 className="text-[17px] font-bold text-primary flex items-center gap-2 uppercase tracking-wide">
           <Trees className="h-4 w-4 text-accent" /> Project Highlights
@@ -613,7 +626,8 @@ function ProjectHighlightsColumn() {
           return (
             <article
               key={`${p.id}-${idx}`}
-              className="flex gap-2.5 p-2.5 hover:bg-surface/60 transition"
+              style={{ height: HIGHLIGHT_CARD_PX }}
+              className="flex items-center gap-2.5 px-2.5 hover:bg-surface/60 transition"
             >
               <div className="h-14 w-16 shrink-0 bg-gradient-to-br from-primary/20 to-primary-light/20 rounded-sm overflow-hidden flex items-center justify-center">
                 {img ? (
@@ -623,27 +637,22 @@ function ProjectHighlightsColumn() {
                 )}
               </div>
               <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-1 mb-0.5 flex-wrap">
+                <div className="flex items-center gap-1 mb-0.5">
                   {p.component?.label && (
-                    <span className="text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-accent/15 text-accent">
+                    <span className="text-[9px] font-bold uppercase tracking-wide px-1 py-0.5 rounded-sm bg-accent/15 text-accent truncate max-w-[55%]">
                       {p.component.label}
                     </span>
                   )}
-                  <span className={`text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm ${statusCls}`}>
+                  <span className={`text-[9px] font-bold uppercase tracking-wide px-1 py-0.5 rounded-sm shrink-0 ${statusCls}`}>
                     {statusText}
                   </span>
                 </div>
-                <h3 className="text-sm font-semibold text-foreground leading-snug line-clamp-1">
+                <h3 className="text-[13px] font-semibold text-foreground leading-tight line-clamp-1">
                   {p.title}
                 </h3>
-                {p.subtitle && (
-                  <p className="text-xs text-muted-foreground line-clamp-1">
-                    {p.subtitle}
-                  </p>
-                )}
                 <Link
                   to={`/projects/${p.slug}`}
-                  className="inline-flex items-center gap-1 text-xs font-semibold text-accent hover:text-accent-hover mt-0.5"
+                  className="inline-flex items-center gap-1 text-[11px] font-semibold text-accent hover:text-accent-hover"
                 >
                   Read More <ArrowRight className="h-3 w-3" />
                 </Link>
@@ -654,8 +663,8 @@ function ProjectHighlightsColumn() {
       </div>
       <div className="px-3 py-2 border-t border-border bg-surface flex items-center justify-end">
         <ScrollArrows
-          onUp={() => scrollByAmount(-MANUAL_STEP_PX)}
-          onDown={() => scrollByAmount(MANUAL_STEP_PX)}
+          onUp={() => scrollByAmount(-HIGHLIGHT_CARD_PX)}
+          onDown={() => scrollByAmount(HIGHLIGHT_CARD_PX)}
         />
       </div>
     </div>
