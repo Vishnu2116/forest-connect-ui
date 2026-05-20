@@ -1070,13 +1070,13 @@ export function OfficialDirectory() {
           </p>
         )}
 
-        {!loading && groups.length === 0 && (
+        {!loading && filtered.length === 0 && (
           <p className="text-sm text-muted-foreground text-center py-8">
             No results found.
           </p>
         )}
 
-        {groups.map((cat) => (
+        {filtered.map((cat) => (
           <div key={cat.category_id || cat.category_name}>
             <h3 className="text-base font-bold text-primary mb-3 flex items-center gap-2">
               <Users className="h-4 w-4 text-accent" /> {cat.category_name}
