@@ -535,7 +535,11 @@ export default function Navbar() {
                   )}
 
                   {item.children && openDropdown === item.labelKey && (
-                    <div className="absolute left-0 top-full min-w-[260px] bg-background text-foreground shadow-elevated border border-border rounded-b-md overflow-hidden animate-fade-in z-50">
+                    <div
+                      role="menu"
+                      aria-label={t(item.labelKey)}
+                      className="absolute left-0 top-full min-w-[260px] bg-background text-foreground shadow-elevated border border-border rounded-b-md overflow-hidden animate-fade-in z-50"
+                    >
                       {item.children.map((c) => (
                         <NavLink
                           key={c.to}
