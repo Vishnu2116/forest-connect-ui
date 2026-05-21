@@ -97,7 +97,7 @@ export function useAutoScroll<T extends HTMLElement>(
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, [shouldScroll, paused, pixelsPerSecond]);
+  }, [shouldScroll, paused, focusPaused, pixelsPerSecond]);
 
   const scrollByAmount = useCallback((delta: number) => {
     const el = ref.current;
