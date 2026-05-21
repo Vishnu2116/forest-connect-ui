@@ -224,7 +224,7 @@ export default function HeroSlider() {
         aria-label="Next slide"
         className="absolute right-4 bottom-3 lg:bottom-auto lg:top-1/2 lg:-translate-y-1/2 bg-background/20 hover:bg-background/40 text-primary-foreground p-2.5 rounded-full backdrop-blur-md focus-ring z-30 transition-all"
       >
-        <ChevronRight className="h-5 w-5" />
+        <ChevronRight className="h-5 w-5" aria-hidden="true" />
       </button>
 
       {/* Bottom Center Dots */}
