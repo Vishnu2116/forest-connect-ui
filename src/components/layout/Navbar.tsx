@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import {
   ChevronDown,
@@ -15,6 +15,7 @@ import { navItems as baseNavItems } from "@/data/navigation";
 import { useLang, LANGUAGES } from "@/contexts/LanguageContext";
 import { useA11y } from "@/contexts/AccessibilityContext";
 import { getNavComponentsOnce } from "@/lib/projects";
+import { searchSite, type SearchEntry } from "@/data/searchIndex";
 import logoTripura from "@/assets/logo-tripura.png";
 import logoTheWorldBank from "@/assets/logo-theworldbankOrg.jpg";
 import logoTripuraForestDept from "@/assets/logo-tripuraforestdept.png";
@@ -26,6 +27,14 @@ export default function Navbar() {
   const [langOpen, setLangOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQ, setSearchQ] = useState("");
+  const [searchActiveIdx, setSearchActiveIdx] = useState(0);
+  const searchInputRef = useRef<HTMLInputElement | null>(null);
+  const searchTriggerRef = useRef<HTMLButtonElement | null>(null);
+  const searchResults: SearchEntry[] = useMemo(
+    () => (searchOpen ? searchSite(searchQ, 8) : []),
+    [searchOpen, searchQ],
+  );
+  const searchListboxId = "global-search-listbox";
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const { t, lang, setLang } = useLang();
