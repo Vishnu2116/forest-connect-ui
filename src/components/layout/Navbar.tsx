@@ -572,14 +572,21 @@ export default function Navbar() {
           Now: xl:hidden — perfectly mirrors the mobile header
       */}
       {mobileOpen && (
-        <nav className="lg:hidden bg-primary text-primary-foreground max-h-[70vh] overflow-y-auto">
+        <nav
+          id="mobile-primary-nav"
+          aria-label="Mobile primary"
+          className="lg:hidden bg-primary text-primary-foreground max-h-[70vh] overflow-y-auto"
+        >
           <ul className="divide-y divide-primary-dark">
             {navItems.map((item) => (
               <li key={item.labelKey}>
                 {item.children ? (
                   <>
                     <button
-                      className={`w-full flex items-center justify-between px-4 py-3 text-sm font-medium`}
+                      type="button"
+                      aria-expanded={mobileSubOpen === item.labelKey}
+                      aria-controls={`mobile-sub-${item.labelKey}`}
+                      className={`w-full flex items-center justify-between px-4 py-3 text-sm font-medium focus-ring`}
                       onClick={() =>
                         setMobileSubOpen(
                           mobileSubOpen === item.labelKey
@@ -590,6 +597,7 @@ export default function Navbar() {
                     >
                       {t(item.labelKey)}
                       <ChevronDown
+                        aria-hidden="true"
                         className={`h-4 w-4 transition-transform ${
                           mobileSubOpen === item.labelKey ? "rotate-180" : ""
                         }`}
