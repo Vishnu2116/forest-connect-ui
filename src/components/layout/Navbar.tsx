@@ -604,7 +604,7 @@ export default function Navbar() {
                       />
                     </button>
                     {mobileSubOpen === item.labelKey && (
-                      <ul className="bg-primary-dark">
+                      <ul id={`mobile-sub-${item.labelKey}`} className="bg-primary-dark">
                         {item.children.map((c) => (
                           <li key={c.to}>
                             <NavLink
