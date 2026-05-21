@@ -478,11 +478,15 @@ export default function Navbar() {
           Was: hidden lg:block (caused the gap between 1024–1279px)
           Now: hidden xl:block
       */}
-      <nav className="bg-primary text-primary-foreground hidden lg:block">
+      <nav
+        className="bg-primary text-primary-foreground hidden lg:block"
+        aria-label="Primary"
+      >
         <div className="gov-container-wide">
           <ul className="flex items-stretch justify-between w-full">
             {navItems.map((item) => {
               const dropActive = isDropdownActive(item);
+              const isOpen = openDropdown === item.labelKey;
               return (
                 <li
                   key={item.labelKey}
@@ -494,10 +498,25 @@ export default function Navbar() {
                 >
                   {item.children ? (
                     <button
-                      className={`flex items-center justify-center gap-1 whitespace-nowrap px-2.5 lg:px-3 xl:px-5 py-3 xl:py-3.5 text-[13px] xl:text-sm font-medium hover:bg-primary-dark transition-colors border-b-2 border-transparent`}
+                      type="button"
+                      aria-haspopup="menu"
+                      aria-expanded={isOpen}
+                      aria-current={dropActive ? "page" : undefined}
+                      onClick={() => setOpenDropdown(isOpen ? null : item.labelKey)}
+                      onKeyDown={(e) => {
+                        if (e.key === "ArrowDown" || e.key === "Enter" || e.key === " ") {
+                          e.preventDefault();
+                          setOpenDropdown(item.labelKey);
+                        } else if (e.key === "Escape") {
+                          setOpenDropdown(null);
+                        }
+                      }}
+                      className={`flex items-center justify-center gap-1 whitespace-nowrap px-2.5 lg:px-3 xl:px-5 py-3 xl:py-3.5 text-[13px] xl:text-sm font-medium hover:bg-primary-dark transition-colors border-b-2 focus-ring ${
+                        dropActive ? "bg-primary-dark border-accent" : "border-transparent"
+                      }`}
                     >
                       {t(item.labelKey)}
-                      <ChevronDown className="h-3.5 w-3.5 shrink-0" />
+                      <ChevronDown className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
                     </button>
                   ) : (
                     <NavLink
