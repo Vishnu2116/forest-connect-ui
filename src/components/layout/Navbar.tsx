@@ -84,6 +84,46 @@ export default function Navbar() {
   const currentLangLabel =
     LANGUAGES.find((l) => l.code === lang)?.label ?? "English";
 
+  // Global Escape: close transient menus and restore focus.
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== "Escape") return;
+      if (searchOpen) {
+        setSearchOpen(false);
+        searchTriggerRef.current?.focus();
+      }
+      if (langOpen) setLangOpen(false);
+      if (openDropdown) setOpenDropdown(null);
+      if (mobileOpen) setMobileOpen(false);
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [searchOpen, langOpen, openDropdown, mobileOpen]);
+
+  // Focus search input when opened; reset highlighted result when query changes.
+  useEffect(() => {
+    if (searchOpen) {
+      // Slight delay so the input is mounted.
+      const t = setTimeout(() => searchInputRef.current?.focus(), 0);
+      return () => clearTimeout(t);
+    }
+  }, [searchOpen]);
+  useEffect(() => {
+    setSearchActiveIdx(0);
+  }, [searchQ, searchOpen]);
+
+  const goToSearchResult = (entry?: SearchEntry) => {
+    const target = entry ?? searchResults[searchActiveIdx];
+    if (!target) {
+      if (searchQ.trim()) navigate(`/sitemap?q=${encodeURIComponent(searchQ.trim())}`);
+    } else {
+      navigate(target.to);
+    }
+    setSearchOpen(false);
+    setSearchQ("");
+  };
+
+
   return (
     <header className="sticky top-0 z-50 shadow-card">
       <a href="#main" className="skip-link focus-ring">
