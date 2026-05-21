@@ -201,9 +201,11 @@ export default function Navbar() {
             </Link>
             <span className="hidden sm:inline opacity-50">|</span>
             <button
+              ref={searchTriggerRef}
               onClick={() => setSearchOpen((v) => !v)}
-              aria-label="Search"
+              aria-label={searchOpen ? "Close site search" : "Open site search"}
               aria-expanded={searchOpen}
+              aria-controls="global-search-panel"
               className="p-1 hover:bg-primary rounded focus-ring"
             >
               <Search className="h-3.5 w-3.5" />
