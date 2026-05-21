@@ -71,7 +71,7 @@ export function useAutoScroll<T extends HTMLElement>(
       posRef.current = 0;
       return;
     }
-    if (paused) return;
+    if (paused || focusPaused) return;
 
     posRef.current = el.scrollTop;
     let raf = 0;
