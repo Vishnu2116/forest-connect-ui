@@ -415,13 +415,14 @@ export default function Navbar() {
           <button
             className="p-2 rounded-md border border-border focus-ring shrink-0"
             onClick={() => setMobileOpen((v) => !v)}
-            aria-label="Toggle menu"
+            aria-label={mobileOpen ? "Close main menu" : "Open main menu"}
             aria-expanded={mobileOpen}
+            aria-controls="mobile-primary-nav"
           >
             {mobileOpen ? (
-              <X className="h-5 w-5" />
+              <X className="h-5 w-5" aria-hidden="true" />
             ) : (
-              <Menu className="h-5 w-5" />
+              <Menu className="h-5 w-5" aria-hidden="true" />
             )}
           </button>
         </div>
