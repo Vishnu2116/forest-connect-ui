@@ -24,6 +24,26 @@ export function useAutoScroll<T extends HTMLElement>(
   const posRef = useRef(0);
   const manualActiveRef = useRef(false);
   const [shouldScroll, setShouldScroll] = useState(false);
+  const [focusPaused, setFocusPaused] = useState(false);
+
+  // Pause auto-scroll while any descendant has keyboard focus so screen-reader
+  // and keyboard users can read/navigate without content moving under them.
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const onFocusIn = () => setFocusPaused(true);
+    const onFocusOut = (e: FocusEvent) => {
+      const next = e.relatedTarget as Node | null;
+      if (!next || !el.contains(next)) setFocusPaused(false);
+    };
+    el.addEventListener("focusin", onFocusIn);
+    el.addEventListener("focusout", onFocusOut);
+    return () => {
+      el.removeEventListener("focusin", onFocusIn);
+      el.removeEventListener("focusout", onFocusOut);
+    };
+  }, []);
+
 
   // Measure overflow. When the consumer is rendering duplicated content the
   // "natural" content height is scrollHeight / 2; when single, it's scrollHeight.
