@@ -113,11 +113,18 @@ export default function HeroSlider() {
     };
   }, []);
 
+  // Pause auto-rotate on hover, keyboard focus, or reduced-motion preference.
+  const [paused, setPaused] = useState(false);
+  const regionRef = useRef<HTMLElement | null>(null);
+  const prefersReducedMotion =
+    typeof window !== "undefined" &&
+    window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+
   useEffect(() => {
-    if (slides.length === 0) return;
+    if (slides.length === 0 || paused || prefersReducedMotion) return;
     const t = setInterval(() => setI((p) => (p + 1) % slides.length), 6000);
     return () => clearInterval(t);
-  }, [slides.length]);
+  }, [slides.length, paused, prefersReducedMotion]);
 
   // Clamp index whenever the slide set shrinks (e.g. API returns fewer than dummy).
   useEffect(() => {
