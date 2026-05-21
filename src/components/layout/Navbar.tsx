@@ -256,48 +256,130 @@ export default function Navbar() {
         </div>
 
         {searchOpen && (
-          <div className="bg-primary border-t border-primary-dark/40">
+          <div
+            id="global-search-panel"
+            className="bg-primary border-t border-primary-dark/40"
+            role="search"
+            aria-label="Search the ELEMENT portal"
+          >
             <form
               onSubmit={(e) => {
                 e.preventDefault();
-                if (searchQ.trim()) {
-                  navigate(`/sitemap?q=${encodeURIComponent(searchQ.trim())}`);
-                  setSearchOpen(false);
-                }
+                goToSearchResult();
               }}
-              className="gov-container py-2 flex items-center gap-2"
-              role="search"
+              className="gov-container py-2 flex items-center gap-2 relative"
             >
               <label htmlFor="site-search" className="sr-only">
                 Search the portal
               </label>
-              <Search className="h-4 w-4 opacity-80" />
+              <Search className="h-4 w-4 opacity-80" aria-hidden="true" />
               <input
                 id="site-search"
+                ref={searchInputRef}
                 value={searchQ}
                 onChange={(e) => setSearchQ(e.target.value)}
-                placeholder="Search ELEMENT portal…"
+                onKeyDown={(e) => {
+                  if (searchResults.length === 0) return;
+                  if (e.key === "ArrowDown") {
+                    e.preventDefault();
+                    setSearchActiveIdx((i) => (i + 1) % searchResults.length);
+                  } else if (e.key === "ArrowUp") {
+                    e.preventDefault();
+                    setSearchActiveIdx((i) =>
+                      (i - 1 + searchResults.length) % searchResults.length,
+                    );
+                  } else if (e.key === "Home") {
+                    e.preventDefault();
+                    setSearchActiveIdx(0);
+                  } else if (e.key === "End") {
+                    e.preventDefault();
+                    setSearchActiveIdx(searchResults.length - 1);
+                  }
+                }}
+                placeholder="Search pages — try 'About', 'Tenders', 'Knowledge Hub'…"
                 className="flex-1 bg-transparent border-b border-primary-foreground/40 focus:outline-none focus:border-accent text-sm py-1 placeholder:text-primary-foreground/60"
-                autoFocus
+                role="combobox"
+                aria-autocomplete="list"
+                aria-expanded={searchResults.length > 0}
+                aria-controls={searchListboxId}
+                aria-activedescendant={
+                  searchResults.length > 0
+                    ? `search-result-${searchActiveIdx}`
+                    : undefined
+                }
+                autoComplete="off"
               />
               <button
                 type="submit"
-                className="bg-accent hover:bg-accent-hover text-accent-foreground text-xs font-semibold px-3 py-1 rounded"
+                className="bg-accent hover:bg-accent-hover text-accent-foreground text-xs font-semibold px-3 py-1 rounded focus-ring"
               >
                 Search
               </button>
               <button
                 type="button"
-                onClick={() => setSearchOpen(false)}
+                onClick={() => {
+                  setSearchOpen(false);
+                  searchTriggerRef.current?.focus();
+                }}
                 aria-label="Close search"
-                className="p-1 hover:bg-primary-dark rounded"
+                className="p-1 hover:bg-primary-dark rounded focus-ring"
               >
                 <X className="h-4 w-4" />
               </button>
+
+              {searchQ.trim() && (
+                <div className="absolute left-0 right-0 top-full z-50 px-4 sm:px-6 lg:px-8">
+                  <ul
+                    id={searchListboxId}
+                    role="listbox"
+                    aria-label="Search results"
+                    className="mt-1 bg-background text-foreground rounded-md shadow-elevated border border-border max-h-[60vh] overflow-y-auto"
+                  >
+                    {searchResults.length === 0 ? (
+                      <li
+                        className="px-4 py-3 text-sm text-muted-foreground"
+                        role="option"
+                        aria-selected="false"
+                      >
+                        No results for &ldquo;{searchQ}&rdquo;.
+                      </li>
+                    ) : (
+                      searchResults.map((r, idx) => {
+                        const selected = idx === searchActiveIdx;
+                        return (
+                          <li
+                            key={`${r.to}-${idx}`}
+                            id={`search-result-${idx}`}
+                            role="option"
+                            aria-selected={selected}
+                          >
+                            <button
+                              type="button"
+                              onMouseEnter={() => setSearchActiveIdx(idx)}
+                              onClick={() => goToSearchResult(r)}
+                              className={`w-full text-left px-4 py-2.5 text-sm flex items-center justify-between gap-3 focus-ring ${
+                                selected ? "bg-surface text-primary" : "hover:bg-surface"
+                              }`}
+                            >
+                              <span className="font-medium truncate">{r.title}</span>
+                              {r.group && (
+                                <span className="text-[11px] uppercase tracking-wide text-muted-foreground shrink-0">
+                                  {r.group}
+                                </span>
+                              )}
+                            </button>
+                          </li>
+                        );
+                      })
+                    )}
+                  </ul>
+                </div>
+              )}
             </form>
           </div>
         )}
       </div>
+
 
       {/* ── MOBILE HEADER — below lg (< 1024px) ── */}
       <div className="lg:hidden bg-background border-b border-border">
