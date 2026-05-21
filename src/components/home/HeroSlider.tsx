@@ -135,17 +135,43 @@ export default function HeroSlider() {
   const prev = () => setI((p) => (p - 1 + slides.length) % slides.length);
 
   return (
-    <section className="relative bg-primary-dark overflow-hidden">
-      <div className="relative h-[420px] sm:h-[460px] md:h-[480px] lg:h-[540px]">
+    <section
+      ref={regionRef}
+      className="relative bg-primary-dark overflow-hidden"
+      aria-roledescription="carousel"
+      aria-label="Featured highlights"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onFocus={() => setPaused(true)}
+      onBlur={(e) => {
+        if (!e.currentTarget.contains(e.relatedTarget as Node)) setPaused(false);
+      }}
+      onKeyDown={(e) => {
+        if (e.key === "ArrowRight") {
+          e.preventDefault();
+          next();
+        } else if (e.key === "ArrowLeft") {
+          e.preventDefault();
+          prev();
+        }
+      }}
+    >
+      <div
+        className="relative h-[420px] sm:h-[460px] md:h-[480px] lg:h-[540px]"
+        aria-live={paused ? "polite" : "off"}
+      >
         {slides.map((s, idx) => (
           <div
             key={idx}
+            role="group"
+            aria-roledescription="slide"
+            aria-label={`Slide ${idx + 1} of ${slides.length}: ${s.title}`}
             className={`absolute inset-0 transition-opacity duration-700 ${idx === i ? "opacity-100" : "opacity-0"}`}
             aria-hidden={idx !== i}
           >
             <img
               src={s.img}
-              alt={s.title}
+              alt=""
               className="w-full h-full object-cover"
               width={1920}
               height={1024}
