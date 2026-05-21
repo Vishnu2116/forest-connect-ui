@@ -228,13 +228,19 @@ export default function HeroSlider() {
       </button>
 
       {/* Bottom Center Dots */}
-      <div className="absolute bottom-5 left-1/2 -translate-x-1/2 flex items-center gap-2 z-30">
+      <div
+        role="tablist"
+        aria-label="Slide selectors"
+        className="absolute bottom-5 left-1/2 -translate-x-1/2 flex items-center gap-2 z-30"
+      >
         {slides.map((_, idx) => (
           <button
             key={idx}
+            role="tab"
+            aria-selected={idx === i}
+            aria-label={`Go to slide ${idx + 1} of ${slides.length}`}
             onClick={() => setI(idx)}
-            aria-label={`Go to slide ${idx + 1}`}
-            className={`h-2.5 rounded-full transition-all duration-300 ${
+            className={`h-2.5 rounded-full transition-all duration-300 focus-ring ${
               idx === i
                 ? "bg-accent w-8"
                 : "bg-primary-foreground/60 hover:bg-primary-foreground/80 w-2.5"
