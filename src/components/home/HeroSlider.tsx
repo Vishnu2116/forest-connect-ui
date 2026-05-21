@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import hero1 from "@/assets/hero-forest.jpg";
@@ -113,11 +113,18 @@ export default function HeroSlider() {
     };
   }, []);
 
+  // Pause auto-rotate on hover, keyboard focus, or reduced-motion preference.
+  const [paused, setPaused] = useState(false);
+  const regionRef = useRef<HTMLElement | null>(null);
+  const prefersReducedMotion =
+    typeof window !== "undefined" &&
+    window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+
   useEffect(() => {
-    if (slides.length === 0) return;
+    if (slides.length === 0 || paused || prefersReducedMotion) return;
     const t = setInterval(() => setI((p) => (p + 1) % slides.length), 6000);
     return () => clearInterval(t);
-  }, [slides.length]);
+  }, [slides.length, paused, prefersReducedMotion]);
 
   // Clamp index whenever the slide set shrinks (e.g. API returns fewer than dummy).
   useEffect(() => {
@@ -128,17 +135,43 @@ export default function HeroSlider() {
   const prev = () => setI((p) => (p - 1 + slides.length) % slides.length);
 
   return (
-    <section className="relative bg-primary-dark overflow-hidden">
-      <div className="relative h-[420px] sm:h-[460px] md:h-[480px] lg:h-[540px]">
+    <section
+      ref={regionRef}
+      className="relative bg-primary-dark overflow-hidden"
+      aria-roledescription="carousel"
+      aria-label="Featured highlights"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onFocus={() => setPaused(true)}
+      onBlur={(e) => {
+        if (!e.currentTarget.contains(e.relatedTarget as Node)) setPaused(false);
+      }}
+      onKeyDown={(e) => {
+        if (e.key === "ArrowRight") {
+          e.preventDefault();
+          next();
+        } else if (e.key === "ArrowLeft") {
+          e.preventDefault();
+          prev();
+        }
+      }}
+    >
+      <div
+        className="relative h-[420px] sm:h-[460px] md:h-[480px] lg:h-[540px]"
+        aria-live={paused ? "polite" : "off"}
+      >
         {slides.map((s, idx) => (
           <div
             key={idx}
+            role="group"
+            aria-roledescription="slide"
+            aria-label={`Slide ${idx + 1} of ${slides.length}: ${s.title}`}
             className={`absolute inset-0 transition-opacity duration-700 ${idx === i ? "opacity-100" : "opacity-0"}`}
             aria-hidden={idx !== i}
           >
             <img
               src={s.img}
-              alt={s.title}
+              alt=""
               className="w-full h-full object-cover"
               width={1920}
               height={1024}
@@ -182,7 +215,7 @@ export default function HeroSlider() {
         aria-label="Previous slide"
         className="absolute left-4 bottom-3 lg:bottom-auto lg:top-1/2 lg:-translate-y-1/2 bg-background/20 hover:bg-background/40 text-primary-foreground p-2.5 rounded-full backdrop-blur-md focus-ring z-30 transition-all"
       >
-        <ChevronLeft className="h-5 w-5" />
+        <ChevronLeft className="h-5 w-5" aria-hidden="true" />
       </button>
 
       {/* Right Arrow — bottom-right on mobile/tablet, centered on desktop */}
@@ -191,17 +224,23 @@ export default function HeroSlider() {
         aria-label="Next slide"
         className="absolute right-4 bottom-3 lg:bottom-auto lg:top-1/2 lg:-translate-y-1/2 bg-background/20 hover:bg-background/40 text-primary-foreground p-2.5 rounded-full backdrop-blur-md focus-ring z-30 transition-all"
       >
-        <ChevronRight className="h-5 w-5" />
+        <ChevronRight className="h-5 w-5" aria-hidden="true" />
       </button>
 
       {/* Bottom Center Dots */}
-      <div className="absolute bottom-5 left-1/2 -translate-x-1/2 flex items-center gap-2 z-30">
+      <div
+        role="tablist"
+        aria-label="Slide selectors"
+        className="absolute bottom-5 left-1/2 -translate-x-1/2 flex items-center gap-2 z-30"
+      >
         {slides.map((_, idx) => (
           <button
             key={idx}
+            role="tab"
+            aria-selected={idx === i}
+            aria-label={`Go to slide ${idx + 1} of ${slides.length}`}
             onClick={() => setI(idx)}
-            aria-label={`Go to slide ${idx + 1}`}
-            className={`h-2.5 rounded-full transition-all duration-300 ${
+            className={`h-2.5 rounded-full transition-all duration-300 focus-ring ${
               idx === i
                 ? "bg-accent w-8"
                 : "bg-primary-foreground/60 hover:bg-primary-foreground/80 w-2.5"

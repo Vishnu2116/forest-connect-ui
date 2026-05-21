@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import {
   ChevronDown,
@@ -15,6 +15,7 @@ import { navItems as baseNavItems } from "@/data/navigation";
 import { useLang, LANGUAGES } from "@/contexts/LanguageContext";
 import { useA11y } from "@/contexts/AccessibilityContext";
 import { getNavComponentsOnce } from "@/lib/projects";
+import { searchSite, type SearchEntry } from "@/data/searchIndex";
 import logoTripura from "@/assets/logo-tripura.png";
 import logoTheWorldBank from "@/assets/logo-theworldbankOrg.jpg";
 import logoTripuraForestDept from "@/assets/logo-tripuraforestdept.png";
@@ -26,6 +27,14 @@ export default function Navbar() {
   const [langOpen, setLangOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQ, setSearchQ] = useState("");
+  const [searchActiveIdx, setSearchActiveIdx] = useState(0);
+  const searchInputRef = useRef<HTMLInputElement | null>(null);
+  const searchTriggerRef = useRef<HTMLButtonElement | null>(null);
+  const searchResults: SearchEntry[] = useMemo(
+    () => (searchOpen ? searchSite(searchQ, 8) : []),
+    [searchOpen, searchQ],
+  );
+  const searchListboxId = "global-search-listbox";
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const { t, lang, setLang } = useLang();
@@ -74,6 +83,46 @@ export default function Navbar() {
     item.children?.some((c) => pathname.startsWith(c.to));
   const currentLangLabel =
     LANGUAGES.find((l) => l.code === lang)?.label ?? "English";
+
+  // Global Escape: close transient menus and restore focus.
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== "Escape") return;
+      if (searchOpen) {
+        setSearchOpen(false);
+        searchTriggerRef.current?.focus();
+      }
+      if (langOpen) setLangOpen(false);
+      if (openDropdown) setOpenDropdown(null);
+      if (mobileOpen) setMobileOpen(false);
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [searchOpen, langOpen, openDropdown, mobileOpen]);
+
+  // Focus search input when opened; reset highlighted result when query changes.
+  useEffect(() => {
+    if (searchOpen) {
+      // Slight delay so the input is mounted.
+      const t = setTimeout(() => searchInputRef.current?.focus(), 0);
+      return () => clearTimeout(t);
+    }
+  }, [searchOpen]);
+  useEffect(() => {
+    setSearchActiveIdx(0);
+  }, [searchQ, searchOpen]);
+
+  const goToSearchResult = (entry?: SearchEntry) => {
+    const target = entry ?? searchResults[searchActiveIdx];
+    if (!target) {
+      if (searchQ.trim()) navigate(`/sitemap?q=${encodeURIComponent(searchQ.trim())}`);
+    } else {
+      navigate(target.to);
+    }
+    setSearchOpen(false);
+    setSearchQ("");
+  };
+
 
   return (
     <header className="sticky top-0 z-50 shadow-card">
@@ -152,9 +201,11 @@ export default function Navbar() {
             </Link>
             <span className="hidden sm:inline opacity-50">|</span>
             <button
+              ref={searchTriggerRef}
               onClick={() => setSearchOpen((v) => !v)}
-              aria-label="Search"
+              aria-label={searchOpen ? "Close site search" : "Open site search"}
               aria-expanded={searchOpen}
+              aria-controls="global-search-panel"
               className="p-1 hover:bg-primary rounded focus-ring"
             >
               <Search className="h-3.5 w-3.5" />
@@ -205,48 +256,130 @@ export default function Navbar() {
         </div>
 
         {searchOpen && (
-          <div className="bg-primary border-t border-primary-dark/40">
+          <div
+            id="global-search-panel"
+            className="bg-primary border-t border-primary-dark/40"
+            role="search"
+            aria-label="Search the ELEMENT portal"
+          >
             <form
               onSubmit={(e) => {
                 e.preventDefault();
-                if (searchQ.trim()) {
-                  navigate(`/sitemap?q=${encodeURIComponent(searchQ.trim())}`);
-                  setSearchOpen(false);
-                }
+                goToSearchResult();
               }}
-              className="gov-container py-2 flex items-center gap-2"
-              role="search"
+              className="gov-container py-2 flex items-center gap-2 relative"
             >
               <label htmlFor="site-search" className="sr-only">
                 Search the portal
               </label>
-              <Search className="h-4 w-4 opacity-80" />
+              <Search className="h-4 w-4 opacity-80" aria-hidden="true" />
               <input
                 id="site-search"
+                ref={searchInputRef}
                 value={searchQ}
                 onChange={(e) => setSearchQ(e.target.value)}
-                placeholder="Search ELEMENT portal…"
+                onKeyDown={(e) => {
+                  if (searchResults.length === 0) return;
+                  if (e.key === "ArrowDown") {
+                    e.preventDefault();
+                    setSearchActiveIdx((i) => (i + 1) % searchResults.length);
+                  } else if (e.key === "ArrowUp") {
+                    e.preventDefault();
+                    setSearchActiveIdx((i) =>
+                      (i - 1 + searchResults.length) % searchResults.length,
+                    );
+                  } else if (e.key === "Home") {
+                    e.preventDefault();
+                    setSearchActiveIdx(0);
+                  } else if (e.key === "End") {
+                    e.preventDefault();
+                    setSearchActiveIdx(searchResults.length - 1);
+                  }
+                }}
+                placeholder="Search pages — try 'About', 'Tenders', 'Knowledge Hub'…"
                 className="flex-1 bg-transparent border-b border-primary-foreground/40 focus:outline-none focus:border-accent text-sm py-1 placeholder:text-primary-foreground/60"
-                autoFocus
+                role="combobox"
+                aria-autocomplete="list"
+                aria-expanded={searchResults.length > 0}
+                aria-controls={searchListboxId}
+                aria-activedescendant={
+                  searchResults.length > 0
+                    ? `search-result-${searchActiveIdx}`
+                    : undefined
+                }
+                autoComplete="off"
               />
               <button
                 type="submit"
-                className="bg-accent hover:bg-accent-hover text-accent-foreground text-xs font-semibold px-3 py-1 rounded"
+                className="bg-accent hover:bg-accent-hover text-accent-foreground text-xs font-semibold px-3 py-1 rounded focus-ring"
               >
                 Search
               </button>
               <button
                 type="button"
-                onClick={() => setSearchOpen(false)}
+                onClick={() => {
+                  setSearchOpen(false);
+                  searchTriggerRef.current?.focus();
+                }}
                 aria-label="Close search"
-                className="p-1 hover:bg-primary-dark rounded"
+                className="p-1 hover:bg-primary-dark rounded focus-ring"
               >
                 <X className="h-4 w-4" />
               </button>
+
+              {searchQ.trim() && (
+                <div className="absolute left-0 right-0 top-full z-50 px-4 sm:px-6 lg:px-8">
+                  <ul
+                    id={searchListboxId}
+                    role="listbox"
+                    aria-label="Search results"
+                    className="mt-1 bg-background text-foreground rounded-md shadow-elevated border border-border max-h-[60vh] overflow-y-auto"
+                  >
+                    {searchResults.length === 0 ? (
+                      <li
+                        className="px-4 py-3 text-sm text-muted-foreground"
+                        role="option"
+                        aria-selected="false"
+                      >
+                        No results for &ldquo;{searchQ}&rdquo;.
+                      </li>
+                    ) : (
+                      searchResults.map((r, idx) => {
+                        const selected = idx === searchActiveIdx;
+                        return (
+                          <li
+                            key={`${r.to}-${idx}`}
+                            id={`search-result-${idx}`}
+                            role="option"
+                            aria-selected={selected}
+                          >
+                            <button
+                              type="button"
+                              onMouseEnter={() => setSearchActiveIdx(idx)}
+                              onClick={() => goToSearchResult(r)}
+                              className={`w-full text-left px-4 py-2.5 text-sm flex items-center justify-between gap-3 focus-ring ${
+                                selected ? "bg-surface text-primary" : "hover:bg-surface"
+                              }`}
+                            >
+                              <span className="font-medium truncate">{r.title}</span>
+                              {r.group && (
+                                <span className="text-[11px] uppercase tracking-wide text-muted-foreground shrink-0">
+                                  {r.group}
+                                </span>
+                              )}
+                            </button>
+                          </li>
+                        );
+                      })
+                    )}
+                  </ul>
+                </div>
+              )}
             </form>
           </div>
         )}
       </div>
+
 
       {/* ── MOBILE HEADER — below lg (< 1024px) ── */}
       <div className="lg:hidden bg-background border-b border-border">
@@ -282,13 +415,14 @@ export default function Navbar() {
           <button
             className="p-2 rounded-md border border-border focus-ring shrink-0"
             onClick={() => setMobileOpen((v) => !v)}
-            aria-label="Toggle menu"
+            aria-label={mobileOpen ? "Close main menu" : "Open main menu"}
             aria-expanded={mobileOpen}
+            aria-controls="mobile-primary-nav"
           >
             {mobileOpen ? (
-              <X className="h-5 w-5" />
+              <X className="h-5 w-5" aria-hidden="true" />
             ) : (
-              <Menu className="h-5 w-5" />
+              <Menu className="h-5 w-5" aria-hidden="true" />
             )}
           </button>
         </div>
@@ -345,11 +479,15 @@ export default function Navbar() {
           Was: hidden lg:block (caused the gap between 1024–1279px)
           Now: hidden xl:block
       */}
-      <nav className="bg-primary text-primary-foreground hidden lg:block">
+      <nav
+        className="bg-primary text-primary-foreground hidden lg:block"
+        aria-label="Primary"
+      >
         <div className="gov-container-wide">
           <ul className="flex items-stretch justify-between w-full">
             {navItems.map((item) => {
               const dropActive = isDropdownActive(item);
+              const isOpen = openDropdown === item.labelKey;
               return (
                 <li
                   key={item.labelKey}
@@ -361,10 +499,25 @@ export default function Navbar() {
                 >
                   {item.children ? (
                     <button
-                      className={`flex items-center justify-center gap-1 whitespace-nowrap px-2.5 lg:px-3 xl:px-5 py-3 xl:py-3.5 text-[13px] xl:text-sm font-medium hover:bg-primary-dark transition-colors border-b-2 border-transparent`}
+                      type="button"
+                      aria-haspopup="menu"
+                      aria-expanded={isOpen}
+                      aria-current={dropActive ? "page" : undefined}
+                      onClick={() => setOpenDropdown(isOpen ? null : item.labelKey)}
+                      onKeyDown={(e) => {
+                        if (e.key === "ArrowDown" || e.key === "Enter" || e.key === " ") {
+                          e.preventDefault();
+                          setOpenDropdown(item.labelKey);
+                        } else if (e.key === "Escape") {
+                          setOpenDropdown(null);
+                        }
+                      }}
+                      className={`flex items-center justify-center gap-1 whitespace-nowrap px-2.5 lg:px-3 xl:px-5 py-3 xl:py-3.5 text-[13px] xl:text-sm font-medium hover:bg-primary-dark transition-colors border-b-2 focus-ring ${
+                        dropActive ? "bg-primary-dark border-accent" : "border-transparent"
+                      }`}
                     >
                       {t(item.labelKey)}
-                      <ChevronDown className="h-3.5 w-3.5 shrink-0" />
+                      <ChevronDown className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
                     </button>
                   ) : (
                     <NavLink
@@ -383,7 +536,11 @@ export default function Navbar() {
                   )}
 
                   {item.children && openDropdown === item.labelKey && (
-                    <div className="absolute left-0 top-full min-w-[260px] bg-background text-foreground shadow-elevated border border-border rounded-b-md overflow-hidden animate-fade-in z-50">
+                    <div
+                      role="menu"
+                      aria-label={t(item.labelKey)}
+                      className="absolute left-0 top-full min-w-[260px] bg-background text-foreground shadow-elevated border border-border rounded-b-md overflow-hidden animate-fade-in z-50"
+                    >
                       {item.children.map((c) => (
                         <NavLink
                           key={c.to}
@@ -416,14 +573,21 @@ export default function Navbar() {
           Now: xl:hidden — perfectly mirrors the mobile header
       */}
       {mobileOpen && (
-        <nav className="lg:hidden bg-primary text-primary-foreground max-h-[70vh] overflow-y-auto">
+        <nav
+          id="mobile-primary-nav"
+          aria-label="Mobile primary"
+          className="lg:hidden bg-primary text-primary-foreground max-h-[70vh] overflow-y-auto"
+        >
           <ul className="divide-y divide-primary-dark">
             {navItems.map((item) => (
               <li key={item.labelKey}>
                 {item.children ? (
                   <>
                     <button
-                      className={`w-full flex items-center justify-between px-4 py-3 text-sm font-medium`}
+                      type="button"
+                      aria-expanded={mobileSubOpen === item.labelKey}
+                      aria-controls={`mobile-sub-${item.labelKey}`}
+                      className={`w-full flex items-center justify-between px-4 py-3 text-sm font-medium focus-ring`}
                       onClick={() =>
                         setMobileSubOpen(
                           mobileSubOpen === item.labelKey
@@ -434,13 +598,14 @@ export default function Navbar() {
                     >
                       {t(item.labelKey)}
                       <ChevronDown
+                        aria-hidden="true"
                         className={`h-4 w-4 transition-transform ${
                           mobileSubOpen === item.labelKey ? "rotate-180" : ""
                         }`}
                       />
                     </button>
                     {mobileSubOpen === item.labelKey && (
-                      <ul className="bg-primary-dark">
+                      <ul id={`mobile-sub-${item.labelKey}`} className="bg-primary-dark">
                         {item.children.map((c) => (
                           <li key={c.to}>
                             <NavLink
