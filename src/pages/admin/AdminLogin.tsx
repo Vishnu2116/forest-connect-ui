@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import logoTripura from "@/assets/logo-tripura.png";
+import logoTripuraForest from "@/assets/logo-tripuraforestdept.png";
 import logoWorldBank from "@/assets/logo-theworldbank.jpg";
 import { API_BASE_URL, USE_REAL_API } from "@/config/api";
 
@@ -22,7 +23,14 @@ export default function AdminLogin() {
     if (!USE_REAL_API) {
       // Preview/dummy mode — accept any credentials
       sessionStorage.setItem("element_admin", user || "admin");
-      localStorage.setItem("element_admin", JSON.stringify({ id: "demo", email: user || "admin", name: user || "Admin" }));
+      localStorage.setItem(
+        "element_admin",
+        JSON.stringify({
+          id: "demo",
+          email: user || "admin",
+          name: user || "Admin",
+        }),
+      );
       localStorage.setItem("element_admin_token", "demo-token");
       navigate("/admin");
       return;
@@ -77,6 +85,11 @@ export default function AdminLogin() {
                 src={logoTripura}
                 alt="Tripura"
                 className="h-10 w-10 bg-white rounded p-1"
+              />
+              <img
+                src={logoTripuraForest}
+                alt="Tripura Forest Department"
+                className="h-10 w-auto bg-white rounded p-1"
               />
               <img
                 src={logoWorldBank}
@@ -142,7 +155,9 @@ export default function AdminLogin() {
               {loading ? "Signing in..." : "Login to Dashboard"}
             </Button>
             <p className="text-[11px] text-center text-muted-foreground">
-              {USE_REAL_API ? "Use your admin credentials." : "Demo only — any credentials will be accepted."}
+              {USE_REAL_API
+                ? "Use your admin credentials."
+                : "Demo only — any credentials will be accepted."}
             </p>
           </form>
         </div>
