@@ -13,7 +13,7 @@ export const adminMenu = [
   { to: "/admin/gallery", label: "Gallery", icon: ImageIcon },
   { to: "/admin/social-media", label: "Social Media", icon: MessageSquare },
   { to: "/admin/tenders", label: "Tenders / Procurements", icon: FileText },
-  { to: "/admin/whoswho", label: "Who's Who", icon: Users },
+  
   { to: "/admin/officials", label: "Officials & Directory", icon: Users },
   { to: "/admin/activities", label: "Activities & Outputs", icon: Activity },
   { to: "/admin/knowledge-hub", label: "Knowledge Hub", icon: BookOpen },
