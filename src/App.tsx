@@ -56,6 +56,7 @@ import Archive from "./pages/Archive";
 import HyperlinkingPolicy from "./pages/HyperlinkingPolicy";
 import CopyrightPolicy from "./pages/CopyrightPolicy";
 import { AccessibilityProvider } from "./contexts/AccessibilityContext";
+import { SettingsProvider } from "./contexts/SettingsContext";
 
 
 const queryClient = new QueryClient();
@@ -68,7 +69,9 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <SettingsProvider>
         <ScrollToTop />
+
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/about" element={<AboutElement />} />
@@ -154,6 +157,7 @@ const App = () => (
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
+        </SettingsProvider>
       </BrowserRouter>
     </TooltipProvider>
     </AccessibilityProvider>
