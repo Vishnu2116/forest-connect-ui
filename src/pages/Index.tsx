@@ -843,7 +843,7 @@ function ProjectHighlightsColumn() {
                         {statusText}
                       </span>
                     </div>
-                    <h3 className="text-[13px] font-semibold text-foreground leading-snug line-clamp-2 mb-1">
+                    <h3 className="text-[14px] md:text-[15px] font-semibold text-foreground leading-snug line-clamp-2 mt-1.5 mb-1">
                       {p.title}
                     </h3>
                     <Link
