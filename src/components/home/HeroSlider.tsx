@@ -90,8 +90,8 @@ export default function HeroSlider() {
               title: s.title ?? "",
               subtitle: s.subtitle ?? "",
               badge: s.badge_text ?? "",
-              cta1: { label: s.cta1_label ?? "", to: s.cta1_link ?? "#" },
-              cta2: { label: s.cta2_label ?? "", to: s.cta2_link ?? "#" },
+              cta1: { label: s.cta1_label ?? "", to: s.cta1_link ?? "" },
+              cta2: { label: s.cta2_label ?? "", to: s.cta2_link ?? "" },
             }));
           if (mapped.length > 0) {
             setSlides(mapped);
