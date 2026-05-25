@@ -817,9 +817,9 @@ function ProjectHighlightsColumn() {
               return (
                 <article
                   key={`${p.id}-${idx}`}
-                  className="flex items-center gap-2.5 px-2.5 py-2 hover:bg-surface/60 transition border-b border-border"
+                  className="flex items-center gap-3 px-3 py-3 hover:bg-surface/60 transition border-b border-border"
                 >
-                  <div className="h-14 w-16 shrink-0 bg-gradient-to-br from-primary/20 to-primary-light/20 rounded-sm overflow-hidden flex items-center justify-center">
+                  <div className="h-20 w-24 shrink-0 bg-gradient-to-br from-primary/20 to-primary-light/20 rounded overflow-hidden flex items-center justify-center">
                     {img ? (
                       <img
                         src={img}
@@ -827,23 +827,23 @@ function ProjectHighlightsColumn() {
                         className="w-full h-full object-cover"
                       />
                     ) : (
-                      <Trees className="h-5 w-5 text-primary/40" />
+                      <Trees className="h-6 w-6 text-primary/40" />
                     )}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-1 mb-0.5">
+                    <div className="flex items-center gap-1 mb-1">
                       {p.component?.label && (
-                        <span className="text-[8px] font-semibold uppercase tracking-wide px-1 py-0.5 rounded-sm bg-accent/15 text-accent">
+                        <span className="text-[9px] font-semibold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-accent/15 text-accent truncate">
                           {p.component.label}
                         </span>
                       )}
                       <span
-                        className={`text-[8px] font-semibold uppercase tracking-wide px-1 py-0.5 rounded-sm shrink-0 ml-auto ${statusCls}`}
+                        className={`text-[9px] font-semibold uppercase tracking-wide px-1.5 py-0.5 rounded-sm shrink-0 ml-auto ${statusCls}`}
                       >
                         {statusText}
                       </span>
                     </div>
-                    <h3 className="text-[13px] font-semibold text-foreground leading-tight line-clamp-1">
+                    <h3 className="text-[13px] font-semibold text-foreground leading-snug line-clamp-2 mb-1">
                       {p.title}
                     </h3>
                     <Link
