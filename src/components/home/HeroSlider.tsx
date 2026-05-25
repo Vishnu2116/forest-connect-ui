@@ -190,18 +190,22 @@ export default function HeroSlider() {
                     {s.subtitle}
                   </p>
                   <div className="mt-6 flex flex-col sm:flex-row flex-wrap gap-3">
-                    <Link
-                      to={s.cta1.to}
-                      className="bg-accent hover:bg-accent-hover text-accent-foreground px-5 py-2.5 rounded font-semibold focus-ring text-center"
-                    >
-                      {s.cta1.label}
-                    </Link>
-                    <Link
-                      to={s.cta2.to}
-                      className="bg-background/10 backdrop-blur border border-primary-foreground/30 text-primary-foreground px-5 py-2.5 rounded font-semibold hover:bg-background/20 focus-ring text-center"
-                    >
-                      {s.cta2.label}
-                    </Link>
+                    {s.cta1?.label && s.cta1?.to && (
+                      <Link
+                        to={s.cta1.to}
+                        className="bg-accent hover:bg-accent-hover text-accent-foreground px-5 py-2.5 rounded font-semibold focus-ring text-center"
+                      >
+                        {s.cta1.label}
+                      </Link>
+                    )}
+                    {s.cta2?.label && s.cta2?.to && (
+                      <Link
+                        to={s.cta2.to}
+                        className="bg-background/10 backdrop-blur border border-primary-foreground/30 text-primary-foreground px-5 py-2.5 rounded font-semibold hover:bg-background/20 focus-ring text-center"
+                      >
+                        {s.cta2.label}
+                      </Link>
+                    )}
                   </div>
                 </div>
               </div>
