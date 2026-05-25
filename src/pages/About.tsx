@@ -47,7 +47,7 @@ import cmImage from "@/assets/dignitaries/CM.jpeg";
 import Animesh from "@/assets/dignitaries/Animesh.jpeg";
 import CS from "@/assets/dignitaries/CS.jpg";
 import SanjibDas from "@/assets/dignitaries/SanjibDas.png";
-import forestBg from "@/assets/hero-forest.jpg";
+import forestBg from "@/assets/forest.png";
 import heroWaterShedBg from "@/assets/hero-watershed.jpg";
 
 function AboutLayout({
@@ -418,10 +418,11 @@ export function Organization() {
     <AboutLayout
       title="Organization Structure"
       subtitle="Governance and implementation framework of the PROJECT ELEMENT"
+      backgroundImage={forestBg}
     >
       <div className="space-y-8">
         {/* Header intro */}
-        <div className="bg-gradient-to-br from-primary/5 to-accent/5 border border-border rounded-xl p-6 text-center">
+        <div className="bg-gradient-to-br from-white to-white/95 border border-border rounded-xl p-6 text-center shadow-sm">
           <span className="inline-block bg-accent/10 text-accent text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-3">
             Institutional Framework
           </span>
@@ -438,7 +439,7 @@ export function Organization() {
         <div className="flex flex-col items-center gap-0">
           {orgNodes.map((node, i) => (
             <div key={node.id} className="flex flex-col items-center">
-              {i > 0 && <div className="w-px h-6 bg-primary/30" />}
+              {i > 0 && <div className="w-px h-6 bg-white/90" />}
               <button
                 onClick={() =>
                   setSelected(selected?.id === node.id ? null : node)
@@ -447,7 +448,7 @@ export function Organization() {
                   i === 0
                     ? "bg-primary text-primary-foreground border-primary hover:opacity-90"
                     : selected?.id === node.id
-                      ? "bg-accent/5 border-accent shadow-sm"
+                      ? "bg-gray-200 border-accent shadow-sm"
                       : "bg-card border-border hover:border-primary/40 hover:shadow-md"
                 }`}
               >
@@ -463,7 +464,7 @@ export function Organization() {
                 </p>
               </button>
               {i < orgNodes.length - 1 && (
-                <div className="w-0 h-0 border-l-[6px] border-r-[6px] border-t-[6px] border-l-transparent border-r-transparent border-t-primary/30 mt-0" />
+                <div className="w-0 h-0 border-l-[6px] border-r-[6px] border-t-[6px] border-l-transparent border-r-transparent border-t-white/90 mt-0" />
               )}
             </div>
           ))}
