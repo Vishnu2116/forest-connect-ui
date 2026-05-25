@@ -1,12 +1,14 @@
 import { Link } from "react-router-dom";
 import { Mail, MapPin, Phone, Facebook, Twitter, Youtube } from "lucide-react";
 import { useLang } from "@/contexts/LanguageContext";
+import { useSettings } from "@/contexts/SettingsContext";
 import logoTripura from "@/assets/logo-tripura.png";
 import logoForestDept from "@/assets/logo-tripuraforestdept.png";
 import logoWorldBank from "@/assets/logo-theworldbank.jpg";
 
 export default function Footer() {
   const { t } = useLang();
+  const { settings } = useSettings();
   return (
     <footer className="bg-primary-dark text-primary-foreground mt-16">
       <div className="gov-container py-12 md:py-14 grid gap-10 md:gap-12 sm:grid-cols-2 lg:grid-cols-4">
@@ -182,14 +184,14 @@ export default function Footer() {
           <div className="space-y-3 text-sm opacity-90">
             <div className="flex items-start gap-2">
               <MapPin className="h-4 w-4 mt-0.5 shrink-0 text-accent" />{" "}
-              {t("footer.address")}
+              {settings.office_address}
             </div>
             <div className="flex items-center gap-2">
-              <Phone className="h-4 w-4 shrink-0 text-accent" /> +91 381 2416403
+              <Phone className="h-4 w-4 shrink-0 text-accent" /> {settings.contact_phone}
             </div>
             <div className="flex items-center gap-2">
               <Mail className="h-4 w-4 shrink-0 text-accent" />{" "}
-              info@element.tripura.gov.in
+              {settings.contact_email}
             </div>
           </div>
           <div className="flex gap-3 mt-4">
@@ -229,7 +231,7 @@ export default function Footer() {
         <div className="gov-container py-3 text-sm flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3 text-center flex-wrap">
           <Phone className="h-4 w-4 text-accent" />
           <span className="font-semibold">{t("common.helpline")}:</span>
-          <span>1800-345-3666</span>
+          <span>{settings.helpline_number}</span>
           <span className="hidden sm:inline opacity-60">|</span>
           <span className="opacity-90">{t("common.helplineHours")}</span>
           <span className="hidden sm:inline opacity-60">|</span>
