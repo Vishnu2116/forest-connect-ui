@@ -166,8 +166,9 @@ export default function HeroSlider() {
             role="group"
             aria-roledescription="slide"
             aria-label={`Slide ${idx + 1} of ${slides.length}: ${s.title}`}
-            className={`absolute inset-0 transition-opacity duration-700 ${idx === i ? "opacity-100" : "opacity-0"}`}
+            className={`absolute inset-0 transition-opacity duration-700 ${idx === i ? "opacity-100 pointer-events-auto z-10" : "opacity-0 pointer-events-none z-0"}`}
             aria-hidden={idx !== i}
+            inert={idx !== i ? "" : undefined as any}
           >
             <img
               src={s.img}
