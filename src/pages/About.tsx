@@ -48,6 +48,7 @@ import Animesh from "@/assets/dignitaries/Animesh.jpeg";
 import CS from "@/assets/dignitaries/CS.jpg";
 import SanjibDas from "@/assets/dignitaries/SanjibDas.png";
 import forestBg from "@/assets/hero-forest.jpg";
+import heroWaterShedBg from "@/assets/hero-watershed.jpg";
 
 function AboutLayout({
   title,
@@ -147,18 +148,20 @@ export function AboutElement() {
     <AboutLayout
       title="About PROJECT ELEMENT"
       subtitle="A joint initiative for landscape development, livelihood generation and economic transformation"
-      backgroundImage={forestBg}
+      backgroundImage={heroWaterShedBg}
     >
       <div className="space-y-10">
         {/* What is PROJECT ELEMENT? */}
         <div className="bg-card border border-border rounded-xl p-6 md:p-8 shadow-card">
-          <span className="inline-block bg-accent/10 text-accent text-[11px] font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-4">
-            About the Project
-          </span>
+          <div className="flex flex-col items-center text-center">
+            <span className="inline-block bg-accent/10 text-accent text-[11px] font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-4">
+              About the Project
+            </span>
 
-          <h3 className="text-2xl md:text-3xl font-bold text-primary mb-5">
-            What is PROJECT ELEMENT?
-          </h3>
+            <h3 className="text-2xl md:text-3xl font-bold text-primary mb-5">
+              What is PROJECT ELEMENT?
+            </h3>
+          </div>
 
           <div className="space-y-4 text-sm md:text-[15px] text-muted-foreground leading-relaxed">
             <p>
@@ -242,7 +245,7 @@ export function AboutElement() {
 
         {/* Stakeholders */}
         <div className="bg-card border border-border rounded-xl p-6 md:p-8 shadow-card">
-          <h3 className="text-xl md:text-2xl font-bold text-primary mb-3">
+          <h3 className="text-xl md:text-2xl font-bold text-primary mb-3 text-center">
             Stakeholders of PROJECT ELEMENT
           </h3>
           <p className="text-sm md:text-[15px] text-muted-foreground mb-5 leading-relaxed">
