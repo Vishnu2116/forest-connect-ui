@@ -8,6 +8,7 @@ export interface SiteSettings {
   contact_email: string;
   contact_phone: string;
   helpline_number: string;
+  last_updated_at: string | null;
 }
 
 const DEFAULTS: SiteSettings = {
@@ -16,6 +17,7 @@ const DEFAULTS: SiteSettings = {
   contact_email: "info@element.tripura.gov.in",
   contact_phone: "+91 381 2416403",
   helpline_number: "1800-345-3666",
+  last_updated_at: null,
 };
 
 interface Ctx {
@@ -43,6 +45,7 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
           contact_email: data.contact_email || DEFAULTS.contact_email,
           contact_phone: data.contact_phone || DEFAULTS.contact_phone,
           helpline_number: data.helpline_number || DEFAULTS.helpline_number,
+          last_updated_at: data.last_updated_at || null,
         });
       }
     } catch {
