@@ -8,7 +8,7 @@ import logoWorldBank from "@/assets/logo-theworldbank.jpg";
 
 export default function Footer() {
   const { t } = useLang();
-  const { settings } = useSettings();
+  const { settings, visitorCount } = useSettings();
   return (
     <footer className="bg-primary-dark text-primary-foreground mt-16">
       <div className="gov-container py-12 md:py-14 grid gap-10 md:gap-12 sm:grid-cols-2 lg:grid-cols-4">
