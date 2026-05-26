@@ -222,7 +222,15 @@ export default function Footer() {
             <span className="font-semibold text-accent">12,48,936</span>
           </div>
           <div className="mt-2 text-xs opacity-80">
-            {t("footer.lastUpdated")}: 28 April 2026
+            {t("footer.lastUpdated")}:{" "}
+            {settings.last_updated_at
+              ? new Date(settings.last_updated_at).toLocaleDateString("en-IN", {
+                  timeZone: "Asia/Kolkata",
+                  day: "numeric",
+                  month: "long",
+                  year: "numeric",
+                })
+              : "28 April 2026"}
           </div>
         </div>
       </div>
