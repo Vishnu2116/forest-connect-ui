@@ -32,7 +32,7 @@ export default function SocialMediaAdmin() {
 
   const saveEmbeds = async () => {
     setSavingEmbeds(true);
-    try { await adminSaveEmbeds({ facebook_embed_code: fb, twitter_embed_code: tw }); toast.success("Embeds saved"); await load(); }
+    try { await adminSaveEmbeds({ facebook_embed_code: fb, twitter_embed_code: tw }); toast.success("Embeds saved"); }
     catch { toast.error("Save failed"); }
     finally { setSavingEmbeds(false); }
   };
