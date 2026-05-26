@@ -20,17 +20,25 @@ const DEFAULTS: SiteSettings = {
   last_updated_at: null,
 };
 
+const FALLBACK_VISITOR_COUNT = 1248936;
+
 interface Ctx {
   settings: SiteSettings;
   refresh: () => Promise<void>;
+  visitorCount: number;
 }
 
-const SettingsContext = createContext<Ctx>({ settings: DEFAULTS, refresh: async () => {} });
+const SettingsContext = createContext<Ctx>({
+  settings: DEFAULTS,
+  refresh: async () => {},
+  visitorCount: FALLBACK_VISITOR_COUNT,
+});
 
 export const useSettings = () => useContext(SettingsContext);
 
 export function SettingsProvider({ children }: { children: ReactNode }) {
   const [settings, setSettings] = useState<SiteSettings>(DEFAULTS);
+  const [visitorCount, setVisitorCount] = useState<number>(FALLBACK_VISITOR_COUNT);
 
   const refresh = async () => {
     if (!USE_REAL_API) return;
@@ -57,8 +65,31 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
     refresh();
   }, []);
 
+  useEffect(() => {
+    if (!USE_REAL_API) return;
+    let cancelled = false;
+    (async () => {
+      try {
+        const res = await fetch(`${API_BASE_URL}/api/visitor/track`, {
+          method: "POST",
+          credentials: "include",
+        });
+        if (!res.ok) return;
+        const data = await res.json();
+        if (!cancelled && data && typeof data.count === "number" && data.count > 0) {
+          setVisitorCount(data.count);
+        }
+      } catch {
+        // keep fallback
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   return (
-    <SettingsContext.Provider value={{ settings, refresh }}>
+    <SettingsContext.Provider value={{ settings, refresh, visitorCount }}>
       <TitleSync title={settings.website_title} />
       {children}
     </SettingsContext.Provider>
