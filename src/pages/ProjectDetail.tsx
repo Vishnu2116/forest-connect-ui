@@ -97,8 +97,11 @@ export default function ProjectDetail() {
 
       <section className="py-10">
         <div className="gov-container">
-          <Link to="/projects" className="inline-flex items-center gap-1.5 text-sm text-primary hover:text-accent font-medium mb-6">
-            <ArrowLeft className="h-4 w-4" /> Back to all projects
+          <Link
+            to={project.component?.id ? `/components/${project.component.id}` : "/projects"}
+            className="inline-flex items-center gap-1.5 text-sm text-primary hover:text-accent font-medium mb-6"
+          >
+            <ArrowLeft className="h-4 w-4" /> Back to Projects
           </Link>
 
           <div className="grid lg:grid-cols-12 gap-8 mb-12">

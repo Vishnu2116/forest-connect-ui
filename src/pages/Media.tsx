@@ -265,7 +265,7 @@ export function MediaEventDetail() {
         breadcrumb={["Home", "Media", "Events", display.title]}
       />
       <section className="py-10">
-        <div className="gov-container max-w-5xl">
+        <div className="gov-container">
           <Link to="/media/events" className="text-sm text-primary inline-flex items-center gap-1 hover:underline mb-6">
             <ArrowLeft className="h-4 w-4" /> Back to all events
           </Link>
