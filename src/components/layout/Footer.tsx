@@ -219,7 +219,9 @@ export default function Footer() {
           </div>
           <div className="mt-4 text-xs opacity-80">
             {t("footer.visitor")}:{" "}
-            <span className="font-semibold text-accent">12,48,936</span>
+            <span className="font-semibold text-accent">
+              {visitorCount.toLocaleString("en-IN")}
+            </span>
           </div>
           <div className="mt-2 text-xs opacity-80">
             {t("footer.lastUpdated")}:{" "}
