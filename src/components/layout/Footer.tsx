@@ -8,7 +8,7 @@ import logoWorldBank from "@/assets/logo-theworldbank.jpg";
 
 export default function Footer() {
   const { t } = useLang();
-  const { settings } = useSettings();
+  const { settings, visitorCount } = useSettings();
   return (
     <footer className="bg-primary-dark text-primary-foreground mt-16">
       <div className="gov-container py-12 md:py-14 grid gap-10 md:gap-12 sm:grid-cols-2 lg:grid-cols-4">
@@ -219,7 +219,9 @@ export default function Footer() {
           </div>
           <div className="mt-4 text-xs opacity-80">
             {t("footer.visitor")}:{" "}
-            <span className="font-semibold text-accent">12,48,936</span>
+            <span className="font-semibold text-accent">
+              {visitorCount.toLocaleString("en-IN")}
+            </span>
           </div>
           <div className="mt-2 text-xs opacity-80">
             {t("footer.lastUpdated")}:{" "}
