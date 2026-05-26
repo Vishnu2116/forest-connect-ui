@@ -224,11 +224,14 @@ export default function Footer() {
           <div className="mt-2 text-xs opacity-80">
             {t("footer.lastUpdated")}:{" "}
             {settings.last_updated_at
-              ? new Date(settings.last_updated_at).toLocaleDateString("en-IN", {
+              ? new Date(settings.last_updated_at).toLocaleString("en-IN", {
                   timeZone: "Asia/Kolkata",
                   day: "numeric",
                   month: "long",
                   year: "numeric",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  hour12: true,
                 })
               : "28 April 2026"}
           </div>
