@@ -612,31 +612,113 @@ export function WhosWhoSection() {
 
 function ApiOfficialCard({ o }: { o: ApiOfficial }) {
   const img = resolvePhoto(o.photo_path);
+  const [open, setOpen] = useState(false);
   return (
-    <Link
-      to={`/about/officials/${o.id}`}
-      className="bg-card border border-border rounded-xl p-6 text-center hover:shadow-md hover:border-primary/30 transition cursor-pointer group block"
-    >
-      <div className="mx-auto h-20 w-20 rounded-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center text-primary-foreground group-hover:scale-105 transition-transform overflow-hidden">
-        {img ? (
-          <img src={img} alt={o.name} className="h-full w-full object-cover" />
-        ) : (
-          <User className="h-8 w-8" />
+    <>
+      <button
+        type="button"
+        onClick={() => setOpen(true)}
+        className="bg-card border border-border rounded-xl p-6 text-center hover:shadow-md hover:border-primary/30 transition cursor-pointer group block w-full"
+      >
+        <div className="mx-auto h-20 w-20 rounded-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center text-primary-foreground group-hover:scale-105 transition-transform overflow-hidden">
+          {img ? (
+            <img src={img} alt={o.name} className="h-full w-full object-cover" />
+          ) : (
+            <User className="h-8 w-8" />
+          )}
+        </div>
+        <h3 className="mt-4 font-bold text-sm text-primary">{o.name}</h3>
+        <p className="text-xs text-foreground font-semibold mt-1">{o.designation}</p>
+        {o.organisation && (
+          <p className="text-[11px] text-muted-foreground mt-0.5">{o.organisation}</p>
         )}
-      </div>
-      <h3 className="mt-4 font-bold text-sm text-primary">{o.name}</h3>
-      <p className="text-xs text-foreground font-semibold mt-1">
-        {o.designation}
-      </p>
-      {o.organisation && (
-        <p className="text-[11px] text-muted-foreground mt-0.5">
-          {o.organisation}
-        </p>
+        <div className="mt-3 text-xs text-accent font-semibold group-hover:underline">
+          View Profile →
+        </div>
+      </button>
+
+      {open && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60"
+          onClick={() => setOpen(false)}
+          role="dialog"
+          aria-modal="true"
+        >
+          <div
+            className="relative bg-card border border-border rounded-xl shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              type="button"
+              onClick={() => setOpen(false)}
+              aria-label="Close"
+              className="absolute right-3 top-3 p-1.5 rounded-md text-muted-foreground hover:bg-muted hover:text-foreground"
+            >
+              <X className="h-4 w-4" />
+            </button>
+            <div className="p-6 sm:p-8">
+              <div className="flex flex-col sm:flex-row gap-5 sm:gap-6 items-center sm:items-start text-center sm:text-left">
+                <div className="h-28 w-28 rounded-xl bg-gradient-to-br from-primary to-primary-light flex items-center justify-center text-primary-foreground overflow-hidden shrink-0">
+                  {img ? (
+                    <img src={img} alt={o.name} className="h-full w-full object-cover" />
+                  ) : (
+                    <User className="h-12 w-12" />
+                  )}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h2 className="text-xl sm:text-2xl font-bold text-primary">{o.name}</h2>
+                  <p className="text-sm sm:text-base font-semibold text-foreground mt-1">
+                    {o.designation}
+                  </p>
+                  {o.organisation && (
+                    <p className="text-sm text-muted-foreground mt-0.5">{o.organisation}</p>
+                  )}
+                  {o.category_name && (
+                    <span className="inline-block mt-2 text-[11px] font-semibold uppercase tracking-wide bg-accent/10 text-accent px-2 py-0.5 rounded-full">
+                      {o.category_name}
+                    </span>
+                  )}
+                </div>
+              </div>
+
+              <div className="mt-5 pt-5 border-t border-border space-y-2 text-sm text-muted-foreground">
+                {o.division_office && (
+                  <div className="flex items-start gap-2">
+                    <MapPin className="h-4 w-4 text-primary mt-0.5 shrink-0" />
+                    <span>{o.division_office}</span>
+                  </div>
+                )}
+                {o.phone && (
+                  <div className="flex items-center gap-2">
+                    <Phone className="h-4 w-4 text-primary" /> {o.phone}
+                  </div>
+                )}
+                {o.mobile && (
+                  <div className="flex items-center gap-2">
+                    <Smartphone className="h-4 w-4 text-primary" /> {o.mobile}
+                  </div>
+                )}
+                {o.email && (
+                  <div className="flex items-center gap-2">
+                    <Mail className="h-4 w-4 text-primary" />
+                    <a href={`mailto:${o.email}`} className="text-primary hover:underline break-all">
+                      {o.email}
+                    </a>
+                  </div>
+                )}
+              </div>
+
+              {o.bio && (
+                <div className="mt-5 pt-5 border-t border-border">
+                  <h3 className="text-xs font-semibold text-primary mb-2 uppercase tracking-wide">Biography</h3>
+                  <p className="text-sm text-foreground leading-relaxed whitespace-pre-line">{o.bio}</p>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
       )}
-      <div className="mt-3 text-xs text-accent font-semibold group-hover:underline">
-        View Profile →
-      </div>
-    </Link>
+    </>
   );
 }
 
