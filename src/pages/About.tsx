@@ -1208,12 +1208,9 @@ export function OfficialDirectory() {
                                 <User className="h-4 w-4" />
                               )}
                             </div>
-                            <Link
-                              to={`/about/officials/${entry.id}`}
-                              className="font-semibold text-foreground leading-snug whitespace-normal break-normal hover:text-primary"
-                            >
+                            <span className="font-semibold text-foreground leading-snug whitespace-normal break-normal">
                               {entry.name}
-                            </Link>
+                            </span>
                           </div>
                         </td>
                         <td className="py-3 px-3 text-foreground break-words leading-snug">
