@@ -1266,12 +1266,9 @@ export function OfficialDirectory() {
                         )}
                       </div>
                       <div>
-                        <Link
-                          to={`/about/officials/${entry.id}`}
-                          className="font-semibold text-sm text-foreground hover:text-primary"
-                        >
+                        <span className="font-semibold text-sm text-foreground">
                           {entry.name}
-                        </Link>
+                        </span>
                         <p className="text-xs text-primary font-medium">
                           {entry.designation}
                         </p>
