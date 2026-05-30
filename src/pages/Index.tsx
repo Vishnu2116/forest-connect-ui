@@ -150,17 +150,17 @@ const dummyLeadershipSlots = [
   },
   {
     slot_number: 2,
-    name: "Shri Animesh Debbarma",
-    designation: "Forest & Environment Minister",
-    organisation: "Government of Tripura",
-    image: Animesh,
-  },
-  {
-    slot_number: 3,
     name: "Shri Rabindra Kumar Samal, IFS",
     designation: "PCCF HOFF SFDA Chair Person",
     organisation: "Tripura Forest Department",
     image: PCCF,
+  },
+  {
+    slot_number: 3,
+    name: "Shri Animesh Debbarma",
+    designation: "Forest & Environment Minister",
+    organisation: "Government of Tripura",
+    image: Animesh,
   },
   {
     slot_number: 4,
@@ -976,8 +976,15 @@ export default function Home() {
     });
   }, [apiLeadership]);
 
-  const leftDignitaries = [leadershipSlots[0], leadershipSlots[1]];
-  const rightDignitaries = [leadershipSlots[2], leadershipSlots[3]];
+  const topRowDignitaries = [
+    leadershipSlots[0], // CM
+    leadershipSlots[2], // Forest Minister
+  ].filter(Boolean);
+
+  const bottomRowDignitaries = [
+    leadershipSlots[1], // Principal Secretary
+    leadershipSlots[3], // PCCF CEO
+  ].filter(Boolean);
 
   return (
     <PageLayout>
@@ -1002,10 +1009,11 @@ export default function Home() {
           {/* Mobile: dignitaries first, then center tabs */}
           <div className="lg:hidden space-y-6">
             <div className="grid grid-cols-2 gap-4">
-              {leftDignitaries.map((d) => (
+              {topRowDignitaries.map((d) => (
                 <DignitaryCard key={d.name} d={d} />
               ))}
-              {rightDignitaries.map((d) => (
+
+              {bottomRowDignitaries.map((d) => (
                 <DignitaryCard key={d.name} d={d} />
               ))}
             </div>
@@ -1021,13 +1029,13 @@ export default function Home() {
           </div>
 
           {/* Desktop: 3-column layout */}
-          <div className="hidden lg:grid grid-cols-[minmax(0,1fr)_minmax(0,2fr)_minmax(0,1fr)] gap-6 items-stretch">
+          <div className="hidden lg:grid grid-cols-[1fr_2fr_1fr] gap-6 items-start">
             <div className="grid grid-cols-1 gap-4">
-              {leftDignitaries.map((d) => (
-                <DignitaryCard key={d.name} d={d} />
-              ))}
+              <DignitaryCard d={leadershipSlots[0]} />
+              <DignitaryCard d={leadershipSlots[1]} />
             </div>
-            <div className="relative">
+
+            <div className="relative h-full">
               <div className="absolute inset-0">
                 <UpdatesPanel
                   updatesTab={updatesTab}
@@ -1036,10 +1044,10 @@ export default function Home() {
                 />
               </div>
             </div>
+
             <div className="grid grid-cols-1 gap-4">
-              {rightDignitaries.map((d) => (
-                <DignitaryCard key={d.name} d={d} />
-              ))}
+              <DignitaryCard d={leadershipSlots[2]} />
+              <DignitaryCard d={leadershipSlots[3]} />
             </div>
           </div>
         </div>
