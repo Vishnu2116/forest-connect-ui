@@ -20,21 +20,7 @@ export default function AdminLogin() {
     e.preventDefault();
     setError("");
 
-    if (!USE_REAL_API) {
-      // Preview/dummy mode — accept any credentials
-      sessionStorage.setItem("element_admin", user || "admin");
-      localStorage.setItem(
-        "element_admin",
-        JSON.stringify({
-          id: "demo",
-          email: user || "admin",
-          name: user || "Admin",
-        }),
-      );
-      localStorage.setItem("element_admin_token", "demo-token");
-      navigate("/admin");
-      return;
-    }
+
 
     setLoading(true);
     try {
