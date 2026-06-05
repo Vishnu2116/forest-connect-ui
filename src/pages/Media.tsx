@@ -32,13 +32,26 @@ export function SocialMedia() {
     : "";
   const safeTw = tw
     ? DOMPurify.sanitize(tw, {
-        ADD_TAGS: ["blockquote", "script", "a"],
+        ADD_TAGS: ["blockquote", "a"],
         ADD_ATTR: [
           "class", "href", "data-lang", "data-theme",
-          "async", "src", "charset",
+          "target", "rel",
         ],
       })
     : "";
+
+  useEffect(() => {
+    if (safeTw) {
+      const script = document.createElement("script");
+      script.src = "https://platform.twitter.com/widgets.js";
+      script.async = true;
+      script.charset = "utf-8";
+      document.body.appendChild(script);
+      return () => {
+        document.body.removeChild(script);
+      };
+    }
+  }, [safeTw]);
   const videos = data?.videos?.length ? data.videos : null;
 
   return (
