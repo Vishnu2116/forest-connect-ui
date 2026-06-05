@@ -1,5 +1,5 @@
-import { ReactNode, useEffect, useState } from "react";
-import { Link, NavLink, useNavigate, Outlet } from "react-router-dom";
+import { ReactNode, useState } from "react";
+import { Link, NavLink, useNavigate, Outlet, Navigate } from "react-router-dom";
 import {
   LayoutDashboard, Bell, Calendar, FileText, Users, Award, BookOpen, FolderKanban,
   Image as ImageIcon, Activity, Briefcase, TreePine, MessageSquare, FileQuestion,
