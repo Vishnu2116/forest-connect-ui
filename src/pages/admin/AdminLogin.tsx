@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import logoTripura from "@/assets/logo-tripura.png";
 import logoTripuraForest from "@/assets/logo-tripuraforestdept.png";
 import logoWorldBank from "@/assets/logo-theworldbank.jpg";
-import { API_BASE_URL, USE_REAL_API, resetSessionExpiredFlag } from "@/config/api";
+import { API_BASE_URL, resetSessionExpiredFlag } from "@/config/api";
 
 export default function AdminLogin() {
   const navigate = useNavigate();
