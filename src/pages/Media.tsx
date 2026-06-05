@@ -59,7 +59,7 @@ export function SocialMedia() {
               {fb ? (
                 <div
                   className="p-3 w-full flex justify-center overflow-x-hidden [&_iframe]:max-w-full [&_iframe]:w-full [&_blockquote]:max-w-full [&_*]:max-w-full"
-                  dangerouslySetInnerHTML={{ __html: fb }}
+                  dangerouslySetInnerHTML={{ __html: safeFb }}
                 />
               ) : (
                 <div className="aspect-[4/5] bg-muted/50 flex items-center justify-center text-muted-foreground text-sm">
@@ -75,7 +75,7 @@ export function SocialMedia() {
               {tw ? (
                 <div
                   className="p-3 w-full flex justify-center overflow-x-hidden [&_iframe]:max-w-full [&_iframe]:w-full [&_blockquote]:max-w-full [&_*]:max-w-full"
-                  dangerouslySetInnerHTML={{ __html: tw }}
+                  dangerouslySetInnerHTML={{ __html: safeTw }}
                 />
               ) : (
                 <div className="aspect-[4/5] bg-muted/50 flex items-center justify-center text-muted-foreground text-sm">
