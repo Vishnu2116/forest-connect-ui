@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
+import DOMPurify from "dompurify";
 import PageLayout, { PageHeader } from "@/components/layout/PageLayout";
 import { Facebook, Twitter, Youtube, ArrowRight, Calendar, MapPin, ArrowLeft } from "lucide-react";
 import { USE_REAL_API } from "@/config/api";
@@ -20,6 +21,24 @@ export function SocialMedia() {
 
   const fb = data?.embeds?.facebook_embed_code;
   const tw = data?.embeds?.twitter_embed_code;
+  const safeFb = fb
+    ? DOMPurify.sanitize(fb, {
+        ADD_TAGS: ["iframe"],
+        ADD_ATTR: [
+          "allow", "allowfullscreen", "frameborder", "scrolling",
+          "style", "width", "height", "src", "class", "href", "target",
+        ],
+      })
+    : "";
+  const safeTw = tw
+    ? DOMPurify.sanitize(tw, {
+        ADD_TAGS: ["blockquote", "script", "a"],
+        ADD_ATTR: [
+          "class", "href", "data-lang", "data-theme",
+          "async", "src", "charset",
+        ],
+      })
+    : "";
   const videos = data?.videos?.length ? data.videos : null;
 
   return (
@@ -40,7 +59,7 @@ export function SocialMedia() {
               {fb ? (
                 <div
                   className="p-3 w-full flex justify-center overflow-x-hidden [&_iframe]:max-w-full [&_iframe]:w-full [&_blockquote]:max-w-full [&_*]:max-w-full"
-                  dangerouslySetInnerHTML={{ __html: fb }}
+                  dangerouslySetInnerHTML={{ __html: safeFb }}
                 />
               ) : (
                 <div className="aspect-[4/5] bg-muted/50 flex items-center justify-center text-muted-foreground text-sm">
@@ -56,7 +75,7 @@ export function SocialMedia() {
               {tw ? (
                 <div
                   className="p-3 w-full flex justify-center overflow-x-hidden [&_iframe]:max-w-full [&_iframe]:w-full [&_blockquote]:max-w-full [&_*]:max-w-full"
-                  dangerouslySetInnerHTML={{ __html: tw }}
+                  dangerouslySetInnerHTML={{ __html: safeTw }}
                 />
               ) : (
                 <div className="aspect-[4/5] bg-muted/50 flex items-center justify-center text-muted-foreground text-sm">

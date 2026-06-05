@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import logoTripura from "@/assets/logo-tripura.png";
 import logoTripuraForest from "@/assets/logo-tripuraforestdept.png";
 import logoWorldBank from "@/assets/logo-theworldbank.jpg";
-import { API_BASE_URL, USE_REAL_API } from "@/config/api";
+import { API_BASE_URL, resetSessionExpiredFlag } from "@/config/api";
 
 export default function AdminLogin() {
   const navigate = useNavigate();
@@ -20,21 +20,7 @@ export default function AdminLogin() {
     e.preventDefault();
     setError("");
 
-    if (!USE_REAL_API) {
-      // Preview/dummy mode — accept any credentials
-      sessionStorage.setItem("element_admin", user || "admin");
-      localStorage.setItem(
-        "element_admin",
-        JSON.stringify({
-          id: "demo",
-          email: user || "admin",
-          name: user || "Admin",
-        }),
-      );
-      localStorage.setItem("element_admin_token", "demo-token");
-      navigate("/admin");
-      return;
-    }
+
 
     setLoading(true);
     try {
@@ -46,8 +32,7 @@ export default function AdminLogin() {
       if (res.status === 200) {
         const data = await res.json();
         localStorage.setItem("element_admin_token", data.token);
-        localStorage.setItem("element_admin", JSON.stringify(data.admin));
-        sessionStorage.setItem("element_admin", data.admin?.name || user);
+        resetSessionExpiredFlag();
         navigate("/admin");
       } else if (res.status === 401) {
         setError("Invalid email or password");
@@ -155,9 +140,7 @@ export default function AdminLogin() {
               {loading ? "Signing in..." : "Login to Dashboard"}
             </Button>
             <p className="text-[11px] text-center text-muted-foreground">
-              {USE_REAL_API
-                ? "Use your admin credentials."
-                : "Demo only — any credentials will be accepted."}
+              Use your admin credentials.
             </p>
           </form>
         </div>
