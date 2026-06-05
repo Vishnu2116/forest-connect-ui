@@ -1,29 +1,23 @@
-const hostname = window.location.hostname;
-const isLocalhost = hostname === 'localhost';
-const isEC2 = hostname === '18.61.78.224';
+export const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000';
 
-export const USE_REAL_API = isLocalhost || isEC2;
+export const USE_REAL_API = true;
 
-export const API_BASE_URL = isEC2
-  ? 'http://18.61.78.224'
-  : 'http://localhost:3000';
-
-// Always reads the token fresh from localStorage. Never cache the return value.
-// Use for multipart/form-data (file uploads) — do NOT set Content-Type, the
-// browser will set it with the correct boundary automatically.
 export const getAuthHeaders = () => ({
   Authorization: `Bearer ${localStorage.getItem('element_admin_token')}`,
 });
 
-// Use for JSON requests.
 export const getAuthJsonHeaders = () => ({
   Authorization: `Bearer ${localStorage.getItem('element_admin_token')}`,
   'Content-Type': 'application/json',
 });
 
-// Centralized 401 handler. On expired/invalid token: clear storage, notify,
-// and redirect to the admin login screen.
 let sessionExpiredHandled = false;
+
+export const resetSessionExpiredFlag = () => {
+  sessionExpiredHandled = false;
+};
+
 export const handleApiResponse = async (response) => {
   if (response && response.status === 401) {
     if (!sessionExpiredHandled) {
@@ -34,9 +28,9 @@ export const handleApiResponse = async (response) => {
       } catch (e) {
         // ignore
       }
-      localStorage.clear();
+      localStorage.removeItem('element_admin_token');
+      localStorage.removeItem('element_admin');
       sessionStorage.removeItem('element_admin');
-      // Small delay so the toast can render before navigation.
       setTimeout(() => {
         window.location.href = '/admin/login';
       }, 50);
@@ -68,7 +62,6 @@ if (typeof window !== 'undefined' && !window.__elementAdminFetchPatched) {
         response.status === 401 &&
         (url.includes('/api/admin/') || onAdminRoute)
       ) {
-        // Fire and forget — handleApiResponse will redirect.
         handleApiResponse(response.clone()).catch(() => {});
       }
     } catch (e) {
