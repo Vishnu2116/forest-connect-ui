@@ -21,6 +21,24 @@ export function SocialMedia() {
 
   const fb = data?.embeds?.facebook_embed_code;
   const tw = data?.embeds?.twitter_embed_code;
+  const safeFb = fb
+    ? DOMPurify.sanitize(fb, {
+        ADD_TAGS: ["iframe"],
+        ADD_ATTR: [
+          "allow", "allowfullscreen", "frameborder", "scrolling",
+          "style", "width", "height", "src", "class", "href", "target",
+        ],
+      })
+    : "";
+  const safeTw = tw
+    ? DOMPurify.sanitize(tw, {
+        ADD_TAGS: ["blockquote", "script", "a"],
+        ADD_ATTR: [
+          "class", "href", "data-lang", "data-theme",
+          "async", "src", "charset",
+        ],
+      })
+    : "";
   const videos = data?.videos?.length ? data.videos : null;
 
   return (
