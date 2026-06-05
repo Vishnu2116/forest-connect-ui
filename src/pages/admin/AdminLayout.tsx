@@ -31,12 +31,20 @@ export const adminMenu = [
 export default function AdminLayout() {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
-  const adminName = sessionStorage.getItem("element_admin") || "Admin";
 
-  useEffect(() => {
-    const token = localStorage.getItem("element_admin_token");
-    if (!token) navigate("/admin/login");
-  }, [navigate]);
+  const token = localStorage.getItem("element_admin_token");
+  if (!token) {
+    return <Navigate to="/admin/login" replace />;
+  }
+
+  let adminName = "Admin";
+  try {
+    const payload = JSON.parse(atob(token.split(".")[1] || ""));
+    adminName = payload?.name || payload?.email || "Admin";
+  } catch {
+    // ignore — non-JWT token (e.g. legacy), fall back to default
+  }
+
 
   const logout = () => {
     sessionStorage.removeItem("element_admin");
