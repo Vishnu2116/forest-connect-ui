@@ -140,9 +140,7 @@ export default function AdminLogin() {
               {loading ? "Signing in..." : "Login to Dashboard"}
             </Button>
             <p className="text-[11px] text-center text-muted-foreground">
-              {USE_REAL_API
-                ? "Use your admin credentials."
-                : "Demo only — any credentials will be accepted."}
+              Use your admin credentials.
             </p>
           </form>
         </div>
