@@ -9,6 +9,7 @@ import {
   fetchProcurements, formatDate as formatProcDate, formatSize as formatProcSize, resolveUrl as resolveProcUrl,
   statusClass, statusLabel, type ProcType, type ApiProcurement,
 } from "@/lib/procurements";
+import { getOriginalFilename } from "@/utils/fileDownload";
 
 type Row = { title: string; date: string; size?: string; type?: string; deadline?: string; status?: string };
 
