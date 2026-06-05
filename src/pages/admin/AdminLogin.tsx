@@ -46,8 +46,7 @@ export default function AdminLogin() {
       if (res.status === 200) {
         const data = await res.json();
         localStorage.setItem("element_admin_token", data.token);
-        localStorage.setItem("element_admin", JSON.stringify(data.admin));
-        sessionStorage.setItem("element_admin", data.admin?.name || user);
+        resetSessionExpiredFlag();
         navigate("/admin");
       } else if (res.status === 401) {
         setError("Invalid email or password");
