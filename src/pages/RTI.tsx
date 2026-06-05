@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import PageLayout, { PageHeader } from "@/components/layout/PageLayout";
 import { FileText, Download } from "lucide-react";
 import { API_BASE_URL, USE_REAL_API } from "@/config/api";
+import { getOriginalFilename } from "@/utils/fileDownload";
 
 type OfficerType = "public_information_officer" | "first_appellate_officer";
 
@@ -133,8 +134,9 @@ export default function RTI() {
                       {href ? (
                         <a
                           href={href}
+                          download={getOriginalFilename(d.file_path)}
                           target="_blank"
-                          rel="noreferrer"
+                          rel="noopener noreferrer"
                           className="text-accent hover:text-accent-hover"
                           aria-label={`Download ${d.title}`}
                         >

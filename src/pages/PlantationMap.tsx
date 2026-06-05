@@ -5,6 +5,7 @@ import {
   fetchMapKey, fetchGisYears, fetchGisDistricts, fetchGisSites,
   loadGoogleMaps, resolveGisUrl, formatKmlSize, GisSite, GisKmlFile,
 } from "@/lib/gis";
+import { getOriginalFilename } from "@/utils/fileDownload";
 
 const TRIPURA_CENTER = { lat: 23.9408, lng: 91.9882 };
 
@@ -214,7 +215,9 @@ export default function PlantationMap() {
                       </div>
                     </div>
                     {resolveGisUrl(selectedKml.file_path) && (
-                      <a href={resolveGisUrl(selectedKml.file_path)!} target="_blank" rel="noreferrer"
+                      <a href={resolveGisUrl(selectedKml.file_path)!}
+                         download={getOriginalFilename(selectedKml.file_path)}
+                         target="_blank" rel="noopener noreferrer"
                          className="inline-flex items-center gap-1 text-accent hover:underline text-xs">
                         <Download className="h-3.5 w-3.5" /> Download
                       </a>

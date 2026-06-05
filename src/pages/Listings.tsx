@@ -253,7 +253,9 @@ function KnowledgeHubApiListing({
                     </a>
                     <a
                       href={url || "#"}
-                      download
+                      download={getOriginalFilename(r.file_path || "")}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       onClick={(e) => { if (!url) e.preventDefault(); }}
                       className="p-1.5 text-accent hover:bg-accent/10 rounded inline-flex"
                       aria-label={`Download ${r.title}`}
@@ -396,7 +398,9 @@ function ProcurementApiListing({
                       ><Eye className="h-4 w-4" /></a>
                       <a
                         href={url || "#"}
-                        download
+                        download={getOriginalFilename(r.file_path || "")}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         onClick={(e) => { if (!url) e.preventDefault(); }}
                         className="p-1.5 text-accent hover:bg-accent/10 rounded inline-flex"
                         aria-label={`Download ${r.title}`}

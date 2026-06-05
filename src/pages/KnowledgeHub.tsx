@@ -5,6 +5,7 @@ import {
   fetchKnowledgeHub, categoryToType, formatMonthYear, formatSizeMB, resolveUrl,
   type ApiKHItem, type KHType,
 } from "@/lib/knowledgeHub";
+import { getOriginalFilename } from "@/utils/fileDownload";
 
 export default function KnowledgeHub({ initialCategory = "IEC Materials" }: { initialCategory?: string }) {
   const active = initialCategory;
@@ -62,7 +63,9 @@ export default function KnowledgeHub({ initialCategory = "IEC Materials" }: { in
                 {fileUrl && (
                   <a
                     href={fileUrl}
-                    download
+                    download={getOriginalFilename(k.file_path || "")}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="mt-3 inline-flex items-center justify-center gap-1.5 bg-accent hover:bg-accent-hover text-accent-foreground px-3 py-1.5 rounded text-xs font-semibold"
                   >
                     <Download className="h-3.5 w-3.5" /> Download
