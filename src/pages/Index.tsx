@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { API_BASE_URL, USE_REAL_API } from "@/config/api";
+import { getOriginalFilename } from "@/utils/fileDownload";
 import {
   Calendar,
   ArrowRight,
@@ -301,8 +302,9 @@ function UpdatesPanel({
           </div>
           <a
             href={fileUrl || "#"}
+            download={fileUrl ? getOriginalFilename(it.file_path || "") : undefined}
             target={fileUrl ? "_blank" : undefined}
-            rel="noreferrer"
+            rel="noopener noreferrer"
             onClick={(e) => {
               if (!fileUrl) e.preventDefault();
             }}
@@ -569,8 +571,9 @@ function UpdatesPanel({
                         </div>
                         <a
                           href={fileUrl || "#"}
+                          download={fileUrl ? getOriginalFilename(p.file_path || "") : undefined}
                           target={fileUrl ? "_blank" : undefined}
-                          rel="noreferrer"
+                          rel="noopener noreferrer"
                           onClick={(e) => {
                             if (!fileUrl) e.preventDefault();
                           }}

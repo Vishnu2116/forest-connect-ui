@@ -9,6 +9,7 @@ import {
   fetchProcurements, formatDate as formatProcDate, formatSize as formatProcSize, resolveUrl as resolveProcUrl,
   statusClass, statusLabel, type ProcType, type ApiProcurement,
 } from "@/lib/procurements";
+import { getOriginalFilename } from "@/utils/fileDownload";
 
 type Row = { title: string; date: string; size?: string; type?: string; deadline?: string; status?: string };
 
@@ -253,7 +254,9 @@ function KnowledgeHubApiListing({
                     </a>
                     <a
                       href={url || "#"}
-                      download
+                      download={getOriginalFilename(r.file_path || "")}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       onClick={(e) => { if (!url) e.preventDefault(); }}
                       className="p-1.5 text-accent hover:bg-accent/10 rounded inline-flex"
                       aria-label={`Download ${r.title}`}
@@ -396,7 +399,9 @@ function ProcurementApiListing({
                       ><Eye className="h-4 w-4" /></a>
                       <a
                         href={url || "#"}
-                        download
+                        download={getOriginalFilename(r.file_path || "")}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         onClick={(e) => { if (!url) e.preventDefault(); }}
                         className="p-1.5 text-accent hover:bg-accent/10 rounded inline-flex"
                         aria-label={`Download ${r.title}`}
