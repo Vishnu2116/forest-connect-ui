@@ -109,13 +109,6 @@ export default function KnowledgeHubAdmin() {
       const showThumb = editing.type !== "publication" && editing.type !== "report";
       if (showThumb && editing.thumbnail) fd.append("thumbnail", editing.thumbnail, editing.thumbnail.name);
 
-      // Debug: log FormData payload
-      console.log("[KH submit] payload:");
-      for (const [k, v] of fd.entries()) {
-        if (v instanceof File) console.log(" ", k, `File(${v.name}, ${v.size}b, ${v.type})`);
-        else console.log(" ", k, v);
-      }
-
       if (editing.id) await updateKHAdmin(editing.id, fd);
       else await createKHAdmin(fd);
       toast.success(editing.id ? "Updated" : "Created");
