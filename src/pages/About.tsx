@@ -1196,8 +1196,8 @@ export function OfficialDirectory() {
                         className="border-b border-border last:border-b-0 hover:bg-muted/30 transition align-top"
                       >
                         <td className="py-3 px-3">
-                          <div className="flex items-start gap-2.5">
-                            <div className="h-9 w-9 rounded-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center text-primary-foreground shrink-0 overflow-hidden">
+                          <div className="flex items-center gap-3">
+                            <div className="h-16 w-16 rounded-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center text-primary-foreground shrink-0 overflow-hidden">
                               {img ? (
                                 <img
                                   src={img}
@@ -1205,12 +1205,17 @@ export function OfficialDirectory() {
                                   className="h-full w-full object-cover"
                                 />
                               ) : (
-                                <User className="h-4 w-4" />
+                                <User className="h-6 w-6" />
                               )}
                             </div>
-                            <span className="font-semibold text-foreground leading-snug whitespace-normal break-normal">
-                              {entry.name}
-                            </span>
+                            <div className="flex flex-col justify-center">
+                              <span className="font-semibold text-foreground leading-snug whitespace-normal break-normal">
+                                {entry.name}
+                              </span>
+                              <span className="text-xs text-muted-foreground">
+                                {entry.designation}
+                              </span>
+                            </div>
                           </div>
                         </td>
                         <td className="py-3 px-3 text-foreground break-words leading-snug">
@@ -1253,27 +1258,27 @@ export function OfficialDirectory() {
                     key={entry.id}
                     className="bg-card border border-border rounded-xl p-4 shadow-sm"
                   >
-                    <div className="flex items-center gap-3 mb-3">
-                      <div className="h-12 w-12 rounded-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center text-primary-foreground shrink-0 overflow-hidden">
-                        {img ? (
-                          <img
-                            src={img}
-                            alt={entry.name}
-                            className="h-full w-full object-cover"
-                          />
-                        ) : (
-                          <User className="h-5 w-5" />
-                        )}
+                      <div className="flex items-center gap-3 mb-3">
+                        <div className="h-16 w-16 rounded-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center text-primary-foreground shrink-0 overflow-hidden">
+                          {img ? (
+                            <img
+                              src={img}
+                              alt={entry.name}
+                              className="h-full w-full object-cover"
+                            />
+                          ) : (
+                            <User className="h-6 w-6" />
+                          )}
+                        </div>
+                        <div className="flex flex-col justify-center">
+                          <span className="font-semibold text-sm text-foreground">
+                            {entry.name}
+                          </span>
+                          <p className="text-xs text-primary font-medium">
+                            {entry.designation}
+                          </p>
+                        </div>
                       </div>
-                      <div>
-                        <span className="font-semibold text-sm text-foreground">
-                          {entry.name}
-                        </span>
-                        <p className="text-xs text-primary font-medium">
-                          {entry.designation}
-                        </p>
-                      </div>
-                    </div>
                     <div className="space-y-1.5 text-xs text-muted-foreground">
                       {entry.division_office && (
                         <div className="flex items-start gap-2">
