@@ -1,4 +1,9 @@
-import { API_BASE_URL, USE_REAL_API, getAuthHeaders, getAuthJsonHeaders } from "@/config/api";
+import {
+  API_BASE_URL,
+  USE_REAL_API,
+  getAuthHeaders,
+  getAuthJsonHeaders,
+} from "@/config/api";
 import { projects as dummyProjectsRaw } from "@/data/content";
 
 export type ProjectStatus = "ongoing" | "pilot_phase" | "completed" | string;
@@ -69,7 +74,12 @@ export interface ApiProjectDetail extends ApiProjectCard {
 
 export function resolveImage(path?: string | null): string | null {
   if (!path) return null;
-  if (path.startsWith("http") || path.startsWith("data:") || path.startsWith("blob:")) return path;
+  if (
+    path.startsWith("http") ||
+    path.startsWith("data:") ||
+    path.startsWith("blob:")
+  )
+    return path;
   // Only prefix backend upload paths with API_BASE_URL.
   if (path.startsWith("/uploads/")) return `${API_BASE_URL ?? ""}${path}`;
   // Local Vite-imported assets or other absolute paths — return as-is.
@@ -77,7 +87,10 @@ export function resolveImage(path?: string | null): string | null {
 }
 
 export function slugify(s: string) {
-  return s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+  return s
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
 }
 
 export function statusBadgeClass(status?: string) {
@@ -95,10 +108,14 @@ export function statusBadgeClass(status?: string) {
 
 export function statusLabel(status?: string) {
   switch (status) {
-    case "ongoing": return "Ongoing";
-    case "pilot_phase": return "Pilot Phase";
-    case "completed": return "Completed";
-    default: return status || "—";
+    case "ongoing":
+      return "Ongoing";
+    case "pilot_phase":
+      return "Pilot Phase";
+    case "completed":
+      return "Completed";
+    default:
+      return status || "—";
   }
 }
 
@@ -110,52 +127,76 @@ export function dummyComponents(): ApiProjectComponent[] {
       component_number: 1,
       label: "PROJECT COMPONENT 1",
       name: "Landscape Management",
-      description: "Restoring degraded landscapes, watershed management and climate-resilient interventions across Tripura.",
+      description:
+        "Restoring degraded landscapes, watershed management and climate-resilient interventions across Tripura.",
       icon_name: "Trees",
-      stat1_label: "Area Restored", stat1_value: "18,500 Ha",
-      stat2_label: "Households Benefited", stat2_value: "25,000+",
-      stat3_label: "Livelihood Activities", stat3_value: "620+",
-      stat4_label: "Districts Covered", stat4_value: "8",
-      display_order: 1, is_active: true,
+      stat1_label: "Area Restored",
+      stat1_value: "18,500 Ha",
+      stat2_label: "Households Benefited",
+      stat2_value: "25,000+",
+      stat3_label: "Livelihood Activities",
+      stat3_value: "620+",
+      stat4_label: "Districts Covered",
+      stat4_value: "8",
+      display_order: 1,
+      is_active: true,
     },
     {
       id: "component-2",
       component_number: 2,
       label: "PROJECT COMPONENT 2",
       name: "Biodiversity & Ecosystem Services",
-      description: "Strengthening biodiversity conservation, community plantation drives and ecosystem services.",
+      description:
+        "Strengthening biodiversity conservation, community plantation drives and ecosystem services.",
       icon_name: "Leaf",
-      stat1_label: "Area Restored", stat1_value: "18,500 Ha",
-      stat2_label: "Households Benefited", stat2_value: "25,000+",
-      stat3_label: "Livelihood Activities", stat3_value: "620+",
-      stat4_label: "Districts Covered", stat4_value: "8",
-      display_order: 2, is_active: true,
+      stat1_label: "Area Restored",
+      stat1_value: "18,500 Ha",
+      stat2_label: "Households Benefited",
+      stat2_value: "25,000+",
+      stat3_label: "Livelihood Activities",
+      stat3_value: "620+",
+      stat4_label: "Districts Covered",
+      stat4_value: "8",
+      display_order: 2,
+      is_active: true,
     },
     {
       id: "component-3",
       component_number: 3,
       label: "PROJECT COMPONENT 3",
       name: "Livelihood Development",
-      description: "Developing sustainable value chains, enterprise support and community-led eco-tourism.",
+      description:
+        "Developing sustainable value chains, enterprise support and community-led eco-tourism.",
       icon_name: "Users",
-      stat1_label: "Area Restored", stat1_value: "18,500 Ha",
-      stat2_label: "Households Benefited", stat2_value: "25,000+",
-      stat3_label: "Livelihood Activities", stat3_value: "620+",
-      stat4_label: "Districts Covered", stat4_value: "8",
-      display_order: 3, is_active: true,
+      stat1_label: "Area Restored",
+      stat1_value: "18,500 Ha",
+      stat2_label: "Households Benefited",
+      stat2_value: "25,000+",
+      stat3_label: "Livelihood Activities",
+      stat3_value: "620+",
+      stat4_label: "Districts Covered",
+      stat4_value: "8",
+      display_order: 3,
+      is_active: true,
     },
     {
       id: "component-4",
       component_number: 4,
       label: "PROJECT COMPONENT 4",
       name: "Project Management, Monitoring & Learning",
-      description: "Project management, MIS/GIS, monitoring & evaluation, and knowledge dissemination.",
+      description:
+        "Project management, MIS/GIS, monitoring & evaluation, and knowledge dissemination.",
       icon_name: "BarChart3",
-      stat1_label: "Area Restored", stat1_value: "18,500 Ha",
-      stat2_label: "Households Benefited", stat2_value: "25,000+",
-      stat3_label: "Livelihood Activities", stat3_value: "620+",
-      stat4_label: "Districts Covered", stat4_value: "8",
-      display_order: 4, is_active: true,
+      stat1_label: "Area Restored",
+      stat1_value: "18,500 Ha",
+      stat2_label: "Households Benefited",
+      stat2_value: "25,000+",
+      stat3_label: "Livelihood Activities",
+      stat3_value: "620+",
+      stat4_label: "Districts Covered",
+      stat4_value: "8",
+      display_order: 4,
+      is_active: true,
     },
   ];
 }
@@ -166,10 +207,14 @@ export function dummyProjects(): ApiProjectCard[] {
     title: p.title,
     slug: slugify(p.title),
     subtitle: p.objective,
-    status: (p.status || "ongoing").toLowerCase().replace(/\s+/g, "_") as ProjectStatus,
+    status: (p.status || "ongoing")
+      .toLowerCase()
+      .replace(/\s+/g, "_") as ProjectStatus,
     thumbnail_image_path: p.image || null,
     component_id: null,
-    component: p.component ? { id: "", name: p.component, label: p.component, component_number: 0 } : null,
+    component: p.component
+      ? { id: "", name: p.component, label: p.component, component_number: 0 }
+      : null,
   }));
 }
 
@@ -198,7 +243,9 @@ export function dummyProjectDetail(slug: string): ApiProjectDetail | null {
     households: p.beneficiaries.match(/[\d,]+/)?.[0] || null,
     districts: "8",
     gallery: [],
-    component: p.component ? { id: "", name: p.component, label: p.component, component_number: 0 } : null,
+    component: p.component
+      ? { id: "", name: p.component, label: p.component, component_number: 0 }
+      : null,
   };
 }
 
@@ -226,7 +273,9 @@ function dummyComponentWithProjects(id: string): ApiProjectComponent | null {
   return { ...c, projects: projects.length ? projects : all };
 }
 
-export async function fetchComponent(id: string): Promise<ApiProjectComponent | null> {
+export async function fetchComponent(
+  id: string,
+): Promise<ApiProjectComponent | null> {
   if (!USE_REAL_API) return dummyComponentWithProjects(id);
   try {
     const r = await fetch(`${API_BASE_URL}/api/project-components/${id}`);
@@ -256,10 +305,15 @@ export async function fetchProjects(): Promise<ApiProjectCard[]> {
 }
 
 function dummyProjectFallback(slug: string): ApiProjectDetail | null {
-  return dummyProjectDetail(slug) || dummyProjectDetail(dummyProjects()[0]?.slug || "");
+  return (
+    dummyProjectDetail(slug) ||
+    dummyProjectDetail(dummyProjects()[0]?.slug || "")
+  );
 }
 
-export async function fetchProject(slug: string): Promise<ApiProjectDetail | null> {
+export async function fetchProject(
+  slug: string,
+): Promise<ApiProjectDetail | null> {
   if (!USE_REAL_API) return dummyProjectFallback(slug);
   try {
     const r = await fetch(`${API_BASE_URL}/api/projects/${slug}`);
@@ -282,7 +336,12 @@ export function getNavComponentsOnce(): Promise<ApiProjectComponent[]> {
 function dummyHighlights(): ApiProjectCard[] {
   const all = dummyProjects();
   const byTitle = (t: string) => all.find((p) => p.title === t);
-  const pick = (title: string, componentLabel: string, status: ProjectStatus, fallbackIdx: number): ApiProjectCard => {
+  const pick = (
+    title: string,
+    componentLabel: string,
+    status: ProjectStatus,
+    fallbackIdx: number,
+  ): ApiProjectCard => {
     const base = byTitle(title) ?? all[fallbackIdx % all.length];
     return {
       ...base,
@@ -291,20 +350,25 @@ function dummyHighlights(): ApiProjectCard[] {
       slug: base?.slug ?? slugify(title),
       status,
       thumbnail_image_path: base?.thumbnail_image_path ?? null,
-      component: { id: "", name: componentLabel, label: componentLabel, component_number: 0 },
+      component: {
+        id: "",
+        name: componentLabel,
+        label: componentLabel,
+        component_number: 0,
+      },
     };
   };
   return [
-    pick("Landscape Restoration and Productive Land Management", "Component 1 — Landscape Management", "ongoing", 0),
-    pick("Biodiversity Conservation & Ecosystem Services", "Component 2 — Biodiversity & Ecosystem Services", "ongoing", 1),
-    pick("Community Livelihood & Value Chain Development", "Component 3 — Livelihood Development", "ongoing", 2),
-    pick("Eco-Tourism & Enterprise Development", "Component 3 — Livelihood Development", "pilot_phase", 3),
-    pick("Climate Resilience & Watershed Management", "Component 1 — Landscape Management", "ongoing", 4),
-    pick("Watershed Development & Water Conservation", "Component 1 — Landscape Management", "ongoing", 4),
-    pick("Community Forest Management", "Component 2 — Biodiversity & Ecosystem Services", "ongoing", 5),
-    pick("Rural Enterprise & Value Chain Support", "Component 3 — Livelihood Development", "completed", 2),
-    pick("Soil Conservation & Land Restoration", "Component 1 — Landscape Management", "ongoing", 0),
-    pick("Biodiversity Monitoring & Ecosystem Services", "Component 2 — Biodiversity & Ecosystem Services", "pilot_phase", 1),
+    // pick("Landscape Restoration and Productive Land Management", "Component 1 — Landscape Management", "ongoing", 0),
+    // pick("Biodiversity Conservation & Ecosystem Services", "Component 2 — Biodiversity & Ecosystem Services", "ongoing", 1),
+    // pick("Community Livelihood & Value Chain Development", "Component 3 — Livelihood Development", "ongoing", 2),
+    // pick("Eco-Tourism & Enterprise Development", "Component 3 — Livelihood Development", "pilot_phase", 3),
+    // pick("Climate Resilience & Watershed Management", "Component 1 — Landscape Management", "ongoing", 4),
+    // pick("Watershed Development & Water Conservation", "Component 1 — Landscape Management", "ongoing", 4),
+    // pick("Community Forest Management", "Component 2 — Biodiversity & Ecosystem Services", "ongoing", 5),
+    // pick("Rural Enterprise & Value Chain Support", "Component 3 — Livelihood Development", "completed", 2),
+    // pick("Soil Conservation & Land Restoration", "Component 1 — Landscape Management", "ongoing", 0),
+    // pick("Biodiversity Monitoring & Ecosystem Services", "Component 2 — Biodiversity & Ecosystem Services", "pilot_phase", 1),
   ];
 }
 
@@ -323,20 +387,28 @@ export async function fetchHighlights(): Promise<ApiProjectCard[]> {
 
 /* ---------- Admin fetchers (no dummy fallback, always real API) ---------- */
 export async function fetchProjectsAdmin(): Promise<ApiProjectCard[]> {
-  const r = await fetch(`${API_BASE_URL}/api/projects`, { headers: getAuthHeaders() });
+  const r = await fetch(`${API_BASE_URL}/api/projects`, {
+    headers: getAuthHeaders(),
+  });
   if (!r.ok) throw new Error(`HTTP ${r.status}`);
   const data = await r.json();
   return Array.isArray(data) ? data : [];
 }
 
-export async function fetchProjectAdmin(slug: string): Promise<ApiProjectDetail | null> {
-  const r = await fetch(`${API_BASE_URL}/api/projects/${slug}`, { headers: getAuthHeaders() });
+export async function fetchProjectAdmin(
+  slug: string,
+): Promise<ApiProjectDetail | null> {
+  const r = await fetch(`${API_BASE_URL}/api/projects/${slug}`, {
+    headers: getAuthHeaders(),
+  });
   if (!r.ok) throw new Error(`HTTP ${r.status}`);
   return await r.json();
 }
 
 export async function fetchComponentsAdmin(): Promise<ApiProjectComponent[]> {
-  const r = await fetch(`${API_BASE_URL}/api/project-components`, { headers: getAuthHeaders() });
+  const r = await fetch(`${API_BASE_URL}/api/project-components`, {
+    headers: getAuthHeaders(),
+  });
   if (!r.ok) throw new Error(`HTTP ${r.status}`);
   const data = await r.json();
   return Array.isArray(data) ? data : [];
