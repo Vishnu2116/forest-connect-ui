@@ -1216,7 +1216,7 @@ export function OfficialDirectory() {
                     return (
                       <tr
                         key={entry.id}
-                        className="border-b border-border last:border-b-0 hover:bg-muted/30 transition align-top"
+                        className="border-b border-border last:border-b-0 hover:bg-muted/30 transition align-middle"
                       >
                         <td className="py-3 px-3">
                           <div className="flex items-center gap-3">
