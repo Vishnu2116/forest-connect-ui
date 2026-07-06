@@ -31,7 +31,7 @@ export const STATUS_OPTIONS: { value: ProcStatus; label: string }[] = [
 
 export const TYPE_OPTIONS: { value: ProcType; label: string }[] = [
   { value: "tender", label: "Tender" },
-  { value: "rfp", label: "RFP" },
+  // { value: "rfp", label: "RFP" }, // Removed per request — kept for future use
 ];
 
 export function resolveUrl(path?: string | null): string | null {

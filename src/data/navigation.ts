@@ -11,7 +11,7 @@ export const navItems: NavItem[] = [
     children: [
       { label: "About PROJECT ELEMENT", to: "/about" },
       { label: "Organization Structure", to: "/about/organization" },
-      { label: "Who's Who", to: "/about/whos-who" },
+      // { label: "Who's Who", to: "/about/whos-who" }, // Removed per request — kept for future use
       { label: "Memorandum of Association", to: "/about/memorandum" },
       { label: "Official Directory", to: "/about/directory" },
       { label: "Objectives", to: "/about/objectives" },
@@ -35,7 +35,7 @@ export const navItems: NavItem[] = [
       { label: "IEC Materials", to: "/knowledge-hub/iec" },
       { label: "Newsletters", to: "/knowledge-hub/newsletters" },
       { label: "Success Stories", to: "/knowledge-hub/success-stories" },
-      { label: "Thematic Studies", to: "/knowledge-hub/thematic" },
+      // { label: "Thematic Studies", to: "/knowledge-hub/thematic" }, // Removed per request — kept for future use
       { label: "Documentation", to: "/knowledge-hub/documentation" },
       { label: "Case Studies", to: "/knowledge-hub/case-studies" },
       { label: "Notifications", to: "/knowledge-hub/notifications" },
@@ -53,7 +53,7 @@ export const navItems: NavItem[] = [
   {
     labelKey: "nav.procurements",
     children: [
-      { label: "RFPs", to: "/procurements/rfps" },
+      // { label: "RFPs", to: "/procurements/rfps" }, // Removed per request — kept for future use
       { label: "Tenders", to: "/procurements/tenders" },
     ],
   },

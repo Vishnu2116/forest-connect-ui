@@ -12,7 +12,7 @@ export const KH_TYPES: { value: KHType; label: string; categoryLabel: string }[]
   { value: "iec_material",    label: "IEC Materials",      categoryLabel: "IEC Materials" },
   { value: "newsletter",      label: "Newsletters",        categoryLabel: "Newsletters" },
   { value: "success_story",   label: "Success Stories",    categoryLabel: "Success Stories" },
-  { value: "thematic_study",  label: "Thematic Studies",   categoryLabel: "Thematic Studies" },
+  // { value: "thematic_study",  label: "Thematic Studies",   categoryLabel: "Thematic Studies" }, // Removed per request — kept for future use
   { value: "documentation",   label: "Documentation",      categoryLabel: "Documentation" },
   { value: "case_study",      label: "Case Studies",       categoryLabel: "Case Studies" },
   { value: "notification",    label: "Notifications",      categoryLabel: "Notifications" },

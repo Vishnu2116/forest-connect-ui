@@ -42,10 +42,11 @@ export default function ComponentPage() {
   return (
     <PageLayout>
       <PageHeader
-        title={data?.name || "Project Component"}
+        title={data ? `Component ${data.component_number}` : "Project Component"}
         subtitle={data?.description || ""}
-        breadcrumb={["Home", "Project Components", data?.label || ""]}
+        breadcrumb={["Home", "Project Components", data ? `Component ${data.component_number}` : ""]}
       />
+      {/* Original title used data?.name and breadcrumb used data?.label — replaced per request with numeric label */}
 
       {loading && (
         <section className="py-10"><div className="gov-container"><p className="text-sm text-muted-foreground">Loading…</p></div></section>

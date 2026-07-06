@@ -6,7 +6,7 @@ export const knowledgeHubCategories = [
   { label: "IEC Materials", to: "/knowledge-hub/iec" },
   { label: "Newsletters", to: "/knowledge-hub/newsletters" },
   { label: "Success Stories", to: "/knowledge-hub/success-stories" },
-  { label: "Thematic Studies", to: "/knowledge-hub/thematic" },
+  // { label: "Thematic Studies", to: "/knowledge-hub/thematic" }, // Removed per request — kept for future use
   { label: "Documentation", to: "/knowledge-hub/documentation" },
   { label: "Case Studies", to: "/knowledge-hub/case-studies" },
   { label: "Notifications", to: "/knowledge-hub/notifications" },
