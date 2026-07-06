@@ -442,7 +442,9 @@ export const Procurements = () => (
 export const Tenders = () => (
   <ProcurementApiListing type="tender" title="Tenders" subtitle="Active and archived tender notices" breadcrumb={["Home", "Procurements", "Tenders"]} />
 );
-export const RFPs = () => (
-  <ProcurementApiListing type="rfp" title="RFPs" subtitle="Active Requests for Proposals under the PROJECT ELEMENT" breadcrumb={["Home", "Procurements", "RFPs"]} />
-);
+// Removed per request — kept for future use
+// export const RFPs = () => (
+//   <ProcurementApiListing type="rfp" title="RFPs" subtitle="Active Requests for Proposals under the PROJECT ELEMENT" breadcrumb={["Home", "Procurements", "RFPs"]} />
+// );
+export const RFPs = () => null;
 

@@ -14,7 +14,7 @@ export const searchIndex: SearchEntry[] = [
   // About
   { title: "About PROJECT ELEMENT", to: "/about", group: "About", keywords: "about element overview" },
   { title: "Organization Structure", to: "/about/organization", group: "About" },
-  { title: "Who's Who", to: "/about/whos-who", group: "About", keywords: "whos who team leadership" },
+  // { title: "Who's Who", to: "/about/whos-who", group: "About", keywords: "whos who team leadership" }, // Removed per request — kept for future use
   { title: "Memorandum of Association", to: "/about/memorandum", group: "About" },
   { title: "Official Directory", to: "/about/directory", group: "About" },
   { title: "Objectives", to: "/about/objectives", group: "About", keywords: "vision mission objectives" },
@@ -38,7 +38,7 @@ export const searchIndex: SearchEntry[] = [
   { title: "IEC Materials", to: "/knowledge-hub/iec", group: "Knowledge Hub" },
   { title: "Newsletters", to: "/knowledge-hub/newsletters", group: "Knowledge Hub" },
   { title: "Success Stories", to: "/knowledge-hub/success-stories", group: "Knowledge Hub" },
-  { title: "Thematic Studies", to: "/knowledge-hub/thematic", group: "Knowledge Hub" },
+  // { title: "Thematic Studies", to: "/knowledge-hub/thematic", group: "Knowledge Hub" }, // Removed per request — kept for future use
   { title: "Documentation", to: "/knowledge-hub/documentation", group: "Knowledge Hub" },
   { title: "Case Studies", to: "/knowledge-hub/case-studies", group: "Knowledge Hub" },
   { title: "Notifications", to: "/knowledge-hub/notifications", group: "Knowledge Hub" },
@@ -51,7 +51,7 @@ export const searchIndex: SearchEntry[] = [
 
   // Procurements
   { title: "Procurements", to: "/procurements", group: "Procurements" },
-  { title: "RFPs", to: "/procurements/rfps", group: "Procurements", keywords: "request for proposal" },
+  // { title: "RFPs", to: "/procurements/rfps", group: "Procurements", keywords: "request for proposal" }, // Removed per request — kept for future use
   { title: "Tenders", to: "/procurements/tenders", group: "Procurements" },
 
   // GIS / Map

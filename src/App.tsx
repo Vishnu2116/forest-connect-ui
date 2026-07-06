@@ -77,7 +77,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/about" element={<AboutElement />} />
           <Route path="/about/organization" element={<Organization />} />
-          <Route path="/about/whos-who" element={<WhosWhoSection />} />
+          {/* <Route path="/about/whos-who" element={<WhosWhoSection />} /> */} {/* Removed per request — kept for future use */}
           <Route path="/about/objectives" element={<VisionMission />} />
           <Route path="/about/vision-mission" element={<Navigate to="/about/objectives" replace />} />
           <Route path="/about/vision" element={<Navigate to="/about/objectives" replace />} />
@@ -93,14 +93,14 @@ const App = () => (
           <Route path="/knowledge-hub/iec" element={<KnowledgeHub initialCategory="IEC Materials" />} />
           <Route path="/knowledge-hub/newsletters" element={<KnowledgeHub initialCategory="Newsletters" />} />
           <Route path="/knowledge-hub/success-stories" element={<KnowledgeHub initialCategory="Success Stories" />} />
-          <Route path="/knowledge-hub/thematic" element={<KnowledgeHub initialCategory="Thematic Studies" />} />
+          {/* <Route path="/knowledge-hub/thematic" element={<KnowledgeHub initialCategory="Thematic Studies" />} /> */} {/* Removed per request — kept for future use */}
           <Route path="/knowledge-hub/documentation" element={<KnowledgeHub initialCategory="Documentation" />} />
           <Route path="/knowledge-hub/case-studies" element={<KnowledgeHub initialCategory="Case Studies" />} />
           <Route path="/knowledge-hub/notifications" element={<KnowledgeHub initialCategory="Notifications" />} />
           <Route path="/knowledge-hub/lessons" element={<KnowledgeHub initialCategory="Lessons Learned" />} />
           <Route path="/reports" element={<Reports />} />
           <Route path="/procurements" element={<Procurements />} />
-          <Route path="/procurements/rfps" element={<RFPs />} />
+          {/* <Route path="/procurements/rfps" element={<RFPs />} /> */} {/* Removed per request — kept for future use */}
           <Route path="/procurements/tenders" element={<Tenders />} />
           <Route path="/components/:id" element={<ComponentPage />} />
           <Route path="/media/social" element={<SocialMedia />} />

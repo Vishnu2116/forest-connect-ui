@@ -54,7 +54,8 @@ export default function ProjectComponents() {
                   </div>
                   <div className="p-5 flex flex-col flex-1">
                     <span className="text-[10px] font-bold uppercase tracking-wide text-accent">
-                      {c.label}
+                      {/* Original: {c.label} — replaced per request with numeric label */}
+                      {`Component ${c.component_number}`}
                     </span>
                     <h3 className="text-lg font-bold text-primary mt-1 leading-snug">{c.name}</h3>
                     <p className="text-sm text-muted-foreground mt-2 leading-relaxed flex-1">
