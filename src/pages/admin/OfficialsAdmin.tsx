@@ -386,15 +386,15 @@ function OfficialEditor({ form, setForm, categories, onCancel, onSave, saving, f
               <Textarea rows={4} value={form.bio} onChange={(e) => set("bio", e.target.value)} />
             </Field>
             <div className="flex gap-4 text-sm">
-              <label className="flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  checked={form.show_in_whos_who}
-                  onChange={(e) => set("show_in_whos_who", e.target.checked)}
-                />
-                Show in Who's Who
-              </label>
-              <label className="flex items-center gap-2">
+            {/* <label className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                checked={form.show_in_whos_who}
+                onChange={(e) => set("show_in_whos_who", e.target.checked)}
+              />
+              Show in Who's Who
+            </label> */}
+            <label className="flex items-center gap-2">
                 <input
                   type="checkbox"
                   checked={form.show_in_directory}

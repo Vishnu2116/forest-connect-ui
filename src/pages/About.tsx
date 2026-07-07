@@ -1235,9 +1235,6 @@ export function OfficialDirectory() {
                               <span className="font-semibold text-foreground leading-snug whitespace-normal break-normal">
                                 {entry.name}
                               </span>
-                              <span className="text-xs text-muted-foreground">
-                                {entry.designation}
-                              </span>
                             </div>
                           </div>
                         </td>
@@ -1297,9 +1294,6 @@ export function OfficialDirectory() {
                         <span className="font-semibold text-sm text-foreground">
                           {entry.name}
                         </span>
-                        <p className="text-xs text-primary font-medium">
-                          {entry.designation}
-                        </p>
                       </div>
                     </div>
                     <div className="space-y-1.5 text-xs text-muted-foreground">
