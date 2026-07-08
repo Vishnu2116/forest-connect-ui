@@ -4,11 +4,13 @@ import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { Loader2, Pencil, Plus, Trash2, Upload, X, ArrowLeft } from "lucide-react";
+import { Progress } from "@/components/ui/progress";
 import { toast } from "sonner";
 import {
   adminAddEventImages, adminDeleteEvent, adminDeleteEventImage, adminSaveEvent,
   adminToggleEventImageGallery, fetchEvent, fetchEvents, fileUrl, formatEventDate,
 } from "@/lib/media";
+import { batchUpload } from "@/lib/batchUpload";
 
 interface EventForm { id?: string; title: string; event_date: string; description: string; cover: File | null; }
 
