@@ -177,6 +177,20 @@ export function Gallery() {
   const display = showApi ? (items!.length ? items! : []) : fallback;
   const isEmpty = showApi && display.length === 0;
 
+  const lightboxImages: LightboxImage[] = useMemo(
+    () =>
+      (display as any[])
+        .filter((img) => img.image_path)
+        .map((img) => ({ src: fileUrl(img.image_path), caption: img.caption || "" })),
+    [display]
+  );
+  const [lbIndex, setLbIndex] = useState(-1);
+
+  const openLightbox = (img: any) => {
+    const idx = lightboxImages.findIndex((li) => li.src === fileUrl(img.image_path));
+    if (idx >= 0) setLbIndex(idx);
+  };
+
   return (
     <PageLayout>
       <PageHeader
@@ -192,13 +206,18 @@ export function Gallery() {
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
               {display.map((img: any) => (
                 <figure key={img.id} className="rounded-lg overflow-hidden border border-border bg-card">
-                  <div className="aspect-square bg-gradient-to-br from-primary/10 to-primary-light/10 flex items-center justify-center text-[11px] text-muted-foreground text-center px-2">
+                  <button
+                    type="button"
+                    onClick={() => openLightbox(img)}
+                    disabled={!img.image_path}
+                    className="block w-full aspect-square bg-gradient-to-br from-primary/10 to-primary-light/10 flex items-center justify-center text-[11px] text-muted-foreground text-center px-2 cursor-zoom-in disabled:cursor-default"
+                  >
                     {img.image_path ? (
                       <img src={fileUrl(img.image_path)} alt={img.caption || ""} className="w-full h-full object-cover" loading="lazy" />
                     ) : (
                       <span>{img.caption}</span>
                     )}
-                  </div>
+                  </button>
                   {img.caption && (
                     <figcaption className="px-2 py-1.5 text-[11px] text-muted-foreground truncate">{img.caption}</figcaption>
                   )}
@@ -208,6 +227,14 @@ export function Gallery() {
           )}
         </div>
       </section>
+      {lbIndex >= 0 && (
+        <Lightbox
+          images={lightboxImages}
+          index={lbIndex}
+          onClose={() => setLbIndex(-1)}
+          onIndexChange={setLbIndex}
+        />
+      )}
     </PageLayout>
   );
 }
