@@ -57,9 +57,8 @@ export default function Navbar() {
         if (!alive || !Array.isArray(items) || items.length === 0) return;
         setComponentChildren(
           items.map((c) => ({
-            label: c.component_number != null
-              ? `Component ${c.component_number}`
-              : c.name || c.label || "Component",
+            label: c.label
+              || (c.component_number != null ? `Component ${c.component_number}` : c.name || "Component"),
             to: `/components/${c.id}`,
           })),
         );
