@@ -326,8 +326,6 @@ export function MediaEventDetail() {
   const eventLightboxImages: LightboxImage[] = (display.images || [])
     .filter((img: any) => img.image_path)
     .map((img: any) => ({ src: fileUrl(img.image_path), caption: img.caption || "" }));
-  const [lbIndex, setLbIndex] = [] as any; // placeholder to satisfy TS-less scan
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [lightboxIndex, setLightboxIndex] = useState(-1);
 
   const openEventLightbox = (img: any) => {
