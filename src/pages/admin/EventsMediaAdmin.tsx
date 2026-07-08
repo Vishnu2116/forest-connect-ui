@@ -315,9 +315,9 @@ function EventImagesManager({ id, onBack }: { id: string; onBack: () => void }) 
 
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
             {images.map((img: any) => (
-              <div key={img.id} className="border border-border rounded-md overflow-hidden bg-card">
+              <div key={img.id} className={`border border-border rounded-md overflow-hidden bg-card ${selectedIds.has(img.id) ? "ring-2 ring-blue-500" : ""}`}>
                 <div className="relative group">
-                  <div className="absolute top-1.5 left-1.5 z-10 opacity-0 group-hover:opacity-100 transition">
+                  <div className={`absolute top-1.5 left-1.5 z-10 transition ${selectedIds.has(img.id) ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`}>
                     <Checkbox
                       checked={selectedIds.has(img.id)}
                       onCheckedChange={() => toggleSelection(img.id)}
