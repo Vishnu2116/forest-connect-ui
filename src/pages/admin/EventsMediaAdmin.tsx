@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
-import { Loader2, Pencil, Plus, Trash2, Upload, X, ArrowLeft } from "lucide-react";
+import { Loader2, Pencil, Plus, Trash2, Upload, X, ArrowLeft, Eye, EyeOff } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { toast } from "sonner";
 import {
@@ -147,6 +147,8 @@ function EventImagesManager({ id, onBack }: { id: string; onBack: () => void }) 
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const [bulkDeleting, setBulkDeleting] = useState(false);
   const [bulkProgress, setBulkProgress] = useState<{ current: number; total: number } | null>(null);
+  const [bulkToggling, setBulkToggling] = useState(false);
+  const [bulkToggleProgress, setBulkToggleProgress] = useState<{ current: number; total: number } | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const load = async () => {
