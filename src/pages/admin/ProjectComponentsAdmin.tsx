@@ -14,7 +14,7 @@ interface FormState {
   label: string;
   name: string;
   description: string;
-  objectives: string;
+  objectives: string[];
   icon_name: string;
   stat1_label: string; stat1_value: string;
   stat2_label: string; stat2_value: string;
@@ -30,7 +30,7 @@ function emptyForm(): FormState {
     label: "",
     name: "",
     description: "",
-    objectives: "",
+    objectives: [""],
     icon_name: "Trees",
     stat1_label: "", stat1_value: "",
     stat2_label: "", stat2_value: "",
@@ -68,7 +68,11 @@ export default function ProjectComponentsAdmin() {
       label: c.label || "",
       name: c.name || "",
       description: c.description || "",
-      objectives: (c as any).objectives || "",
+      objectives: (() => {
+        const raw = ((c as any).objectives || "") as string;
+        const lines = raw.split("\n");
+        return lines.length ? lines : [""];
+      })(),
       icon_name: c.icon_name || "Trees",
       stat1_label: c.stat1_label || "", stat1_value: c.stat1_value || "",
       stat2_label: c.stat2_label || "", stat2_value: c.stat2_value || "",
@@ -83,8 +87,9 @@ export default function ProjectComponentsAdmin() {
     if (!USE_REAL_API) { toast.success("Saved (preview only)"); setEditing(null); return; }
     setSaving(true);
     try {
-      const body = { ...editing };
-      delete (body as any).id;
+      const body: any = { ...editing };
+      body.objectives = (editing.objectives || []).map((s) => s.trim()).filter(Boolean).join("\n");
+      delete body.id;
       const url = editing.id
         ? `${API_BASE_URL}/api/admin/project-components/${editing.id}`
         : `${API_BASE_URL}/api/admin/project-components`;
@@ -217,12 +222,42 @@ function Editor({
           </Field>
           <Field label="Description"><Textarea rows={3} value={form.description} onChange={(e) => set("description", e.target.value)} /></Field>
           <Field label="OBJECTIVES">
-            <Textarea
-              rows={4}
-              value={form.objectives}
-              onChange={(e) => set("objectives", e.target.value)}
-              placeholder="Enter each objective on a new line"
-            />
+            <div className="space-y-2">
+              {(form.objectives.length ? form.objectives : [""]).map((val, idx) => (
+                <div key={idx} className="flex items-center gap-2">
+                  <Input
+                    value={val}
+                    onChange={(e) => {
+                      const next = [...form.objectives];
+                      next[idx] = e.target.value;
+                      set("objectives", next);
+                    }}
+                    placeholder="Objective"
+                  />
+                  <Button
+                    type="button"
+                    size="sm"
+                    variant="outline"
+                    onClick={() => {
+                      const next = form.objectives.filter((_, i) => i !== idx);
+                      set("objectives", next.length ? next : [""]);
+                    }}
+                    aria-label="Remove objective"
+                  >
+                    <X className="h-3 w-3" />
+                  </Button>
+                </div>
+              ))}
+              <Button
+                type="button"
+                size="sm"
+                variant="outline"
+                onClick={() => set("objectives", [...form.objectives, ""])}
+                className="gap-1.5"
+              >
+                <Plus className="h-3 w-3" /> Add Objective
+              </Button>
+            </div>
             <p className="text-[11px] text-muted-foreground mt-1">Each line will show as a separate bullet point on the public page</p>
           </Field>
 
