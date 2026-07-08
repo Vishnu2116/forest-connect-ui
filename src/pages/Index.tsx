@@ -43,7 +43,7 @@ import PCCF from "@/assets/dignitaries/ShriRabindraKumarSamal_PCCF.jpg";
  *
  * The actual scroll engine lives in:  src/hooks/useAutoScroll.ts
  * ──────────────────────────────────────────────────────────────────────────── */
-// Controls: What's New, Notifications, Tenders (Updates panel)
+// Controls: What's New (Updates panel)
 const AUTO_SCROLL_SPEED_UPDATES = 28;
 // Controls: Project Highlights column
 const AUTO_SCROLL_SPEED_PROJECTS = 24;
@@ -52,7 +52,7 @@ const MANUAL_STEP_PX = 96;
 
 const announcementDescriptions: Record<string, string> = {
   Recruitment: "Applications invited for PROJECT ELEMENT positions.",
-  Tender: "Sealed tenders for livelihood infrastructure and civil works.",
+  Tender: "Sealed e-tenders for livelihood infrastructure and civil works.",
   Event: "Community engagement and stakeholder events.",
   Notification: "Project guidelines and circulars issued.",
   Report: "Progress reports published for public reference.",
@@ -202,7 +202,7 @@ function getUpdateIcon(tag: string) {
   switch (tag) {
     case "Recruitment":
       return UserCheck;
-    case "Tender":
+    case "E-Tender":
       return FileText;
     case "Event":
       return Calendar;
@@ -269,7 +269,7 @@ function UpdatesPanel({
     const typeMap: Record<string, string> = {
       notification: "Notification",
       report: "Report",
-      tender: "Tender",
+      tender: "E-Tender",
       rfp: "RFP",
       event: "Event",
       project: "Project",
