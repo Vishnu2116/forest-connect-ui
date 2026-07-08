@@ -4,11 +4,13 @@ import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { Loader2, Pencil, Plus, Trash2, Upload, X, ArrowLeft } from "lucide-react";
+import { Progress } from "@/components/ui/progress";
 import { toast } from "sonner";
 import {
   adminAddEventImages, adminDeleteEvent, adminDeleteEventImage, adminSaveEvent,
   adminToggleEventImageGallery, fetchEvent, fetchEvents, fileUrl, formatEventDate,
 } from "@/lib/media";
+import { batchUpload } from "@/lib/batchUpload";
 
 interface EventForm { id?: string; title: string; event_date: string; description: string; cover: File | null; }
 
@@ -140,6 +142,7 @@ function EventImagesManager({ id, onBack }: { id: string; onBack: () => void }) 
   const [ev, setEv] = useState<any | null>(null);
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState<{ uploaded: number; total: number } | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const load = async () => {
@@ -159,12 +162,36 @@ function EventImagesManager({ id, onBack }: { id: string; onBack: () => void }) 
   useEffect(() => { load(); }, [id]);
 
   const onSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = Array.from(e.target.files || []).slice(0, 20);
+    const files = Array.from(e.target.files || []);
     if (!files.length) return;
     setUploading(true);
-    try { await adminAddEventImages(id, files); toast.success(`Uploaded ${files.length}`); await load(); }
-    catch { toast.error("Upload failed"); }
-    finally { setUploading(false); if (inputRef.current) inputRef.current.value = ""; }
+    setUploadProgress({ uploaded: 0, total: files.length });
+    const result = await batchUpload(
+      files,
+      10,
+      (batch) => adminAddEventImages(id, batch),
+      ({ uploaded, total, batchIndex, totalBatches }) => {
+        setUploadProgress({ uploaded, total });
+        if (uploaded < total) {
+          toast.message(`Uploading batch ${batchIndex} of ${totalBatches}…`, {
+            description: `${uploaded} of ${total} images uploaded`,
+            id: "event-batch-upload",
+          });
+        }
+      }
+    );
+    if (result.errors.length) {
+      result.errors.forEach((er) =>
+        toast.error(`Batch ${er.batchIndex} failed`, { description: String((er.error as any)?.message || er.error) })
+      );
+    }
+    if (result.uploaded > 0) {
+      toast.success(`${result.uploaded} image${result.uploaded === 1 ? "" : "s"} uploaded successfully`);
+    }
+    await load();
+    setUploadProgress(null);
+    setUploading(false);
+    if (inputRef.current) inputRef.current.value = "";
   };
 
   const del = async (imgId: string) => {
@@ -193,6 +220,14 @@ function EventImagesManager({ id, onBack }: { id: string; onBack: () => void }) 
         }
       />
       <input ref={inputRef} type="file" accept="image/*" multiple className="hidden" onChange={onSelect} />
+      {uploadProgress && (
+        <div className="mb-4 rounded-md border border-border bg-card p-3">
+          <div className="text-xs text-muted-foreground mb-2">
+            Uploading {Math.min(uploadProgress.uploaded + 1, uploadProgress.total)} of {uploadProgress.total} images…
+          </div>
+          <Progress value={(uploadProgress.uploaded / uploadProgress.total) * 100} />
+        </div>
+      )}
 
       {loading ? (
         <div className="flex items-center gap-2 text-sm text-muted-foreground"><Loader2 className="h-4 w-4 animate-spin" /> Loading…</div>

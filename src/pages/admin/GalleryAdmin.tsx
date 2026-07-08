@@ -1,14 +1,17 @@
 import { useEffect, useRef, useState } from "react";
 import { AdminPageHeader } from "./AdminLayout";
 import { Button } from "@/components/ui/button";
+import { Progress } from "@/components/ui/progress";
 import { Loader2, Trash2, Upload } from "lucide-react";
 import { toast } from "sonner";
 import { adminDeleteGallery, adminUploadGallery, fetchGallery, fileUrl } from "@/lib/media";
+import { batchUpload } from "@/lib/batchUpload";
 
 export default function GalleryAdmin() {
   const [items, setItems] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState<{ uploaded: number; total: number } | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const load = async () => {
@@ -19,15 +22,36 @@ export default function GalleryAdmin() {
   useEffect(() => { load(); }, []);
 
   const onSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = Array.from(e.target.files || []).slice(0, 20);
+    const files = Array.from(e.target.files || []);
     if (!files.length) return;
     setUploading(true);
-    try {
-      await adminUploadGallery(files);
-      toast.success(`Uploaded ${files.length} image(s)`);
-      await load();
-    } catch { toast.error("Upload failed"); }
-    finally { setUploading(false); if (inputRef.current) inputRef.current.value = ""; }
+    setUploadProgress({ uploaded: 0, total: files.length });
+    const result = await batchUpload(
+      files,
+      10,
+      (batch) => adminUploadGallery(batch),
+      ({ uploaded, total, batchIndex, totalBatches }) => {
+        setUploadProgress({ uploaded, total });
+        if (uploaded < total) {
+          toast.message(`Uploading batch ${batchIndex} of ${totalBatches}…`, {
+            description: `${uploaded} of ${total} images uploaded`,
+            id: "gallery-batch-upload",
+          });
+        }
+      }
+    );
+    if (result.errors.length) {
+      result.errors.forEach((er) =>
+        toast.error(`Batch ${er.batchIndex} failed`, { description: String((er.error as any)?.message || er.error) })
+      );
+    }
+    if (result.uploaded > 0) {
+      toast.success(`${result.uploaded} image${result.uploaded === 1 ? "" : "s"} uploaded successfully`);
+    }
+    await load();
+    setUploadProgress(null);
+    setUploading(false);
+    if (inputRef.current) inputRef.current.value = "";
   };
 
   const del = async (id: string) => {
@@ -49,6 +73,14 @@ export default function GalleryAdmin() {
         }
       />
       <input ref={inputRef} type="file" accept="image/*" multiple className="hidden" onChange={onSelect} />
+      {uploadProgress && (
+        <div className="mb-4 rounded-md border border-border bg-card p-3">
+          <div className="text-xs text-muted-foreground mb-2">
+            Uploading {Math.min(uploadProgress.uploaded + 1, uploadProgress.total)} of {uploadProgress.total} images…
+          </div>
+          <Progress value={(uploadProgress.uploaded / uploadProgress.total) * 100} />
+        </div>
+      )}
 
       {loading ? (
         <div className="flex items-center gap-2 text-sm text-muted-foreground"><Loader2 className="h-4 w-4 animate-spin" /> Loading…</div>
