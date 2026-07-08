@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import DOMPurify from "dompurify";
 import PageLayout, { PageHeader } from "@/components/layout/PageLayout";
 import { Facebook, Twitter, Youtube, ArrowRight, Calendar, MapPin, ArrowLeft } from "lucide-react";
 import { USE_REAL_API } from "@/config/api";
 import { fetchGallery, fetchEvents, fetchEvent, fetchSocial, fileUrl, formatEventDate, youtubeEmbed } from "@/lib/media";
+import Lightbox, { LightboxImage } from "@/components/common/Lightbox";
 
 const dummyVideos = [
   { id: "1", title: "PROJECT ELEMENT Overview" },
