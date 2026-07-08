@@ -8,6 +8,7 @@ import {
   MapPin,
   Bell,
   Trees,
+  Sprout,
   BookOpen,
   User,
   TrendingUp,
@@ -108,36 +109,28 @@ const isItemNew = (_title: string) => true;
 
 const pillars = [
   {
-    icon: Briefcase,
-    label: "Livelihood Generation",
-    stat: "620+",
-    statLabel: "Activities",
-    desc: "Sustainable income through value chains & enterprise",
-    gradient: "from-primary to-primary-light",
-  },
-  {
-    icon: TrendingUp,
-    label: "Economic Transformation",
-    stat: "₹45 Cr+",
-    statLabel: "Investment",
-    desc: "Boosting rural economy across all 8 districts",
-    gradient: "from-accent to-accent-hover",
-  },
-  {
-    icon: Mountain,
-    label: "Landscape Restoration",
-    stat: "18,500",
-    statLabel: "Hectares",
-    desc: "Restoring degraded lands for productive use",
-    gradient: "from-primary to-primary-light",
+    icon: Sprout,
+    stat: "821",
+    statLabel: "Villages",
+    label: "Project beneficiaries",
+    desc: "The primary beneficiaries of ELEMENT Project are tribal population and forest dwellers.",
+    gradient: "from-green-500 to-emerald-600",
   },
   {
     icon: Handshake,
-    label: "Community Development",
-    stat: "25,000+",
+    stat: "75,000",
+    statLabel: "Direct Beneficiaries",
+    label: "Direct beneficiaries",
+    desc: "The project beneficiaries would mainly comprise of families of identified JFMC members across villages in project area.",
+    gradient: "from-blue-500 to-cyan-600",
+  },
+  {
+    icon: Briefcase,
+    stat: "1,48,800",
     statLabel: "Households",
-    desc: "Empowering communities through participation",
-    gradient: "from-accent to-accent-hover",
+    label: "Direct and indirect households",
+    desc: "The project will cover 1,48,800 households direct and indirect.",
+    gradient: "from-amber-500 to-orange-600",
   },
 ];
 
@@ -320,7 +313,6 @@ function UpdatesPanel({
       } else {
         navigate(`/knowledge-hub/${itemType}`);
       }
-
     };
 
     return (
@@ -361,7 +353,6 @@ function UpdatesPanel({
       </article>
     );
   };
-
 
   return (
     <div className="bg-card border border-border rounded-md overflow-hidden h-full flex flex-col">
@@ -447,7 +438,11 @@ function UpdatesPanel({
                 );
               })}
             {updatesTab === "notifications" && apiNotifs.length > 0 && (
-              <>{apiNotifs.map((it, i) => renderApiItem(it, i, "notifications"))}</>
+              <>
+                {apiNotifs.map((it, i) =>
+                  renderApiItem(it, i, "notifications"),
+                )}
+              </>
             )}
             {updatesTab === "notifications" && apiNotifs.length === 0 && (
               <>
@@ -1108,13 +1103,15 @@ export default function Home() {
               What is ELEMENT?
             </h2>
             <p className="text-muted-foreground mt-3 text-sm md:text-base max-w-2xl mx-auto mb-6">
-              A flagship initiative of the Government of Tripura and the World
-              Bank — transforming livelihoods, landscapes, and communities
-              across all 8 districts.
+              The “Enhancing Landscape and Ecosystem Management (ELEMENT)”
+              Project is proposed with an overarching objective to increase the
+              resilience of landscapes and forest-dependent communities in the
+              North-Eastern Region of India starting with the two states of
+              Tripura and Nagaland.
             </p>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10 pb-3">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10 pb-3">
             {pillars.map((p) => (
               <div
                 key={p.label}

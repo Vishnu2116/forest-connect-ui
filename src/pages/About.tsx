@@ -165,62 +165,66 @@ export function AboutElement() {
 
           <div className="space-y-4 text-sm md:text-[15px] text-muted-foreground leading-relaxed">
             <p>
-              Tripura, located in the North-Eastern region of India, is endowed
-              with rich forest resources, diverse ecosystems, and significant
-              ecological wealth that support the livelihoods and well-being of
-              forest-dependent communities while contributing to ecological
-              sustainability.
+              The “Enhancing Landscape and Ecosystem Management (ELEMENT)”
+              Project is proposed with an overarching objective to increase the
+              resilience of landscapes and forest-dependent communities in the
+              North-Eastern Region of India starting with the two states of
+              Tripura and Nagaland. Project is structured in a way that provides
+              an opportunity.
             </p>
 
-            <p>
-              Increasing anthropogenic pressures, land-use changes, climate
-              variability, and unsustainable resource utilization have
-              contributed to degradation of forest ecosystems in certain
-              landscapes of the State, highlighting the need for integrated and
-              climate-resilient landscape management approaches.
-            </p>
-
-            <p>
-              <strong>PROJECT ELEMENT</strong> (Enhancing Landscape and
-              Ecosystem Management) has been conceptualized to strengthen
-              ecosystem resilience, improve landscape management, and enhance
-              sustainable livelihood opportunities through participatory and
-              environmentally sustainable interventions across Tripura.
-            </p>
-
-            <p>
-              The project adopts a landscape-based approach integrating forest
-              conservation, biodiversity protection, restoration of degraded
-              ecosystems, climate adaptation measures, watershed management,
-              institutional strengthening, and sustainable livelihood generation
-              for local communities.
-            </p>
+            <ul className="list-disc pl-5 space-y-1.5">
+              <li>
+                Promoting the development of forests and thereby increase the
+                carbon sink potential,
+              </li>
+              <li>
+                Provision of alternate livelihood for agriculture and forest
+                dependent tribal communities,
+              </li>
+              <li>
+                Capacity Building of both Government and communities,
+                development of forest value chains for private sector
+                participation and increased earnings from forestry sector, and
+              </li>
+              <li>
+                Research and development of knowledge products to enhance long
+                term innovation and growth.
+              </li>
+            </ul>
 
             <div>
-              <p className="font-semibold text-foreground mb-2">
-                Key focus areas include:
+              <p className="font-semibold text-foreground mb-2">Scope</p>
+
+              <p>
+                The ELEMENT project focuses on protecting and restoring
+                landscapes, increasing forest cover, and improving livelihood
+                options for local communities. It aims to enhance forest quality
+                and productivity by developing and strengthening community
+                institutions, thereby improving ecosystem services through
+                integrated and sustainable land-use practices, such as enhanced
+                tree cover and soil moisture retention.
               </p>
-              <ul className="list-disc pl-5 space-y-1.5">
-                <li>Landscape restoration and ecosystem conservation</li>
-                <li>Climate resilience and watershed management</li>
-                <li>Community participation and social inclusion</li>
-                <li>Sustainable livelihood generation</li>
-                <li>Institutional capacity building</li>
-                <li>Strengthening ecosystem services</li>
-              </ul>
             </div>
 
             <p>
-              PROJECT ELEMENT emphasizes active participation of local
-              communities, indigenous groups, self-help groups, and village
-              institutions to ensure inclusive, transparent, and sustainable
-              implementation outcomes.
+              The project will also provide training to strengthen the capacity
+              of state institutions, including the Forest Department, line
+              departments, research and academic institutions, as well as other
+              stakeholders like JFMCs, SHGs, marginalized groups, civil society,
+              and the private sector.
+            </p>
+
+            <p>
+              Additionally, the project will invest in developing robust systems
+              for project management and monitoring to ensure efficient
+              implementation and track progress.
             </p>
           </div>
         </div>
 
         {/* Compact stats grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+        {/* <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
           {[
             { icon: Briefcase, stat: "25,000+", label: "Households" },
             { icon: TrendingUp, stat: "₹45 Cr+", label: "Investment" },
@@ -237,6 +241,27 @@ export function AboutElement() {
                 {p.stat}
               </div>
               <div className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">
+                {p.label}
+              </div>
+            </div>
+          ))}
+        </div> */}
+        {/* Project beneficiaries stats grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          {[
+            { icon: Sprout, stat: "821", label: "Villages" },
+            { icon: Handshake, stat: "75,000", label: "Direct Beneficiaries" },
+            { icon: Briefcase, stat: "1,48,800", label: "Households" },
+          ].map((p) => (
+            <div
+              key={p.label}
+              className="bg-card border border-border rounded-lg p-4 text-center hover:shadow-sm transition"
+            >
+              <p.icon className="h-6 w-6 mx-auto text-accent" />
+              <div className="text-2xl font-bold text-primary mt-2">
+                {p.stat}
+              </div>
+              <div className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider mt-1">
                 {p.label}
               </div>
             </div>
@@ -359,18 +384,17 @@ export function AboutElement() {
               Key Objectives of PROJECT ELEMENT
             </h3>
             <p className="text-sm text-muted-foreground max-w-2xl mx-auto">
-              The action-oriented commitments guiding landscape restoration,
-              livelihood transformation and inclusive development across Tripura.
+              The project objectives are to “Improve landscape management and
+              increase benefits for targeted forest dependent communities". The
+              project objectives include the following sub-objectives:
             </p>
           </div>
           <div className="grid sm:grid-cols-2 gap-3">
             {[
-              "Generate sustainable livelihoods through high-value, climate-resilient value chains.",
-              "Strengthen community-based institutions (JFMCs, SHGs, VLCs) and local governance.",
-              "Restore degraded landscapes for long-term ecological and economic productivity.",
-              "Build climate resilience through adaptive land and water management.",
-              "Improve market access, enterprise opportunities and producer collectives.",
-              "Adopt GIS, drones and digital MIS for transparent monitoring and decision-making.",
+              "To protect and restore the degraded forest landscapes in Tripura.",
+              "To increase forest and tree-based livelihood options for the community and a sustained stream of high-value forest products like Agar, Bamboo, other NTFPs and building up of carbon stock in and outside forests.",
+              "To improve the quality of forest cover from open forests to moderately dense forests and moderately dense to very dense forest.",
+              "To enhance that productivity of forests by developing and strengthening community institutions thereby enhancing the ecosystem services through integrated and sustainable land use practices such as improved tree cover and soil moisture.",
             ].map((obj) => (
               <div
                 key={obj}
@@ -880,7 +904,7 @@ export function LoanAgreement() {
           </div>
         </div>
 
-        {/* Key highlights */}
+        {/* Key highlights
         <div>
           <h3 className="text-lg font-bold text-primary mb-4">
             Key Highlights
@@ -925,7 +949,7 @@ export function LoanAgreement() {
               </div>
             ))}
           </div>
-        </div>
+        </div> */}
       </div>
     </AboutLayout>
   );
