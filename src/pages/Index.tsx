@@ -202,6 +202,7 @@ function getUpdateIcon(tag: string) {
   switch (tag) {
     case "Recruitment":
       return UserCheck;
+    case "Tender":
     case "E-Tender":
       return FileText;
     case "Event":
@@ -443,7 +444,7 @@ function UpdatesPanel({
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-1.5 mb-1">
                         <span className="inline-block text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-accent/15 text-accent">
-                          {a.tag}
+                          {a.tag === "Tender" ? "E-Tender" : a.tag}
                         </span>
                         <span className="ml-auto">
                           <NewBadge show={isItemNew(a.title)} />
@@ -1060,7 +1061,7 @@ export default function Home() {
               Welcome to Project ELEMENT, Tripura
             </h2>
             <p className="text-sm text-muted-foreground mt-2 max-w-xl mx-auto">
-              Project leadership, official updates, notifications, and tenders
+              Project leadership, official updates, notifications, and e-tenders
               from the PROJECT ELEMENT.
             </p>
           </div>
