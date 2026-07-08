@@ -389,10 +389,13 @@ function EventImagesManager({ id, onBack }: { id: string; onBack: () => void }) 
                     <Trash2 className="h-3.5 w-3.5" />
                   </button>
                 </div>
+                {/* Per-image "Show in gallery" toggle removed.
                 <div className="flex items-center justify-between px-2 py-2 text-xs">
                   <span className="text-muted-foreground">Show in gallery</span>
                   <Switch checked={!!img.show_in_gallery} onCheckedChange={() => toggle(img.id)} disabled={bulkDeleting || bulkToggling} />
                 </div>
+                */}
+
               </div>
             ))}
           </div>
