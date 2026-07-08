@@ -304,11 +304,7 @@ function UpdatesPanel({
       if (source === "event") {
         navigate(`/media/events/${it.slug}`);
       } else if (source === "knowledge_hub") {
-        if (fileUrl) {
-          window.open(fileUrl, "_blank", "noopener,noreferrer");
-        } else {
-          navigate(`/knowledge-hub/${it.item_type || itemType}`);
-        }
+        navigate(`/knowledge-hub/${it.item_type || itemType}`);
       } else if (source === "procurement") {
         navigate("/procurements/tenders");
       } else if (source === "project") {
