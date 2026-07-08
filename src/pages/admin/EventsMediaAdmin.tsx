@@ -255,6 +255,38 @@ function EventImagesManager({ id, onBack }: { id: string; onBack: () => void }) 
     }
   };
 
+  const bulkSetGallery = async (show: boolean) => {
+    if (selectedIds.size === 0) return;
+    const ids = images
+      .filter((img: any) => selectedIds.has(img.id) && !!img.show_in_gallery !== show)
+      .map((img: any) => img.id);
+    if (ids.length === 0) {
+      toast.info(`All selected images are already ${show ? "shown" : "hidden"} in gallery`);
+      return;
+    }
+    setBulkToggling(true);
+    setBulkToggleProgress({ current: 0, total: ids.length });
+    let updated = 0;
+    let failed = 0;
+    for (let i = 0; i < ids.length; i++) {
+      try {
+        await adminToggleEventImageGallery(ids[i]);
+        updated++;
+      } catch {
+        failed++;
+      }
+      setBulkToggleProgress({ current: i + 1, total: ids.length });
+    }
+    setBulkToggling(false);
+    setBulkToggleProgress(null);
+    await load();
+    if (failed > 0) {
+      toast.error(`${failed} image${failed === 1 ? "" : "s"} failed to update`, { description: `${updated} updated successfully` });
+    } else {
+      toast.success(`${updated} image${updated === 1 ? "" : "s"} ${show ? "shown" : "hidden"} in gallery`);
+    }
+  };
+
   return (
     <>
       <AdminPageHeader
