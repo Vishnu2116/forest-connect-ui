@@ -68,7 +68,11 @@ export default function ProjectComponentsAdmin() {
       label: c.label || "",
       name: c.name || "",
       description: c.description || "",
-      objectives: (c as any).objectives || "",
+      objectives: (() => {
+        const raw = ((c as any).objectives || "") as string;
+        const lines = raw.split("\n");
+        return lines.length ? lines : [""];
+      })(),
       icon_name: c.icon_name || "Trees",
       stat1_label: c.stat1_label || "", stat1_value: c.stat1_value || "",
       stat2_label: c.stat2_label || "", stat2_value: c.stat2_value || "",
