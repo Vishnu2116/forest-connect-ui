@@ -354,8 +354,26 @@ function UpdatesPanel({
     );
   };
 
+  const filteredWhatsNew = useMemo(() => {
+    return apiWhatsNew.filter((it) => {
+      const source = it.source || it.item_source;
+      const itemType = it.item_type || it.type;
+      if (source === "event") return true;
+      if (source === "procurement") return true;
+      if (source === "knowledge_hub" && itemType === "notification") return true;
+      return false;
+    });
+  }, [apiWhatsNew]);
+
   return (
     <div className="bg-card border border-border rounded-md overflow-hidden h-full flex flex-col">
+      <div className="px-4 py-3 border-b-2 border-primary bg-primary/5">
+        <h2 className="text-xs sm:text-sm font-semibold text-primary flex items-center justify-center gap-1.5">
+          <Bell className="h-4 w-4" />
+          What's New
+        </h2>
+      </div>
+      {/*
       <div className="grid grid-cols-3 border-b-2 border-primary bg-primary/5">
         {(
           [
@@ -382,6 +400,7 @@ function UpdatesPanel({
           </button>
         ))}
       </div>
+      */}
       <div
         ref={ref}
         onPointerEnter={(e) => {
