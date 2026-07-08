@@ -302,13 +302,17 @@ function UpdatesPanel({
       // whatsnew — route by source
       const source = it.source || it.item_source;
       if (source === "event") {
-        navigate(`/media/events/${it.slug || it.id}`);
+        navigate(`/media/events/${it.slug}`);
       } else if (source === "knowledge_hub") {
-        navigate(`/knowledge-hub/${it.item_type || itemType}`);
+        if (fileUrl) {
+          window.open(fileUrl, "_blank", "noopener,noreferrer");
+        } else {
+          navigate(`/knowledge-hub/${it.item_type || itemType}`);
+        }
       } else if (source === "procurement") {
         navigate("/procurements/tenders");
       } else if (source === "project") {
-        navigate(`/projects/${it.slug || it.id}`);
+        navigate(`/projects/${it.slug}`);
       } else if (fileUrl) {
         window.open(fileUrl, "_blank", "noopener,noreferrer");
       } else if (itemType === "event") {
@@ -320,6 +324,7 @@ function UpdatesPanel({
       } else {
         navigate(`/knowledge-hub/${itemType}`);
       }
+
     };
 
     return (
