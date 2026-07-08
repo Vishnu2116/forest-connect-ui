@@ -204,8 +204,14 @@ function Editor({
             <Field label="Display order"><Input type="number" value={form.display_order} onChange={(e) => set("display_order", Number(e.target.value) || 0)} /></Field>
             <Field label="Icon name"><Input value={form.icon_name} onChange={(e) => set("icon_name", e.target.value)} placeholder="Trees / Leaf / Users…" /></Field>
           </div>
-          <Field label="Label"><Input value={form.label} onChange={(e) => set("label", e.target.value)} placeholder="PROJECT COMPONENT 1" /></Field>
-          <Field label="Name *"><Input value={form.name} onChange={(e) => set("name", e.target.value)} /></Field>
+          <Field label="Label">
+            <Input value={form.label} onChange={(e) => set("label", e.target.value)} placeholder="PROJECT COMPONENT 1" />
+            <p className="text-[11px] text-muted-foreground mt-1">This text appears in the navbar dropdown</p>
+          </Field>
+          <Field label="Name *">
+            <Input value={form.name} onChange={(e) => set("name", e.target.value)} />
+            <p className="text-[11px] text-muted-foreground mt-1">This text appears as subtitle on component page</p>
+          </Field>
           <Field label="Description"><Textarea rows={3} value={form.description} onChange={(e) => set("description", e.target.value)} /></Field>
 
           <div className="border-t border-border pt-3">
