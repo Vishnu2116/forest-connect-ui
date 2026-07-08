@@ -15,7 +15,7 @@ export const searchIndex: SearchEntry[] = [
   { title: "About PROJECT ELEMENT", to: "/about", group: "About", keywords: "about element overview" },
   { title: "Organization Structure", to: "/about/organization", group: "About" },
   // { title: "Who's Who", to: "/about/whos-who", group: "About", keywords: "whos who team leadership" }, // Removed per request — kept for future use
-  { title: "Memorandum of Association", to: "/about/memorandum", group: "About" },
+  { title: "Loan Agreement", to: "/about/loan-agreement", group: "About" },
   { title: "Official Directory", to: "/about/directory", group: "About" },
   { title: "Objectives", to: "/about/objectives", group: "About", keywords: "vision mission objectives" },
 

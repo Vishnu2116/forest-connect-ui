@@ -3,7 +3,7 @@ import PageLayout, { PageHeader } from "@/components/layout/PageLayout";
 
 const links = [
   { to: "/about/organization", title: "Organization Structure", desc: "Hierarchy and structure of the Department." },
-  { to: "/about/memorandum", title: "Memorandum of Association", desc: "Founding documents and governance." },
+  { to: "/about/loan-agreement", title: "Loan Agreement", desc: "Founding documents and governance." },
   { to: "/about/directory", title: "Official Directory", desc: "Contact details of officials." },
   { to: "/about/objectives", title: "Objectives", desc: "Key objectives of the Project." },
 ];

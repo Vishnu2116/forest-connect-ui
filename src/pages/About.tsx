@@ -828,11 +828,11 @@ export function VisionMission() {
   );
 }
 
-/* ---- Memorandum of Association ---- */
-export function Memorandum() {
+/* ---- Loan Agreement ---- */
+export function LoanAgreement() {
   return (
     <AboutLayout
-      title="Memorandum of Association"
+      title="Loan Agreement"
       subtitle="Founding documents and governance framework of ELEMENT"
     >
       <div className="space-y-8">
@@ -841,7 +841,7 @@ export function Memorandum() {
             Official Document
           </span>
           <h3 className="text-xl font-bold text-primary mb-2">
-            Memorandum of Association
+            Loan Agreement
           </h3>
           <p className="text-sm text-muted-foreground max-w-lg mx-auto">
             The founding document establishing the governance, objectives, and
@@ -857,7 +857,7 @@ export function Memorandum() {
             </div>
             <div className="flex-1">
               <h4 className="text-base font-bold text-foreground">
-                PROJECT ELEMENT — Memorandum of Association
+                PROJECT ELEMENT — Loan Agreement
               </h4>
               <p className="text-xs text-muted-foreground mt-1">
                 Government of Tripura · Registered under Societies Registration
@@ -909,7 +909,7 @@ export function Memorandum() {
               },
               {
                 title: "Amendment Provisions",
-                desc: "MOA can be amended with approval of the Governing Body and prior consent of the World Bank.",
+                desc: "Loan Agreement can be amended with approval of the Governing Body and prior consent of the World Bank.",
               },
             ].map((item) => (
               <div
