@@ -105,7 +105,7 @@ export default function ProcurementsAdmin() {
     <>
       <AdminPageHeader
         title="Procurements"
-        subtitle="Manage tenders and RFPs."
+        subtitle="Manage e-tenders and RFPs."
         action={
           <div className="flex items-center gap-2">
             <select

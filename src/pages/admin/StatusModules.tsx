@@ -98,7 +98,7 @@ export const RTIAdmin = () => (
     idPrefix="RTI"
     statuses={["Pending","In Progress","Replied","Closed"]}
     seed={[
-      { id: "RTI-2026-0042", name: "Pradip Nath", subject: "Tender details for Q1 2026", date: "2026-04-25", status: "Pending", details: "Seeking copies of all tender notices." },
+      { id: "RTI-2026-0042", name: "Pradip Nath", subject: "E-Tender details for Q1 2026", date: "2026-04-25", status: "Pending", details: "Seeking copies of all e-tender notices." },
       { id: "RTI-2026-0041", name: "Anita Saha", subject: "Plantation expenditure 2024-25", date: "2026-04-20", status: "In Progress", details: "Requested district-wise expenditure." },
       { id: "RTI-2026-0040", name: "Mohan Reang", subject: "List of beneficiaries — HVFP", date: "2026-04-12", status: "Replied", details: "Reply sent on 2026-04-22." },
     ]}

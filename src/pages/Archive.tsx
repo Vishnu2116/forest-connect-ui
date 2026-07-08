@@ -2,20 +2,20 @@ import { useMemo, useState } from "react";
 import PageLayout, { PageHeader } from "@/components/layout/PageLayout";
 import { Archive as ArchiveIcon, Eye, Download } from "lucide-react";
 
-type Item = { title: string; category: "Notice" | "Event" | "Tender" | "Report"; year: number; date: string; size: string; type: string };
+type Item = { title: string; category: "Notice" | "Event" | "E-Tender" | "Report"; year: number; date: string; size: string; type: string };
 
 const items: Item[] = [
   { title: "Annual Plantation Drive 2023 — Notification", category: "Notice", year: 2023, date: "12 Jul 2023", size: "320 KB", type: "PDF" },
   { title: "World Environment Day 2024 — Event Report", category: "Event", year: 2024, date: "10 Jun 2024", size: "1.2 MB", type: "PDF" },
-  { title: "RFP — Watershed Mapping (Closed)", category: "Tender", year: 2024, date: "28 Mar 2024", size: "540 KB", type: "PDF" },
+  { title: "RFP — Watershed Mapping (Closed)", category: "E-Tender", year: 2024, date: "28 Mar 2024", size: "540 KB", type: "PDF" },
   { title: "Annual Report 2022-23", category: "Report", year: 2023, date: "30 Sep 2023", size: "4.8 MB", type: "PDF" },
   { title: "Bamboo Cluster Workshop — Proceedings", category: "Event", year: 2023, date: "18 Nov 2023", size: "2.1 MB", type: "PDF" },
-  { title: "Tender — Eco-tourism Infrastructure (Expired)", category: "Tender", year: 2022, date: "05 Aug 2022", size: "780 KB", type: "PDF" },
+  { title: "E-Tender — Eco-tourism Infrastructure (Expired)", category: "E-Tender", year: 2022, date: "05 Aug 2022", size: "780 KB", type: "PDF" },
   { title: "Quarterly Bulletin Q4 2022", category: "Notice", year: 2022, date: "31 Dec 2022", size: "920 KB", type: "PDF" },
   { title: "Mid-term Project Review 2024", category: "Report", year: 2024, date: "15 Aug 2024", size: "5.3 MB", type: "PDF" },
 ];
 
-const categories = ["All", "Notice", "Event", "Tender", "Report"] as const;
+const categories = ["All", "Notice", "Event", "E-Tender", "Report"] as const;
 
 export default function Archive() {
   const [year, setYear] = useState<string>("All");
@@ -25,7 +25,7 @@ export default function Archive() {
 
   return (
     <PageLayout>
-      <PageHeader title="Archive" subtitle="Archived notices, past events, expired tenders and historical reports." breadcrumb={["Home", "Archive"]} />
+      <PageHeader title="Archive" subtitle="Archived notices, past events, expired e-tenders and historical reports." breadcrumb={["Home", "Archive"]} />
       <section className="py-10">
         <div className="gov-container">
           <div className="flex flex-wrap items-end gap-3 mb-5">

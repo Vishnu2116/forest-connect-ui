@@ -52,7 +52,7 @@ export const searchIndex: SearchEntry[] = [
   // Procurements
   { title: "Procurements", to: "/procurements", group: "Procurements" },
   // { title: "RFPs", to: "/procurements/rfps", group: "Procurements", keywords: "request for proposal" }, // Removed per request — kept for future use
-  { title: "Tenders", to: "/procurements/tenders", group: "Procurements" },
+  { title: "E-Tenders", to: "/procurements/tenders", group: "Procurements" },
 
   // GIS / Map
   { title: "Plantation Map", to: "/plantation-map", group: "MIS / GIS" },

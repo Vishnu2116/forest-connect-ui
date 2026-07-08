@@ -73,7 +73,7 @@ export function ListingPage({
               ))}
             </DataTable>
           ) : (
-            <DataTable headers={["#", "Tender Title", "Published", "Deadline", "Status", "Actions"]}>
+            <DataTable headers={["#", "E-Tender Title", "Published", "Deadline", "Status", "Actions"]}>
               {rows.map((r, i) => (
                 <tr key={r.title}>
                   <td>{i + 1}</td>
@@ -437,10 +437,10 @@ function ProcurementApiListing({
 }
 
 export const Procurements = () => (
-  <ProcurementApiListing type="tender" title="Procurements & Tenders" subtitle="Active and archived tender notices" breadcrumb={["Home", "Procurements"]} />
+  <ProcurementApiListing type="tender" title="Procurements & E-Tenders" subtitle="Active and archived e-tender notices" breadcrumb={["Home", "Procurements"]} />
 );
 export const Tenders = () => (
-  <ProcurementApiListing type="tender" title="Tenders" subtitle="Active and archived tender notices" breadcrumb={["Home", "Procurements", "Tenders"]} />
+  <ProcurementApiListing type="tender" title="E-Tenders" subtitle="Active and archived e-tender notices" breadcrumb={["Home", "Procurements", "E-Tenders"]} />
 );
 // Removed per request — kept for future use
 // export const RFPs = () => (

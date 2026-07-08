@@ -43,7 +43,7 @@ import PCCF from "@/assets/dignitaries/ShriRabindraKumarSamal_PCCF.jpg";
  *
  * The actual scroll engine lives in:  src/hooks/useAutoScroll.ts
  * ──────────────────────────────────────────────────────────────────────────── */
-// Controls: What's New, Notifications, Tenders (Updates panel)
+// Controls: What's New (Updates panel)
 const AUTO_SCROLL_SPEED_UPDATES = 28;
 // Controls: Project Highlights column
 const AUTO_SCROLL_SPEED_PROJECTS = 24;
@@ -52,7 +52,7 @@ const MANUAL_STEP_PX = 96;
 
 const announcementDescriptions: Record<string, string> = {
   Recruitment: "Applications invited for PROJECT ELEMENT positions.",
-  Tender: "Sealed tenders for livelihood infrastructure and civil works.",
+  Tender: "Sealed e-tenders for livelihood infrastructure and civil works.",
   Event: "Community engagement and stakeholder events.",
   Notification: "Project guidelines and circulars issued.",
   Report: "Progress reports published for public reference.",
@@ -203,6 +203,7 @@ function getUpdateIcon(tag: string) {
     case "Recruitment":
       return UserCheck;
     case "Tender":
+    case "E-Tender":
       return FileText;
     case "Event":
       return Calendar;
@@ -269,7 +270,7 @@ function UpdatesPanel({
     const typeMap: Record<string, string> = {
       notification: "Notification",
       report: "Report",
-      tender: "Tender",
+      tender: "E-Tender",
       rfp: "RFP",
       event: "Event",
       project: "Project",
@@ -354,8 +355,26 @@ function UpdatesPanel({
     );
   };
 
+  const filteredWhatsNew = useMemo(() => {
+    return apiWhatsNew.filter((it) => {
+      const source = it.source || it.item_source;
+      const itemType = it.item_type || it.type;
+      if (source === "event") return true;
+      if (source === "procurement") return true;
+      if (source === "knowledge_hub" && itemType === "notification") return true;
+      return false;
+    });
+  }, [apiWhatsNew]);
+
   return (
     <div className="bg-card border border-border rounded-md overflow-hidden h-full flex flex-col">
+      <div className="px-4 py-3 border-b-2 border-primary bg-primary/5">
+        <h2 className="text-xs sm:text-sm font-semibold text-primary flex items-center justify-center gap-1.5">
+          <Bell className="h-4 w-4" />
+          What's New
+        </h2>
+      </div>
+      {/*
       <div className="grid grid-cols-3 border-b-2 border-primary bg-primary/5">
         {(
           [
@@ -382,6 +401,7 @@ function UpdatesPanel({
           </button>
         ))}
       </div>
+      */}
       <div
         ref={ref}
         onPointerEnter={(e) => {
@@ -399,14 +419,21 @@ function UpdatesPanel({
             aria-hidden={copyIdx === 1 || undefined}
           >
             {updatesTab === "whatsnew" &&
-              apiWhatsNew.length > 0 &&
-              apiWhatsNew.map((it, i) => renderApiItem(it, i, "whatsnew"))}
+              filteredWhatsNew.length > 0 &&
+              filteredWhatsNew.map((it, i) => renderApiItem(it, i, "whatsnew"))}
             {updatesTab === "whatsnew" &&
-              apiWhatsNew.length === 0 &&
-              announcements.map((a, idx) => {
-                const Icon = getUpdateIcon(a.tag);
+              filteredWhatsNew.length === 0 &&
+              announcements
+                .filter(
+                  (a) =>
+                    a.tag === "Event" ||
+                    a.tag === "Tender" ||
+                    a.tag === "Notification",
+                )
+                .map((a, idx) => {
+                  const Icon = getUpdateIcon(a.tag);
 
-                return (
+                  return (
                   <article
                     key={`${a.title}-${idx}`}
                     className="flex items-center gap-3 px-4 py-3 hover:bg-surface/60 transition border-b border-border"
@@ -417,7 +444,7 @@ function UpdatesPanel({
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-1.5 mb-1">
                         <span className="inline-block text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-accent/15 text-accent">
-                          {a.tag}
+                          {a.tag === "Tender" ? "E-Tender" : a.tag}
                         </span>
                         <span className="ml-auto">
                           <NewBadge show={isItemNew(a.title)} />
@@ -632,10 +659,11 @@ function UpdatesPanel({
         <Link
           to={
             updatesTab === "whatsnew"
-              ? "/reports"
-              : updatesTab === "notifications"
+              ? "/procurements/tenders"
+              : /* updatesTab === "notifications"
                 ? "/knowledge-hub/notifications"
-                : "/procurements/tenders"
+                : "/procurements/tenders" */
+                "/procurements/tenders"
           }
           className="text-xs font-semibold text-primary hover:text-accent inline-flex items-center gap-1"
         >
@@ -1040,7 +1068,7 @@ export default function Home() {
               Welcome to Project ELEMENT, Tripura
             </h2>
             <p className="text-sm text-muted-foreground mt-2 max-w-xl mx-auto">
-              Project leadership, official updates, notifications, and tenders
+              Project leadership, official updates, notifications, and e-tenders
               from the PROJECT ELEMENT.
             </p>
           </div>

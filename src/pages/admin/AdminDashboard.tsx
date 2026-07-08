@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 const stats = [
   { label: "Total Notifications", value: 124, icon: Bell, to: "/admin/notifications", color: "bg-primary" },
   { label: "Upcoming Events", value: 8, icon: Calendar, to: "/admin/events", color: "bg-accent" },
-  { label: "Active Tenders", value: 12, icon: FileText, to: "/admin/tenders", color: "bg-primary-light" },
+  { label: "Active E-Tenders", value: 12, icon: FileText, to: "/admin/tenders", color: "bg-primary-light" },
   { label: "Reports Uploaded", value: 87, icon: FolderKanban, to: "/admin/reports", color: "bg-primary" },
   { label: "Plantation Records", value: 642, icon: TreePine, to: "/admin/plantation", color: "bg-success" },
   { label: "Pending Grievances", value: 23, icon: MessageSquare, to: "/admin/grievance", color: "bg-destructive" },
@@ -14,7 +14,7 @@ const stats = [
 ];
 
 const recent = [
-  { mod: "Notification", title: "Tender notice: Bamboo plantation, Khowai", date: "28 Apr 2026", by: "Content Manager" },
+  { mod: "Notification", title: "E-Tender notice: Bamboo plantation, Khowai", date: "28 Apr 2026", by: "Content Manager" },
   { mod: "Event", title: "Stakeholder workshop on HVFPs — Agartala", date: "26 Apr 2026", by: "Admin" },
   { mod: "Report", title: "Q1 2026 Progress Report uploaded", date: "24 Apr 2026", by: "District Officer" },
   { mod: "Plantation", title: "New plantation record — Sepahijala (12 ha)", date: "22 Apr 2026", by: "District Officer" },
@@ -24,7 +24,7 @@ const recent = [
 const quickActions = [
   { label: "Add Notification", to: "/admin/notifications" },
   { label: "Add Event", to: "/admin/events" },
-  { label: "Add Tender", to: "/admin/tenders" },
+  { label: "Add E-Tender", to: "/admin/tenders" },
   { label: "Add Plantation", to: "/admin/plantation" },
   { label: "Upload Report", to: "/admin/reports" },
 ];
