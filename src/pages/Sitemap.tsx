@@ -11,7 +11,7 @@ const tree: { title: string; links: { label: string; to: string }[] }[] = [
       { label: "Organization Structure", to: "/about/organization" },
       { label: "Who's Who", to: "/about/whos-who" },
       { label: "Official Directory", to: "/about/directory" },
-      { label: "Memorandum of Association", to: "/about/memorandum" },
+      { label: "Loan Agreement", to: "/about/loan-agreement" },
       { label: "Vision & Objective", to: "/about/vision" },
       { label: "Mission & Objective", to: "/about/mission" },
     ],

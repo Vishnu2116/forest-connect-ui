@@ -12,7 +12,7 @@ export const navItems: NavItem[] = [
       { label: "About PROJECT ELEMENT", to: "/about" },
       { label: "Organization Structure", to: "/about/organization" },
       // { label: "Who's Who", to: "/about/whos-who" }, // Removed per request — kept for future use
-      { label: "Memorandum of Association", to: "/about/memorandum" },
+      { label: "Loan Agreement", to: "/about/loan-agreement" },
       { label: "Official Directory", to: "/about/directory" },
       // { label: "Objectives", to: "/about/objectives" }, // Removed per request — objectives now shown as section on /about
     ],
