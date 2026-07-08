@@ -2,9 +2,6 @@ import { Link } from "react-router-dom";
 import { Mail, MapPin, Phone, Facebook, Twitter, Youtube } from "lucide-react";
 import { useLang } from "@/contexts/LanguageContext";
 import { useSettings } from "@/contexts/SettingsContext";
-import logoTripura from "@/assets/logo-tripura.png";
-import logoForestDept from "@/assets/logo-tripuraforestdept.png";
-import logoWorldBank from "@/assets/logo-theworldbank.jpg";
 
 export default function Footer() {
   const { t } = useLang();
@@ -12,46 +9,7 @@ export default function Footer() {
   return (
     <footer className="bg-primary-dark text-primary-foreground mt-16">
       <div className="gov-container py-12 md:py-14 grid gap-10 md:gap-12 sm:grid-cols-2 lg:grid-cols-4">
-        <div className="sm:col-span-2 lg:col-span-1">
-          <h3 className="text-2xl font-extrabold text-accent tracking-tight mb-0">
-            ELEMENT
-          </h3>
-          <p className="text-sm font-medium opacity-95 mt-1.5 mb-0">
-            Enhancing Landscape and Ecosystem Management
-          </p>
-          <p className="text-xs opacity-80 mt-2.5 mb-0">
-            Government of Tripura | The World Bank
-          </p>
-          <div className="mt-4 flex items-center gap-3 flex-nowrap">
-            <img
-              src={logoTripura}
-              alt="Government of Tripura"
-              className="h-12 w-12 bg-white rounded p-1 object-contain shrink-0"
-              width={48}
-              height={48}
-              loading="lazy"
-            />
-            <img
-              src={logoForestDept}
-              alt="Tripura Forest Department"
-              className="h-12 w-12 bg-white rounded p-1 object-contain shrink-0"
-              width={48}
-              height={48}
-              loading="lazy"
-            />
-            <img
-              src={logoWorldBank}
-              alt="The World Bank"
-              className="h-12 w-auto bg-white rounded p-1 object-contain shrink-0"
-              width={64}
-              height={48}
-              loading="lazy"
-            />
-          </div>
-          <p className="text-sm opacity-85 mt-5 leading-relaxed mb-0">
-            {t("footer.about")}
-          </p>
-        </div>
+        {/* Left column removed per layout update */}
 
         <div>
           <h3 className="text-base font-semibold mb-4 text-accent">
@@ -171,6 +129,45 @@ export default function Footer() {
                 className="opacity-90 hover:text-accent"
               >
                 National Portal of India ↗
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        {/* Connect section with address, contact & social */}
+        <div>
+          <h3 className="text-base font-semibold mb-4 text-accent">
+            Useful Links
+          </h3>
+          <ul className="space-y-2.5 text-sm">
+            <li>
+              <a
+                href="https://tripura.gov.in/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold hover:text-accent underline-offset-2 hover:underline"
+              >
+                Government of Tripura ↗
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://forest.tripura.gov.in/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold hover:text-accent underline-offset-2 hover:underline"
+              >
+                Tripura Forest Department ↗
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://jica.tripura.gov.in/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold hover:text-accent underline-offset-2 hover:underline"
+              >
+                JICA Tripura ↗
               </a>
             </li>
           </ul>
