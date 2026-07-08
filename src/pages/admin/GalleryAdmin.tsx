@@ -11,6 +11,7 @@ export default function GalleryAdmin() {
   const [items, setItems] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState<{ uploaded: number; total: number } | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const load = async () => {
@@ -21,15 +22,36 @@ export default function GalleryAdmin() {
   useEffect(() => { load(); }, []);
 
   const onSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = Array.from(e.target.files || []).slice(0, 20);
+    const files = Array.from(e.target.files || []);
     if (!files.length) return;
     setUploading(true);
-    try {
-      await adminUploadGallery(files);
-      toast.success(`Uploaded ${files.length} image(s)`);
-      await load();
-    } catch { toast.error("Upload failed"); }
-    finally { setUploading(false); if (inputRef.current) inputRef.current.value = ""; }
+    setUploadProgress({ uploaded: 0, total: files.length });
+    const result = await batchUpload(
+      files,
+      10,
+      (batch) => adminUploadGallery(batch),
+      ({ uploaded, total, batchIndex, totalBatches }) => {
+        setUploadProgress({ uploaded, total });
+        if (uploaded < total) {
+          toast.message(`Uploading batch ${batchIndex} of ${totalBatches}…`, {
+            description: `${uploaded} of ${total} images uploaded`,
+            id: "gallery-batch-upload",
+          });
+        }
+      }
+    );
+    if (result.errors.length) {
+      result.errors.forEach((er) =>
+        toast.error(`Batch ${er.batchIndex} failed`, { description: String((er.error as any)?.message || er.error) })
+      );
+    }
+    if (result.uploaded > 0) {
+      toast.success(`${result.uploaded} image${result.uploaded === 1 ? "" : "s"} uploaded successfully`);
+    }
+    await load();
+    setUploadProgress(null);
+    setUploading(false);
+    if (inputRef.current) inputRef.current.value = "";
   };
 
   const del = async (id: string) => {
