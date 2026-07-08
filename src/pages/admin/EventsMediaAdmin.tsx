@@ -323,18 +323,30 @@ function EventImagesManager({ id, onBack }: { id: string; onBack: () => void }) 
                 id="select-all-event-images"
                 checked={allSelected ? true : someSelected ? "indeterminate" : false}
                 onCheckedChange={toggleSelectAll}
-                disabled={bulkDeleting}
+                disabled={bulkDeleting || bulkToggling}
               />
               <label htmlFor="select-all-event-images" className="text-sm text-muted-foreground cursor-pointer select-none">
                 Select all
               </label>
             </div>
             {selectedIds.size > 0 && (
-              <Button variant="destructive" size="sm" onClick={bulkDelete} disabled={bulkDeleting} className="gap-1.5">
-                {bulkDeleting && <Loader2 className="h-4 w-4 animate-spin" />}
-                <Trash2 className="h-4 w-4" />
-                Delete selected ({selectedIds.size})
-              </Button>
+              <div className="flex flex-wrap items-center gap-2">
+                <Button size="sm" onClick={() => bulkSetGallery(true)} disabled={bulkToggling || bulkDeleting} className="gap-1.5 bg-green-600 hover:bg-green-700 text-white">
+                  {bulkToggling && <Loader2 className="h-4 w-4 animate-spin" />}
+                  <Eye className="h-4 w-4" />
+                  Show in Gallery ({selectedIds.size})
+                </Button>
+                <Button size="sm" variant="secondary" onClick={() => bulkSetGallery(false)} disabled={bulkToggling || bulkDeleting} className="gap-1.5">
+                  {bulkToggling && <Loader2 className="h-4 w-4 animate-spin" />}
+                  <EyeOff className="h-4 w-4" />
+                  Hide from Gallery ({selectedIds.size})
+                </Button>
+                <Button variant="destructive" size="sm" onClick={bulkDelete} disabled={bulkDeleting || bulkToggling} className="gap-1.5">
+                  {bulkDeleting && <Loader2 className="h-4 w-4 animate-spin" />}
+                  <Trash2 className="h-4 w-4" />
+                  Delete selected ({selectedIds.size})
+                </Button>
+              </div>
             )}
           </div>
 
@@ -347,6 +359,15 @@ function EventImagesManager({ id, onBack }: { id: string; onBack: () => void }) 
             </div>
           )}
 
+          {bulkToggleProgress && (
+            <div className="mb-4 rounded-md border border-border bg-card p-3">
+              <div className="text-xs text-muted-foreground mb-2">
+                Updating {bulkToggleProgress.current} of {bulkToggleProgress.total} images…
+              </div>
+              <Progress value={(bulkToggleProgress.current / bulkToggleProgress.total) * 100} />
+            </div>
+          )}
+
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
             {images.map((img: any) => (
               <div key={img.id} className={`border border-border rounded-md overflow-hidden bg-card ${selectedIds.has(img.id) ? "ring-2 ring-blue-500" : ""}`}>
@@ -355,7 +376,7 @@ function EventImagesManager({ id, onBack }: { id: string; onBack: () => void }) 
                     <Checkbox
                       checked={selectedIds.has(img.id)}
                       onCheckedChange={() => toggleSelection(img.id)}
-                      disabled={bulkDeleting}
+                      disabled={bulkDeleting || bulkToggling}
                       aria-label="Select image"
                     />
                   </div>
@@ -367,7 +388,7 @@ function EventImagesManager({ id, onBack }: { id: string; onBack: () => void }) 
                 </div>
                 <div className="flex items-center justify-between px-2 py-2 text-xs">
                   <span className="text-muted-foreground">Show in gallery</span>
-                  <Switch checked={!!img.show_in_gallery} onCheckedChange={() => toggle(img.id)} />
+                  <Switch checked={!!img.show_in_gallery} onCheckedChange={() => toggle(img.id)} disabled={bulkDeleting || bulkToggling} />
                 </div>
               </div>
             ))}
