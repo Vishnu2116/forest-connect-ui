@@ -5,7 +5,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Progress } from "@/components/ui/progress";
 import { Loader2, Trash2, Upload } from "lucide-react";
 import { toast } from "sonner";
-import { adminDeleteGallery, adminUploadGallery, fetchGallery, fileUrl } from "@/lib/media";
+import { adminDeleteGallery, adminUploadGallery, fetchGalleryByDistrict, fileUrl } from "@/lib/media";
 import { batchUpload } from "@/lib/batchUpload";
 
 const DISTRICTS = [
