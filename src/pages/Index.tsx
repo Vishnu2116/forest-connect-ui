@@ -656,13 +656,7 @@ function UpdatesPanel({
       </div>
       <div className="px-3 py-2 border-t border-border bg-surface flex items-center justify-between gap-2">
         <Link
-          to={
-            updatesTab === "whatsnew"
-              ? "/reports"
-              : updatesTab === "notifications"
-                ? "/knowledge-hub/notifications"
-                : "/procurements/tenders"
-          }
+          to="/procurements/tenders"
           className="text-xs font-semibold text-primary hover:text-accent inline-flex items-center gap-1"
         >
           View all <ArrowRight className="h-3 w-3" />
