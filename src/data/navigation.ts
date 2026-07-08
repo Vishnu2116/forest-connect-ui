@@ -14,7 +14,7 @@ export const navItems: NavItem[] = [
       // { label: "Who's Who", to: "/about/whos-who" }, // Removed per request — kept for future use
       { label: "Memorandum of Association", to: "/about/memorandum" },
       { label: "Official Directory", to: "/about/directory" },
-      { label: "Objectives", to: "/about/objectives" },
+      // { label: "Objectives", to: "/about/objectives" }, // Removed per request — objectives now shown as section on /about
     ],
   },
   {
@@ -30,16 +30,16 @@ export const navItems: NavItem[] = [
   {
     labelKey: "nav.knowledge",
     children: [
-      { label: "Publications", to: "/publications" },
+      // { label: "Publications", to: "/publications" }, // Hidden per request — kept for future use
       { label: "Reports", to: "/reports" },
       { label: "IEC Materials", to: "/knowledge-hub/iec" },
-      { label: "Newsletters", to: "/knowledge-hub/newsletters" },
+      // { label: "Newsletters", to: "/knowledge-hub/newsletters" }, // Hidden per request — kept for future use
       { label: "Success Stories", to: "/knowledge-hub/success-stories" },
       // { label: "Thematic Studies", to: "/knowledge-hub/thematic" }, // Removed per request — kept for future use
       { label: "Documentation", to: "/knowledge-hub/documentation" },
-      { label: "Case Studies", to: "/knowledge-hub/case-studies" },
+      // { label: "Case Studies", to: "/knowledge-hub/case-studies" }, // Hidden per request — kept for future use
       { label: "Notifications", to: "/knowledge-hub/notifications" },
-      { label: "Lessons Learned", to: "/knowledge-hub/lessons" },
+      // { label: "Lessons Learned", to: "/knowledge-hub/lessons" }, // Hidden per request — kept for future use
     ],
   },
   {

@@ -7,16 +7,16 @@ export type KHType =
   | "case_study" | "notification" | "lessons_learned";
 
 export const KH_TYPES: { value: KHType; label: string; categoryLabel: string }[] = [
-  { value: "publication",     label: "Publications",       categoryLabel: "Publications" },
+  // { value: "publication",     label: "Publications",       categoryLabel: "Publications" }, // Hidden per request — kept for future use
   { value: "report",          label: "Reports",            categoryLabel: "Reports" },
   { value: "iec_material",    label: "IEC Materials",      categoryLabel: "IEC Materials" },
-  { value: "newsletter",      label: "Newsletters",        categoryLabel: "Newsletters" },
+  // { value: "newsletter",      label: "Newsletters",        categoryLabel: "Newsletters" }, // Hidden per request — kept for future use
   { value: "success_story",   label: "Success Stories",    categoryLabel: "Success Stories" },
   // { value: "thematic_study",  label: "Thematic Studies",   categoryLabel: "Thematic Studies" }, // Removed per request — kept for future use
   { value: "documentation",   label: "Documentation",      categoryLabel: "Documentation" },
-  { value: "case_study",      label: "Case Studies",       categoryLabel: "Case Studies" },
+  // { value: "case_study",      label: "Case Studies",       categoryLabel: "Case Studies" }, // Hidden per request — kept for future use
   { value: "notification",    label: "Notifications",      categoryLabel: "Notifications" },
-  { value: "lessons_learned", label: "Lessons Learned",    categoryLabel: "Lessons Learned" },
+  // { value: "lessons_learned", label: "Lessons Learned",    categoryLabel: "Lessons Learned" }, // Hidden per request — kept for future use
 ];
 
 export function categoryToType(category: string): KHType | null {

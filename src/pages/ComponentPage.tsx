@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import PageLayout, { PageHeader } from "@/components/layout/PageLayout";
-import { Trees, ArrowRight, BarChart3 } from "lucide-react";
+import { Trees, ArrowRight, BarChart3, ChevronRight } from "lucide-react";
 import {
   fetchComponent,
   resolveImage,
@@ -9,6 +9,49 @@ import {
   statusLabel,
   type ApiProjectComponent,
 } from "@/lib/projects";
+
+const COMPONENT_STATIC: Record<number, { paragraph: string; objectives: string[] }> = {
+  1: {
+    paragraph:
+      "Component 1 focuses on landscape management and ecosystem restoration across Tripura. It aims to restore degraded forest landscapes, conserve watersheds, and enhance biodiversity through community-led interventions.",
+    objectives: [
+      "Restoration of degraded forest landscapes across Tripura",
+      "Watershed and ecosystem conservation",
+      "Biodiversity enhancement through native species",
+      "Soil and moisture conservation works",
+    ],
+  },
+  2: {
+    paragraph:
+      "Component 2 focuses on enhancing livelihoods of forest-dependent communities through value chain development, enterprise promotion, and market linkage support.",
+    objectives: [
+      "Strengthening community-based enterprises",
+      "Value chain development for forest produce",
+      "Support to Self Help Groups and FPOs",
+      "Market linkage and enterprise promotion",
+    ],
+  },
+  3: {
+    paragraph:
+      "Component 3 focuses on strengthening institutional capacity of the forest department and community institutions through training, knowledge management, and governance systems.",
+    objectives: [
+      "Capacity building of forest department staff",
+      "Training of community institutions",
+      "Knowledge management and documentation",
+      "Governance and accountability systems",
+    ],
+  },
+  4: {
+    paragraph:
+      "Component 4 covers overall project management including monitoring and evaluation, financial management, coordination with agencies, and grievance redressal.",
+    objectives: [
+      "Monitoring and evaluation framework",
+      "Financial management and procurement",
+      "Coordination with state and central agencies",
+      "Grievance redressal and citizen engagement",
+    ],
+  },
+};
 
 export default function ComponentPage() {
   const { id } = useParams();
@@ -43,10 +86,10 @@ export default function ComponentPage() {
     <PageLayout>
       <PageHeader
         title={data ? `Component ${data.component_number}` : "Project Component"}
-        subtitle={data?.description || ""}
+        subtitle={data?.name || ""}
         breadcrumb={["Home", "Project Components", data ? `Component ${data.component_number}` : ""]}
       />
-      {/* Original title used data?.name and breadcrumb used data?.label — replaced per request with numeric label */}
+      {/* Original subtitle was description — per request, name is now subtitle; description shown below as paragraph */}
 
       {loading && (
         <section className="py-10"><div className="gov-container"><p className="text-sm text-muted-foreground">Loading…</p></div></section>
@@ -54,6 +97,36 @@ export default function ComponentPage() {
 
       {data && (
         <>
+          {(() => {
+            const staticContent = COMPONENT_STATIC[data.component_number as 1 | 2 | 3 | 4];
+            const paragraph = (data.description && data.description.trim()) || staticContent?.paragraph || "";
+            const objectives = staticContent?.objectives || [];
+            if (!paragraph && objectives.length === 0) return null;
+            return (
+              <section className="py-10 border-b border-border">
+                <div className="gov-container space-y-6">
+                  {paragraph && (
+                    <p className="text-[15px] text-muted-foreground leading-relaxed max-w-4xl">
+                      {paragraph}
+                    </p>
+                  )}
+                  {objectives.length > 0 && (
+                    <div>
+                      <h2 className="text-lg font-bold text-primary mb-3">Objectives</h2>
+                      <div className="grid sm:grid-cols-2 gap-3">
+                        {objectives.map((obj) => (
+                          <div key={obj} className="flex items-start gap-2 bg-card border border-border rounded-lg p-3.5">
+                            <ChevronRight className="h-4 w-4 text-accent mt-0.5 shrink-0" />
+                            <span className="text-sm text-muted-foreground leading-relaxed">{obj}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </section>
+            );
+          })()}
           <section className="bg-surface py-8 border-b border-border">
             <div className="gov-container">
               <div className="flex items-center gap-2 mb-6">

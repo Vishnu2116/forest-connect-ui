@@ -348,6 +348,42 @@ export function AboutElement() {
             </div>
           </div>
         </div>
+
+        {/* Objectives section — moved from separate /about/objectives page per request */}
+        <div className="bg-card border border-border rounded-xl p-6 md:p-8 shadow-card">
+          <div className="text-center mb-6">
+            <span className="inline-block bg-accent/10 text-accent text-[11px] font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-3">
+              Objectives
+            </span>
+            <h3 className="text-2xl md:text-3xl font-bold text-primary mb-2">
+              Key Objectives of PROJECT ELEMENT
+            </h3>
+            <p className="text-sm text-muted-foreground max-w-2xl mx-auto">
+              The action-oriented commitments guiding landscape restoration,
+              livelihood transformation and inclusive development across Tripura.
+            </p>
+          </div>
+          <div className="grid sm:grid-cols-2 gap-3">
+            {[
+              "Generate sustainable livelihoods through high-value, climate-resilient value chains.",
+              "Strengthen community-based institutions (JFMCs, SHGs, VLCs) and local governance.",
+              "Restore degraded landscapes for long-term ecological and economic productivity.",
+              "Build climate resilience through adaptive land and water management.",
+              "Improve market access, enterprise opportunities and producer collectives.",
+              "Adopt GIS, drones and digital MIS for transparent monitoring and decision-making.",
+            ].map((obj) => (
+              <div
+                key={obj}
+                className="flex items-start gap-2 bg-surface border border-border rounded-lg p-3.5"
+              >
+                <ChevronRight className="h-4 w-4 text-accent mt-0.5 shrink-0" />
+                <span className="text-sm text-muted-foreground leading-relaxed">
+                  {obj}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </AboutLayout>
   );
