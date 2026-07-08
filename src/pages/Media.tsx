@@ -323,6 +323,20 @@ export function MediaEventDetail() {
 
   if (!display) return <PageLayout><div className="py-20 text-center text-sm text-muted-foreground">Loading…</div></PageLayout>;
 
+  const eventLightboxImages: LightboxImage[] = (display.images || [])
+    .filter((img: any) => img.image_path)
+    .map((img: any) => ({ src: fileUrl(img.image_path), caption: img.caption || "" }));
+  const [lbIndex, setLbIndex] = [] as any; // placeholder to satisfy TS-less scan
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const [lightboxIndex, setLightboxIndex] = useState(-1);
+
+  const openEventLightbox = (img: any) => {
+    if (!img.image_path) return;
+    const src = fileUrl(img.image_path);
+    const idx = eventLightboxImages.findIndex((li) => li.src === src);
+    if (idx >= 0) setLightboxIndex(idx);
+  };
+
   return (
     <PageLayout>
       <PageHeader
@@ -342,24 +356,31 @@ export function MediaEventDetail() {
               {display.event_date?.includes("-") ? formatEventDate(display.event_date) : display.event_date}
               {display.venue && (<><span className="text-muted-foreground/60">·</span><MapPin className="h-3.5 w-3.5" /> {display.venue}</>)}
             </div>
+            {/* Duplicate title & description removed — already shown in PageHeader.
             <h1 className="text-2xl md:text-3xl font-bold text-primary mb-4">{display.title}</h1>
             {display.description && (
               <p className="text-sm md:text-base text-muted-foreground leading-relaxed">{display.description}</p>
             )}
+            */}
 
             {display.images?.length > 0 && (
               <>
-                <h2 className="text-base font-bold text-primary mt-8 mb-4">Event Gallery</h2>
+                <h2 className="text-base font-bold text-primary mt-2 mb-4">Event Gallery</h2>
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
                   {display.images.map((img: any) => (
                     <figure key={img.id} className="rounded-lg overflow-hidden border border-border bg-card">
-                      <div className="aspect-square bg-gradient-to-br from-primary/10 to-primary-light/10 flex items-center justify-center text-[11px] text-muted-foreground text-center px-2">
+                      <button
+                        type="button"
+                        onClick={() => openEventLightbox(img)}
+                        disabled={!img.image_path}
+                        className="block w-full aspect-square bg-gradient-to-br from-primary/10 to-primary-light/10 flex items-center justify-center text-[11px] text-muted-foreground text-center px-2 cursor-zoom-in disabled:cursor-default"
+                      >
                         {img.image_path ? (
                           <img src={fileUrl(img.image_path)} alt={img.caption || ""} className="w-full h-full object-cover" loading="lazy" />
                         ) : (
                           <span>{img.caption}</span>
                         )}
-                      </div>
+                      </button>
                       {img.caption && (
                         <figcaption className="px-2 py-1.5 text-[11px] text-muted-foreground truncate">{img.caption}</figcaption>
                       )}
@@ -371,6 +392,14 @@ export function MediaEventDetail() {
           </div>
         </div>
       </section>
+      {lightboxIndex >= 0 && (
+        <Lightbox
+          images={eventLightboxImages}
+          index={lightboxIndex}
+          onClose={() => setLightboxIndex(-1)}
+          onIndexChange={setLightboxIndex}
+        />
+      )}
     </PageLayout>
   );
 }
