@@ -134,6 +134,44 @@ export default function Footer() {
           </ul>
         </div>
 
+        <div>
+          <h3 className="text-base font-semibold mb-4 text-accent">
+            Useful Links
+          </h3>
+          <ul className="space-y-2.5 text-sm">
+            <li>
+              <a
+                href="https://tripura.gov.in/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="opacity-90 hover:text-accent"
+              >
+                Government of Tripura ↗
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://forest.tripura.gov.in/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="opacity-90 hover:text-accent"
+              >
+                Tripura Forest Department ↗
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://jica.tripura.gov.in/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="opacity-90 hover:text-accent"
+              >
+                JICA Tripura ↗
+              </a>
+            </li>
+          </ul>
+        </div>
+
         {/* Connect section with address, contact & social */}
         <div>
           <h3 className="text-base font-semibold mb-4 text-accent">
@@ -195,44 +233,6 @@ export default function Footer() {
                 })
               : "28 April 2026"}
           </div>
-        </div>
-
-        <div>
-          <h3 className="text-base font-semibold mb-4 text-accent">
-            Useful Links
-          </h3>
-          <ul className="space-y-2.5 text-sm">
-            <li>
-              <a
-                href="https://tripura.gov.in/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-semibold hover:text-accent underline-offset-2 hover:underline"
-              >
-                Government of Tripura ↗
-              </a>
-            </li>
-            <li>
-              <a
-                href="https://forest.tripura.gov.in/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-semibold hover:text-accent underline-offset-2 hover:underline"
-              >
-                Tripura Forest Department ↗
-              </a>
-            </li>
-            <li>
-              <a
-                href="https://jica.tripura.gov.in/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-semibold hover:text-accent underline-offset-2 hover:underline"
-              >
-                JICA Tripura ↗
-              </a>
-            </li>
-          </ul>
         </div>
       </div>
 
