@@ -14,7 +14,7 @@ export const navItems: NavItem[] = [
       // { label: "Who's Who", to: "/about/whos-who" }, // Removed per request — kept for future use
       { label: "Memorandum of Association", to: "/about/memorandum" },
       { label: "Official Directory", to: "/about/directory" },
-      { label: "Objectives", to: "/about/objectives" },
+      // { label: "Objectives", to: "/about/objectives" }, // Removed per request — objectives now shown as section on /about
     ],
   },
   {
