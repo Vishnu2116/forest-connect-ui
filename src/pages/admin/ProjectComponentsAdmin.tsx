@@ -14,7 +14,7 @@ interface FormState {
   label: string;
   name: string;
   description: string;
-  objectives: string;
+  objectives: string[];
   icon_name: string;
   stat1_label: string; stat1_value: string;
   stat2_label: string; stat2_value: string;
