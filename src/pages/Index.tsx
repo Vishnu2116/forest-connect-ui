@@ -231,6 +231,7 @@ function UpdatesPanel({
   setUpdatesTab: (k: "whatsnew" | "notifications" | "tenders") => void;
   t: (k: string) => string;
 }) {
+  const navigate = useNavigate();
   const [paused, setPaused] = useState(false);
   const [apiWhatsNew, setApiWhatsNew] = useState<any[]>([]);
   const [apiNotifs, setApiNotifs] = useState<any[]>([]);
