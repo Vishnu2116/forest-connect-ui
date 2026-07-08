@@ -216,6 +216,15 @@ function Editor({
             <p className="text-[11px] text-muted-foreground mt-1">This text appears as subtitle on component page</p>
           </Field>
           <Field label="Description"><Textarea rows={3} value={form.description} onChange={(e) => set("description", e.target.value)} /></Field>
+          <Field label="OBJECTIVES">
+            <Textarea
+              rows={4}
+              value={form.objectives}
+              onChange={(e) => set("objectives", e.target.value)}
+              placeholder="Enter each objective on a new line"
+            />
+            <p className="text-[11px] text-muted-foreground mt-1">Each line will show as a separate bullet point on the public page</p>
+          </Field>
 
           <div className="border-t border-border pt-3">
             <h4 className="text-xs font-semibold text-muted-foreground uppercase mb-2">Impact stats</h4>
