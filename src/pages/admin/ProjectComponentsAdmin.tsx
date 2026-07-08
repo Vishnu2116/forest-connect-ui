@@ -222,12 +222,42 @@ function Editor({
           </Field>
           <Field label="Description"><Textarea rows={3} value={form.description} onChange={(e) => set("description", e.target.value)} /></Field>
           <Field label="OBJECTIVES">
-            <Textarea
-              rows={4}
-              value={form.objectives}
-              onChange={(e) => set("objectives", e.target.value)}
-              placeholder="Enter each objective on a new line"
-            />
+            <div className="space-y-2">
+              {(form.objectives.length ? form.objectives : [""]).map((val, idx) => (
+                <div key={idx} className="flex items-center gap-2">
+                  <Input
+                    value={val}
+                    onChange={(e) => {
+                      const next = [...form.objectives];
+                      next[idx] = e.target.value;
+                      set("objectives", next);
+                    }}
+                    placeholder="Objective"
+                  />
+                  <Button
+                    type="button"
+                    size="sm"
+                    variant="outline"
+                    onClick={() => {
+                      const next = form.objectives.filter((_, i) => i !== idx);
+                      set("objectives", next.length ? next : [""]);
+                    }}
+                    aria-label="Remove objective"
+                  >
+                    <X className="h-3 w-3" />
+                  </Button>
+                </div>
+              ))}
+              <Button
+                type="button"
+                size="sm"
+                variant="outline"
+                onClick={() => set("objectives", [...form.objectives, ""])}
+                className="gap-1.5"
+              >
+                <Plus className="h-3 w-3" /> Add Objective
+              </Button>
+            </div>
             <p className="text-[11px] text-muted-foreground mt-1">Each line will show as a separate bullet point on the public page</p>
           </Field>
 
