@@ -269,7 +269,7 @@ export function AboutElement() {
         </div>
 
         {/* Stakeholders */}
-        <div className="bg-card border border-border rounded-xl p-6 md:p-8 shadow-card">
+        {/* <div className="bg-card border border-border rounded-xl p-6 md:p-8 shadow-card">
           <h3 className="text-xl md:text-2xl font-bold text-primary mb-3 text-center">
             Stakeholders of PROJECT ELEMENT
           </h3>
@@ -372,7 +372,7 @@ export function AboutElement() {
               </p>
             </div>
           </div>
-        </div>
+        </div> */}
 
         {/* Objectives section — moved from separate /about/objectives page per request */}
         <div className="bg-card border border-border rounded-xl p-6 md:p-8 shadow-card">
