@@ -30,6 +30,7 @@ function emptyForm(): FormState {
     label: "",
     name: "",
     description: "",
+    objectives: "",
     icon_name: "Trees",
     stat1_label: "", stat1_value: "",
     stat2_label: "", stat2_value: "",
