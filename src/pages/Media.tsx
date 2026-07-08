@@ -327,7 +327,6 @@ export function MediaEventDetail() {
   const eventLightboxImages: LightboxImage[] = (display.images || [])
     .filter((img: any) => img.image_path)
     .map((img: any) => ({ src: fileUrl(img.image_path), caption: img.caption || "" }));
-  const [lightboxIndex, setLightboxIndex] = useState(-1);
 
   const openEventLightbox = (img: any) => {
     if (!img.image_path) return;
