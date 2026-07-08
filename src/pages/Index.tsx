@@ -446,7 +446,7 @@ function UpdatesPanel({
                 );
               })}
             {updatesTab === "notifications" && apiNotifs.length > 0 && (
-              <>{apiNotifs.map(renderApiItem)}</>
+              <>{apiNotifs.map((it, i) => renderApiItem(it, i, "notifications"))}</>
             )}
             {updatesTab === "notifications" && apiNotifs.length === 0 && (
               <>
