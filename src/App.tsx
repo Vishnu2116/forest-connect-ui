@@ -12,7 +12,7 @@ import Projects from "./pages/Projects";
 import ProjectDetail from "./pages/ProjectDetail";
 import { Reports, Publications, Procurements, RFPs, Tenders } from "./pages/Listings";
 import ComponentPage from "./pages/ComponentPage";
-import { SocialMedia, Gallery, MediaEvents, MediaEventDetail } from "./pages/Media";
+import { SocialMedia, Gallery, GalleryDistrict, MediaEvents, MediaEventDetail } from "./pages/Media";
 import KnowledgeHub from "./pages/KnowledgeHub";
 import ProjectComponents from "./pages/ProjectComponents";
 import PlantationMap from "./pages/PlantationMap";
@@ -105,6 +105,8 @@ const App = () => (
           <Route path="/components/:id" element={<ComponentPage />} />
           <Route path="/media/social" element={<SocialMedia />} />
           <Route path="/media/gallery" element={<Gallery />} />
+          <Route path="/media/gallery/:district" element={<GalleryDistrict />} />
+
           <Route path="/media/events" element={<MediaEvents />} />
           <Route path="/media/events/:slug" element={<MediaEventDetail />} />
           <Route path="/plantation-map" element={<PlantationMap />} />

@@ -331,6 +331,7 @@ function EventImagesManager({ id, onBack }: { id: string; onBack: () => void }) 
             </div>
             {selectedIds.size > 0 && (
               <div className="flex flex-wrap items-center gap-2">
+                {/* Bulk "Show in Gallery" toggle removed with per-image toggle.
                 <Button size="sm" onClick={() => bulkSetGallery(true)} disabled={bulkToggling || bulkDeleting} className="gap-1.5 bg-green-600 hover:bg-green-700 text-white">
                   {bulkToggling && <Loader2 className="h-4 w-4 animate-spin" />}
                   <Eye className="h-4 w-4" />
@@ -341,6 +342,7 @@ function EventImagesManager({ id, onBack }: { id: string; onBack: () => void }) 
                   <EyeOff className="h-4 w-4" />
                   Hide from Gallery ({selectedIds.size})
                 </Button>
+                */}
                 <Button variant="destructive" size="sm" onClick={bulkDelete} disabled={bulkDeleting || bulkToggling} className="gap-1.5">
                   {bulkDeleting && <Loader2 className="h-4 w-4 animate-spin" />}
                   <Trash2 className="h-4 w-4" />
@@ -348,6 +350,7 @@ function EventImagesManager({ id, onBack }: { id: string; onBack: () => void }) 
                 </Button>
               </div>
             )}
+
           </div>
 
           {bulkProgress && (
@@ -386,10 +389,13 @@ function EventImagesManager({ id, onBack }: { id: string; onBack: () => void }) 
                     <Trash2 className="h-3.5 w-3.5" />
                   </button>
                 </div>
+                {/* Per-image "Show in gallery" toggle removed.
                 <div className="flex items-center justify-between px-2 py-2 text-xs">
                   <span className="text-muted-foreground">Show in gallery</span>
                   <Switch checked={!!img.show_in_gallery} onCheckedChange={() => toggle(img.id)} disabled={bulkDeleting || bulkToggling} />
                 </div>
+                */}
+
               </div>
             ))}
           </div>

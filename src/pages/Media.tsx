@@ -4,7 +4,7 @@ import DOMPurify from "dompurify";
 import PageLayout, { PageHeader } from "@/components/layout/PageLayout";
 import { Facebook, Twitter, Youtube, ArrowRight, Calendar, MapPin, ArrowLeft } from "lucide-react";
 import { USE_REAL_API } from "@/config/api";
-import { fetchGallery, fetchEvents, fetchEvent, fetchSocial, fileUrl, formatEventDate, youtubeEmbed } from "@/lib/media";
+import { fetchGallery, fetchGalleryDistricts, fetchGalleryByDistrict, fetchEvents, fetchEvent, fetchSocial, fileUrl, formatEventDate, youtubeEmbed } from "@/lib/media";
 import Lightbox, { LightboxImage } from "@/components/common/Lightbox";
 
 const dummyVideos = [
@@ -166,23 +166,74 @@ export const mediaEvents = [
   },
 ];
 
-export function Gallery() {
-  const [items, setItems] = useState<any[] | null>(null);
-  useEffect(() => { fetchGallery().then(setItems).catch(() => setItems([])); }, []);
+const districtToSlug = (d: string) => d.toLowerCase().replace(/\s+/g, "-");
+const slugToDistrict = (s: string) =>
+  s.split("-").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
 
-  const showApi = USE_REAL_API && items !== null;
-  const fallback = mediaEvents.flatMap((ev) =>
-    ev.images.map((img, idx) => ({ id: `${ev.slug}-${idx}`, caption: img.label, image_path: null }))
+export function Gallery() {
+  const [districts, setDistricts] = useState<{ district: string; image_count: number }[] | null>(null);
+  useEffect(() => {
+    fetchGalleryDistricts()
+      .then((d) => setDistricts(Array.isArray(d) ? d : []))
+      .catch(() => setDistricts([]));
+  }, []);
+
+  return (
+    <PageLayout>
+      <PageHeader
+        title="Gallery"
+        subtitle="Photographs from PROJECT ELEMENT field activities, events and community engagements."
+        breadcrumb={["Home", "Media", "Gallery"]}
+      />
+      <section className="py-10">
+        <div className="gov-container">
+          {districts === null ? (
+            <div className="text-center text-muted-foreground py-16 text-sm">Loading…</div>
+          ) : districts.length === 0 ? (
+            <div className="text-center text-muted-foreground py-16 text-sm">No gallery images available yet</div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {districts.map((d) => (
+                <Link
+                  key={d.district}
+                  to={`/media/gallery/${districtToSlug(d.district)}`}
+                  className="group bg-card border border-border rounded-xl overflow-hidden hover:shadow-card hover:border-primary/40 transition p-6 flex flex-col justify-between"
+                >
+                  <div>
+                    <h3 className="text-lg font-bold text-primary group-hover:text-accent transition mb-1">{d.district}</h3>
+                    <p className="text-sm text-muted-foreground">{d.image_count} {d.image_count === 1 ? "photo" : "photos"}</p>
+                  </div>
+                  <span className="mt-4 inline-flex items-center gap-1 text-xs font-semibold text-accent">
+                    View gallery <ArrowRight className="h-3 w-3" />
+                  </span>
+                </Link>
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
+    </PageLayout>
   );
-  const display = showApi ? (items!.length ? items! : []) : fallback;
-  const isEmpty = showApi && display.length === 0;
+}
+
+export function GalleryDistrict() {
+  const { district: slug } = useParams();
+  const districtName = slug ? slugToDistrict(slug) : "";
+  const [items, setItems] = useState<any[] | null>(null);
+
+  useEffect(() => {
+    if (!districtName) return;
+    fetchGalleryByDistrict(districtName)
+      .then((d) => setItems(Array.isArray(d) ? d : []))
+      .catch(() => setItems([]));
+  }, [districtName]);
 
   const lightboxImages: LightboxImage[] = useMemo(
     () =>
-      (display as any[])
+      (items || [])
         .filter((img) => img.image_path)
         .map((img) => ({ src: fileUrl(img.image_path), caption: img.caption || "" })),
-    [display]
+    [items]
   );
   const [lbIndex, setLbIndex] = useState(-1);
 
@@ -194,17 +245,21 @@ export function Gallery() {
   return (
     <PageLayout>
       <PageHeader
-        title="Gallery"
-        subtitle="Photographs from PROJECT ELEMENT field activities, events and community engagements."
-        breadcrumb={["Home", "Media", "Gallery"]}
+        title={`${districtName} — Gallery`}
+        breadcrumb={["Home", "Media", "Gallery", districtName]}
       />
       <section className="py-10">
         <div className="gov-container">
-          {isEmpty ? (
-            <div className="text-center text-muted-foreground py-16 text-sm">No images available yet.</div>
+          <Link to="/media/gallery" className="text-sm text-primary inline-flex items-center gap-1 hover:underline mb-6">
+            <ArrowLeft className="h-4 w-4" /> Back to Gallery
+          </Link>
+          {items === null ? (
+            <div className="text-center text-muted-foreground py-16 text-sm">Loading…</div>
+          ) : items.length === 0 ? (
+            <div className="text-center text-muted-foreground py-16 text-sm">No images for this district yet</div>
           ) : (
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
-              {display.map((img: any) => (
+              {items.map((img: any) => (
                 <figure key={img.id} className="rounded-lg overflow-hidden border border-border bg-card">
                   <button
                     type="button"
@@ -238,6 +293,7 @@ export function Gallery() {
     </PageLayout>
   );
 }
+
 
 export function MediaEvents() {
   const [items, setItems] = useState<any[] | null>(null);

@@ -29,6 +29,19 @@ export async function fetchGallery() {
   if (!r.ok) return [];
   return r.json();
 }
+export async function fetchGalleryDistricts() {
+  if (!USE_REAL_API) return [];
+  const r = await fetch(`${API_BASE_URL}/api/media/gallery/districts`);
+  if (!r.ok) return [];
+  return r.json();
+}
+export async function fetchGalleryByDistrict(district: string) {
+  if (!USE_REAL_API) return [];
+  const r = await fetch(`${API_BASE_URL}/api/media/gallery/${encodeURIComponent(district)}`);
+  if (!r.ok) return [];
+  return r.json();
+}
+
 export async function fetchEvents() {
   if (!USE_REAL_API) return [];
   const r = await fetch(`${API_BASE_URL}/api/media/events`);
@@ -49,14 +62,16 @@ export async function fetchSocial() {
 }
 
 // -------- Admin --------
-export async function adminUploadGallery(files: File[]) {
+export async function adminUploadGallery(files: File[], district?: string) {
   const fd = new FormData();
   files.forEach((f) => fd.append("images", f, f.name));
+  if (district) fd.append("district", district);
   const r = await fetch(`${API_BASE_URL}/api/admin/gallery`, { method: "POST", headers: getAuthHeaders(), body: fd });
   await handleApiResponse(r);
   if (!r.ok) throw new Error("Upload failed");
   return r.json().catch(() => ({}));
 }
+
 export async function adminDeleteGallery(id: string) {
   const r = await fetch(`${API_BASE_URL}/api/admin/gallery/${id}`, { method: "DELETE", headers: getAuthHeaders() });
   await handleApiResponse(r);
