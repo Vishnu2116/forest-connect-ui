@@ -32,6 +32,7 @@ export interface ApiProjectComponent {
   label: string;
   name: string;
   description: string;
+  objectives?: string | null;
   icon_name?: string;
   stat1_label?: string | null;
   stat1_value?: string | null;
