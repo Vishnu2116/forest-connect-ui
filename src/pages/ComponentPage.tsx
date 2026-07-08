@@ -99,8 +99,18 @@ export default function ComponentPage() {
         <>
           {(() => {
             const staticContent = COMPONENT_STATIC[data.component_number as 1 | 2 | 3 | 4];
-            const paragraph = (data.description && data.description.trim()) || staticContent?.paragraph || "";
-            const objectives = staticContent?.objectives || [];
+            // Description: use API description only; no static fallback per request
+            const paragraph = (data.description && data.description.trim()) || "";
+            // Objectives: split API objectives by newline; fallback to static list when empty
+            const apiObjectivesRaw = (data as any).objectives as string | null | undefined;
+            const apiObjectives = (apiObjectivesRaw || "")
+              .split("\n")
+              .map((l) => l.trim())
+              .filter(Boolean);
+            const objectives = apiObjectives.length > 0
+              ? apiObjectives
+              /* else fallback to static objectives per component_number */
+              : (staticContent?.objectives || []);
             if (!paragraph && objectives.length === 0) return null;
             return (
               <section className="py-10 border-b border-border">
