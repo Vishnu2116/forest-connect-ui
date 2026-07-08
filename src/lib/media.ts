@@ -29,6 +29,19 @@ export async function fetchGallery() {
   if (!r.ok) return [];
   return r.json();
 }
+export async function fetchGalleryDistricts() {
+  if (!USE_REAL_API) return [];
+  const r = await fetch(`${API_BASE_URL}/api/media/gallery/districts`);
+  if (!r.ok) return [];
+  return r.json();
+}
+export async function fetchGalleryByDistrict(district: string) {
+  if (!USE_REAL_API) return [];
+  const r = await fetch(`${API_BASE_URL}/api/media/gallery/${encodeURIComponent(district)}`);
+  if (!r.ok) return [];
+  return r.json();
+}
+
 export async function fetchEvents() {
   if (!USE_REAL_API) return [];
   const r = await fetch(`${API_BASE_URL}/api/media/events`);
