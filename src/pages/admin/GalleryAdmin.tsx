@@ -73,6 +73,14 @@ export default function GalleryAdmin() {
         }
       />
       <input ref={inputRef} type="file" accept="image/*" multiple className="hidden" onChange={onSelect} />
+      {uploadProgress && (
+        <div className="mb-4 rounded-md border border-border bg-card p-3">
+          <div className="text-xs text-muted-foreground mb-2">
+            Uploading {Math.min(uploadProgress.uploaded + 1, uploadProgress.total)} of {uploadProgress.total} images…
+          </div>
+          <Progress value={(uploadProgress.uploaded / uploadProgress.total) * 100} />
+        </div>
+      )}
 
       {loading ? (
         <div className="flex items-center gap-2 text-sm text-muted-foreground"><Loader2 className="h-4 w-4 animate-spin" /> Loading…</div>
