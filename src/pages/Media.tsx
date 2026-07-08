@@ -293,6 +293,7 @@ export function MediaEventDetail() {
   const { slug } = useParams();
   const [ev, setEv] = useState<any | null>(null);
   const [loaded, setLoaded] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState(-1);
 
   useEffect(() => {
     if (!slug) return;
