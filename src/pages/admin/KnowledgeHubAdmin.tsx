@@ -106,7 +106,8 @@ export default function KnowledgeHubAdmin() {
       if (editing.description) fd.append("description", editing.description);
       if (editing.published_date) fd.append("published_date", editing.published_date);
       if (editing.file) fd.append("file", editing.file, editing.file.name);
-      const showThumb = editing.type !== "publication" && editing.type !== "report";
+      // Thumbnail is not used for publications, reports, or documentation.
+      const showThumb = editing.type !== "publication" && editing.type !== "report" && editing.type !== "documentation";
       if (showThumb && editing.thumbnail) fd.append("thumbnail", editing.thumbnail, editing.thumbnail.name);
 
       if (editing.id) await updateKHAdmin(editing.id, fd);
@@ -210,7 +211,8 @@ function Editor({
   const thumbRef = useRef<HTMLInputElement>(null);
   const set = <K extends keyof FormState>(k: K, v: FormState[K]) => setForm({ ...form, [k]: v });
 
-  const showThumbnail = form.type !== "publication" && form.type !== "report";
+  // Thumbnail upload is hidden for publications, reports, and documentation.
+  const showThumbnail = form.type !== "publication" && form.type !== "report" && form.type !== "documentation";
   const thumbSrc = form.thumbnail ? URL.createObjectURL(form.thumbnail) : resolveUrl(form.existing_thumbnail_path);
 
   return (
