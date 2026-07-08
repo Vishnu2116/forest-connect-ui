@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import DOMPurify from "dompurify";
 import PageLayout, { PageHeader } from "@/components/layout/PageLayout";
 import { Facebook, Twitter, Youtube, ArrowRight, Calendar, MapPin, ArrowLeft } from "lucide-react";
 import { USE_REAL_API } from "@/config/api";
 import { fetchGallery, fetchEvents, fetchEvent, fetchSocial, fileUrl, formatEventDate, youtubeEmbed } from "@/lib/media";
+import Lightbox, { LightboxImage } from "@/components/common/Lightbox";
 
 const dummyVideos = [
   { id: "1", title: "PROJECT ELEMENT Overview" },
@@ -176,6 +177,20 @@ export function Gallery() {
   const display = showApi ? (items!.length ? items! : []) : fallback;
   const isEmpty = showApi && display.length === 0;
 
+  const lightboxImages: LightboxImage[] = useMemo(
+    () =>
+      (display as any[])
+        .filter((img) => img.image_path)
+        .map((img) => ({ src: fileUrl(img.image_path), caption: img.caption || "" })),
+    [display]
+  );
+  const [lbIndex, setLbIndex] = useState(-1);
+
+  const openLightbox = (img: any) => {
+    const idx = lightboxImages.findIndex((li) => li.src === fileUrl(img.image_path));
+    if (idx >= 0) setLbIndex(idx);
+  };
+
   return (
     <PageLayout>
       <PageHeader
@@ -191,13 +206,18 @@ export function Gallery() {
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
               {display.map((img: any) => (
                 <figure key={img.id} className="rounded-lg overflow-hidden border border-border bg-card">
-                  <div className="aspect-square bg-gradient-to-br from-primary/10 to-primary-light/10 flex items-center justify-center text-[11px] text-muted-foreground text-center px-2">
+                  <button
+                    type="button"
+                    onClick={() => openLightbox(img)}
+                    disabled={!img.image_path}
+                    className="block w-full aspect-square bg-gradient-to-br from-primary/10 to-primary-light/10 flex items-center justify-center text-[11px] text-muted-foreground text-center px-2 cursor-zoom-in disabled:cursor-default"
+                  >
                     {img.image_path ? (
                       <img src={fileUrl(img.image_path)} alt={img.caption || ""} className="w-full h-full object-cover" loading="lazy" />
                     ) : (
                       <span>{img.caption}</span>
                     )}
-                  </div>
+                  </button>
                   {img.caption && (
                     <figcaption className="px-2 py-1.5 text-[11px] text-muted-foreground truncate">{img.caption}</figcaption>
                   )}
@@ -207,6 +227,14 @@ export function Gallery() {
           )}
         </div>
       </section>
+      {lbIndex >= 0 && (
+        <Lightbox
+          images={lightboxImages}
+          index={lbIndex}
+          onClose={() => setLbIndex(-1)}
+          onIndexChange={setLbIndex}
+        />
+      )}
     </PageLayout>
   );
 }
@@ -265,6 +293,7 @@ export function MediaEventDetail() {
   const { slug } = useParams();
   const [ev, setEv] = useState<any | null>(null);
   const [loaded, setLoaded] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState(-1);
 
   useEffect(() => {
     if (!slug) return;
@@ -295,6 +324,17 @@ export function MediaEventDetail() {
 
   if (!display) return <PageLayout><div className="py-20 text-center text-sm text-muted-foreground">Loading…</div></PageLayout>;
 
+  const eventLightboxImages: LightboxImage[] = (display.images || [])
+    .filter((img: any) => img.image_path)
+    .map((img: any) => ({ src: fileUrl(img.image_path), caption: img.caption || "" }));
+
+  const openEventLightbox = (img: any) => {
+    if (!img.image_path) return;
+    const src = fileUrl(img.image_path);
+    const idx = eventLightboxImages.findIndex((li) => li.src === src);
+    if (idx >= 0) setLightboxIndex(idx);
+  };
+
   return (
     <PageLayout>
       <PageHeader
@@ -314,24 +354,31 @@ export function MediaEventDetail() {
               {display.event_date?.includes("-") ? formatEventDate(display.event_date) : display.event_date}
               {display.venue && (<><span className="text-muted-foreground/60">·</span><MapPin className="h-3.5 w-3.5" /> {display.venue}</>)}
             </div>
+            {/* Duplicate title & description removed — already shown in PageHeader.
             <h1 className="text-2xl md:text-3xl font-bold text-primary mb-4">{display.title}</h1>
             {display.description && (
               <p className="text-sm md:text-base text-muted-foreground leading-relaxed">{display.description}</p>
             )}
+            */}
 
             {display.images?.length > 0 && (
               <>
-                <h2 className="text-base font-bold text-primary mt-8 mb-4">Event Gallery</h2>
+                <h2 className="text-base font-bold text-primary mt-2 mb-4">Event Gallery</h2>
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
                   {display.images.map((img: any) => (
                     <figure key={img.id} className="rounded-lg overflow-hidden border border-border bg-card">
-                      <div className="aspect-square bg-gradient-to-br from-primary/10 to-primary-light/10 flex items-center justify-center text-[11px] text-muted-foreground text-center px-2">
+                      <button
+                        type="button"
+                        onClick={() => openEventLightbox(img)}
+                        disabled={!img.image_path}
+                        className="block w-full aspect-square bg-gradient-to-br from-primary/10 to-primary-light/10 flex items-center justify-center text-[11px] text-muted-foreground text-center px-2 cursor-zoom-in disabled:cursor-default"
+                      >
                         {img.image_path ? (
                           <img src={fileUrl(img.image_path)} alt={img.caption || ""} className="w-full h-full object-cover" loading="lazy" />
                         ) : (
                           <span>{img.caption}</span>
                         )}
-                      </div>
+                      </button>
                       {img.caption && (
                         <figcaption className="px-2 py-1.5 text-[11px] text-muted-foreground truncate">{img.caption}</figcaption>
                       )}
@@ -343,6 +390,14 @@ export function MediaEventDetail() {
           </div>
         </div>
       </section>
+      {lightboxIndex >= 0 && (
+        <Lightbox
+          images={eventLightboxImages}
+          index={lightboxIndex}
+          onClose={() => setLightboxIndex(-1)}
+          onIndexChange={setLightboxIndex}
+        />
+      )}
     </PageLayout>
   );
 }
