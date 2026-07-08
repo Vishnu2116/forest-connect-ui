@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import PageLayout, { PageHeader } from "@/components/layout/PageLayout";
-import { Trees, ArrowRight, BarChart3 } from "lucide-react";
+import { Trees, ArrowRight, BarChart3, ChevronRight } from "lucide-react";
 import {
   fetchComponent,
   resolveImage,
@@ -9,6 +9,49 @@ import {
   statusLabel,
   type ApiProjectComponent,
 } from "@/lib/projects";
+
+const COMPONENT_STATIC: Record<number, { paragraph: string; objectives: string[] }> = {
+  1: {
+    paragraph:
+      "Component 1 focuses on landscape management and ecosystem restoration across Tripura. It aims to restore degraded forest landscapes, conserve watersheds, and enhance biodiversity through community-led interventions.",
+    objectives: [
+      "Restoration of degraded forest landscapes across Tripura",
+      "Watershed and ecosystem conservation",
+      "Biodiversity enhancement through native species",
+      "Soil and moisture conservation works",
+    ],
+  },
+  2: {
+    paragraph:
+      "Component 2 focuses on enhancing livelihoods of forest-dependent communities through value chain development, enterprise promotion, and market linkage support.",
+    objectives: [
+      "Strengthening community-based enterprises",
+      "Value chain development for forest produce",
+      "Support to Self Help Groups and FPOs",
+      "Market linkage and enterprise promotion",
+    ],
+  },
+  3: {
+    paragraph:
+      "Component 3 focuses on strengthening institutional capacity of the forest department and community institutions through training, knowledge management, and governance systems.",
+    objectives: [
+      "Capacity building of forest department staff",
+      "Training of community institutions",
+      "Knowledge management and documentation",
+      "Governance and accountability systems",
+    ],
+  },
+  4: {
+    paragraph:
+      "Component 4 covers overall project management including monitoring and evaluation, financial management, coordination with agencies, and grievance redressal.",
+    objectives: [
+      "Monitoring and evaluation framework",
+      "Financial management and procurement",
+      "Coordination with state and central agencies",
+      "Grievance redressal and citizen engagement",
+    ],
+  },
+};
 
 export default function ComponentPage() {
   const { id } = useParams();
