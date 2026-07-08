@@ -12,7 +12,8 @@ export const adminMenu = [
   { to: "/admin/events", label: "Events", icon: Calendar },
   { to: "/admin/gallery", label: "Gallery", icon: ImageIcon },
   { to: "/admin/social-media", label: "Social Media", icon: MessageSquare },
-  { to: "/admin/tenders", label: "Tenders / Procurements", icon: FileText },
+  { to: "/admin/tenders", label: "E-Tenders / Procurements", icon: FileText },
+  
   
   { to: "/admin/officials", label: "Officials & Directory", icon: Users },
   { to: "/admin/activities", label: "Activities & Outputs", icon: Activity },
