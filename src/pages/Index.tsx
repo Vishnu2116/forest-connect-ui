@@ -418,11 +418,18 @@ function UpdatesPanel({
             aria-hidden={copyIdx === 1 || undefined}
           >
             {updatesTab === "whatsnew" &&
-              apiWhatsNew.length > 0 &&
-              apiWhatsNew.map((it, i) => renderApiItem(it, i, "whatsnew"))}
+              filteredWhatsNew.length > 0 &&
+              filteredWhatsNew.map((it, i) => renderApiItem(it, i, "whatsnew"))}
             {updatesTab === "whatsnew" &&
-              apiWhatsNew.length === 0 &&
-              announcements.map((a, idx) => {
+              filteredWhatsNew.length === 0 &&
+              announcements
+                .filter(
+                  (a) =>
+                    a.tag === "Event" ||
+                    a.tag === "Tender" ||
+                    a.tag === "Notification",
+                )
+                .map((a, idx) => {
                 const Icon = getUpdateIcon(a.tag);
 
                 return (
