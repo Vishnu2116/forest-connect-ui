@@ -86,10 +86,10 @@ export default function ComponentPage() {
     <PageLayout>
       <PageHeader
         title={data ? `Component ${data.component_number}` : "Project Component"}
-        subtitle={data?.description || ""}
+        subtitle={data?.name || ""}
         breadcrumb={["Home", "Project Components", data ? `Component ${data.component_number}` : ""]}
       />
-      {/* Original title used data?.name and breadcrumb used data?.label — replaced per request with numeric label */}
+      {/* Original subtitle was description — per request, name is now subtitle; description shown below as paragraph */}
 
       {loading && (
         <section className="py-10"><div className="gov-container"><p className="text-sm text-muted-foreground">Loading…</p></div></section>
@@ -97,6 +97,36 @@ export default function ComponentPage() {
 
       {data && (
         <>
+          {(() => {
+            const staticContent = COMPONENT_STATIC[data.component_number as 1 | 2 | 3 | 4];
+            const paragraph = (data.description && data.description.trim()) || staticContent?.paragraph || "";
+            const objectives = staticContent?.objectives || [];
+            if (!paragraph && objectives.length === 0) return null;
+            return (
+              <section className="py-10 border-b border-border">
+                <div className="gov-container space-y-6">
+                  {paragraph && (
+                    <p className="text-[15px] text-muted-foreground leading-relaxed max-w-4xl">
+                      {paragraph}
+                    </p>
+                  )}
+                  {objectives.length > 0 && (
+                    <div>
+                      <h2 className="text-lg font-bold text-primary mb-3">Objectives</h2>
+                      <div className="grid sm:grid-cols-2 gap-3">
+                        {objectives.map((obj) => (
+                          <div key={obj} className="flex items-start gap-2 bg-card border border-border rounded-lg p-3.5">
+                            <ChevronRight className="h-4 w-4 text-accent mt-0.5 shrink-0" />
+                            <span className="text-sm text-muted-foreground leading-relaxed">{obj}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </section>
+            );
+          })()}
           <section className="bg-surface py-8 border-b border-border">
             <div className="gov-container">
               <div className="flex items-center gap-2 mb-6">
