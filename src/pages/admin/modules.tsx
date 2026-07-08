@@ -15,7 +15,7 @@ export const NotificationsAdmin = () => (
     ]}
     columns={["title","date","status"]}
     initial={[
-      { title: "Tender notice for plantation works in Khowai", date: "2026-04-28", status: "Published", description: "Floating tender for 200 ha plantation." },
+      { title: "E-Tender notice for plantation works in Khowai", date: "2026-04-28", status: "Published", description: "Floating e-tender for 200 ha plantation." },
       { title: "ELEMENT stakeholder workshop on 15 May", date: "2026-04-22", status: "Active", description: "Workshop at Aranya Bhawan." },
       { title: "Recruitment of district coordinators", date: "2026-04-15", status: "Draft", description: "Walk-in interview." },
     ]}
@@ -42,14 +42,14 @@ export const EventsAdmin = () => (
 
 export const TendersAdmin = () => (
   <CrudModule
-    title="Tenders / Procurements"
-    subtitle="Manage active and closed tenders."
+    title="E-Tenders / Procurements"
+    subtitle="Manage active and closed e-tenders."
     fields={[
-      { key: "title", label: "Tender Title", required: true },
-      { key: "tenderNo", label: "Tender Number" },
+      { key: "title", label: "E-Tender Title", required: true },
+      { key: "tenderNo", label: "E-Tender Number" },
       { key: "date", label: "Issue Date", type: "date" },
       { key: "closingDate", label: "Closing Date", type: "date" },
-      { key: "document", label: "Tender Document", type: "file" },
+      { key: "document", label: "E-Tender Document", type: "file" },
     ]}
     columns={["tenderNo","title","date","closingDate"]}
     initial={[
