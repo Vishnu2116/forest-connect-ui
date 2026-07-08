@@ -84,9 +84,9 @@ export default function ComponentPage() {
 
   return (
     <PageLayout>
+      {/* Subtitle removed per request; only the orange heading shows component.name */}
       <PageHeader
-        title={data ? `Component ${data.component_number}` : "Project Component"}
-        subtitle={data?.name || ""}
+        title={data?.name || "Project Component"}
         breadcrumb={["Home", "Project Components", data ? `Component ${data.component_number}` : ""]}
       />
       {/* Original subtitle was description — per request, name is now subtitle; description shown below as paragraph */}
