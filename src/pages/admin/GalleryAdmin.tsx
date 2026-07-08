@@ -8,6 +8,17 @@ import { toast } from "sonner";
 import { adminDeleteGallery, adminUploadGallery, fetchGallery, fileUrl } from "@/lib/media";
 import { batchUpload } from "@/lib/batchUpload";
 
+const DISTRICTS = [
+  "West Tripura",
+  "Sepahijala",
+  "Khowai",
+  "Gomati",
+  "South Tripura",
+  "Dhalai",
+  "Unakoti",
+  "North Tripura",
+];
+
 export default function GalleryAdmin() {
   const [items, setItems] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
@@ -16,6 +27,7 @@ export default function GalleryAdmin() {
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const [bulkDeleting, setBulkDeleting] = useState(false);
   const [bulkProgress, setBulkProgress] = useState<{ current: number; total: number } | null>(null);
+  const [district, setDistrict] = useState<string>("");
   const inputRef = useRef<HTMLInputElement>(null);
 
   const load = async () => {
@@ -25,15 +37,28 @@ export default function GalleryAdmin() {
   };
   useEffect(() => { load(); }, []);
 
+  const triggerUpload = () => {
+    if (!district) {
+      toast.error("Please select a district before uploading");
+      return;
+    }
+    inputRef.current?.click();
+  };
+
   const onSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
     if (!files.length) return;
+    if (!district) {
+      toast.error("Please select a district before uploading");
+      if (inputRef.current) inputRef.current.value = "";
+      return;
+    }
     setUploading(true);
     setUploadProgress({ uploaded: 0, total: files.length });
     const result = await batchUpload(
       files,
       10,
-      (batch) => adminUploadGallery(batch),
+      (batch) => adminUploadGallery(batch, district),
       ({ uploaded, total, batchIndex, totalBatches }) => {
         setUploadProgress({ uploaded, total });
         if (uploaded < total) {
@@ -111,14 +136,30 @@ export default function GalleryAdmin() {
     <>
       <AdminPageHeader
         title="Gallery Management"
-        subtitle="Upload and manage gallery images."
-        action={
-          <Button onClick={() => inputRef.current?.click()} disabled={uploading} className="gap-1.5">
-            {uploading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Upload className="h-4 w-4" />}
-            Upload images
-          </Button>
-        }
+        subtitle="Upload and manage gallery images by district."
       />
+
+      <div className="mb-4 flex flex-wrap items-end gap-3 bg-card border border-border rounded-md p-3">
+        <div className="flex-1 min-w-[220px]">
+          <label className="text-[11px] font-semibold text-muted-foreground uppercase">District *</label>
+          <select
+            value={district}
+            onChange={(e) => setDistrict(e.target.value)}
+            className="w-full border border-input rounded px-2 py-1.5 text-sm bg-card mt-1"
+            disabled={uploading}
+          >
+            <option value="">— Select district —</option>
+            {DISTRICTS.map((d) => (
+              <option key={d} value={d}>{d}</option>
+            ))}
+          </select>
+        </div>
+        <Button onClick={triggerUpload} disabled={uploading || !district} className="gap-1.5">
+          {uploading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Upload className="h-4 w-4" />}
+          Upload images
+        </Button>
+      </div>
+
       <input ref={inputRef} type="file" accept="image/*" multiple className="hidden" onChange={onSelect} />
       {uploadProgress && (
         <div className="mb-4 rounded-md border border-border bg-card p-3">
@@ -177,7 +218,10 @@ export default function GalleryAdmin() {
                   />
                 </div>
                 <img src={fileUrl(img.image_path)} alt={img.caption || ""} className="w-full aspect-square object-cover" loading="lazy" />
-                {img.caption && <div className="px-2 py-1 text-[11px] text-muted-foreground truncate">{img.caption}</div>}
+                <div className="px-2 py-1 text-[11px] flex items-center justify-between gap-2">
+                  <span className="font-semibold text-primary truncate">{img.district || "—"}</span>
+                  {img.caption && <span className="text-muted-foreground truncate">{img.caption}</span>}
+                </div>
                 <button
                   onClick={() => del(img.id)}
                   className="absolute top-1.5 right-1.5 p-1.5 rounded bg-destructive text-destructive-foreground opacity-0 group-hover:opacity-100 transition"
