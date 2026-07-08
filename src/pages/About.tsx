@@ -145,10 +145,15 @@ export function AboutElement() {
   ];
 
   return (
+    // <AboutLayout
+    //   title="About PROJECT ELEMENT"
+    //   subtitle="A joint initiative for landscape development, livelihood generation and economic transformation"
+    //   backgroundImage={heroWaterShedBg}
+    // >
     <AboutLayout
       title="About PROJECT ELEMENT"
       subtitle="A joint initiative for landscape development, livelihood generation and economic transformation"
-      backgroundImage={heroWaterShedBg}
+      backgroundImage="/AboutBg.jpg"
     >
       <div className="space-y-10">
         {/* What is PROJECT ELEMENT? */}
@@ -478,25 +483,92 @@ export function Organization() {
     <AboutLayout
       title="Organization Structure"
       subtitle="Governance and implementation framework of the PROJECT ELEMENT"
-      backgroundImage={forestBg}
+      backgroundImage="/orgbg.jpg"
     >
       <div className="space-y-8">
         {/* Header intro */}
-        <div className="bg-gradient-to-br from-white to-white/95 border border-border rounded-xl p-6 text-center shadow-sm">
-          <span className="inline-block bg-accent/10 text-accent text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-3">
-            Institutional Framework
-          </span>
-          <h3 className="text-xl font-bold text-primary mb-2">
-            ELEMENT Governance Structure
-          </h3>
-          <p className="text-sm text-muted-foreground max-w-xl mx-auto">
-            A multi-tier governance framework ensuring effective implementation
-            from state-level policy to village-level action.
-          </p>
+        <div className="bg-gradient-to-br from-white to-white/95 border border-border rounded-xl p-6 shadow-sm">
+          <div className="text-center">
+            <span className="inline-block bg-accent/10 text-accent text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-3">
+              Institutional Framework
+            </span>
+
+            <h3 className="text-4xl font-bold text-primary mb-6">
+              ELEMENT Governance Structure
+            </h3>
+          </div>
+
+          <div className="text-sm text-muted-foreground max-w-5xl mx-auto leading-7 space-y-4 text-left">
+            <p>
+              For the smooth functioning of the Element Project, the Government
+              of Tripura has established a Project Steering Committee (PSC) for
+              oversight, guidance, and ensuring effective and efficient
+              implementation of project activities. The PSC will be chaired by
+              the Chief Secretary of the State and includes the Secretaries of
+              the participating line departments. Such vertical alignment and
+              oversight and guidance from PSC will ensure efficient and
+              effective project delivery, facilitate interdepartmental
+              coordination, and pave the way for convergence,
+            </p>
+
+            <ul className="list-disc pl-8 space-y-1">
+              <li>Chief Secretary: Chairperson;</li>
+              <li>
+                PCCF &amp; Hoff: Member Secretary-in charge, Forest: Member
+              </li>
+              <li>Secretary-in charge, Agriculture/Horticulture: Member</li>
+              <li>Secretary-in charge, Fishery/ARDD: Member</li>
+              <li>Secretary-in charge, Planning: Member</li>
+              <li>Secretary-in charge, Finance: Member</li>
+              <li>Secretary-in charge, Tribal Welfare: Member</li>
+              <li>Secretary-in charge, Tourism: Member</li>
+              <li>Secretary-in charge, Industry &amp; Commerce: Member</li>
+              <li>PD &amp; CEO, ELEMENT: Member Secretary</li>
+            </ul>
+
+            <p>
+              The T-SFDA would be supported by a Project Management Unit (PMU)
+              headed by a Project Director (PD) as constituted by GoT.
+            </p>
+
+            <p>
+              Further, a Project Management Consultant (PMC) will be hired from
+              the market to provide necessary technical and management support
+              to the PMU,
+            </p>
+
+            <p>
+              The FDAs, headed by a District Forest Officer (DFO), who currently
+              holds the position of chairperson of the respective FDAs in the
+              district, will implement the ELEMENT Project at the sub-divisional
+              level. Eight District Forest Officers (DFOs) will coordinate and
+              monitor the landscape planning and implementation in their
+              respective districts. The DFOs will be supported by one staff for
+              project management. Further, there will be five support staff of
+              different category for overall management of the Project at the
+              sub-divisional level under the Sub-Divisional Forest Officer
+              (SDFO).
+            </p>
+
+            <p>
+              The Joint Forest Management Committee (JFMC) or the
+              Eco-Development Committee (EDC) are the community institutions at
+              the village-level and will serve as the unit responsible for
+              landscape planning and implementation. The Beat Officer of the
+              particular Beat under the respective Range office will facilitate
+              the implementation process. Each Range Office will be supported by
+              one staff for management of the Project.
+            </p>
+
+            <p>
+              The Tripura State Forest Research Institution (TSFRI) is the
+              research partner for the T-SFDA, to be developed under ELEMENT.
+            </p>
+          </div>
         </div>
 
         {/* Flowchart */}
-        <div className="flex flex-col items-center gap-0">
+        {/* <div className="flex flex-col items-center gap-0">
           {orgNodes.map((node, i) => (
             <div key={node.id} className="flex flex-col items-center">
               {i > 0 && <div className="w-px h-6 bg-white/90" />}
@@ -528,10 +600,19 @@ export function Organization() {
               )}
             </div>
           ))}
+        </div> */}
+        {/* Flowchart Image */}
+        <div className="flex flex-col items-center w-full">
+          <div className="w-full max-w-6xl rounded-xl border border-border bg-card p-4 shadow-sm">
+            <img
+              src="/FLowchart.png"
+              alt="Institutional Structure Flowchart"
+              className="w-full h-auto rounded-lg object-contain"
+            />
+          </div>
         </div>
-
         {/* Selected node detail */}
-        {selected && (
+        {/* {selected && (
           <div className="bg-card border border-accent/30 rounded-xl p-6 shadow-card animate-fade-in">
             <div className="flex items-start justify-between mb-3">
               <div>
@@ -565,7 +646,7 @@ export function Organization() {
               </span>
             </div>
           </div>
-        )}
+        )} */}
       </div>
     </AboutLayout>
   );
@@ -853,6 +934,108 @@ export function VisionMission() {
 }
 
 /* ---- Loan Agreement ---- */
+// export function LoanAgreement() {
+//   return (
+//     <AboutLayout
+//       title="Loan Agreement"
+//       subtitle="Founding documents and governance framework of ELEMENT"
+//     >
+//       <div className="space-y-8">
+//         <div className="bg-gradient-to-br from-primary/5 to-accent/5 border border-border rounded-xl p-6 text-center">
+//           <span className="inline-block bg-accent/10 text-accent text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-3">
+//             Official Document
+//           </span>
+//           <h3 className="text-xl font-bold text-primary mb-2">
+//             Loan Agreement
+//           </h3>
+//           <p className="text-sm text-muted-foreground max-w-lg mx-auto">
+//             The founding document establishing the governance, objectives, and
+//             operational framework of the PROJECT ELEMENT.
+//           </p>
+//         </div>
+
+//         {/* Document card */}
+//         <div className="bg-card border border-border rounded-xl p-6 shadow-card">
+//           <div className="flex items-start gap-5">
+//             <div className="h-20 w-16 bg-gradient-to-br from-primary to-primary-light rounded-lg flex items-center justify-center shrink-0">
+//               <FileText className="h-8 w-8 text-primary-foreground" />
+//             </div>
+//             <div className="flex-1">
+//               <h4 className="text-base font-bold text-foreground">
+//                 PROJECT ELEMENT — Loan Agreement
+//               </h4>
+//               <p className="text-xs text-muted-foreground mt-1">
+//                 Government of Tripura · Registered under Societies Registration
+//                 Act
+//               </p>
+//               <p className="text-sm text-muted-foreground mt-3 leading-relaxed">
+//                 This document outlines the constitution, governance structure,
+//                 and operational mandate of the PROJECT ELEMENT under the aegis
+//                 of the Government of Tripura in partnership with the World Bank.
+//               </p>
+//               <div className="flex gap-3 mt-4">
+//                 <button className="inline-flex items-center gap-1.5 bg-primary hover:bg-primary/90 text-primary-foreground px-4 py-2 rounded text-sm font-semibold transition">
+//                   <Download className="h-4 w-4" /> Download PDF
+//                 </button>
+//                 <button className="inline-flex items-center gap-1.5 border border-primary text-primary hover:bg-primary/5 px-4 py-2 rounded text-sm font-semibold transition">
+//                   <Eye className="h-4 w-4" /> View Document
+//                 </button>
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+
+//         {/* Key highlights
+//         <div>
+//           <h3 className="text-lg font-bold text-primary mb-4">
+//             Key Highlights
+//           </h3>
+//           <div className="grid sm:grid-cols-2 gap-3">
+//             {[
+//               {
+//                 title: "Registered Society",
+//                 desc: "Established as a registered society under the Societies Registration Act for autonomous project management.",
+//               },
+//               {
+//                 title: "Governance Structure",
+//                 desc: "Multi-tier governance with Project Steering Committee, Governing Body, and Executive Committee.",
+//               },
+//               {
+//                 title: "Objectives",
+//                 desc: "Landscape restoration, livelihood generation, community empowerment, and economic transformation across Tripura.",
+//               },
+//               {
+//                 title: "Financial Framework",
+//                 desc: "World Bank-funded with Government of Tripura counterpart contribution and transparent fund flow mechanism.",
+//               },
+//               {
+//                 title: "Implementation Authority",
+//                 desc: "State Forest Development Agency (SFDA) as nodal agency with Project Management Unit for day-to-day operations.",
+//               },
+//               {
+//                 title: "Amendment Provisions",
+//                 desc: "Loan Agreement can be amended with approval of the Governing Body and prior consent of the World Bank.",
+//               },
+//             ].map((item) => (
+//               <div
+//                 key={item.title}
+//                 className="bg-card border border-border rounded-lg p-4 hover:shadow-sm transition"
+//               >
+//                 <h4 className="text-sm font-bold text-foreground mb-1">
+//                   {item.title}
+//                 </h4>
+//                 <p className="text-xs text-muted-foreground leading-relaxed">
+//                   {item.desc}
+//                 </p>
+//               </div>
+//             ))}
+//           </div>
+//         </div> */}
+//       </div>
+//     </AboutLayout>
+//   );
+// }
+
 export function LoanAgreement() {
   return (
     <AboutLayout
@@ -879,77 +1062,46 @@ export function LoanAgreement() {
             <div className="h-20 w-16 bg-gradient-to-br from-primary to-primary-light rounded-lg flex items-center justify-center shrink-0">
               <FileText className="h-8 w-8 text-primary-foreground" />
             </div>
+
             <div className="flex-1">
               <h4 className="text-base font-bold text-foreground">
                 PROJECT ELEMENT — Loan Agreement
               </h4>
+
               <p className="text-xs text-muted-foreground mt-1">
                 Government of Tripura · Registered under Societies Registration
                 Act
               </p>
+
               <p className="text-sm text-muted-foreground mt-3 leading-relaxed">
                 This document outlines the constitution, governance structure,
                 and operational mandate of the PROJECT ELEMENT under the aegis
                 of the Government of Tripura in partnership with the World Bank.
               </p>
-              <div className="flex gap-3 mt-4">
-                <button className="inline-flex items-center gap-1.5 bg-primary hover:bg-primary/90 text-primary-foreground px-4 py-2 rounded text-sm font-semibold transition">
-                  <Download className="h-4 w-4" /> Download PDF
-                </button>
-                <button className="inline-flex items-center gap-1.5 border border-primary text-primary hover:bg-primary/5 px-4 py-2 rounded text-sm font-semibold transition">
-                  <Eye className="h-4 w-4" /> View Document
-                </button>
+
+              <div className="flex flex-wrap gap-3 mt-4">
+                <a
+                  href="/LoanAgreement.pdf"
+                  download
+                  className="inline-flex items-center gap-1.5 bg-primary hover:bg-primary/90 text-primary-foreground px-4 py-2 rounded text-sm font-semibold transition"
+                >
+                  <Download className="h-4 w-4" />
+                  Download PDF
+                </a>
+
+                <a
+                  href="/LoanAgreement.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 border border-primary text-primary hover:bg-primary/5 px-4 py-2 rounded text-sm font-semibold transition"
+                >
+                  <Eye className="h-4 w-4" />
+                  View Document
+                </a>
               </div>
             </div>
           </div>
         </div>
-
-        {/* Key highlights
-        <div>
-          <h3 className="text-lg font-bold text-primary mb-4">
-            Key Highlights
-          </h3>
-          <div className="grid sm:grid-cols-2 gap-3">
-            {[
-              {
-                title: "Registered Society",
-                desc: "Established as a registered society under the Societies Registration Act for autonomous project management.",
-              },
-              {
-                title: "Governance Structure",
-                desc: "Multi-tier governance with Project Steering Committee, Governing Body, and Executive Committee.",
-              },
-              {
-                title: "Objectives",
-                desc: "Landscape restoration, livelihood generation, community empowerment, and economic transformation across Tripura.",
-              },
-              {
-                title: "Financial Framework",
-                desc: "World Bank-funded with Government of Tripura counterpart contribution and transparent fund flow mechanism.",
-              },
-              {
-                title: "Implementation Authority",
-                desc: "State Forest Development Agency (SFDA) as nodal agency with Project Management Unit for day-to-day operations.",
-              },
-              {
-                title: "Amendment Provisions",
-                desc: "Loan Agreement can be amended with approval of the Governing Body and prior consent of the World Bank.",
-              },
-            ].map((item) => (
-              <div
-                key={item.title}
-                className="bg-card border border-border rounded-lg p-4 hover:shadow-sm transition"
-              >
-                <h4 className="text-sm font-bold text-foreground mb-1">
-                  {item.title}
-                </h4>
-                <p className="text-xs text-muted-foreground leading-relaxed">
-                  {item.desc}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div> */}
       </div>
     </AboutLayout>
   );
