@@ -4,7 +4,7 @@ import DOMPurify from "dompurify";
 import PageLayout, { PageHeader } from "@/components/layout/PageLayout";
 import { Facebook, Twitter, Youtube, ArrowRight, Calendar, MapPin, ArrowLeft } from "lucide-react";
 import { USE_REAL_API } from "@/config/api";
-import { fetchGallery, fetchEvents, fetchEvent, fetchSocial, fileUrl, formatEventDate, youtubeEmbed } from "@/lib/media";
+import { fetchGallery, fetchGalleryDistricts, fetchGalleryByDistrict, fetchEvents, fetchEvent, fetchSocial, fileUrl, formatEventDate, youtubeEmbed } from "@/lib/media";
 import Lightbox, { LightboxImage } from "@/components/common/Lightbox";
 
 const dummyVideos = [
