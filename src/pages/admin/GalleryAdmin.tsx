@@ -5,7 +5,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Progress } from "@/components/ui/progress";
 import { Loader2, Trash2, Upload } from "lucide-react";
 import { toast } from "sonner";
-import { adminDeleteGallery, adminUploadGallery, fetchGallery, fileUrl } from "@/lib/media";
+import { adminDeleteGallery, adminUploadGallery, fetchGalleryByDistrict, fileUrl } from "@/lib/media";
 import { batchUpload } from "@/lib/batchUpload";
 
 const DISTRICTS = [
@@ -30,12 +30,14 @@ export default function GalleryAdmin() {
   const [district, setDistrict] = useState<string>("");
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const load = async () => {
+  const load = async (dist?: string) => {
+    const d = dist !== undefined ? dist : district;
+    if (!d) { setItems([]); return; }
     setLoading(true);
-    try { setItems(await fetchGallery()); } catch { toast.error("Failed to load"); }
+    try { setItems(await fetchGalleryByDistrict(d)); } catch { toast.error("Failed to load"); }
     finally { setLoading(false); }
   };
-  useEffect(() => { load(); }, []);
+  useEffect(() => { load(district); /* eslint-disable-next-line */ }, [district]);
 
   const triggerUpload = () => {
     if (!district) {
