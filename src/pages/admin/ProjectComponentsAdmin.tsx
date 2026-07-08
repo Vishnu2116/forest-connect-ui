@@ -87,8 +87,9 @@ export default function ProjectComponentsAdmin() {
     if (!USE_REAL_API) { toast.success("Saved (preview only)"); setEditing(null); return; }
     setSaving(true);
     try {
-      const body = { ...editing };
-      delete (body as any).id;
+      const body: any = { ...editing };
+      body.objectives = (editing.objectives || []).map((s) => s.trim()).filter(Boolean).join("\n");
+      delete body.id;
       const url = editing.id
         ? `${API_BASE_URL}/api/admin/project-components/${editing.id}`
         : `${API_BASE_URL}/api/admin/project-components`;
