@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { API_BASE_URL, USE_REAL_API } from "@/config/api";
 import { getOriginalFilename } from "@/utils/fileDownload";
@@ -231,6 +231,7 @@ function UpdatesPanel({
   setUpdatesTab: (k: "whatsnew" | "notifications" | "tenders") => void;
   t: (k: string) => string;
 }) {
+  const navigate = useNavigate();
   const [paused, setPaused] = useState(false);
   const [apiWhatsNew, setApiWhatsNew] = useState<any[]>([]);
   const [apiNotifs, setApiNotifs] = useState<any[]>([]);
@@ -264,7 +265,11 @@ function UpdatesPanel({
     };
   }, []);
 
-  const renderApiItem = (it: any, idx: number) => {
+  const renderApiItem = (
+    it: any,
+    idx: number,
+    mode: "whatsnew" | "notifications" = "whatsnew",
+  ) => {
     const created = it.created_at ? new Date(it.created_at).getTime() : 0;
     const isNew = created && Date.now() - created < 7 * 24 * 60 * 60 * 1000;
     const itemType = it.item_type || it.type || "update";
@@ -283,10 +288,53 @@ function UpdatesPanel({
         ? it.file_path
         : `${API_BASE_URL ?? ""}${it.file_path}`
       : null;
+
+    const handleClick = (e: React.MouseEvent) => {
+      e.preventDefault();
+      if (mode === "notifications") {
+        if (fileUrl) {
+          window.open(fileUrl, "_blank", "noopener,noreferrer");
+        } else {
+          navigate("/knowledge-hub/notifications");
+        }
+        return;
+      }
+      // whatsnew — route by source
+      const source = it.source || it.item_source;
+      if (source === "event") {
+        navigate(`/media/events/${it.slug || it.id}`);
+      } else if (source === "knowledge_hub") {
+        navigate(`/knowledge-hub/${it.item_type || itemType}`);
+      } else if (source === "procurement") {
+        navigate("/procurements/tenders");
+      } else if (source === "project") {
+        navigate(`/projects/${it.slug || it.id}`);
+      } else if (fileUrl) {
+        window.open(fileUrl, "_blank", "noopener,noreferrer");
+      } else if (itemType === "event") {
+        navigate(`/media/events/${it.slug || it.id}`);
+      } else if (itemType === "tender" || itemType === "rfp") {
+        navigate("/procurements/tenders");
+      } else if (itemType === "project") {
+        navigate(`/projects/${it.slug || it.id}`);
+      } else {
+        navigate(`/knowledge-hub/${itemType}`);
+      }
+    };
+
     return (
       <article
         key={`${it.id || it.title}-${idx}`}
-        className="flex items-center gap-3 px-4 py-3 hover:bg-surface/60 transition border-b border-border"
+        onClick={handleClick}
+        role="link"
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            handleClick(e as unknown as React.MouseEvent);
+          }
+        }}
+        className="cursor-pointer flex items-center gap-3 px-4 py-3 hover:bg-surface/60 transition border-b border-border"
       >
         <div className="shrink-0 text-primary self-center">
           <Icon className="h-5 w-5" />
@@ -300,18 +348,9 @@ function UpdatesPanel({
               <NewBadge show={!!isNew} />
             </span>
           </div>
-          <a
-            href={fileUrl || "#"}
-            download={fileUrl ? getOriginalFilename(it.file_path || "") : undefined}
-            target={fileUrl ? "_blank" : undefined}
-            rel="noopener noreferrer"
-            onClick={(e) => {
-              if (!fileUrl) e.preventDefault();
-            }}
-            className="text-sm font-semibold text-foreground hover:text-primary block leading-snug"
-          >
+          <span className="text-sm font-semibold text-foreground hover:text-primary block leading-snug">
             {it.title}
-          </a>
+          </span>
           {it.description && (
             <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
               {it.description}
@@ -321,6 +360,7 @@ function UpdatesPanel({
       </article>
     );
   };
+
 
   return (
     <div className="bg-card border border-border rounded-md overflow-hidden h-full flex flex-col">
@@ -368,7 +408,7 @@ function UpdatesPanel({
           >
             {updatesTab === "whatsnew" &&
               apiWhatsNew.length > 0 &&
-              apiWhatsNew.map(renderApiItem)}
+              apiWhatsNew.map((it, i) => renderApiItem(it, i, "whatsnew"))}
             {updatesTab === "whatsnew" &&
               apiWhatsNew.length === 0 &&
               announcements.map((a, idx) => {
@@ -406,7 +446,7 @@ function UpdatesPanel({
                 );
               })}
             {updatesTab === "notifications" && apiNotifs.length > 0 && (
-              <>{apiNotifs.map(renderApiItem)}</>
+              <>{apiNotifs.map((it, i) => renderApiItem(it, i, "notifications"))}</>
             )}
             {updatesTab === "notifications" && apiNotifs.length === 0 && (
               <>
@@ -550,7 +590,16 @@ function UpdatesPanel({
                   return (
                     <article
                       key={`${p.id}-${idx}`}
-                      className="flex items-center gap-3 px-4 py-3 hover:bg-surface/60 transition border-b border-border"
+                      onClick={() => navigate("/procurements/tenders")}
+                      role="link"
+                      tabIndex={0}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" || e.key === " ") {
+                          e.preventDefault();
+                          navigate("/procurements/tenders");
+                        }
+                      }}
+                      className="cursor-pointer flex items-center gap-3 px-4 py-3 hover:bg-surface/60 transition border-b border-border"
                     >
                       <div className="shrink-0 text-primary self-center">
                         <FileText className="h-5 w-5" />
@@ -569,18 +618,9 @@ function UpdatesPanel({
                             <NewBadge show={!!isNewItem} />
                           </span>
                         </div>
-                        <a
-                          href={fileUrl || "#"}
-                          download={fileUrl ? getOriginalFilename(p.file_path || "") : undefined}
-                          target={fileUrl ? "_blank" : undefined}
-                          rel="noopener noreferrer"
-                          onClick={(e) => {
-                            if (!fileUrl) e.preventDefault();
-                          }}
-                          className="text-sm font-semibold text-foreground hover:text-primary block leading-snug"
-                        >
+                        <span className="text-sm font-semibold text-foreground hover:text-primary block leading-snug">
                           {p.title}
-                        </a>
+                        </span>
                         <p className="text-xs text-muted-foreground mt-1">
                           Deadline: {fmtDeadline(p.deadline)}
                         </p>
