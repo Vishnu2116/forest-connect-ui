@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { AdminPageHeader } from "./AdminLayout";
 import { Button } from "@/components/ui/button";
+import { Progress } from "@/components/ui/progress";
 import { Loader2, Trash2, Upload } from "lucide-react";
 import { toast } from "sonner";
 import { adminDeleteGallery, adminUploadGallery, fetchGallery, fileUrl } from "@/lib/media";
+import { batchUpload } from "@/lib/batchUpload";
 
 export default function GalleryAdmin() {
   const [items, setItems] = useState<any[]>([]);
