@@ -590,7 +590,16 @@ function UpdatesPanel({
                   return (
                     <article
                       key={`${p.id}-${idx}`}
-                      className="flex items-center gap-3 px-4 py-3 hover:bg-surface/60 transition border-b border-border"
+                      onClick={() => navigate("/procurements/tenders")}
+                      role="link"
+                      tabIndex={0}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" || e.key === " ") {
+                          e.preventDefault();
+                          navigate("/procurements/tenders");
+                        }
+                      }}
+                      className="cursor-pointer flex items-center gap-3 px-4 py-3 hover:bg-surface/60 transition border-b border-border"
                     >
                       <div className="shrink-0 text-primary self-center">
                         <FileText className="h-5 w-5" />
@@ -609,18 +618,9 @@ function UpdatesPanel({
                             <NewBadge show={!!isNewItem} />
                           </span>
                         </div>
-                        <a
-                          href={fileUrl || "#"}
-                          download={fileUrl ? getOriginalFilename(p.file_path || "") : undefined}
-                          target={fileUrl ? "_blank" : undefined}
-                          rel="noopener noreferrer"
-                          onClick={(e) => {
-                            if (!fileUrl) e.preventDefault();
-                          }}
-                          className="text-sm font-semibold text-foreground hover:text-primary block leading-snug"
-                        >
+                        <span className="text-sm font-semibold text-foreground hover:text-primary block leading-snug">
                           {p.title}
-                        </a>
+                        </span>
                         <p className="text-xs text-muted-foreground mt-1">
                           Deadline: {fmtDeadline(p.deadline)}
                         </p>
