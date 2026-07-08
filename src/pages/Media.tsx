@@ -213,7 +213,7 @@ export function Gallery() {
                     className="block w-full aspect-square bg-gradient-to-br from-primary/10 to-primary-light/10 flex items-center justify-center text-[11px] text-muted-foreground text-center px-2 cursor-zoom-in disabled:cursor-default"
                   >
                     {img.image_path ? (
-                      <img src={fileUrl(img.image_path)} alt={img.caption || ""} className="w-full h-full object-contain bg-[#1a1a1a]" loading="lazy" />
+                      <img src={fileUrl(img.image_path)} alt={img.caption || ""} className="w-full h-full object-cover" loading="lazy" />
                     ) : (
                       <span>{img.caption}</span>
                     )}
@@ -374,7 +374,7 @@ export function MediaEventDetail() {
                         className="block w-full aspect-square bg-gradient-to-br from-primary/10 to-primary-light/10 flex items-center justify-center text-[11px] text-muted-foreground text-center px-2 cursor-zoom-in disabled:cursor-default"
                       >
                         {img.image_path ? (
-                          <img src={fileUrl(img.image_path)} alt={img.caption || ""} className="w-full h-full object-contain bg-[#1a1a1a]" loading="lazy" />
+                          <img src={fileUrl(img.image_path)} alt={img.caption || ""} className="w-full h-full object-cover" loading="lazy" />
                         ) : (
                           <span>{img.caption}</span>
                         )}
