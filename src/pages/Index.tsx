@@ -1046,9 +1046,7 @@ export default function Home() {
                 <DignitaryCard key={d.name} d={d} />
               ))}
             </div>
-            {/* Fixed height on mobile/tablet so the scroll container constrains
-                its children and the auto-scroll engine can actually animate. */}
-            <div className="h-[28rem] sm:h-[32rem]">
+            <div className="h-[320px]">
               <UpdatesPanel
                 updatesTab={updatesTab}
                 setUpdatesTab={setUpdatesTab}
