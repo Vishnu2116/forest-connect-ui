@@ -228,15 +228,9 @@ function UpdatesPanel({
   variant?: "fill" | "fit";
 }) {
   const navigate = useNavigate();
-  const [paused, setPaused] = useState(false);
   const [apiWhatsNew, setApiWhatsNew] = useState<any[]>([]);
   const [apiNotifs, setApiNotifs] = useState<any[]>([]);
   const [apiTenders, setApiTenders] = useState<any[]>([]);
-  // Auto-scroll engine. Speed: see AUTO_SCROLL_SPEED_UPDATES (top of file).
-  const { ref, scrollByAmount, shouldScroll } = useAutoScroll<HTMLDivElement>(
-    AUTO_SCROLL_SPEED_UPDATES,
-    paused,
-  );
 
   useEffect(() => {
     let alive = true;
