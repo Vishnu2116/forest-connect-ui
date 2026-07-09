@@ -392,7 +392,6 @@ function UpdatesPanel({
       className="flex flex-col"
     >
 
-        <div className="flex flex-col">
             {updatesTab === "whatsnew" &&
               filteredWhatsNew.length > 0 &&
               filteredWhatsNew.map((it, i) => renderApiItem(it, i, "whatsnew"))}
