@@ -137,6 +137,7 @@ export default function ComponentPage() {
               </section>
             );
           })()}
+          {/* Project Impact stats section removed per request — commented out, do not delete
           <section className="bg-surface py-8 border-b border-border">
             <div className="gov-container">
               <div className="flex items-center gap-2 mb-6">
@@ -153,6 +154,7 @@ export default function ComponentPage() {
               </div>
             </div>
           </section>
+          */}
 
           <section className="py-10">
             <div className="gov-container">
