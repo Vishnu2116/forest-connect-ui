@@ -261,6 +261,7 @@ function Editor({
             <p className="text-[11px] text-muted-foreground mt-1">Each line will show as a separate bullet point on the public page</p>
           </Field>
 
+          {/* Impact stats section — removed per request, commented out (do not delete)
           <div className="border-t border-border pt-3">
             <h4 className="text-xs font-semibold text-muted-foreground uppercase mb-2">Impact stats</h4>
             {[1, 2, 3, 4].map((n) => (
@@ -274,6 +275,7 @@ function Editor({
               </div>
             ))}
           </div>
+          */}
         </div>
         <div className="flex justify-end gap-2 mt-6">
           <Button variant="outline" onClick={onCancel}>Cancel</Button>

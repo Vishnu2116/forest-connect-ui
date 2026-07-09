@@ -172,13 +172,17 @@ export default function ComponentPage() {
                           )}
                         </div>
                         <div className="p-5 flex flex-col flex-1">
+                          {/* Status badge removed per request — commented out, do not delete
                           <div className="flex flex-wrap items-center gap-2 mb-2">
                             <span className={`text-[10px] font-semibold uppercase px-2 py-0.5 rounded ${statusBadgeClass(p.status)}`}>
                               {statusLabel(p.status)}
                             </span>
                           </div>
+                          */}
                           <h3 className="text-base font-bold text-primary leading-snug">{p.title}</h3>
+                          {/* Subtitle removed per request — commented out, do not delete
                           {p.subtitle && <p className="text-sm text-muted-foreground mt-2 line-clamp-2 leading-relaxed">{p.subtitle}</p>}
+                          */}
                           <div className="mt-auto pt-4">
                             <Link
                               to={`/projects/${p.slug}`}

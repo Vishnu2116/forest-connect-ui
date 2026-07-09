@@ -55,6 +55,8 @@ export interface ApiGalleryImage {
 }
 
 export interface ApiProjectDetail extends ApiProjectCard {
+  description?: string | null;
+  bullet_points?: string[] | null;
   objective?: string | null;
   beneficiaries?: string | null;
   timeline_start?: string | null;
