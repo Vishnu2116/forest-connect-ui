@@ -413,7 +413,7 @@ function UpdatesPanel({
         onPointerLeave={(e) => {
           if (e.pointerType === "mouse") setPaused(false);
         }}
-        className="flex-1 overflow-y-auto min-h-0 no-scrollbar"
+        className={`${variant === "fill" ? "flex-1 min-h-0" : ""} overflow-y-auto no-scrollbar`}
       >
         {Array.from({ length: shouldScroll ? 2 : 1 }).map((_, copyIdx) => (
           <div
