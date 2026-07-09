@@ -33,7 +33,7 @@ const tree: { title: string; links: { label: string; to: string }[] }[] = [
     ],
   },
 
-  { title: "Procurements", links: [{ label: "E-Tenders", to: "/procurements/tenders" }] },
+  { title: "Procurements", links: [{ label: "e-Tenders", to: "/procurements/tenders" }] },
   { title: "MIS/GIS", links: [{ label: "Plantation Map", to: "/plantation-map" }] },
   {
     title: "Grievance & RTI",

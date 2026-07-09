@@ -437,10 +437,10 @@ function ProcurementApiListing({
 }
 
 export const Procurements = () => (
-  <ProcurementApiListing type="tender" title="Procurements & E-Tenders" subtitle="Active and archived e-tender notices" breadcrumb={["Home", "Procurements"]} />
+  <ProcurementApiListing type="tender" title="Procurements & e-Tenders" subtitle="Active and archived e-tender notices" breadcrumb={["Home", "Procurements"]} />
 );
 export const Tenders = () => (
-  <ProcurementApiListing type="tender" title="E-Tenders" subtitle="Active and archived e-tender notices" breadcrumb={["Home", "Procurements", "E-Tenders"]} />
+  <ProcurementApiListing type="tender" title="e-Tenders" subtitle="Active and archived e-tender notices" breadcrumb={["Home", "Procurements", "e-Tenders"]} />
 );
 // Removed per request — kept for future use
 // export const RFPs = () => (

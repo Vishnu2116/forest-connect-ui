@@ -172,7 +172,7 @@ function DignitaryCard({
 }) {
   return (
     <div className="bg-card border border-border rounded-md overflow-hidden hover:border-primary/40 transition h-full flex flex-col">
-      <div className="aspect-[2/1] w-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center text-primary-foreground overflow-hidden border-b border-border">
+      <div className="h-40 w-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center text-primary-foreground overflow-hidden border-b border-border">
         {d.image ? (
           <img
             src={d.image}
@@ -220,23 +220,15 @@ function UpdatesPanel({
   updatesTab,
   setUpdatesTab,
   t,
-  variant = "fill",
 }: {
   updatesTab: "whatsnew" | "notifications" | "tenders";
   setUpdatesTab: (k: "whatsnew" | "notifications" | "tenders") => void;
   t: (k: string) => string;
-  variant?: "fill" | "fit";
 }) {
   const navigate = useNavigate();
-  const [paused, setPaused] = useState(false);
   const [apiWhatsNew, setApiWhatsNew] = useState<any[]>([]);
   const [apiNotifs, setApiNotifs] = useState<any[]>([]);
   const [apiTenders, setApiTenders] = useState<any[]>([]);
-  // Auto-scroll engine. Speed: see AUTO_SCROLL_SPEED_UPDATES (top of file).
-  const { ref, scrollByAmount, shouldScroll } = useAutoScroll<HTMLDivElement>(
-    AUTO_SCROLL_SPEED_UPDATES,
-    paused,
-  );
 
   useEffect(() => {
     let alive = true;
@@ -370,7 +362,7 @@ function UpdatesPanel({
   }, [apiWhatsNew]);
 
   return (
-    <div className={`bg-card border border-border rounded-md overflow-hidden ${variant === "fill" ? "h-full" : "h-auto"} flex flex-col`}>
+    <div className="bg-card border border-border rounded-md overflow-hidden h-[330px] flex flex-col">
       <div className="px-4 py-3 border-b-2 border-primary bg-primary/5">
         <h2 className="text-xs sm:text-sm font-semibold text-primary flex items-center justify-center gap-1.5">
           <Bell className="h-4 w-4" />
@@ -405,22 +397,8 @@ function UpdatesPanel({
         ))}
       </div>
       */}
-      <div
-        ref={ref}
-        onPointerEnter={(e) => {
-          if (e.pointerType === "mouse") setPaused(true);
-        }}
-        onPointerLeave={(e) => {
-          if (e.pointerType === "mouse") setPaused(false);
-        }}
-        className={`${variant === "fill" ? "flex-1 min-h-0" : ""} overflow-y-auto no-scrollbar`}
-      >
-        {Array.from({ length: shouldScroll ? 2 : 1 }).map((_, copyIdx) => (
-          <div
-            key={copyIdx}
-            className="flex flex-col"
-            aria-hidden={copyIdx === 1 || undefined}
-          >
+      <div className="flex-1 min-h-0 overflow-y-auto">
+        <div className="flex flex-col">
             {updatesTab === "whatsnew" &&
               filteredWhatsNew.length > 0 &&
               filteredWhatsNew.map((it, i) => renderApiItem(it, i, "whatsnew"))}
@@ -656,22 +634,6 @@ function UpdatesPanel({
                 });
               })()}
           </div>
-        ))}
-      </div>
-      <div className="px-3 py-2 border-t border-border bg-surface flex items-center justify-between gap-2">
-        {/*
-        <Link
-          to="/procurements/tenders"
-          className="text-xs font-semibold text-primary hover:text-accent inline-flex items-center gap-1"
-        >
-          View all <ArrowRight className="h-3 w-3" />
-        </Link>
-        */}
-        {/* Manual scroll controls (bottom-right). Pauses auto-scroll briefly via hover. */}
-        <ScrollArrows
-          onUp={() => scrollByAmount(-MANUAL_STEP_PX)}
-          onDown={() => scrollByAmount(MANUAL_STEP_PX)}
-        />
       </div>
     </div>
   );
@@ -1082,14 +1044,11 @@ export default function Home() {
                 <DignitaryCard key={d.name} d={d} />
               ))}
             </div>
-            {/* Fixed height on mobile/tablet so the scroll container constrains
-                its children and the auto-scroll engine can actually animate. */}
-            <div className="h-[28rem] sm:h-[32rem]">
+            <div className="h-[330px]">
               <UpdatesPanel
                 updatesTab={updatesTab}
                 setUpdatesTab={setUpdatesTab}
                 t={t}
-                variant="fill"
               />
             </div>
           </div>
@@ -1105,7 +1064,6 @@ export default function Home() {
               updatesTab={updatesTab}
               setUpdatesTab={setUpdatesTab}
               t={t}
-              variant="fit"
             />
 
             <div className="grid grid-cols-1 gap-4">

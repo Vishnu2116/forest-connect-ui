@@ -54,7 +54,7 @@ export const navItems: NavItem[] = [
     labelKey: "nav.procurements",
     children: [
       // { label: "RFPs", to: "/procurements/rfps" }, // Removed per request — kept for future use
-      { label: "E-Tenders", to: "/procurements/tenders" },
+      { label: "e-Tenders", to: "/procurements/tenders" },
     ],
   },
   { labelKey: "nav.misgis", to: "/plantation-map" },

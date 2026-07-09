@@ -42,7 +42,7 @@ export const EventsAdmin = () => (
 
 export const TendersAdmin = () => (
   <CrudModule
-    title="E-Tenders / Procurements"
+    title="e-Tenders / Procurements"
     subtitle="Manage active and closed e-tenders."
     fields={[
       { key: "title", label: "E-Tender Title", required: true },

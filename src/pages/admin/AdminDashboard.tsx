@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 const stats = [
   { label: "Total Notifications", value: 124, icon: Bell, to: "/admin/notifications", color: "bg-primary" },
   { label: "Upcoming Events", value: 8, icon: Calendar, to: "/admin/events", color: "bg-accent" },
-  { label: "Active E-Tenders", value: 12, icon: FileText, to: "/admin/tenders", color: "bg-primary-light" },
+  { label: "Active e-Tenders", value: 12, icon: FileText, to: "/admin/tenders", color: "bg-primary-light" },
   { label: "Reports Uploaded", value: 87, icon: FolderKanban, to: "/admin/reports", color: "bg-primary" },
   { label: "Plantation Records", value: 642, icon: TreePine, to: "/admin/plantation", color: "bg-success" },
   { label: "Pending Grievances", value: 23, icon: MessageSquare, to: "/admin/grievance", color: "bg-destructive" },

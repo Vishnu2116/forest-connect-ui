@@ -43,7 +43,7 @@ const translations: Record<Lang, Dict> = {
     "home.viewAll": "View all",
     "home.notifications": "Notifications",
     "home.events": "Events",
-    "home.tenders": "E-Tenders",
+    "home.tenders": "e-Tenders",
     "home.plantation.title": "Plantation Across Tripura",
     "home.plantation.desc": "ELEMENT supports landscape-scale plantation, restoration and community livelihood across all 8 districts of Tripura.",
     "home.plantation.cta": "Explore Plantation Locations",
