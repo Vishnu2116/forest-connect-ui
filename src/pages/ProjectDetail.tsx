@@ -80,24 +80,34 @@ export default function ProjectDetail() {
           </Link>
 
           {thumb && (
-            <div className="w-full rounded-xl overflow-hidden mb-8 bg-surface">
-              <img src={thumb} alt={project.title} className="w-full h-auto max-h-[480px] object-cover" />
+            <div className="max-w-3xl mx-auto rounded-xl overflow-hidden mb-8 bg-surface border border-border shadow-card">
+              <img src={thumb} alt={project.title} className="w-full h-auto max-h-[280px] object-cover mx-auto" />
             </div>
           )}
 
-          {description && (
-            <p className="text-muted-foreground leading-relaxed whitespace-pre-line text-base mb-6">
-              {description}
-            </p>
-          )}
+          <div className="bg-card border border-border rounded-xl p-6 md:p-8 shadow-card space-y-6">
+            {description && (
+              <div>
+                <h2 className="text-lg font-semibold text-primary mb-3">About the Project</h2>
+                <p className="text-[17px] text-foreground/90 leading-relaxed whitespace-pre-line">
+                  {description}
+                </p>
+              </div>
+            )}
 
-          {bullets.length > 0 && (
-            <ul className="list-disc pl-6 space-y-2 text-muted-foreground leading-relaxed">
-              {bullets.map((b, i) => (
-                <li key={i}>{b}</li>
-              ))}
-            </ul>
-          )}
+            {bullets.length > 0 && (
+              <div className={description ? "pt-6 border-t border-border" : ""}>
+                <h2 className="text-lg font-semibold text-primary mb-4">Key Highlights</h2>
+                <div className="space-y-4">
+                  {bullets.map((b, i) => (
+                    <p key={i} className="text-[17px] text-foreground/90 leading-relaxed">
+                      {b}
+                    </p>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
 
           {/* Removed sections — commented out, do not delete:
               sidebar (Objective, Beneficiaries, Timeline, Coverage, Component, Status),

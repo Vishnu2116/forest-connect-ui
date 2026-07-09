@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import PageLayout, { PageHeader } from "@/components/layout/PageLayout";
-import { Trees, ArrowRight, BarChart3, ChevronRight } from "lucide-react";
+import { Trees, ArrowRight, ChevronRight } from "lucide-react";
 import {
   fetchComponent,
   resolveImage,
-  statusBadgeClass,
-  statusLabel,
   type ApiProjectComponent,
 } from "@/lib/projects";
 
@@ -71,6 +69,7 @@ export default function ComponentPage() {
     return () => { alive = false; };
   }, [id]);
 
+  /* Project Impact stats removed per request — commented out, do not delete
   const stats = data
     ? [
         { label: data.stat1_label, value: data.stat1_value },
@@ -79,6 +78,7 @@ export default function ComponentPage() {
         { label: data.stat4_label, value: data.stat4_value },
       ].filter((s) => s.label || s.value)
     : [];
+  */
 
   const projects = data?.projects ?? [];
 
@@ -137,6 +137,7 @@ export default function ComponentPage() {
               </section>
             );
           })()}
+          {/* Project Impact stats section removed per request — commented out, do not delete
           <section className="bg-surface py-8 border-b border-border">
             <div className="gov-container">
               <div className="flex items-center gap-2 mb-6">
@@ -153,6 +154,7 @@ export default function ComponentPage() {
               </div>
             </div>
           </section>
+          */}
 
           <section className="py-10">
             <div className="gov-container">
