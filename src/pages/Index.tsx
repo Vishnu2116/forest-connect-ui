@@ -361,43 +361,48 @@ function UpdatesPanel({
     });
   }, [apiWhatsNew]);
 
+  const listRef = useRef<HTMLDivElement | null>(null);
+  const [listHeight, setListHeight] = useState<number | null>(null);
+
+  // Measure first item and lock the scroll container to exactly 3 items tall.
+  useEffect(() => {
+    const el = listRef.current;
+    if (!el) return;
+    const measure = () => {
+      const first = el.querySelector("article") as HTMLElement | null;
+      // Fallback height keeps a stable 3-slot area before items render.
+      const h = first?.offsetHeight ?? 84;
+      setListHeight(h * 3);
+    };
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    const first = el.querySelector("article");
+    if (first) ro.observe(first);
+    return () => ro.disconnect();
+  }, [apiWhatsNew, apiNotifs, apiTenders, updatesTab]);
+
+  const scrollByItem = (dir: 1 | -1) => {
+    const el = listRef.current;
+    if (!el) return;
+    const first = el.querySelector("article") as HTMLElement | null;
+    const step = first?.offsetHeight ?? 84;
+    el.scrollBy({ top: dir * step, behavior: "smooth" });
+  };
+
   return (
-    <div className="bg-card border border-border rounded-md overflow-hidden h-[330px] flex flex-col">
+    <div className="bg-card border border-border rounded-md overflow-hidden flex flex-col">
       <div className="px-4 py-3 border-b-2 border-primary bg-primary/5">
         <h2 className="text-xs sm:text-sm font-semibold text-primary flex items-center justify-center gap-1.5">
           <Bell className="h-4 w-4" />
           What's New
         </h2>
       </div>
-      {/*
-      <div className="grid grid-cols-3 border-b-2 border-primary bg-primary/5">
-        {(
-          [
-            { key: "whatsnew", label: "What's New", icon: Bell },
-            {
-              key: "notifications",
-              label: t("home.notifications"),
-              icon: Calendar,
-            },
-            { key: "tenders", label: t("home.tenders"), icon: Briefcase },
-          ] as const
-        ).map((tab) => (
-          <button
-            key={tab.key}
-            onClick={() => setUpdatesTab(tab.key)}
-            className={`flex items-center justify-center gap-1.5 py-3 text-xs sm:text-sm font-semibold border-r border-border last:border-r-0 transition relative ${
-              updatesTab === tab.key
-                ? "bg-primary text-primary-foreground"
-                : "text-foreground hover:bg-primary/10"
-            }`}
-          >
-            <tab.icon className="h-4 w-4" />
-            {tab.label}
-          </button>
-        ))}
-      </div>
-      */}
-      <div className="flex-1 min-h-0 overflow-y-auto">
+      <div
+        ref={listRef}
+        className="overflow-y-auto"
+        style={{ height: listHeight ?? 252 }}
+      >
         <div className="flex flex-col">
             {updatesTab === "whatsnew" &&
               filteredWhatsNew.length > 0 &&
@@ -634,6 +639,12 @@ function UpdatesPanel({
                 });
               })()}
           </div>
+      </div>
+      <div className="flex items-center justify-end gap-1 px-3 py-2 border-t border-border bg-surface/40">
+        <ScrollArrows
+          onUp={() => scrollByItem(-1)}
+          onDown={() => scrollByItem(1)}
+        />
       </div>
     </div>
   );
@@ -1044,13 +1055,12 @@ export default function Home() {
                 <DignitaryCard key={d.name} d={d} />
               ))}
             </div>
-            <div className="h-[330px]">
-              <UpdatesPanel
-                updatesTab={updatesTab}
-                setUpdatesTab={setUpdatesTab}
-                t={t}
-              />
-            </div>
+            <UpdatesPanel
+              updatesTab={updatesTab}
+              setUpdatesTab={setUpdatesTab}
+              t={t}
+            />
+
           </div>
 
           {/* Desktop: 3-column layout */}
