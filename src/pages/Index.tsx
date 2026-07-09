@@ -171,8 +171,8 @@ function DignitaryCard({
   d: { name: string; designation: string; desc: string; image: string };
 }) {
   return (
-    <div className="bg-card border border-border rounded-md overflow-hidden hover:border-primary/40 transition flex flex-col">
-      <div className="aspect-[3/4] w-3/5 mx-auto bg-gradient-to-br from-primary to-primary-light flex items-center justify-center text-primary-foreground overflow-hidden">
+    <div className="bg-card border border-border rounded-md overflow-hidden hover:border-primary/40 transition h-full flex flex-col">
+      <div className="h-40 w-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center text-primary-foreground overflow-hidden border-b border-border">
         {d.image ? (
           <img
             src={d.image}
@@ -180,10 +180,10 @@ function DignitaryCard({
             className="h-full w-full object-cover"
           />
         ) : (
-          <User className="h-10 w-10" />
+          <User className="h-12 w-12" />
         )}
       </div>
-      <div className="px-3 py-2 text-center border-t-2 border-accent flex-1 flex flex-col justify-center">
+      <div className="px-3 py-3 text-center border-t-2 border-accent flex-1 flex flex-col justify-center">
         <h4 className="text-base font-bold text-foreground leading-tight">
           {d.name}
         </h4>
