@@ -1055,13 +1055,12 @@ export default function Home() {
                 <DignitaryCard key={d.name} d={d} />
               ))}
             </div>
-            <div className="h-[330px]">
-              <UpdatesPanel
-                updatesTab={updatesTab}
-                setUpdatesTab={setUpdatesTab}
-                t={t}
-              />
-            </div>
+            <UpdatesPanel
+              updatesTab={updatesTab}
+              setUpdatesTab={setUpdatesTab}
+              t={t}
+            />
+
           </div>
 
           {/* Desktop: 3-column layout */}
