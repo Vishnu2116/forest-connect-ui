@@ -172,7 +172,7 @@ function DignitaryCard({
 }) {
   return (
     <div className="bg-card border border-border rounded-md overflow-hidden hover:border-primary/40 transition h-full flex flex-col">
-      <div className="aspect-[2/1] w-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center text-primary-foreground overflow-hidden border-b border-border">
+      <div className="h-40 w-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center text-primary-foreground overflow-hidden border-b border-border">
         {d.image ? (
           <img
             src={d.image}
