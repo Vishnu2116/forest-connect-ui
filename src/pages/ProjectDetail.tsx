@@ -1,14 +1,10 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import PageLayout, { PageHeader } from "@/components/layout/PageLayout";
-import {
-  Target, Users, MapPin, CheckCircle2, ArrowLeft, BarChart3, Calendar, Layers, Activity,
-} from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import {
   fetchProject,
   resolveImage,
-  statusBadgeClass,
-  statusLabel,
   slugify,
   type ApiProjectDetail,
 } from "@/lib/projects";
@@ -58,45 +54,24 @@ export default function ProjectDetail() {
     );
   }
 
-  const timeline = [project.timeline_start, project.timeline_end].filter(Boolean).join(" — ");
-
-  const sidebarItems = [
-    project.objective && { icon: Target, label: "Objective", value: project.objective },
-    project.beneficiaries && { icon: Users, label: "Beneficiaries", value: project.beneficiaries },
-    timeline && { icon: Calendar, label: "Timeline", value: timeline },
-    project.coverage && { icon: MapPin, label: "Coverage", value: project.coverage },
-    project.component?.label && { icon: Layers, label: "Component", value: project.component.label },
-    project.status && { icon: Activity, label: "Status", value: statusLabel(project.status) },
-  ].filter(Boolean) as { icon: any; label: string; value: string }[];
-
-  const impactStats = [
-    project.area_covered && { label: "Area Covered", value: project.area_covered },
-    project.households && { label: "Households", value: project.households },
-    project.districts && { label: "Districts", value: project.districts },
-    project.status && { label: "Status", value: statusLabel(project.status) },
-  ].filter(Boolean) as { label: string; value: string }[];
-
-  const gallery = project.gallery || [];
+  const thumb = resolveImage(project.thumbnail_image_path);
+  const description = (project as any).description || project.about || "";
+  const rawBullets = (project as any).bullet_points;
+  const bullets: string[] = Array.isArray(rawBullets)
+    ? rawBullets.filter((s: string) => typeof s === "string" && s.trim())
+    : [];
 
   return (
     <PageLayout>
       <PageHeader
         title={project.title}
-        subtitle={project.subtitle || ""}
         breadcrumb={["Home", "Projects", project.title]}
-      >
-        <div className="flex items-center gap-2 mt-3">
-          <span className={`text-xs font-semibold uppercase px-2.5 py-0.5 rounded-full ${statusBadgeClass(project.status)}`}>
-            {statusLabel(project.status)}
-          </span>
-          {project.component?.label && (
-            <span className="text-xs font-semibold uppercase px-2.5 py-0.5 rounded-full bg-white/20">{project.component.label}</span>
-          )}
-        </div>
-      </PageHeader>
+      />
+      {/* Removed from header (commented out — do not delete):
+          subtitle, status badge, component badge */}
 
       <section className="py-10">
-        <div className="gov-container">
+        <div className="gov-container max-w-4xl">
           <Link
             to={project.component?.id ? `/components/${project.component.id}` : "/projects"}
             className="inline-flex items-center gap-1.5 text-sm text-primary hover:text-accent font-medium mb-6"
@@ -104,146 +79,32 @@ export default function ProjectDetail() {
             <ArrowLeft className="h-4 w-4" /> Back to Projects
           </Link>
 
-          <div className="grid lg:grid-cols-12 gap-8 mb-12">
-            <aside className="lg:col-span-3">
-              <div className="bg-card border border-border rounded-xl p-5 shadow-card">
-                <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">Project Details</h4>
-                <div className="space-y-0">
-                  {sidebarItems.map((item) => (
-                    <div key={item.label} className="flex items-start gap-3 py-3 border-b border-border/50 last:border-0">
-                      <item.icon className="h-4 w-4 text-primary mt-0.5 shrink-0" />
-                      <div className="min-w-0">
-                        <div className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wide">{item.label}</div>
-                        <div className="text-sm text-foreground leading-snug mt-0.5">{item.value}</div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </aside>
-
-            <div className="lg:col-span-9">
-              <div className="bg-card border border-border rounded-xl p-6 md:p-8 shadow-card">
-                <article className="prose-like space-y-10">
-                  {project.about && (
-                    <section>
-                      <h3 className="text-xl font-bold text-primary mb-3">About the Project</h3>
-                      <p className="text-muted-foreground leading-relaxed whitespace-pre-line">{project.about}</p>
-                    </section>
-                  )}
-
-                  {project.key_activities && project.key_activities.length > 0 && (
-                    <>
-                      <hr className="border-border/60" />
-                      <section>
-                        <h3 className="text-xl font-bold text-primary mb-4">Key Activities</h3>
-                        <div className="space-y-2.5">
-                          {project.key_activities.map((a, i) => (
-                            <div key={i} className="flex items-start gap-3">
-                              <CheckCircle2 className="h-4 w-4 text-accent mt-1 shrink-0" />
-                              <span className="text-sm text-muted-foreground leading-relaxed">{a}</span>
-                            </div>
-                          ))}
-                        </div>
-                      </section>
-                    </>
-                  )}
-
-                  {project.expected_outcomes && project.expected_outcomes.length > 0 && (
-                    <>
-                      <hr className="border-border/60" />
-                      <section>
-                        <h3 className="text-xl font-bold text-primary mb-4">Expected Outcomes</h3>
-                        <div className="grid sm:grid-cols-2 gap-3">
-                          {project.expected_outcomes.map((o, i) => (
-                            <div key={i} className="flex items-start gap-3 p-3 rounded-lg bg-surface/60">
-                              <div className="h-8 w-8 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                                <CheckCircle2 className="h-4 w-4 text-primary" />
-                              </div>
-                              <span className="text-sm text-muted-foreground leading-snug">{o}</span>
-                            </div>
-                          ))}
-                        </div>
-                      </section>
-                    </>
-                  )}
-
-                  {project.community_impact && (
-                    <>
-                      <hr className="border-border/60" />
-                      <section>
-                        <h3 className="text-xl font-bold text-primary mb-3">Community Impact</h3>
-                        <p className="text-muted-foreground leading-relaxed whitespace-pre-line">{project.community_impact}</p>
-                      </section>
-                    </>
-                  )}
-
-                  {project.livelihood_opportunities && (
-                    <>
-                      <hr className="border-border/60" />
-                      <section>
-                        <h3 className="text-xl font-bold text-primary mb-3">Livelihood Opportunities</h3>
-                        <p className="text-muted-foreground leading-relaxed whitespace-pre-line">{project.livelihood_opportunities}</p>
-                      </section>
-                    </>
-                  )}
-
-                  {project.landscape_development_benefits && (
-                    <>
-                      <hr className="border-border/60" />
-                      <section>
-                        <h3 className="text-xl font-bold text-primary mb-3">Landscape Development Benefits</h3>
-                        <p className="text-muted-foreground leading-relaxed whitespace-pre-line">{project.landscape_development_benefits}</p>
-                      </section>
-                    </>
-                  )}
-                </article>
-              </div>
-            </div>
-          </div>
-
-          {impactStats.length > 0 && (
-            <div className="mb-10">
-              <div className="flex items-center gap-2 mb-5">
-                <BarChart3 className="h-5 w-5 text-accent" />
-                <h3 className="text-lg font-bold text-primary">Impact &amp; Insights</h3>
-              </div>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                {impactStats.map((s) => (
-                  <div key={s.label} className="bg-surface rounded-lg p-4 text-center">
-                    <div className="text-[11px] text-muted-foreground uppercase tracking-wide font-medium mb-1">{s.label}</div>
-                    <div className="text-lg md:text-xl font-bold text-primary leading-snug">{s.value}</div>
-                  </div>
-                ))}
-              </div>
+          {thumb && (
+            <div className="w-full rounded-xl overflow-hidden mb-8 bg-surface">
+              <img src={thumb} alt={project.title} className="w-full h-auto max-h-[480px] object-cover" />
             </div>
           )}
 
-          {gallery.length > 0 && (
-            <div>
-              <h3 className="text-lg font-bold text-primary mb-4">Gallery</h3>
-              <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-4">
-                {gallery.map((g) => {
-                  const src = resolveImage(g.image_path);
-                  return (
-                    <div key={g.id} className="relative rounded-lg h-56 overflow-hidden group">
-                      {src && (
-                        <img
-                          src={src}
-                          alt={g.caption || ""}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                          loading="lazy"
-                        />
-                      )}
-                      {g.caption && (
-                        <div className="absolute bottom-0 left-0 right-0 bg-black/50 text-white text-xs p-2">{g.caption}</div>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
+          {description && (
+            <p className="text-muted-foreground leading-relaxed whitespace-pre-line text-base mb-6">
+              {description}
+            </p>
           )}
+
+          {bullets.length > 0 && (
+            <ul className="list-disc pl-6 space-y-2 text-muted-foreground leading-relaxed">
+              {bullets.map((b, i) => (
+                <li key={i}>{b}</li>
+              ))}
+            </ul>
+          )}
+
+          {/* Removed sections — commented out, do not delete:
+              sidebar (Objective, Beneficiaries, Timeline, Coverage, Component, Status),
+              About the Project, Key Activities, Expected Outcomes, Community Impact,
+              Livelihood Opportunities, Landscape Development Benefits,
+              Impact & Insights stats (area covered, households, districts, status),
+              Gallery section. */}
         </div>
       </section>
     </PageLayout>
