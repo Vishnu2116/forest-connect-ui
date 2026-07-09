@@ -67,7 +67,9 @@ const dummySlides: Slide[] = [
 
 export default function HeroSlider() {
   // When using the real API, start empty so we don't flash dummy data over real slides.
-  const [slides, setSlides] = useState<Slide[]>(USE_REAL_API ? [] : dummySlides);
+  const [slides, setSlides] = useState<Slide[]>(
+    USE_REAL_API ? [] : dummySlides,
+  );
   const [i, setI] = useState(0);
   const [loading, setLoading] = useState(USE_REAL_API);
 
@@ -84,7 +86,10 @@ export default function HeroSlider() {
         if (Array.isArray(data) && data.length > 0) {
           const mapped: Slide[] = data
             .filter((s: any) => s.is_active !== false)
-            .sort((a: any, b: any) => (a.display_order ?? 0) - (b.display_order ?? 0))
+            .sort(
+              (a: any, b: any) =>
+                (a.display_order ?? 0) - (b.display_order ?? 0),
+            )
             .map((s: any) => ({
               img: `${API_BASE_URL}${s.image_path}`,
               title: s.title ?? "",
@@ -144,7 +149,8 @@ export default function HeroSlider() {
       onMouseLeave={() => setPaused(false)}
       onFocus={() => setPaused(true)}
       onBlur={(e) => {
-        if (!e.currentTarget.contains(e.relatedTarget as Node)) setPaused(false);
+        if (!e.currentTarget.contains(e.relatedTarget as Node))
+          setPaused(false);
       }}
       onKeyDown={(e) => {
         if (e.key === "ArrowRight") {
@@ -176,7 +182,7 @@ export default function HeroSlider() {
               width={1920}
               height={1024}
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-primary-dark/90 via-primary-dark/70 to-primary-dark/30 md:to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-r from-primary-dark/80 via-primary-dark/60 to-primary-dark/30 md:to-transparent" />
             <div className="absolute inset-0 flex items-center">
               <div className="gov-container">
                 <div className="max-w-2xl text-primary-foreground pb-16 sm:pb-0">
