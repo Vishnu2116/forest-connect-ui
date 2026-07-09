@@ -23,6 +23,10 @@ import Disclaimer from "./pages/Disclaimer";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfUse from "./pages/TermsOfUse";
 import Activities from "./pages/Activities";
+import ActivityProjectDetail from "./pages/ActivityProjectDetail";
+import ActivityReports from "./pages/ActivityReports";
+import ActivitiesOutputsAdmin from "./pages/admin/ActivitiesOutputsAdmin";
+import ActivitiesOutputsEditAdmin from "./pages/admin/ActivitiesOutputsEditAdmin";
 import AdminLogin from "./pages/admin/AdminLogin";
 import AdminLayout from "./pages/admin/AdminLayout";
 import AdminDashboard from "./pages/admin/AdminDashboard";
@@ -90,6 +94,8 @@ const App = () => (
           <Route path="/projects/:slug" element={<ProjectDetail />} />
           <Route path="/publications" element={<Publications />} />
           <Route path="/activities" element={<Activities />} />
+          <Route path="/activities/projects/:id" element={<ActivityProjectDetail />} />
+          <Route path="/activities/reports" element={<ActivityReports />} />
           <Route path="/knowledge-hub/iec" element={<KnowledgeHub initialCategory="IEC Materials" />} />
           <Route path="/knowledge-hub/newsletters" element={<KnowledgeHub initialCategory="Newsletters" />} />
           <Route path="/knowledge-hub/success-stories" element={<KnowledgeHub initialCategory="Success Stories" />} />
@@ -142,6 +148,8 @@ const App = () => (
             <Route path="reports" element={<Navigate to="/admin/knowledge-hub?type=report" replace />} />
             <Route path="iec" element={<Navigate to="/admin/knowledge-hub?type=iec_material" replace />} />
             <Route path="activities" element={<ActivitiesAdmin />} />
+            <Route path="activities-outputs" element={<ActivitiesOutputsAdmin />} />
+            <Route path="activities-outputs/:projectId" element={<ActivitiesOutputsEditAdmin />} />
             <Route path="projects" element={<ProjectsManagementAdmin />} />
             <Route path="project-components" element={<ProjectComponentsAdmin />} />
             <Route path="plantation" element={<PlantationAdmin />} />

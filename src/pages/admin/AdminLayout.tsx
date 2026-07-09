@@ -17,6 +17,7 @@ export const adminMenu = [
   
   { to: "/admin/officials", label: "Officials & Directory", icon: Users },
   { to: "/admin/activities", label: "Activities & Outputs", icon: Activity },
+  { to: "/admin/activities-outputs", label: "Activities Content", icon: Activity },
   { to: "/admin/knowledge-hub", label: "Knowledge Hub", icon: BookOpen },
   { to: "/admin/project-components", label: "Project Components", icon: Layers },
   { to: "/admin/projects", label: "Projects", icon: Briefcase },
