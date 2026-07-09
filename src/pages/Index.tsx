@@ -1044,7 +1044,7 @@ export default function Home() {
                 <DignitaryCard key={d.name} d={d} />
               ))}
             </div>
-            <div className="h-[320px]">
+            <div className="h-[330px]">
               <UpdatesPanel
                 updatesTab={updatesTab}
                 setUpdatesTab={setUpdatesTab}
