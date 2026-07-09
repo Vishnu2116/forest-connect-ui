@@ -94,6 +94,8 @@ const App = () => (
           <Route path="/projects/:slug" element={<ProjectDetail />} />
           <Route path="/publications" element={<Publications />} />
           <Route path="/activities" element={<Activities />} />
+          <Route path="/activities/projects/:id" element={<ActivityProjectDetail />} />
+          <Route path="/activities/reports" element={<ActivityReports />} />
           <Route path="/knowledge-hub/iec" element={<KnowledgeHub initialCategory="IEC Materials" />} />
           <Route path="/knowledge-hub/newsletters" element={<KnowledgeHub initialCategory="Newsletters" />} />
           <Route path="/knowledge-hub/success-stories" element={<KnowledgeHub initialCategory="Success Stories" />} />
