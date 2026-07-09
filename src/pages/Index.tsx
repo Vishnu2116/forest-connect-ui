@@ -399,22 +399,8 @@ function UpdatesPanel({
         ))}
       </div>
       */}
-      <div
-        ref={ref}
-        onPointerEnter={(e) => {
-          if (e.pointerType === "mouse") setPaused(true);
-        }}
-        onPointerLeave={(e) => {
-          if (e.pointerType === "mouse") setPaused(false);
-        }}
-        className={`${variant === "fill" ? "flex-1 min-h-0" : ""} overflow-y-auto no-scrollbar`}
-      >
-        {Array.from({ length: shouldScroll ? 2 : 1 }).map((_, copyIdx) => (
-          <div
-            key={copyIdx}
-            className="flex flex-col"
-            aria-hidden={copyIdx === 1 || undefined}
-          >
+      <div className="flex-1 min-h-0 overflow-y-auto">
+        <div className="flex flex-col">
             {updatesTab === "whatsnew" &&
               filteredWhatsNew.length > 0 &&
               filteredWhatsNew.map((it, i) => renderApiItem(it, i, "whatsnew"))}
