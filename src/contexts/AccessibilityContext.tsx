@@ -26,7 +26,7 @@ export function AccessibilityProvider({ children }: { children: ReactNode }) {
   });
 
   useEffect(() => {
-    document.documentElement.style.fontSize = `${16 * fontScale}px`;
+    document.documentElement.style.fontSize = `${18 * fontScale}px`;
     localStorage.setItem("a11y.fontScale", String(fontScale));
   }, [fontScale]);
 
