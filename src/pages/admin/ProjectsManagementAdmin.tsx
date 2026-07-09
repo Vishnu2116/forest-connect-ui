@@ -5,17 +5,26 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Loader2, Plus, Pencil, Trash2, Save, X, Upload, Image as ImageIcon, Trees } from "lucide-react";
 import { toast } from "sonner";
-import { API_BASE_URL, USE_REAL_API, getAuthHeaders, getAuthJsonHeaders } from "@/config/api";
+import { API_BASE_URL, USE_REAL_API, getAuthHeaders } from "@/config/api";
 import {
   fetchProjectsAdmin, fetchProjectAdmin, fetchComponentsAdmin,
   resolveImage, statusLabel,
-  type ApiProjectCard, type ApiProjectDetail, type ApiProjectComponent, type ApiGalleryImage,
+  type ApiProjectCard, type ApiProjectDetail, type ApiProjectComponent,
 } from "@/lib/projects";
 
 interface FormState {
   id: string | null;
   title: string;
   component_id: string;
+  description: string;
+  bullet_points: string[];
+  display_order: number;
+  is_active: boolean;
+  thumbnail_image_path: string | null;
+  thumbnailFile: File | null;
+  thumbnailPreview: string | null;
+  slug?: string;
+  /* Removed fields — commented out, do not delete
   subtitle: string;
   status: "ongoing" | "pilot_phase" | "completed";
   objective: string;
@@ -32,12 +41,8 @@ interface FormState {
   area_covered: string;
   households: string;
   districts: string;
-  display_order: number;
-  thumbnail_image_path: string | null;
-  thumbnailFile: File | null;
-  thumbnailPreview: string | null;
   gallery: ApiGalleryImage[];
-  slug?: string;
+  */
 }
 
 function emptyForm(): FormState {
@@ -45,27 +50,13 @@ function emptyForm(): FormState {
     id: null,
     title: "",
     component_id: "",
-    subtitle: "",
-    status: "ongoing",
-    objective: "",
-    beneficiaries: "",
-    timeline_start: "",
-    timeline_end: "",
-    coverage: "",
-    about: "",
-    community_impact: "",
-    livelihood_opportunities: "",
-    landscape_development_benefits: "",
-    key_activities: [],
-    expected_outcomes: [],
-    area_covered: "",
-    households: "",
-    districts: "",
+    description: "",
+    bullet_points: [],
     display_order: 0,
+    is_active: true,
     thumbnail_image_path: null,
     thumbnailFile: null,
     thumbnailPreview: null,
-    gallery: [],
   };
 }
 
@@ -136,6 +127,15 @@ export default function ProjectsAdmin() {
       const fd = new FormData();
       fd.append("title", editing.title);
       fd.append("component_id", editing.component_id);
+      fd.append("description", editing.description);
+      fd.append(
+        "bullet_points",
+        JSON.stringify((editing.bullet_points || []).map((s) => s.trim()).filter(Boolean))
+      );
+      fd.append("display_order", String(editing.display_order || 0));
+      fd.append("is_active", editing.is_active ? "true" : "false");
+      if (editing.thumbnailFile) fd.append("thumbnail", editing.thumbnailFile);
+      /* Removed fields — do not send
       fd.append("subtitle", editing.subtitle);
       fd.append("status", editing.status);
       fd.append("objective", editing.objective);
@@ -152,8 +152,7 @@ export default function ProjectsAdmin() {
       fd.append("area_covered", editing.area_covered);
       fd.append("households", editing.households);
       fd.append("districts", editing.districts);
-      fd.append("display_order", String(editing.display_order || 0));
-      if (editing.thumbnailFile) fd.append("thumbnail", editing.thumbnailFile);
+      */
 
       const url = editing.id
         ? `${API_BASE_URL}/api/admin/projects/${editing.id}`
@@ -178,7 +177,7 @@ export default function ProjectsAdmin() {
     <>
       <AdminPageHeader
         title="Projects"
-        subtitle="Manage projects, content sections, and gallery images."
+        subtitle="Manage projects."
         action={
           <Button onClick={openCreate} className="gap-1.5">
             <Plus className="h-4 w-4" /> Add Project
@@ -195,7 +194,6 @@ export default function ProjectsAdmin() {
               <th className="py-2 px-3">Thumb</th>
               <th className="py-2 px-3">Title</th>
               <th className="py-2 px-3">Component</th>
-              <th className="py-2 px-3">Status</th>
               <th className="py-2 px-3 w-28">Actions</th>
             </tr>
           </thead>
@@ -211,7 +209,6 @@ export default function ProjectsAdmin() {
                   </td>
                   <td className="py-2 px-3 font-semibold">{p.title}</td>
                   <td className="py-2 px-3 text-muted-foreground">{p.component?.label || "—"}</td>
-                  <td className="py-2 px-3 text-muted-foreground">{statusLabel(p.status)}</td>
                   <td className="py-2 px-3">
                     <div className="flex gap-1">
                       <Button size="sm" variant="outline" onClick={() => openEdit(p)}><Pencil className="h-3 w-3" /></Button>
@@ -222,7 +219,7 @@ export default function ProjectsAdmin() {
               );
             })}
             {!loading && items.length === 0 && (
-              <tr><td colSpan={5} className="text-center text-muted-foreground py-6">No projects yet.</td></tr>
+              <tr><td colSpan={4} className="text-center text-muted-foreground py-6">No projects yet.</td></tr>
             )}
           </tbody>
         </table>
@@ -236,11 +233,6 @@ export default function ProjectsAdmin() {
           onSave={save}
           onCancel={() => setEditing(null)}
           saving={saving}
-          onGalleryChanged={async () => {
-            if (!editing.id) return;
-            const detail = await fetchProjectAdmin(editing.slug || "").catch(() => null);
-            if (detail) setEditing({ ...editing, gallery: detail.gallery || [] });
-          }}
         />
       )}
     </>
@@ -252,27 +244,13 @@ function detailToForm(d: ApiProjectDetail): FormState {
     id: d.id,
     title: d.title || "",
     component_id: d.component?.id || "",
-    subtitle: d.subtitle || "",
-    status: (d.status as any) || "ongoing",
-    objective: d.objective || "",
-    beneficiaries: d.beneficiaries || "",
-    timeline_start: d.timeline_start || "",
-    timeline_end: d.timeline_end || "",
-    coverage: d.coverage || "",
-    about: d.about || "",
-    community_impact: d.community_impact || "",
-    livelihood_opportunities: d.livelihood_opportunities || "",
-    landscape_development_benefits: d.landscape_development_benefits || "",
-    key_activities: d.key_activities || [],
-    expected_outcomes: d.expected_outcomes || [],
-    area_covered: d.area_covered || "",
-    households: d.households || "",
-    districts: d.districts || "",
-    display_order: 0,
+    description: (d as any).description || "",
+    bullet_points: Array.isArray((d as any).bullet_points) ? (d as any).bullet_points : [],
+    display_order: (d as any).display_order || 0,
+    is_active: (d as any).is_active !== false,
     thumbnail_image_path: d.thumbnail_image_path || null,
     thumbnailFile: null,
     thumbnailPreview: null,
-    gallery: d.gallery || [],
     slug: d.slug,
   };
 }
@@ -293,13 +271,10 @@ interface EditorProps {
   onSave: () => void;
   onCancel: () => void;
   saving: boolean;
-  onGalleryChanged: () => Promise<void> | void;
 }
 
-function Editor({ form, setForm, components, onSave, onCancel, saving, onGalleryChanged }: EditorProps) {
+function Editor({ form, setForm, components, onSave, onCancel, saving }: EditorProps) {
   const fileRef = useRef<HTMLInputElement>(null);
-  const galleryInputRef = useRef<HTMLInputElement>(null);
-  const [uploadingGallery, setUploadingGallery] = useState(false);
 
   const set = (k: keyof FormState, v: any) => setForm({ ...form, [k]: v });
 
@@ -310,55 +285,16 @@ function Editor({ form, setForm, components, onSave, onCancel, saving, onGallery
 
   const thumbSrc = form.thumbnailPreview ?? resolveImage(form.thumbnail_image_path);
 
-  // List item helpers
-  const updateListItem = (k: "key_activities" | "expected_outcomes", i: number, v: string) => {
-    const next = [...form[k]];
+  const updateBullet = (i: number, v: string) => {
+    const next = [...form.bullet_points];
     next[i] = v;
-    setForm({ ...form, [k]: next });
+    setForm({ ...form, bullet_points: next });
   };
-  const addListItem = (k: "key_activities" | "expected_outcomes") =>
-    setForm({ ...form, [k]: [...form[k], ""] });
-  const removeListItem = (k: "key_activities" | "expected_outcomes", i: number) => {
-    const next = [...form[k]];
+  const addBullet = () => setForm({ ...form, bullet_points: [...form.bullet_points, ""] });
+  const removeBullet = (i: number) => {
+    const next = [...form.bullet_points];
     next.splice(i, 1);
-    setForm({ ...form, [k]: next });
-  };
-
-  // Gallery
-  const uploadGallery = async (files: FileList | null) => {
-    if (!files || !files.length) return;
-    if (!form.id) { toast.error("Save the project first before adding gallery images"); return; }
-    if (!USE_REAL_API) { toast.success("Uploaded (preview only)"); return; }
-    setUploadingGallery(true);
-    try {
-      const fd = new FormData();
-      Array.from(files).slice(0, 10).forEach((f) => fd.append("images", f));
-      const r = await fetch(`${API_BASE_URL}/api/admin/projects/${form.id}/gallery`, {
-        method: "POST", headers: getAuthHeaders(), body: fd,
-      });
-      if (!r.ok) throw new Error();
-      toast.success("Images uploaded");
-      await onGalleryChanged();
-    } catch {
-      toast.error("Failed to upload images");
-    } finally {
-      setUploadingGallery(false);
-    }
-  };
-
-  const removeGalleryImg = async (img: ApiGalleryImage) => {
-    if (!confirm("Delete this image?")) return;
-    if (!USE_REAL_API) return;
-    try {
-      const r = await fetch(`${API_BASE_URL}/api/admin/projects/gallery/${img.id}`, {
-        method: "DELETE", headers: getAuthHeaders(),
-      });
-      if (!r.ok) throw new Error();
-      toast.success("Image deleted");
-      await onGalleryChanged();
-    } catch {
-      toast.error("Failed to delete image");
-    }
+    setForm({ ...form, bullet_points: next });
   };
 
   return (
@@ -394,114 +330,67 @@ function Editor({ form, setForm, components, onSave, onCancel, saving, onGallery
           {/* Main fields */}
           <div className="space-y-3">
             <Field label="Title *"><Input value={form.title} onChange={(e) => set("title", e.target.value)} /></Field>
-            <Field label="Subtitle"><Input value={form.subtitle} onChange={(e) => set("subtitle", e.target.value)} /></Field>
-            <div className="grid grid-cols-2 gap-3">
-              <Field label="Component *">
-                <select
-                  value={form.component_id}
-                  onChange={(e) => set("component_id", e.target.value)}
-                  className="w-full border border-input rounded h-10 px-2 text-sm bg-background"
-                >
-                  <option value="">— Select —</option>
-                  {components.map((c) => <option key={c.id} value={c.id}>{c.label || c.name}</option>)}
-                </select>
-              </Field>
-              <Field label="Status">
-                <select
-                  value={form.status}
-                  onChange={(e) => set("status", e.target.value as any)}
-                  className="w-full border border-input rounded h-10 px-2 text-sm bg-background"
-                >
-                  <option value="ongoing">Ongoing</option>
-                  <option value="pilot_phase">Pilot Phase</option>
-                  <option value="completed">Completed</option>
-                </select>
-              </Field>
-            </div>
+            <Field label="Component *">
+              <select
+                value={form.component_id}
+                onChange={(e) => set("component_id", e.target.value)}
+                className="w-full border border-input rounded h-10 px-2 text-sm bg-background"
+              >
+                <option value="">— Select —</option>
+                {components.map((c) => <option key={c.id} value={c.id}>{c.label || c.name}</option>)}
+              </select>
+            </Field>
+            <Field label="Description">
+              <Textarea rows={4} value={form.description} onChange={(e) => set("description", e.target.value)} />
+            </Field>
           </div>
         </div>
 
         <div className="space-y-3 mt-4">
-          <Field label="Objective"><Textarea rows={2} value={form.objective} onChange={(e) => set("objective", e.target.value)} /></Field>
-          <Field label="Beneficiaries"><Input value={form.beneficiaries} onChange={(e) => set("beneficiaries", e.target.value)} /></Field>
-
-          <div className="grid grid-cols-2 gap-3">
-            <Field label="Timeline start"><Input value={form.timeline_start} onChange={(e) => set("timeline_start", e.target.value)} placeholder="2024" /></Field>
-            <Field label="Timeline end"><Input value={form.timeline_end} onChange={(e) => set("timeline_end", e.target.value)} placeholder="Ongoing" /></Field>
-          </div>
-          <Field label="Coverage"><Input value={form.coverage} onChange={(e) => set("coverage", e.target.value)} /></Field>
-
-          <Field label="About"><Textarea rows={4} value={form.about} onChange={(e) => set("about", e.target.value)} /></Field>
-
-          <DynamicList label="Key activities" items={form.key_activities}
-            onChange={(i, v) => updateListItem("key_activities", i, v)}
-            onAdd={() => addListItem("key_activities")}
-            onRemove={(i) => removeListItem("key_activities", i)} />
-
-          <DynamicList label="Expected outcomes" items={form.expected_outcomes}
-            onChange={(i, v) => updateListItem("expected_outcomes", i, v)}
-            onAdd={() => addListItem("expected_outcomes")}
-            onRemove={(i) => removeListItem("expected_outcomes", i)} />
-
-          <Field label="Community impact"><Textarea rows={3} value={form.community_impact} onChange={(e) => set("community_impact", e.target.value)} /></Field>
-          <Field label="Livelihood opportunities"><Textarea rows={3} value={form.livelihood_opportunities} onChange={(e) => set("livelihood_opportunities", e.target.value)} /></Field>
-          <Field label="Landscape development benefits"><Textarea rows={3} value={form.landscape_development_benefits} onChange={(e) => set("landscape_development_benefits", e.target.value)} /></Field>
-
-          <div className="grid grid-cols-3 gap-3">
-            <Field label="Area covered"><Input value={form.area_covered} onChange={(e) => set("area_covered", e.target.value)} /></Field>
-            <Field label="Households"><Input value={form.households} onChange={(e) => set("households", e.target.value)} /></Field>
-            <Field label="Districts"><Input value={form.districts} onChange={(e) => set("districts", e.target.value)} /></Field>
-          </div>
-          <Field label="Display order"><Input type="number" value={form.display_order} onChange={(e) => set("display_order", Number(e.target.value) || 0)} /></Field>
-
-          {/* Gallery */}
-          <div className="border-t border-border pt-4">
-            <div className="flex items-center justify-between mb-2">
-              <h4 className="text-xs font-semibold text-muted-foreground uppercase">Gallery</h4>
-              <div>
-                <input
-                  ref={galleryInputRef}
-                  type="file"
-                  multiple
-                  accept="image/*"
-                  className="hidden"
-                  onChange={(e) => { uploadGallery(e.target.files); if (galleryInputRef.current) galleryInputRef.current.value = ""; }}
-                />
-                <Button
-                  size="sm"
-                  variant="outline"
-                  className="gap-1"
-                  disabled={uploadingGallery || !form.id}
-                  onClick={() => galleryInputRef.current?.click()}
-                >
-                  {uploadingGallery ? <Loader2 className="h-3 w-3 animate-spin" /> : <Upload className="h-3 w-3" />}
-                  Upload images
-                </Button>
-              </div>
+          <div>
+            <div className="flex items-center justify-between mb-1">
+              <label className="text-[11px] font-semibold text-muted-foreground uppercase">Bullet Points</label>
+              <Button type="button" size="sm" variant="outline" className="gap-1 text-xs h-7" onClick={addBullet}>
+                <Plus className="h-3 w-3" /> Add
+              </Button>
             </div>
-            {!form.id && (
-              <p className="text-xs text-muted-foreground mb-2">Save the project first to manage gallery images.</p>
-            )}
-            <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
-              {form.gallery.map((g) => {
-                const src = resolveImage(g.image_path);
-                return (
-                  <div key={g.id} className="relative aspect-square rounded overflow-hidden border border-border group">
-                    {src && <img src={src} alt={g.caption || ""} className="h-full w-full object-cover" />}
-                    <button
-                      onClick={() => removeGalleryImg(g)}
-                      className="absolute top-1 right-1 p-1 bg-destructive text-destructive-foreground rounded opacity-0 group-hover:opacity-100 transition"
-                    >
-                      <Trash2 className="h-3 w-3" />
-                    </button>
-                  </div>
-                );
-              })}
-              {form.gallery.length === 0 && (
-                <p className="text-xs text-muted-foreground col-span-4">No images yet.</p>
+            <div className="space-y-2">
+              {form.bullet_points.map((v, i) => (
+                <div key={i} className="flex gap-2">
+                  <Input value={v} onChange={(e) => updateBullet(i, e.target.value)} placeholder="Bullet point" />
+                  <Button type="button" size="sm" variant="outline" className="text-destructive" onClick={() => removeBullet(i)}>
+                    <X className="h-3 w-3" />
+                  </Button>
+                </div>
+              ))}
+              {form.bullet_points.length === 0 && (
+                <p className="text-xs text-muted-foreground">No bullet points.</p>
               )}
             </div>
           </div>
+
+          <div className="grid grid-cols-2 gap-3">
+            <Field label="Display order">
+              <Input type="number" value={form.display_order} onChange={(e) => set("display_order", Number(e.target.value) || 0)} />
+            </Field>
+            <Field label="Active">
+              <label className="flex items-center gap-2 h-10">
+                <input
+                  type="checkbox"
+                  checked={form.is_active}
+                  onChange={(e) => set("is_active", e.target.checked)}
+                  className="h-4 w-4"
+                />
+                <span className="text-sm text-muted-foreground">Show on public site</span>
+              </label>
+            </Field>
+          </div>
+
+          {/* Removed fields (commented out — do not delete):
+              subtitle, status, objective, beneficiaries, timeline start/end, coverage,
+              about, community impact, livelihood opportunities, landscape development benefits,
+              key activities, expected outcomes, area covered, households, districts,
+              and the entire project gallery upload section. */}
         </div>
 
         <div className="flex justify-end gap-2 mt-6">
@@ -510,40 +399,6 @@ function Editor({ form, setForm, components, onSave, onCancel, saving, onGallery
             {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />} Save
           </Button>
         </div>
-      </div>
-    </div>
-  );
-}
-
-function DynamicList({
-  label, items, onChange, onAdd, onRemove,
-}: {
-  label: string;
-  items: string[];
-  onChange: (i: number, v: string) => void;
-  onAdd: () => void;
-  onRemove: (i: number) => void;
-}) {
-  return (
-    <div>
-      <div className="flex items-center justify-between mb-1">
-        <label className="text-[11px] font-semibold text-muted-foreground uppercase">{label}</label>
-        <Button type="button" size="sm" variant="outline" className="gap-1 text-xs h-7" onClick={onAdd}>
-          <Plus className="h-3 w-3" /> Add
-        </Button>
-      </div>
-      <div className="space-y-2">
-        {items.map((v, i) => (
-          <div key={i} className="flex gap-2">
-            <Input value={v} onChange={(e) => onChange(i, e.target.value)} />
-            <Button type="button" size="sm" variant="outline" className="text-destructive" onClick={() => onRemove(i)}>
-              <Trash2 className="h-3 w-3" />
-            </Button>
-          </div>
-        ))}
-        {items.length === 0 && (
-          <p className="text-xs text-muted-foreground">No items.</p>
-        )}
       </div>
     </div>
   );
