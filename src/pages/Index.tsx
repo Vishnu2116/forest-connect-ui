@@ -652,6 +652,12 @@ function UpdatesPanel({
           renderItems(i),
         )}
       </div>
+      <div className="px-3 py-2 border-t border-border bg-surface flex items-center justify-end">
+        <ScrollArrows
+          onUp={() => scrollByAmount(-MANUAL_STEP_PX)}
+          onDown={() => scrollByAmount(MANUAL_STEP_PX)}
+        />
+      </div>
     </div>
   );
 }
