@@ -220,12 +220,10 @@ function UpdatesPanel({
   updatesTab,
   setUpdatesTab,
   t,
-  variant = "fill",
 }: {
   updatesTab: "whatsnew" | "notifications" | "tenders";
   setUpdatesTab: (k: "whatsnew" | "notifications" | "tenders") => void;
   t: (k: string) => string;
-  variant?: "fill" | "fit";
 }) {
   const navigate = useNavigate();
   const [apiWhatsNew, setApiWhatsNew] = useState<any[]>([]);
