@@ -1049,7 +1049,6 @@ export default function Home() {
                 updatesTab={updatesTab}
                 setUpdatesTab={setUpdatesTab}
                 t={t}
-                variant="fill"
               />
             </div>
           </div>
