@@ -109,9 +109,9 @@ export default function Activities() {
       {/* Projects — replaces old Recent Activities section */}
       <section className="py-10">
         <div className="gov-container">
-          <h2 className="section-title mt-2 mb-8">Activites</h2>
+          <h2 className="section-title mt-2 mb-8">Activities</h2>
           {loading ? (
-            <p className="text-sm text-muted-foreground">Loading projects…</p>
+            <p className="text-sm text-muted-foreground">Loading activities…</p>
           ) : projects.length === 0 ? (
             <div className="text-center text-muted-foreground py-12 text-sm">
               No project activities available yet.
