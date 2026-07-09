@@ -626,17 +626,36 @@ function UpdatesPanel({
                   );
                 });
               })()}
-          </div>
+    </div>
+  );
+
+  return (
+    <div className="bg-card border border-border rounded-md overflow-hidden flex flex-col">
+      <div className="px-4 py-3 border-b-2 border-primary bg-primary/5">
+        <h2 className="text-xs sm:text-sm font-semibold text-primary flex items-center justify-center gap-1.5">
+          <Bell className="h-4 w-4" />
+          What's New
+        </h2>
       </div>
-      <div className="flex items-center justify-end gap-1 px-3 py-2 border-t border-border bg-surface/40">
-        <ScrollArrows
-          onUp={() => scrollByItem(-1)}
-          onDown={() => scrollByItem(1)}
-        />
+      <div
+        ref={ref}
+        onPointerEnter={(e) => {
+          if (e.pointerType === "mouse") setPaused(true);
+        }}
+        onPointerLeave={(e) => {
+          if (e.pointerType === "mouse") setPaused(false);
+        }}
+        className="overflow-y-auto no-scrollbar"
+        style={{ height: listHeight ?? 252 }}
+      >
+        {Array.from({ length: shouldScroll ? 2 : 1 }).map((_, i) =>
+          renderItems(i),
+        )}
       </div>
     </div>
   );
 }
+
 
 /**
  * Project Highlights column — continuous slow ticker-style upward scroll.
