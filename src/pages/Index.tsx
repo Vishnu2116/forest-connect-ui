@@ -1064,7 +1064,6 @@ export default function Home() {
               updatesTab={updatesTab}
               setUpdatesTab={setUpdatesTab}
               t={t}
-              variant="fit"
             />
 
             <div className="grid grid-cols-1 gap-4">
