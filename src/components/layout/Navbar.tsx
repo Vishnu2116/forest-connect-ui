@@ -301,7 +301,7 @@ export default function Navbar() {
                     setSearchActiveIdx(searchResults.length - 1);
                   }
                 }}
-                placeholder="Search pages — try 'About', 'E-Tenders', 'Knowledge Hub'…"
+                placeholder="Search pages — try 'About', 'e-Tenders', 'Knowledge Hub'…"
                 className="flex-1 bg-transparent border-b border-primary-foreground/40 focus:outline-none focus:border-accent text-sm py-1 placeholder:text-primary-foreground/60"
                 role="combobox"
                 aria-autocomplete="list"
