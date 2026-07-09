@@ -362,7 +362,7 @@ function UpdatesPanel({
   }, [apiWhatsNew]);
 
   const [paused, setPaused] = useState(false);
-  const { ref, shouldScroll } = useAutoScroll<HTMLDivElement>(
+  const { ref, shouldScroll, scrollByAmount } = useAutoScroll<HTMLDivElement>(
     AUTO_SCROLL_SPEED_UPDATES,
     paused,
   );
