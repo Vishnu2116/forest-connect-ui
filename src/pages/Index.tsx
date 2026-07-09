@@ -1089,6 +1089,7 @@ export default function Home() {
                 updatesTab={updatesTab}
                 setUpdatesTab={setUpdatesTab}
                 t={t}
+                variant="fill"
               />
             </div>
           </div>
@@ -1100,15 +1101,12 @@ export default function Home() {
               <DignitaryCard d={leadershipSlots[1]} />
             </div>
 
-            <div className="relative h-full">
-              <div className="absolute inset-0">
-                <UpdatesPanel
-                  updatesTab={updatesTab}
-                  setUpdatesTab={setUpdatesTab}
-                  t={t}
-                />
-              </div>
-            </div>
+            <UpdatesPanel
+              updatesTab={updatesTab}
+              setUpdatesTab={setUpdatesTab}
+              t={t}
+              variant="fit"
+            />
 
             <div className="grid grid-cols-1 gap-4">
               <DignitaryCard d={leadershipSlots[2]} />
