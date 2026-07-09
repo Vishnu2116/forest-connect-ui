@@ -659,6 +659,7 @@ function UpdatesPanel({
         ))}
       </div>
       <div className="px-3 py-2 border-t border-border bg-surface flex items-center justify-between gap-2">
+        {/**
         <Link
           to={
             updatesTab === "whatsnew"
@@ -672,6 +673,7 @@ function UpdatesPanel({
         >
           View all <ArrowRight className="h-3 w-3" />
         </Link>
+        */}
         {/* Manual scroll controls (bottom-right). Pauses auto-scroll briefly via hover. */}
         <ScrollArrows
           onUp={() => scrollByAmount(-MANUAL_STEP_PX)}
