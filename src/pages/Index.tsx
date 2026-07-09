@@ -172,7 +172,7 @@ function DignitaryCard({
 }) {
   return (
     <div className="bg-card border border-border rounded-md overflow-hidden hover:border-primary/40 transition h-full flex flex-col">
-      <div className="aspect-[4/3] w-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center text-primary-foreground overflow-hidden border-b border-border">
+      <div className="aspect-[2/1] w-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center text-primary-foreground overflow-hidden border-b border-border">
         {d.image ? (
           <img
             src={d.image}
@@ -220,10 +220,12 @@ function UpdatesPanel({
   updatesTab,
   setUpdatesTab,
   t,
+  variant = "fill",
 }: {
   updatesTab: "whatsnew" | "notifications" | "tenders";
   setUpdatesTab: (k: "whatsnew" | "notifications" | "tenders") => void;
   t: (k: string) => string;
+  variant?: "fill" | "fit";
 }) {
   const navigate = useNavigate();
   const [paused, setPaused] = useState(false);
@@ -368,7 +370,7 @@ function UpdatesPanel({
   }, [apiWhatsNew]);
 
   return (
-    <div className="bg-card border border-border rounded-md overflow-hidden h-full flex flex-col">
+    <div className={`bg-card border border-border rounded-md overflow-hidden ${variant === "fill" ? "h-full" : "h-auto"} flex flex-col`}>
       <div className="px-4 py-3 border-b-2 border-primary bg-primary/5">
         <h2 className="text-xs sm:text-sm font-semibold text-primary flex items-center justify-center gap-1.5">
           <Bell className="h-4 w-4" />
@@ -411,7 +413,7 @@ function UpdatesPanel({
         onPointerLeave={(e) => {
           if (e.pointerType === "mouse") setPaused(false);
         }}
-        className="flex-1 overflow-y-auto min-h-0 no-scrollbar"
+        className={`${variant === "fill" ? "flex-1 min-h-0" : ""} overflow-y-auto no-scrollbar`}
       >
         {Array.from({ length: shouldScroll ? 2 : 1 }).map((_, copyIdx) => (
           <div
@@ -657,19 +659,14 @@ function UpdatesPanel({
         ))}
       </div>
       <div className="px-3 py-2 border-t border-border bg-surface flex items-center justify-between gap-2">
+        {/*
         <Link
-          to={
-            updatesTab === "whatsnew"
-              ? "/procurements/tenders"
-              : /* updatesTab === "notifications"
-                ? "/knowledge-hub/notifications"
-                : "/procurements/tenders" */
-                "/procurements/tenders"
-          }
+          to="/procurements/tenders"
           className="text-xs font-semibold text-primary hover:text-accent inline-flex items-center gap-1"
         >
           View all <ArrowRight className="h-3 w-3" />
         </Link>
+        */}
         {/* Manual scroll controls (bottom-right). Pauses auto-scroll briefly via hover. */}
         <ScrollArrows
           onUp={() => scrollByAmount(-MANUAL_STEP_PX)}
@@ -1092,6 +1089,7 @@ export default function Home() {
                 updatesTab={updatesTab}
                 setUpdatesTab={setUpdatesTab}
                 t={t}
+                variant="fill"
               />
             </div>
           </div>
@@ -1103,15 +1101,12 @@ export default function Home() {
               <DignitaryCard d={leadershipSlots[1]} />
             </div>
 
-            <div className="relative h-full">
-              <div className="absolute inset-0">
-                <UpdatesPanel
-                  updatesTab={updatesTab}
-                  setUpdatesTab={setUpdatesTab}
-                  t={t}
-                />
-              </div>
-            </div>
+            <UpdatesPanel
+              updatesTab={updatesTab}
+              setUpdatesTab={setUpdatesTab}
+              t={t}
+              variant="fit"
+            />
 
             <div className="grid grid-cols-1 gap-4">
               <DignitaryCard d={leadershipSlots[2]} />
