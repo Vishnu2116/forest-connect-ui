@@ -148,6 +148,8 @@ const App = () => (
             <Route path="reports" element={<Navigate to="/admin/knowledge-hub?type=report" replace />} />
             <Route path="iec" element={<Navigate to="/admin/knowledge-hub?type=iec_material" replace />} />
             <Route path="activities" element={<ActivitiesAdmin />} />
+            <Route path="activities-outputs" element={<ActivitiesOutputsAdmin />} />
+            <Route path="activities-outputs/:projectId" element={<ActivitiesOutputsEditAdmin />} />
             <Route path="projects" element={<ProjectsManagementAdmin />} />
             <Route path="project-components" element={<ProjectComponentsAdmin />} />
             <Route path="plantation" element={<PlantationAdmin />} />
