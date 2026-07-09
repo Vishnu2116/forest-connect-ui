@@ -57,8 +57,11 @@ export default function Navbar() {
         if (!alive || !Array.isArray(items) || items.length === 0) return;
         setComponentChildren(
           items.map((c) => ({
-            label: c.label
-              || (c.component_number != null ? `Component ${c.component_number}` : c.name || "Component"),
+            label:
+              c.label ||
+              (c.component_number != null
+                ? `Component ${c.component_number}`
+                : c.name || "Component"),
             to: `/components/${c.id}`,
           })),
         );
@@ -116,14 +119,14 @@ export default function Navbar() {
   const goToSearchResult = (entry?: SearchEntry) => {
     const target = entry ?? searchResults[searchActiveIdx];
     if (!target) {
-      if (searchQ.trim()) navigate(`/sitemap?q=${encodeURIComponent(searchQ.trim())}`);
+      if (searchQ.trim())
+        navigate(`/sitemap?q=${encodeURIComponent(searchQ.trim())}`);
     } else {
       navigate(target.to);
     }
     setSearchOpen(false);
     setSearchQ("");
   };
-
 
   return (
     <header className="sticky top-0 z-50 shadow-card">
@@ -286,8 +289,9 @@ export default function Navbar() {
                     setSearchActiveIdx((i) => (i + 1) % searchResults.length);
                   } else if (e.key === "ArrowUp") {
                     e.preventDefault();
-                    setSearchActiveIdx((i) =>
-                      (i - 1 + searchResults.length) % searchResults.length,
+                    setSearchActiveIdx(
+                      (i) =>
+                        (i - 1 + searchResults.length) % searchResults.length,
                     );
                   } else if (e.key === "Home") {
                     e.preventDefault();
@@ -359,10 +363,14 @@ export default function Navbar() {
                               onMouseEnter={() => setSearchActiveIdx(idx)}
                               onClick={() => goToSearchResult(r)}
                               className={`w-full text-left px-4 py-2.5 text-sm flex items-center justify-between gap-3 focus-ring ${
-                                selected ? "bg-surface text-primary" : "hover:bg-surface"
+                                selected
+                                  ? "bg-surface text-primary"
+                                  : "hover:bg-surface"
                               }`}
                             >
-                              <span className="font-medium truncate">{r.title}</span>
+                              <span className="font-medium truncate">
+                                {r.title}
+                              </span>
                               {r.group && (
                                 <span className="text-[11px] uppercase tracking-wide text-muted-foreground shrink-0">
                                   {r.group}
@@ -380,7 +388,6 @@ export default function Navbar() {
           </div>
         )}
       </div>
-
 
       {/* ── MOBILE HEADER — below lg (< 1024px) ── */}
       <div className="lg:hidden bg-background border-b border-border">
@@ -440,7 +447,7 @@ export default function Navbar() {
           <img
             src={logoTripura}
             alt="Government of Tripura"
-            className="h-[80px] w-[80px] xl:h-[100px] xl:w-[100px] 2xl:h-[116px] 2xl:w-[116px] object-contain"
+            className="h-[90px] w-[90px] xl:h-[125px] xl:w-[125px] 2xl:h-[136px] 2xl:w-[136px] object-contain"
           />
         </div>
 
@@ -453,7 +460,7 @@ export default function Navbar() {
             {t("site.full")}
           </p>
           <div className="w-full border-t border-border mt-2 pt-1.5">
-            <p className="text-[11px] xl:text-xs text-muted-foreground italic whitespace-nowrap">
+            <p className="text-[11px] xl:text-sm text-muted-foreground italic whitespace-nowrap">
               {t("site.joint")}
             </p>
           </div>
@@ -464,12 +471,12 @@ export default function Navbar() {
           <img
             src={logoTheWorldBank}
             alt="The World Bank"
-            className="h-[70px] xl:h-[88px] 2xl:h-[100px] w-auto object-contain"
+            className="h-[65px] xl:h-[80px] 2xl:h-[95px] w-auto object-contain"
           />
           <img
             src={logoTripuraForestDept}
             alt="Tripura Forest Department"
-            className="hidden xl:block xl:h-[100px] xl:w-[100px] 2xl:h-[116px] 2xl:w-[116px] object-contain"
+            className="hidden xl:block xl:h-[125px] xl:w-[125px] 2xl:h-[136px] 2xl:w-[136px] object-contain"
           />
         </div>
       </div>
@@ -504,21 +511,32 @@ export default function Navbar() {
                       aria-haspopup="menu"
                       aria-expanded={isOpen}
                       aria-current={dropActive ? "page" : undefined}
-                      onClick={() => setOpenDropdown(isOpen ? null : item.labelKey)}
+                      onClick={() =>
+                        setOpenDropdown(isOpen ? null : item.labelKey)
+                      }
                       onKeyDown={(e) => {
-                        if (e.key === "ArrowDown" || e.key === "Enter" || e.key === " ") {
+                        if (
+                          e.key === "ArrowDown" ||
+                          e.key === "Enter" ||
+                          e.key === " "
+                        ) {
                           e.preventDefault();
                           setOpenDropdown(item.labelKey);
                         } else if (e.key === "Escape") {
                           setOpenDropdown(null);
                         }
                       }}
-                      className={`flex items-center justify-center gap-1 whitespace-nowrap px-2.5 lg:px-3 xl:px-5 py-3 xl:py-3.5 text-[13px] xl:text-sm font-medium hover:bg-primary-dark transition-colors border-b-2 focus-ring ${
-                        dropActive ? "bg-primary-dark border-accent" : "border-transparent"
+                      className={`flex items-center justify-center gap-1 whitespace-nowrap px-2.5 lg:px-2 xl:px-2 py-3 xl:py-1.5 text-[13px] xl:text-sm font-medium hover:bg-primary-dark transition-colors border-b-2 focus-ring ${
+                        dropActive
+                          ? "bg-primary-dark border-accent"
+                          : "border-transparent"
                       }`}
                     >
                       {t(item.labelKey)}
-                      <ChevronDown className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+                      <ChevronDown
+                        className="h-3.5 w-3.5 shrink-0"
+                        aria-hidden="true"
+                      />
                     </button>
                   ) : (
                     <NavLink
@@ -606,7 +624,10 @@ export default function Navbar() {
                       />
                     </button>
                     {mobileSubOpen === item.labelKey && (
-                      <ul id={`mobile-sub-${item.labelKey}`} className="bg-primary-dark">
+                      <ul
+                        id={`mobile-sub-${item.labelKey}`}
+                        className="bg-primary-dark"
+                      >
                         {item.children.map((c) => (
                           <li key={c.to}>
                             <NavLink

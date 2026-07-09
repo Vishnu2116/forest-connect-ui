@@ -26,14 +26,20 @@ export default function ProjectDetail() {
         setLoading(false);
       }
     });
-    return () => { alive = false; };
+    return () => {
+      alive = false;
+    };
   }, [slug]);
 
   if (loading) {
     return (
       <PageLayout>
         <PageHeader title="Loading…" breadcrumb={["Home", "Projects"]} />
-        <section className="py-10"><div className="gov-container"><p className="text-sm text-muted-foreground">Loading project…</p></div></section>
+        <section className="py-10">
+          <div className="gov-container">
+            <p className="text-sm text-muted-foreground">Loading project…</p>
+          </div>
+        </section>
       </PageLayout>
     );
   }
@@ -41,11 +47,19 @@ export default function ProjectDetail() {
   if (!project) {
     return (
       <PageLayout>
-        <PageHeader title="Project Not Found" breadcrumb={["Home", "Projects"]} />
+        <PageHeader
+          title="Project Not Found"
+          breadcrumb={["Home", "Projects"]}
+        />
         <section className="py-10">
           <div className="gov-container text-center">
-            <p className="text-muted-foreground">The requested project could not be found.</p>
-            <Link to="/projects" className="mt-4 inline-flex items-center gap-2 text-primary font-semibold hover:text-accent">
+            <p className="text-muted-foreground">
+              The requested project could not be found.
+            </p>
+            <Link
+              to="/projects"
+              className="mt-4 inline-flex items-center gap-2 text-primary font-semibold hover:text-accent"
+            >
               <ArrowLeft className="h-4 w-4" /> Back to Projects
             </Link>
           </div>
@@ -73,7 +87,11 @@ export default function ProjectDetail() {
       <section className="py-10">
         <div className="gov-container max-w-4xl">
           <Link
-            to={project.component?.id ? `/components/${project.component.id}` : "/projects"}
+            to={
+              project.component?.id
+                ? `/components/${project.component.id}`
+                : "/projects"
+            }
             className="inline-flex items-center gap-1.5 text-sm text-primary hover:text-accent font-medium mb-6"
           >
             <ArrowLeft className="h-4 w-4" /> Back to Projects
@@ -81,15 +99,21 @@ export default function ProjectDetail() {
 
           {thumb && (
             <div className="max-w-3xl mx-auto rounded-xl overflow-hidden mb-8 bg-surface border border-border shadow-card">
-              <img src={thumb} alt={project.title} className="w-full h-auto max-h-[280px] object-cover mx-auto" />
+              <img
+                src={thumb}
+                alt={project.title}
+                className="w-full h-auto max-h-[280px] object-cover mx-auto"
+              />
             </div>
           )}
 
           <div className="bg-card border border-border rounded-xl p-6 md:p-8 shadow-card space-y-6">
             {description && (
               <div>
-                <h2 className="text-lg font-semibold text-primary mb-3">About the Project</h2>
-                <p className="text-[17px] text-foreground/90 leading-relaxed whitespace-pre-line">
+                <h2 className="text-xl font-semibold text-primary mb-3">
+                  About the Project
+                </h2>
+                <p className="text-[19px] text-foreground/90 leading-relaxed whitespace-pre-line">
                   {description}
                 </p>
               </div>
@@ -97,10 +121,15 @@ export default function ProjectDetail() {
 
             {bullets.length > 0 && (
               <div className={description ? "pt-6 border-t border-border" : ""}>
-                <h2 className="text-lg font-semibold text-primary mb-4">Key Highlights</h2>
+                <h2 className="text-xl font-semibold text-primary mb-4">
+                  Key Highlights
+                </h2>
                 <div className="space-y-4">
                   {bullets.map((b, i) => (
-                    <p key={i} className="text-[17px] text-foreground/90 leading-relaxed">
+                    <p
+                      key={i}
+                      className="text-[19px] text-foreground/90 leading-relaxed"
+                    >
                       {b}
                     </p>
                   ))}

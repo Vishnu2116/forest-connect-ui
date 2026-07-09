@@ -8,14 +8,14 @@ export default function Footer() {
   const { settings, visitorCount } = useSettings();
   return (
     <footer className="bg-primary-dark text-primary-foreground mt-16">
-      <div className="gov-container py-12 md:py-14 grid gap-10 md:gap-12 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="gov-container py-12 md:py-6 grid gap-10 md:gap-12 sm:grid-cols-2 lg:grid-cols-4">
         {/* Left column removed per layout update */}
 
         <div>
           <h3 className="text-base font-semibold mb-4 text-accent">
             {t("footer.quicklinks")}
           </h3>
-          <ul className="space-y-2.5 text-sm">
+          <ul className="space-y-1.5 text-md">
             {[
               ["About PROJECT ELEMENT", "/about"],
               ["Project Components", "/project-components"],
@@ -37,10 +37,10 @@ export default function Footer() {
         </div>
 
         <div>
-          <h3 className="text-base font-semibold mb-4 text-accent">
+          <h3 className="text-base font-semibold mb-2 text-accent">
             {t("footer.policies")}
           </h3>
-          <ul className="space-y-2.5 text-sm">
+          <ul className="space-y-1.5 text-md">
             <li>
               <Link to="/disclaimer" className="opacity-90 hover:text-accent">
                 Disclaimer
@@ -138,7 +138,7 @@ export default function Footer() {
           <h3 className="text-base font-semibold mb-4 text-accent">
             Useful Links
           </h3>
-          <ul className="space-y-2.5 text-sm">
+          <ul className="space-y-2.5 text-md">
             <li>
               <a
                 href="https://tripura.gov.in/"
@@ -177,13 +177,14 @@ export default function Footer() {
           <h3 className="text-base font-semibold mb-4 text-accent">
             {t("footer.connect")}
           </h3>
-          <div className="space-y-3 text-sm opacity-90">
+          <div className="space-y-3 text-md opacity-90">
             <div className="flex items-start gap-2">
               <MapPin className="h-4 w-4 mt-0.5 shrink-0 text-accent" />{" "}
               {settings.office_address}
             </div>
             <div className="flex items-center gap-2">
-              <Phone className="h-4 w-4 shrink-0 text-accent" /> {settings.contact_phone}
+              <Phone className="h-4 w-4 shrink-0 text-accent" />{" "}
+              {settings.contact_phone}
             </div>
             <div className="flex items-center gap-2">
               <Mail className="h-4 w-4 shrink-0 text-accent" />{" "}
@@ -213,13 +214,13 @@ export default function Footer() {
               <Youtube className="h-4 w-4" />
             </a>
           </div>
-          <div className="mt-4 text-xs opacity-80">
+          <div className="mt-4 text-sm opacity-80">
             {t("footer.visitor")}:{" "}
             <span className="font-semibold text-accent">
               {visitorCount.toLocaleString("en-IN")}
             </span>
           </div>
-          <div className="mt-2 text-xs opacity-80">
+          <div className="mt-2 text-sm opacity-80">
             {t("footer.lastUpdated")}:{" "}
             {settings.last_updated_at
               ? new Date(settings.last_updated_at).toLocaleString("en-IN", {

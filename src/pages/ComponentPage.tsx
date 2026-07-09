@@ -8,7 +8,10 @@ import {
   type ApiProjectComponent,
 } from "@/lib/projects";
 
-const COMPONENT_STATIC: Record<number, { paragraph: string; objectives: string[] }> = {
+const COMPONENT_STATIC: Record<
+  number,
+  { paragraph: string; objectives: string[] }
+> = {
   1: {
     paragraph:
       "Component 1 focuses on landscape management and ecosystem restoration across Tripura. It aims to restore degraded forest landscapes, conserve watersheds, and enhance biodiversity through community-led interventions.",
@@ -66,7 +69,9 @@ export default function ComponentPage() {
         setLoading(false);
       }
     });
-    return () => { alive = false; };
+    return () => {
+      alive = false;
+    };
   }, [id]);
 
   /* Project Impact stats removed per request — commented out, do not delete
@@ -87,47 +92,68 @@ export default function ComponentPage() {
       {/* Subtitle removed per request; only the orange heading shows component.name */}
       <PageHeader
         title={data?.name || "Project Component"}
-        breadcrumb={["Home", "Project Components", data ? `Component ${data.component_number}` : ""]}
+        breadcrumb={[
+          "Home",
+          "Project Components",
+          data ? `Component ${data.component_number}` : "",
+        ]}
       />
       {/* Original subtitle was description — per request, name is now subtitle; description shown below as paragraph */}
 
       {loading && (
-        <section className="py-10"><div className="gov-container"><p className="text-sm text-muted-foreground">Loading…</p></div></section>
+        <section className="py-10">
+          <div className="gov-container">
+            <p className="text-sm text-muted-foreground">Loading…</p>
+          </div>
+        </section>
       )}
 
       {data && (
         <>
           {(() => {
-            const staticContent = COMPONENT_STATIC[data.component_number as 1 | 2 | 3 | 4];
+            const staticContent =
+              COMPONENT_STATIC[data.component_number as 1 | 2 | 3 | 4];
             // Description: use API description only; no static fallback per request
-            const paragraph = (data.description && data.description.trim()) || "";
+            const paragraph =
+              (data.description && data.description.trim()) || "";
             // Objectives: split API objectives by newline; fallback to static list when empty
-            const apiObjectivesRaw = (data as any).objectives as string | null | undefined;
+            const apiObjectivesRaw = (data as any).objectives as
+              | string
+              | null
+              | undefined;
             const apiObjectives = (apiObjectivesRaw || "")
               .split("\n")
               .map((l) => l.trim())
               .filter(Boolean);
-            const objectives = apiObjectives.length > 0
-              ? apiObjectives
-              /* else fallback to static objectives per component_number */
-              : (staticContent?.objectives || []);
+            const objectives =
+              apiObjectives.length > 0
+                ? apiObjectives
+                : /* else fallback to static objectives per component_number */
+                  staticContent?.objectives || [];
             if (!paragraph && objectives.length === 0) return null;
             return (
               <section className="py-10 border-b border-border">
                 <div className="gov-container space-y-6">
                   {paragraph && (
-                    <p className="text-[15px] text-muted-foreground leading-relaxed max-w-4xl">
+                    <p className="text-lg text-muted-foreground leading-relaxed max-w-4xl">
                       {paragraph}
                     </p>
                   )}
                   {objectives.length > 0 && (
                     <div>
-                      <h2 className="text-lg font-bold text-primary mb-3">Objectives</h2>
+                      <h2 className="text-2xl font-bold text-primary mb-3">
+                        Objectives
+                      </h2>
                       <div className="grid sm:grid-cols-2 gap-3">
                         {objectives.map((obj) => (
-                          <div key={obj} className="flex items-start gap-2 bg-card border border-border rounded-lg p-3.5">
+                          <div
+                            key={obj}
+                            className="flex items-start gap-2 bg-card border border-border rounded-lg p-3.5"
+                          >
                             <ChevronRight className="h-4 w-4 text-accent mt-0.5 shrink-0" />
-                            <span className="text-sm text-muted-foreground leading-relaxed">{obj}</span>
+                            <span className="text-lg text-muted-foreground leading-relaxed">
+                              {obj}
+                            </span>
                           </div>
                         ))}
                       </div>
@@ -159,16 +185,25 @@ export default function ComponentPage() {
           <section className="py-10">
             <div className="gov-container">
               {projects.length === 0 ? (
-                <p className="text-sm text-muted-foreground text-center py-8">No projects yet for this component.</p>
+                <p className="text-sm text-muted-foreground text-center py-8">
+                  No projects yet for this component.
+                </p>
               ) : (
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
                   {projects.map((p) => {
                     const img = resolveImage(p.thumbnail_image_path);
                     return (
-                      <article key={p.id} className="bg-card border border-border rounded-lg overflow-hidden hover:shadow-card transition flex flex-col">
+                      <article
+                        key={p.id}
+                        className="bg-card border border-border rounded-lg overflow-hidden hover:shadow-card transition flex flex-col"
+                      >
                         <div className="h-40 bg-gradient-to-br from-primary/20 to-primary-light/20 flex items-center justify-center overflow-hidden">
                           {img ? (
-                            <img src={img} alt={p.title} className="w-full h-full object-cover" />
+                            <img
+                              src={img}
+                              alt={p.title}
+                              className="w-full h-full object-cover"
+                            />
                           ) : (
                             <Trees className="h-10 w-10 text-primary/30" />
                           )}
@@ -181,7 +216,9 @@ export default function ComponentPage() {
                             </span>
                           </div>
                           */}
-                          <h3 className="text-base font-bold text-primary leading-snug">{p.title}</h3>
+                          <h3 className="text-base font-bold text-primary leading-snug">
+                            {p.title}
+                          </h3>
                           {/* Subtitle removed per request — commented out, do not delete
                           {p.subtitle && <p className="text-sm text-muted-foreground mt-2 line-clamp-2 leading-relaxed">{p.subtitle}</p>}
                           */}

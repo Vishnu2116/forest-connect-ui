@@ -3,7 +3,10 @@ import { Link, useParams } from "react-router-dom";
 import PageLayout, { PageHeader } from "@/components/layout/PageLayout";
 import { ArrowLeft, BarChart3 } from "lucide-react";
 import Lightbox from "@/components/common/Lightbox";
-import { fetchActivityProject, type ActivityProjectDetailResponse } from "@/lib/activities";
+import {
+  fetchActivityProject,
+  type ActivityProjectDetailResponse,
+} from "@/lib/activities";
 import { resolveImage } from "@/lib/projects";
 
 export default function ActivityProjectDetail() {
@@ -30,7 +33,10 @@ export default function ActivityProjectDetail() {
   if (loading) {
     return (
       <PageLayout>
-        <PageHeader title="Loading…" breadcrumb={["Home", "Activities & Outputs"]} />
+        <PageHeader
+          title="Loading…"
+          breadcrumb={["Home", "Activities & Outputs"]}
+        />
         <section className="py-10">
           <div className="gov-container">
             <p className="text-sm text-muted-foreground">Loading…</p>
@@ -43,11 +49,19 @@ export default function ActivityProjectDetail() {
   if (!data || !data.project) {
     return (
       <PageLayout>
-        <PageHeader title="Not Found" breadcrumb={["Home", "Activities & Outputs"]} />
+        <PageHeader
+          title="Not Found"
+          breadcrumb={["Home", "Activities & Outputs"]}
+        />
         <section className="py-10">
           <div className="gov-container text-center">
-            <p className="text-muted-foreground">The requested project could not be found.</p>
-            <Link to="/activities" className="mt-4 inline-flex items-center gap-2 text-primary font-semibold hover:text-accent">
+            <p className="text-muted-foreground">
+              The requested project could not be found.
+            </p>
+            <Link
+              to="/activities"
+              className="mt-4 inline-flex items-center gap-2 text-primary font-semibold hover:text-accent"
+            >
               <ArrowLeft className="h-4 w-4" /> Back to Activities
             </Link>
           </div>
@@ -57,8 +71,12 @@ export default function ActivityProjectDetail() {
   }
 
   const { project, paragraph, bullet_points, stats, images } = data;
-  const bullets = Array.isArray(bullet_points) ? bullet_points.filter((b) => typeof b === "string" && b.trim()) : [];
-  const statList = Array.isArray(stats) ? stats.filter((s) => s && (s.label || s.value)) : [];
+  const bullets = Array.isArray(bullet_points)
+    ? bullet_points.filter((b) => typeof b === "string" && b.trim())
+    : [];
+  const statList = Array.isArray(stats)
+    ? stats.filter((s) => s && (s.label || s.value))
+    : [];
   const imgList = Array.isArray(images) ? images : [];
 
   const lightboxImages = imgList.map((im) => ({
@@ -68,7 +86,10 @@ export default function ActivityProjectDetail() {
 
   return (
     <PageLayout>
-      <PageHeader title={project.title} breadcrumb={["Home", "Activities & Outputs", project.title]} />
+      <PageHeader
+        title={project.title}
+        breadcrumb={["Home", "Activities & Outputs", project.title]}
+      />
 
       <section className="py-10">
         <div className="gov-container max-w-5xl">
@@ -79,7 +100,9 @@ export default function ActivityProjectDetail() {
             <ArrowLeft className="h-4 w-4" /> Back to Activities
           </Link>
 
-          <h1 className="text-2xl md:text-3xl font-bold text-primary mb-6">{project.title}</h1>
+          <h1 className="text-2xl md:text-3xl font-bold text-primary mb-6">
+            {project.title}
+          </h1>
 
           {imgList.length > 0 && (
             <div className="mb-8">
@@ -105,17 +128,22 @@ export default function ActivityProjectDetail() {
           {(paragraph || bullets.length > 0) && (
             <div className="bg-card border border-border rounded-xl p-6 md:p-8 shadow-card space-y-6 mb-8">
               {paragraph && (
-                <p className="text-[17px] text-foreground/90 leading-relaxed whitespace-pre-line">
+                <p className="text-[21px] text-foreground/90 leading-relaxed whitespace-pre-line">
                   {paragraph}
                 </p>
               )}
 
               {bullets.length > 0 && (
                 <div className={paragraph ? "pt-6 border-t border-border" : ""}>
-                  <h2 className="text-lg font-semibold text-primary mb-4">Key Highlights</h2>
+                  <h2 className="text-lg font-semibold text-primary mb-4">
+                    Key Highlights
+                  </h2>
                   <div className="space-y-4">
                     {bullets.map((b, i) => (
-                      <p key={i} className="text-[17px] text-foreground/90 leading-relaxed">
+                      <p
+                        key={i}
+                        className="text-[19px] text-foreground/90 leading-relaxed"
+                      >
                         {b}
                       </p>
                     ))}
@@ -132,11 +160,17 @@ export default function ActivityProjectDetail() {
                   key={i}
                   className="bg-card border border-border rounded-md p-5 shadow-card"
                 >
-                  <div className={`p-2.5 rounded-lg w-fit ${i % 2 === 0 ? "bg-primary/10 text-primary" : "bg-accent/10 text-accent"}`}>
+                  <div
+                    className={`p-2.5 rounded-lg w-fit ${i % 2 === 0 ? "bg-primary/10 text-primary" : "bg-accent/10 text-accent"}`}
+                  >
                     <BarChart3 className="h-5 w-5" />
                   </div>
-                  <div className="mt-3 text-3xl font-bold text-primary">{s.value}</div>
-                  <div className="text-sm font-medium text-foreground">{s.label}</div>
+                  <div className="mt-3 text-3xl font-bold text-primary">
+                    {s.value}
+                  </div>
+                  <div className="text-sm font-medium text-foreground">
+                    {s.label}
+                  </div>
                 </div>
               ))}
             </div>

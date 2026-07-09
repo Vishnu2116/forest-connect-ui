@@ -361,7 +361,8 @@ function UpdatesPanel({
       const itemType = it.item_type || it.type;
       if (source === "event") return true;
       if (source === "procurement") return true;
-      if (source === "knowledge_hub" && itemType === "notification") return true;
+      if (source === "knowledge_hub" && itemType === "notification")
+        return true;
       return false;
     });
   }, [apiWhatsNew]);
@@ -434,36 +435,36 @@ function UpdatesPanel({
                   const Icon = getUpdateIcon(a.tag);
 
                   return (
-                  <article
-                    key={`${a.title}-${idx}`}
-                    className="flex items-center gap-3 px-4 py-3 hover:bg-surface/60 transition border-b border-border"
-                  >
-                    <div className="shrink-0 text-primary self-center">
-                      <Icon className="h-5 w-5" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-1.5 mb-1">
-                        <span className="inline-block text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-accent/15 text-accent">
-                          {a.tag === "Tender" ? "E-Tender" : a.tag}
-                        </span>
-                        <span className="ml-auto">
-                          <NewBadge show={isItemNew(a.title)} />
-                        </span>
+                    <article
+                      key={`${a.title}-${idx}`}
+                      className="flex items-center gap-3 px-4 py-3 hover:bg-surface/60 transition border-b border-border"
+                    >
+                      <div className="shrink-0 text-primary self-center">
+                        <Icon className="h-5 w-5" />
                       </div>
-                      <a
-                        href="#"
-                        className="text-sm font-semibold text-foreground hover:text-primary block leading-snug"
-                      >
-                        {a.title}
-                      </a>
-                      <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
-                        {announcementDescriptions[a.tag] ??
-                          "Latest update from the PROJECT ELEMENT."}
-                      </p>
-                    </div>
-                  </article>
-                );
-              })}
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-1.5 mb-1">
+                          <span className="inline-block text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-accent/15 text-accent">
+                            {a.tag === "Tender" ? "E-Tender" : a.tag}
+                          </span>
+                          <span className="ml-auto">
+                            <NewBadge show={isItemNew(a.title)} />
+                          </span>
+                        </div>
+                        <a
+                          href="#"
+                          className="text-sm font-semibold text-foreground hover:text-primary block leading-snug"
+                        >
+                          {a.title}
+                        </a>
+                        <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
+                          {announcementDescriptions[a.tag] ??
+                            "Latest update from the PROJECT ELEMENT."}
+                        </p>
+                      </div>
+                    </article>
+                  );
+                })}
             {updatesTab === "notifications" && apiNotifs.length > 0 && (
               <>
                 {apiNotifs.map((it, i) =>
@@ -1067,7 +1068,7 @@ export default function Home() {
             <h2 className="text-2xl md:text-3xl font-bold text-primary">
               Welcome to Project ELEMENT, Tripura
             </h2>
-            <p className="text-sm text-muted-foreground mt-2 max-w-xl mx-auto">
+            <p className="text-m text-muted-foreground mt-2 max-w-xl mx-auto">
               Project leadership, official updates, notifications, and e-tenders
               from the PROJECT ELEMENT.
             </p>
@@ -1130,7 +1131,7 @@ export default function Home() {
             <h2 className="text-2xl md:text-3xl font-bold text-primary leading-tight mt-3 mb-5">
               What is ELEMENT?
             </h2>
-            <p className="text-muted-foreground mt-3 text-sm md:text-base max-w-2xl mx-auto mb-6">
+            <p className="text-muted-foreground mt-3 text-sm md:text-[19px] max-w-2xl mx-auto mb-6">
               The “Enhancing Landscape and Ecosystem Management (ELEMENT)”
               Project is proposed with an overarching objective to increase the
               resilience of landscapes and forest-dependent communities in the
@@ -1156,10 +1157,10 @@ export default function Home() {
                 <div className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider mt-0.5">
                   {p.statLabel}
                 </div>
-                <h4 className="text-base font-bold text-foreground mt-3">
+                <h4 className="text-lg font-bold text-foreground mt-3">
                   {p.label}
                 </h4>
-                <p className="text-xs text-muted-foreground mt-1.5 leading-relaxed">
+                <p className="text-sm text-muted-foreground mt-1.5 leading-relaxed">
                   {p.desc}
                 </p>
               </div>

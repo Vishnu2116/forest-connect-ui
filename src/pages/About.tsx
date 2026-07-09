@@ -163,12 +163,12 @@ export function AboutElement() {
               About the Project
             </span>
 
-            <h3 className="text-2xl md:text-3xl font-bold text-primary mb-5">
+            <h3 className="text-2xl md:text-4xl font-bold text-primary mb-5">
               What is PROJECT ELEMENT?
             </h3>
           </div>
 
-          <div className="space-y-4 text-sm md:text-[15px] text-muted-foreground leading-relaxed">
+          <div className="space-y-4 text-sm md:text-[17px] text-muted-foreground leading-relaxed">
             <p>
               The “Enhancing Landscape and Ecosystem Management (ELEMENT)”
               Project is proposed with an overarching objective to increase the
@@ -266,7 +266,7 @@ export function AboutElement() {
               <div className="text-2xl font-bold text-primary mt-2">
                 {p.stat}
               </div>
-              <div className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider mt-1">
+              <div className="text-[14px] font-semibold text-muted-foreground uppercase tracking-wider mt-1">
                 {p.label}
               </div>
             </div>
@@ -388,7 +388,7 @@ export function AboutElement() {
             <h3 className="text-2xl md:text-3xl font-bold text-primary mb-2">
               Key Objectives of PROJECT ELEMENT
             </h3>
-            <p className="text-sm text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-md text-muted-foreground max-w-2xl mx-auto">
               The project objectives are to “Improve landscape management and
               increase benefits for targeted forest dependent communities". The
               project objectives include the following sub-objectives:
@@ -406,7 +406,7 @@ export function AboutElement() {
                 className="flex items-start gap-2 bg-surface border border-border rounded-lg p-3.5"
               >
                 <ChevronRight className="h-4 w-4 text-accent mt-0.5 shrink-0" />
-                <span className="text-sm text-muted-foreground leading-relaxed">
+                <span className="text-md text-muted-foreground leading-relaxed">
                   {obj}
                 </span>
               </div>
@@ -498,7 +498,7 @@ export function Organization() {
             </h3>
           </div>
 
-          <div className="text-sm text-muted-foreground max-w-5xl mx-auto leading-7 space-y-4 text-left">
+          <div className="text-md text-muted-foreground max-w-5xl mx-auto leading-7 space-y-4 text-left">
             <p>
               For the smooth functioning of the Element Project, the Government
               of Tripura has established a Project Steering Committee (PSC) for
@@ -1047,10 +1047,10 @@ export function LoanAgreement() {
           <span className="inline-block bg-accent/10 text-accent text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-3">
             Official Document
           </span>
-          <h3 className="text-xl font-bold text-primary mb-2">
+          <h3 className="text-3xl font-bold text-primary mb-2">
             Loan Agreement
           </h3>
-          <p className="text-sm text-muted-foreground max-w-lg mx-auto">
+          <p className="text-md text-muted-foreground max-w-lg mx-auto">
             The founding document establishing the governance, objectives, and
             operational framework of the PROJECT ELEMENT.
           </p>
@@ -1064,16 +1064,16 @@ export function LoanAgreement() {
             </div>
 
             <div className="flex-1">
-              <h4 className="text-base font-bold text-foreground">
+              <h4 className="text-lg font-bold text-foreground">
                 PROJECT ELEMENT — Loan Agreement
               </h4>
 
-              <p className="text-xs text-muted-foreground mt-1">
+              <p className="text-md text-muted-foreground mt-1">
                 Government of Tripura · Registered under Societies Registration
                 Act
               </p>
 
-              <p className="text-sm text-muted-foreground mt-3 leading-relaxed">
+              <p className="text-md text-muted-foreground mt-3 leading-relaxed">
                 This document outlines the constitution, governance structure,
                 and operational mandate of the PROJECT ELEMENT under the aegis
                 of the Government of Tripura in partnership with the World Bank.
@@ -1352,10 +1352,10 @@ export function OfficialDirectory() {
           <span className="inline-block bg-accent/10 text-accent text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-3">
             Directory
           </span>
-          <h3 className="text-xl font-bold text-primary mb-2">
+          <h3 className="text-3xl font-bold text-primary mb-2">
             Official Directory
           </h3>
-          <p className="text-sm text-muted-foreground max-w-lg mx-auto">
+          <p className="text-md text-muted-foreground max-w-lg mx-auto">
             Contact information for key PROJECT ELEMENT officials across
             departments.
           </p>
@@ -1391,7 +1391,7 @@ export function OfficialDirectory() {
             </h3>
             {/* Desktop table */}
             <div className="hidden md:block rounded-xl border border-border bg-card shadow-sm overflow-x-auto">
-              <table className="w-full text-sm table-fixed">
+              <table className="w-full text-md table-fixed">
                 <colgroup>
                   <col className="w-[30%]" />
                   <col className="w-[15%]" />

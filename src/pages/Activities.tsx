@@ -10,7 +10,10 @@ import {
   BarChart3,
   ArrowRight,
 } from "lucide-react";
-import { fetchActivityProjects, type ActivityProjectCard } from "@/lib/activities";
+import {
+  fetchActivityProjects,
+  type ActivityProjectCard,
+} from "@/lib/activities";
 import { resolveImage } from "@/lib/projects";
 
 const outputs = [
@@ -91,10 +94,10 @@ export default function Activities() {
                 <div className="mt-3 text-3xl font-bold text-primary">
                   {o.value}
                 </div>
-                <div className="text-sm font-medium text-foreground">
+                <div className="text-md font-medium text-foreground">
                   {o.label}
                 </div>
-                <div className="text-xs text-muted-foreground mt-1">
+                <div className="text-sm text-muted-foreground mt-1">
                   {o.note}
                 </div>
               </div>
