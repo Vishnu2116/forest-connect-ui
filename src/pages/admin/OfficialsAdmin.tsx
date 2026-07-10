@@ -393,7 +393,15 @@ function OfficialEditor({ form, setForm, categories, onCancel, onSave, saving, f
               <Field label="Category">
                 <select
                   value={form.category_id}
-                  onChange={(e) => set("category_id", e.target.value)}
+                  onChange={(e) => {
+                    const nextId = e.target.value;
+                    const nextCat = categories.find((c) => c.id === nextId);
+                    setForm({
+                      ...form,
+                      category_id: nextId,
+                      district: nextCat?.is_district_based ? form.district : "",
+                    });
+                  }}
                   className="w-full border border-input rounded h-10 px-2 text-sm bg-background"
                 >
                   <option value="">— None —</option>
