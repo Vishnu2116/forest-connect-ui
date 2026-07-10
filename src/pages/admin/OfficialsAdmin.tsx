@@ -37,6 +37,7 @@ interface FormState {
   email: string;
   bio: string;
   category_id: string;
+  district: string;
   show_in_whos_who: boolean;
   show_in_directory: boolean;
   display_order: number;
@@ -57,6 +58,7 @@ function emptyForm(): FormState {
     email: "",
     bio: "",
     category_id: "",
+    district: "",
     show_in_whos_who: true,
     show_in_directory: true,
     display_order: 0,
