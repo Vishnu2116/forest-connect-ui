@@ -925,6 +925,109 @@ function ProjectHighlightsColumn() {
   );
 }
 
+function SocialMediaBlock({
+  social,
+  youtubeEmbed,
+  compact = false,
+}: {
+  social: {
+    facebook_handle: string;
+    facebook_url: string;
+    twitter_handle: string;
+    twitter_url: string;
+    youtube_video_title: string;
+  };
+  youtubeEmbed: string;
+  compact?: boolean;
+}) {
+  return (
+    <div
+      className={`bg-card border border-border rounded-md overflow-hidden shadow-sm ${
+        compact ? "flex flex-col" : "flex-1 min-h-0 flex flex-col"
+      }`}
+    >
+      <div className="flex items-center justify-between px-4 py-2.5 border-b-2 border-primary bg-primary/5 shrink-0">
+        <h2 className="text-xs sm:text-sm font-semibold text-primary flex items-center gap-1.5">
+          <Facebook className="h-4 w-4" /> Social Media
+        </h2>
+
+        <Link
+          to="/media/social"
+          className="text-xs text-primary hover:text-accent font-semibold"
+        >
+          View all <ArrowRight className="inline h-3 w-3" />
+        </Link>
+      </div>
+
+      <div
+        className={`p-3 flex flex-col gap-3 ${
+          compact ? "" : "flex-1 min-h-0"
+        }`}
+      >
+        {/* Top: Facebook + Twitter links */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 shrink-0">
+          <a
+            href={social.facebook_url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2.5 px-3 py-2 rounded-md bg-[hsl(214_100%_95%)] hover:bg-[hsl(214_100%_92%)] border border-border transition-colors"
+          >
+            <div className="h-8 w-8 rounded-full bg-[hsl(221_44%_41%)] flex items-center justify-center shrink-0">
+              <Facebook className="h-4 w-4 text-white" />
+            </div>
+
+            <div className="flex-1 min-w-0">
+              <div className="text-xs font-bold text-foreground truncate">
+                {social.facebook_handle}
+              </div>
+              <div className="text-[10px] text-muted-foreground">
+                Visit our Facebook Page
+              </div>
+            </div>
+          </a>
+
+          <a
+            href={social.twitter_url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2.5 px-3 py-2 rounded-md bg-[hsl(210_16%_93%)] hover:bg-[hsl(210_16%_90%)] border border-border transition-colors"
+          >
+            <div className="h-8 w-8 rounded-full bg-foreground flex items-center justify-center shrink-0">
+              <Twitter className="h-4 w-4 text-background" />
+            </div>
+
+            <div className="flex-1 min-w-0">
+              <div className="text-xs font-bold text-foreground truncate">
+                {social.twitter_handle}
+              </div>
+              <div className="text-[10px] text-muted-foreground">
+                Visit our Twitter Feed
+              </div>
+            </div>
+          </a>
+        </div>
+
+        {/* Bottom: YouTube video */}
+        <div
+          className={`relative w-full sm:w-[75%] sm:mx-auto overflow-hidden rounded-md bg-muted ${
+            compact ? "min-h-[220px]" : "flex-1 min-h-[220px]"
+          }`}
+        >
+          {youtubeEmbed && (
+            <iframe
+              src={youtubeEmbed}
+              title={social.youtube_video_title}
+              className="absolute inset-0 w-full h-full"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function Home() {
   const { t } = useLang();
   const [updatesTab, setUpdatesTab] = useState<
