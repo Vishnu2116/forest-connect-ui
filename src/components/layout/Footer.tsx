@@ -246,7 +246,7 @@ export default function Footer() {
           <span className="opacity-90">{t("common.helplineHours")}</span>
           <span className="hidden sm:inline opacity-60">|</span>
           <a
-            href="https://pgportal.gov.in/"
+            href="https://grievance.tripura.gov.in/"
             target="_blank"
             rel="noopener noreferrer"
             className="font-semibold hover:text-accent underline-offset-2 hover:underline"
