@@ -638,6 +638,14 @@ function CategoriesModal({
               onChange={(e) => setNewOrder(Number(e.target.value) || 0)}
               className="w-24"
             />
+            <label className="flex items-center gap-1 text-xs whitespace-nowrap">
+              <input
+                type="checkbox"
+                checked={newDistrictBased}
+                onChange={(e) => setNewDistrictBased(e.target.checked)}
+              />
+              District-based
+            </label>
             <Button onClick={create} disabled={busy} className="gap-1">
               <Plus className="h-4 w-4" /> Add
             </Button>
