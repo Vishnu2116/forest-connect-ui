@@ -115,6 +115,7 @@ export default function OfficialsAdmin() {
       email: o.email || "",
       bio: o.bio || "",
       category_id: o.category_id || "",
+      district: o.district || "",
       show_in_whos_who: o.show_in_whos_who ?? true,
       show_in_directory: o.show_in_directory ?? true,
       display_order: o.display_order ?? 0,
