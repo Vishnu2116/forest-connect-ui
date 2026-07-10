@@ -512,11 +512,12 @@ function CategoriesModal({
       const r = await fetch(`${API_BASE_URL}/api/admin/official-categories`, {
         method: "POST",
         headers: getAuthJsonHeaders(),
-        body: JSON.stringify({ name: newName.trim(), display_order: newOrder }),
+        body: JSON.stringify({ name: newName.trim(), display_order: newOrder, is_district_based: newDistrictBased }),
       });
       if (!r.ok) throw new Error();
       setNewName("");
       setNewOrder(0);
+      setNewDistrictBased(false);
       toast.success("Category created");
       await refresh();
     } catch {
