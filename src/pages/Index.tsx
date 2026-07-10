@@ -172,7 +172,8 @@ function DignitaryCard({
 }) {
   return (
     <div className="bg-card border border-border rounded-md overflow-hidden hover:border-primary/40 transition h-full flex flex-col">
-      <div className="h-64 w-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center text-primary-foreground overflow-hidden border-b border-border">
+      {/* Image height is controlled here */}
+      <div className="h-52 md:h-56 lg:h-60 w-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center text-primary-foreground overflow-hidden border-b border-border">
         {d.image ? (
           <img
             src={d.image}
@@ -180,17 +181,21 @@ function DignitaryCard({
             className="h-full w-full object-cover"
           />
         ) : (
-          <User className="h-12 w-12" />
+          <User className="h-10 w-10" />
         )}
       </div>
-      <div className="px-3 py-3 text-center border-t-2 border-accent flex-1 flex flex-col justify-center">
-        <h4 className="text-base font-bold text-foreground leading-tight">
+
+      {/* Text area */}
+      <div className="px-2 py-2 text-center border-t-2 border-accent flex-1 flex flex-col justify-center">
+        <h4 className="text-sm md:text-base font-bold text-foreground leading-tight">
           {d.name}
         </h4>
-        <p className="text-sm text-primary font-semibold mt-1 leading-tight">
+
+        <p className="text-xs md:text-sm text-primary font-semibold mt-1 leading-tight">
           {d.designation}
         </p>
-        <p className="text-xs text-muted-foreground mt-1 leading-tight">
+
+        <p className="text-[11px] md:text-xs text-muted-foreground mt-1 leading-tight">
           {d.desc}
         </p>
       </div>
@@ -391,241 +396,234 @@ function UpdatesPanel({
       aria-hidden={copyIdx === 1 || undefined}
       className="flex flex-col"
     >
+      {updatesTab === "whatsnew" &&
+        filteredWhatsNew.length > 0 &&
+        filteredWhatsNew.map((it, i) => renderApiItem(it, i, "whatsnew"))}
+      {updatesTab === "whatsnew" &&
+        filteredWhatsNew.length === 0 &&
+        announcements
+          .filter(
+            (a) =>
+              a.tag === "Event" ||
+              a.tag === "Tender" ||
+              a.tag === "Notification",
+          )
+          .map((a, idx) => {
+            const Icon = getUpdateIcon(a.tag);
 
-            {updatesTab === "whatsnew" &&
-              filteredWhatsNew.length > 0 &&
-              filteredWhatsNew.map((it, i) => renderApiItem(it, i, "whatsnew"))}
-            {updatesTab === "whatsnew" &&
-              filteredWhatsNew.length === 0 &&
-              announcements
-                .filter(
-                  (a) =>
-                    a.tag === "Event" ||
-                    a.tag === "Tender" ||
-                    a.tag === "Notification",
-                )
-                .map((a, idx) => {
-                  const Icon = getUpdateIcon(a.tag);
-
-                  return (
-                    <article
-                      key={`${a.title}-${idx}`}
-                      className="flex items-center gap-3 px-4 py-3 hover:bg-surface/60 transition border-b border-border"
-                    >
-                      <div className="shrink-0 text-primary self-center">
-                        <Icon className="h-5 w-5" />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-1.5 mb-1">
-                          <span className="inline-block text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-accent/15 text-accent">
-                            {a.tag === "Tender" ? "E-Tender" : a.tag}
-                          </span>
-                          <span className="ml-auto">
-                            <NewBadge show={isItemNew(a.title)} />
-                          </span>
-                        </div>
-                        <a
-                          href="#"
-                          className="text-sm font-semibold text-foreground hover:text-primary block leading-snug"
-                        >
-                          {a.title}
-                        </a>
-                        <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
-                          {announcementDescriptions[a.tag] ??
-                            "Latest update from the PROJECT ELEMENT."}
-                        </p>
-                      </div>
-                    </article>
-                  );
-                })}
-            {updatesTab === "notifications" && apiNotifs.length > 0 && (
-              <>
-                {apiNotifs.map((it, i) =>
-                  renderApiItem(it, i, "notifications"),
-                )}
-              </>
-            )}
-            {updatesTab === "notifications" && apiNotifs.length === 0 && (
-              <>
-                {announcements
-                  .filter(
-                    (a) => a.tag === "Notification" || a.tag === "Recruitment",
-                  )
-                  .map((a, idx) => {
-                    const Icon = getUpdateIcon(a.tag);
-                    return (
-                      <article
-                        key={`${a.title}-${idx}`}
-                        className="flex items-center gap-3 px-4 py-3 hover:bg-surface/60 transition border-b border-border"
-                      >
-                        <div className="shrink-0 text-primary self-center">
-                          <Icon className="h-5 w-5" />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center gap-1.5 mb-1">
-                            <span className="inline-block text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-accent/15 text-accent">
-                              {a.tag}
-                            </span>
-                            <span className="ml-auto">
-                              <NewBadge show={isItemNew(a.title)} />
-                            </span>
-                          </div>
-                          <a
-                            href="#"
-                            className="text-sm font-semibold text-foreground hover:text-primary block leading-snug"
-                          >
-                            {a.title}
-                          </a>
-                          <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
-                            {announcementDescriptions[a.tag] ??
-                              "Official notification issued by the PROJECT ELEMENT."}
-                          </p>
-                        </div>
-                      </article>
-                    );
-                  })}
-                {events.map((e, idx) => (
-                  <article
-                    key={`${e.title}-${idx}`}
-                    className="flex items-center gap-3 px-4 py-3 hover:bg-surface/60 transition border-b border-border"
+            return (
+              <article
+                key={`${a.title}-${idx}`}
+                className="flex items-center gap-3 px-4 py-3 hover:bg-surface/60 transition border-b border-border"
+              >
+                <div className="shrink-0 text-primary self-center">
+                  <Icon className="h-5 w-5" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-1.5 mb-1">
+                    <span className="inline-block text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-accent/15 text-accent">
+                      {a.tag === "Tender" ? "E-Tender" : a.tag}
+                    </span>
+                    <span className="ml-auto">
+                      <NewBadge show={isItemNew(a.title)} />
+                    </span>
+                  </div>
+                  <a
+                    href="#"
+                    className="text-sm font-semibold text-foreground hover:text-primary block leading-snug"
                   >
-                    <div className="shrink-0 text-primary self-center">
-                      <Calendar className="h-5 w-5" />
+                    {a.title}
+                  </a>
+                  <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
+                    {announcementDescriptions[a.tag] ??
+                      "Latest update from the PROJECT ELEMENT."}
+                  </p>
+                </div>
+              </article>
+            );
+          })}
+      {updatesTab === "notifications" && apiNotifs.length > 0 && (
+        <>{apiNotifs.map((it, i) => renderApiItem(it, i, "notifications"))}</>
+      )}
+      {updatesTab === "notifications" && apiNotifs.length === 0 && (
+        <>
+          {announcements
+            .filter((a) => a.tag === "Notification" || a.tag === "Recruitment")
+            .map((a, idx) => {
+              const Icon = getUpdateIcon(a.tag);
+              return (
+                <article
+                  key={`${a.title}-${idx}`}
+                  className="flex items-center gap-3 px-4 py-3 hover:bg-surface/60 transition border-b border-border"
+                >
+                  <div className="shrink-0 text-primary self-center">
+                    <Icon className="h-5 w-5" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-1.5 mb-1">
+                      <span className="inline-block text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-accent/15 text-accent">
+                        {a.tag}
+                      </span>
+                      <span className="ml-auto">
+                        <NewBadge show={isItemNew(a.title)} />
+                      </span>
                     </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-1.5 mb-1">
-                        <span className="inline-block text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-accent/15 text-accent">
-                          Event
-                        </span>
-                        <span className="ml-auto">
-                          <NewBadge show={isItemNew(e.title)} />
-                        </span>
-                      </div>
-                      <a
-                        href="#"
-                        className="text-sm font-semibold text-foreground hover:text-primary block leading-snug"
-                      >
-                        {e.title}
-                      </a>
-                      <p className="text-xs text-muted-foreground mt-1 flex items-center gap-1">
-                        <MapPin className="h-3 w-3" /> {e.venue}
-                      </p>
-                    </div>
-                  </article>
-                ))}
-              </>
-            )}
-            {updatesTab === "tenders" &&
-              (() => {
-                const useApi = apiTenders.length > 0;
-                const list = useApi
-                  ? apiTenders.map((t) => ({
-                      id: t.id,
-                      title: t.title,
-                      status: t.status,
-                      deadline: t.deadline,
-                      created_at: t.created_at,
-                      file_path: t.file_path,
-                    }))
-                  : procurements.map((p, i) => ({
-                      id: `dummy-${i}`,
-                      title: p.title,
-                      status:
-                        p.status === "Open"
-                          ? "open"
-                          : p.status === "Closing Soon"
-                            ? "closing_soon"
-                            : p.status === "Closed"
-                              ? "closed"
-                              : "open",
-                      deadline: p.deadline,
-                      created_at: undefined,
-                      file_path: null as string | null,
-                    }));
-                const statusUi = (s: string) => {
-                  if (s === "open")
-                    return { label: "Open", cls: "bg-success/15 text-success" };
-                  if (s === "closing_soon")
-                    return {
-                      label: "Closing Soon",
-                      cls: "bg-accent/15 text-accent",
-                    };
-                  if (s === "closed")
-                    return {
-                      label: "Closed",
-                      cls: "bg-muted text-muted-foreground",
-                    };
-                  if (s === "cancelled")
-                    return {
-                      label: "Cancelled",
-                      cls: "bg-destructive/15 text-destructive",
-                    };
-                  return { label: s, cls: "bg-muted text-muted-foreground" };
-                };
-                const fmtDeadline = (d?: string) => {
-                  if (!d) return "—";
-                  const dt = new Date(d);
-                  if (Number.isNaN(dt.getTime())) return d;
-                  return dt.toLocaleDateString("en-GB", {
-                    day: "2-digit",
-                    month: "short",
-                    year: "numeric",
-                  });
-                };
-                return list.map((p, idx) => {
-                  const isNewItem = useApi
-                    ? p.created_at &&
-                      Date.now() - new Date(p.created_at).getTime() <
-                        7 * 24 * 60 * 60 * 1000
-                    : isItemNew(p.title);
-                  const fileUrl = p.file_path
-                    ? p.file_path.startsWith("http")
-                      ? p.file_path
-                      : `${API_BASE_URL ?? ""}${p.file_path}`
-                    : null;
-                  const sUi = statusUi(p.status as string);
-                  return (
-                    <article
-                      key={`${p.id}-${idx}`}
-                      onClick={() => navigate("/procurements/tenders")}
-                      role="link"
-                      tabIndex={0}
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter" || e.key === " ") {
-                          e.preventDefault();
-                          navigate("/procurements/tenders");
-                        }
-                      }}
-                      className="cursor-pointer flex items-center gap-3 px-4 py-3 hover:bg-surface/60 transition border-b border-border"
+                    <a
+                      href="#"
+                      className="text-sm font-semibold text-foreground hover:text-primary block leading-snug"
                     >
-                      <div className="shrink-0 text-primary self-center">
-                        <FileText className="h-5 w-5" />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-1.5 mb-1">
-                          <span className="inline-block text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-accent/15 text-accent">
-                            Tender
-                          </span>
-                          <span className="ml-auto flex items-center gap-1.5">
-                            <span
-                              className={`inline-block text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm ${sUi.cls}`}
-                            >
-                              {sUi.label}
-                            </span>
-                            <NewBadge show={!!isNewItem} />
-                          </span>
-                        </div>
-                        <span className="text-sm font-semibold text-foreground hover:text-primary block leading-snug">
-                          {p.title}
-                        </span>
-                        <p className="text-xs text-muted-foreground mt-1">
-                          Deadline: {fmtDeadline(p.deadline)}
-                        </p>
-                      </div>
-                    </article>
-                  );
-                });
-              })()}
+                      {a.title}
+                    </a>
+                    <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
+                      {announcementDescriptions[a.tag] ??
+                        "Official notification issued by the PROJECT ELEMENT."}
+                    </p>
+                  </div>
+                </article>
+              );
+            })}
+          {events.map((e, idx) => (
+            <article
+              key={`${e.title}-${idx}`}
+              className="flex items-center gap-3 px-4 py-3 hover:bg-surface/60 transition border-b border-border"
+            >
+              <div className="shrink-0 text-primary self-center">
+                <Calendar className="h-5 w-5" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-1.5 mb-1">
+                  <span className="inline-block text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-accent/15 text-accent">
+                    Event
+                  </span>
+                  <span className="ml-auto">
+                    <NewBadge show={isItemNew(e.title)} />
+                  </span>
+                </div>
+                <a
+                  href="#"
+                  className="text-sm font-semibold text-foreground hover:text-primary block leading-snug"
+                >
+                  {e.title}
+                </a>
+                <p className="text-xs text-muted-foreground mt-1 flex items-center gap-1">
+                  <MapPin className="h-3 w-3" /> {e.venue}
+                </p>
+              </div>
+            </article>
+          ))}
+        </>
+      )}
+      {updatesTab === "tenders" &&
+        (() => {
+          const useApi = apiTenders.length > 0;
+          const list = useApi
+            ? apiTenders.map((t) => ({
+                id: t.id,
+                title: t.title,
+                status: t.status,
+                deadline: t.deadline,
+                created_at: t.created_at,
+                file_path: t.file_path,
+              }))
+            : procurements.map((p, i) => ({
+                id: `dummy-${i}`,
+                title: p.title,
+                status:
+                  p.status === "Open"
+                    ? "open"
+                    : p.status === "Closing Soon"
+                      ? "closing_soon"
+                      : p.status === "Closed"
+                        ? "closed"
+                        : "open",
+                deadline: p.deadline,
+                created_at: undefined,
+                file_path: null as string | null,
+              }));
+          const statusUi = (s: string) => {
+            if (s === "open")
+              return { label: "Open", cls: "bg-success/15 text-success" };
+            if (s === "closing_soon")
+              return {
+                label: "Closing Soon",
+                cls: "bg-accent/15 text-accent",
+              };
+            if (s === "closed")
+              return {
+                label: "Closed",
+                cls: "bg-muted text-muted-foreground",
+              };
+            if (s === "cancelled")
+              return {
+                label: "Cancelled",
+                cls: "bg-destructive/15 text-destructive",
+              };
+            return { label: s, cls: "bg-muted text-muted-foreground" };
+          };
+          const fmtDeadline = (d?: string) => {
+            if (!d) return "—";
+            const dt = new Date(d);
+            if (Number.isNaN(dt.getTime())) return d;
+            return dt.toLocaleDateString("en-GB", {
+              day: "2-digit",
+              month: "short",
+              year: "numeric",
+            });
+          };
+          return list.map((p, idx) => {
+            const isNewItem = useApi
+              ? p.created_at &&
+                Date.now() - new Date(p.created_at).getTime() <
+                  7 * 24 * 60 * 60 * 1000
+              : isItemNew(p.title);
+            const fileUrl = p.file_path
+              ? p.file_path.startsWith("http")
+                ? p.file_path
+                : `${API_BASE_URL ?? ""}${p.file_path}`
+              : null;
+            const sUi = statusUi(p.status as string);
+            return (
+              <article
+                key={`${p.id}-${idx}`}
+                onClick={() => navigate("/procurements/tenders")}
+                role="link"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    navigate("/procurements/tenders");
+                  }
+                }}
+                className="cursor-pointer flex items-center gap-3 px-4 py-3 hover:bg-surface/60 transition border-b border-border"
+              >
+                <div className="shrink-0 text-primary self-center">
+                  <FileText className="h-5 w-5" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-1.5 mb-1">
+                    <span className="inline-block text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm bg-accent/15 text-accent">
+                      Tender
+                    </span>
+                    <span className="ml-auto flex items-center gap-1.5">
+                      <span
+                        className={`inline-block text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm ${sUi.cls}`}
+                      >
+                        {sUi.label}
+                      </span>
+                      <NewBadge show={!!isNewItem} />
+                    </span>
+                  </div>
+                  <span className="text-sm font-semibold text-foreground hover:text-primary block leading-snug">
+                    {p.title}
+                  </span>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Deadline: {fmtDeadline(p.deadline)}
+                  </p>
+                </div>
+              </article>
+            );
+          });
+        })()}
     </div>
   );
 
@@ -661,7 +659,6 @@ function UpdatesPanel({
     </div>
   );
 }
-
 
 /**
  * Project Highlights column — continuous slow ticker-style upward scroll.
@@ -1042,22 +1039,24 @@ export default function Home() {
       <HeroSlider />
 
       {/* Welcome to Tripura PROJECT ELEMENT — left/right dignitaries + center tabs */}
-      <section className="py-12 md:py-16 bg-surface border-b border-border">
+      <section className="py-12 md:py-8 bg-surface border-b border-border">
         <div className="gov-container">
           <div className="text-center mb-8">
-            <span className="inline-block bg-accent/10 text-accent text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-3">
+            <span className="inline-block bg-accent/10 text-accent text-xs font-semibold px-2 py-1 rounded-full uppercase tracking-wide mb-2">
               Leadership
             </span>
+
             <h2 className="text-2xl md:text-3xl font-bold text-primary">
               Welcome to Project ELEMENT, Tripura
             </h2>
-            <p className="text-m text-muted-foreground mt-2 max-w-xl mx-auto">
+
+            <p className="text-sm md:text-base text-muted-foreground mt-1 max-w-xl mx-auto">
               Project leadership, official updates, notifications, and e-tenders
               from the PROJECT ELEMENT.
             </p>
           </div>
 
-          {/* Mobile: dignitaries first, then center tabs */}
+          {/* Mobile: dignitaries first, then What's New */}
           <div className="lg:hidden space-y-6">
             <div className="grid grid-cols-2 gap-4">
               {topRowDignitaries.map((d) => (
@@ -1068,36 +1067,42 @@ export default function Home() {
                 <DignitaryCard key={d.name} d={d} />
               ))}
             </div>
-            <UpdatesPanel
-              updatesTab={updatesTab}
-              setUpdatesTab={setUpdatesTab}
-              t={t}
-            />
 
-          </div>
-
-          {/* Desktop: 3-column layout */}
-          <div className="hidden lg:grid grid-cols-[1fr_2fr_1fr] gap-6 items-start">
-            <div className="grid grid-cols-1 gap-4">
-              <DignitaryCard d={leadershipSlots[0]} />
-              <DignitaryCard d={leadershipSlots[1]} />
-            </div>
-
-            <div className="flex flex-col gap-4">
+            <div className="h-[28rem] sm:h-[32rem]">
               <UpdatesPanel
                 updatesTab={updatesTab}
                 setUpdatesTab={setUpdatesTab}
                 t={t}
               />
+            </div>
+          </div>
 
-              {/* Relocated Social Media block — fills gap below What's New.
-                  Uses same data (apiSocial from /api/home/social-media) as the
-                  original Social Media column that was removed below. */}
-              <div className="bg-card border border-border rounded-md overflow-hidden shadow-sm">
-                <div className="flex items-center justify-between px-4 py-2.5 border-b-2 border-primary bg-primary/5">
+          {/* Desktop: 3-column layout */}
+          <div className="hidden lg:grid grid-cols-[0.9fr_2.2fr_0.9fr] gap-6 items-stretch">
+            {/* Left dignitaries */}
+            <div className="grid grid-cols-1 gap-4 h-full">
+              <DignitaryCard d={leadershipSlots[0]} />
+              <DignitaryCard d={leadershipSlots[1]} />
+            </div>
+
+            {/* Center: What's New + Social Media */}
+            <div className="flex flex-col gap-6 h-full min-h-0">
+              {/* What's New */}
+              <div className="h-[330px] shrink-0 rounded-md">
+                <UpdatesPanel
+                  updatesTab={updatesTab}
+                  setUpdatesTab={setUpdatesTab}
+                  t={t}
+                />
+              </div>
+
+              {/* Social Media */}
+              <div className="bg-card border border-border rounded-md overflow-hidden shadow-sm flex-1 min-h-0 flex flex-col">
+                <div className="flex items-center justify-between px-4 py-2.5 border-b-2 border-primary bg-primary/5 shrink-0">
                   <h2 className="text-xs sm:text-sm font-semibold text-primary flex items-center gap-1.5">
                     <Facebook className="h-4 w-4" /> Social Media
                   </h2>
+
                   <Link
                     to="/media/social"
                     className="text-xs text-primary hover:text-accent font-semibold"
@@ -1105,18 +1110,20 @@ export default function Home() {
                     View all <ArrowRight className="inline h-3 w-3" />
                   </Link>
                 </div>
-                <div className="p-3 grid grid-cols-2 gap-3">
-                  {/* Left: Facebook + Twitter stacked */}
-                  <div className="flex flex-col gap-2">
+
+                <div className="p-3 flex-1 min-h-0 flex flex-col gap-3">
+                  {/* Top: Facebook + Twitter links */}
+                  <div className="grid grid-cols-2 gap-3 shrink-0">
                     <a
                       href={social.facebook_url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-2.5 px-2.5 py-2 rounded-md bg-[hsl(214_100%_95%)] hover:bg-[hsl(214_100%_92%)] border border-border transition-colors"
+                      className="flex items-center gap-2.5 px-3 py-2 rounded-md bg-[hsl(214_100%_95%)] hover:bg-[hsl(214_100%_92%)] border border-border transition-colors"
                     >
                       <div className="h-8 w-8 rounded-full bg-[hsl(221_44%_41%)] flex items-center justify-center shrink-0">
                         <Facebook className="h-4 w-4 text-white" />
                       </div>
+
                       <div className="flex-1 min-w-0">
                         <div className="text-xs font-bold text-foreground truncate">
                           {social.facebook_handle}
@@ -1126,15 +1133,17 @@ export default function Home() {
                         </div>
                       </div>
                     </a>
+
                     <a
                       href={social.twitter_url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-2.5 px-2.5 py-2 rounded-md bg-[hsl(210_16%_93%)] hover:bg-[hsl(210_16%_90%)] border border-border transition-colors"
+                      className="flex items-center gap-2.5 px-3 py-2 rounded-md bg-[hsl(210_16%_93%)] hover:bg-[hsl(210_16%_90%)] border border-border transition-colors"
                     >
                       <div className="h-8 w-8 rounded-full bg-foreground flex items-center justify-center shrink-0">
                         <Twitter className="h-4 w-4 text-background" />
                       </div>
+
                       <div className="flex-1 min-w-0">
                         <div className="text-xs font-bold text-foreground truncate">
                           {social.twitter_handle}
@@ -1146,11 +1155,8 @@ export default function Home() {
                     </a>
                   </div>
 
-                  {/* Right: YouTube embed */}
-                  <div
-                    className="relative w-full overflow-hidden rounded-md bg-muted"
-                    style={{ aspectRatio: "16 / 9" }}
-                  >
+                  {/* Bottom: YouTube video */}
+                  <div className="relative w-[75%] mx-auto flex-1 min-h-[220px] overflow-hidden rounded-md bg-muted">
                     {youtubeEmbed && (
                       <iframe
                         src={youtubeEmbed}
@@ -1165,7 +1171,8 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 gap-4">
+            {/* Right dignitaries */}
+            <div className="grid grid-cols-1 gap-4 h-full">
               <DignitaryCard d={leadershipSlots[2]} />
               <DignitaryCard d={leadershipSlots[3]} />
             </div>
@@ -1174,15 +1181,17 @@ export default function Home() {
       </section>
 
       {/* What is ELEMENT? */}
-      <section className="py-14 md:py-18 bg-background">
+      <section className="pt-4 pb-3 md:pt-6 md:pb-2 bg-background">
         <div className="gov-container">
-          <div className="text-center max-w-3xl mx-auto mb-12">
-            <span className="inline-block bg-accent/10 text-accent text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-3">
+          <div className="text-center max-w-3xl mx-auto mb-8">
+            <span className="inline-block bg-accent/10 text-accent text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-2">
               About the Project
             </span>
-            <h2 className="text-2xl md:text-3xl font-bold text-primary leading-tight mt-3 mb-5">
+
+            <h2 className="text-2xl md:text-3xl font-bold text-primary leading-tight mt-1 mb-2">
               What is ELEMENT?
             </h2>
+
             <p className="text-muted-foreground mt-3 text-sm md:text-[19px] max-w-2xl mx-auto mb-6">
               The “Enhancing Landscape and Ecosystem Management (ELEMENT)”
               Project is proposed with an overarching objective to increase the
@@ -1192,7 +1201,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10 pb-3">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-3 pb-2">
             {pillars.map((p) => (
               <div
                 key={p.label}
@@ -1203,15 +1212,19 @@ export default function Home() {
                 >
                   <p.icon className="h-7 w-7 text-primary-foreground" />
                 </div>
+
                 <div className="text-3xl font-extrabold text-primary">
                   {p.stat}
                 </div>
+
                 <div className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider mt-0.5">
                   {p.statLabel}
                 </div>
-                <h4 className="text-lg font-bold text-foreground mt-3">
+
+                <h4 className="text-lg font-bold text-foreground mt-2">
                   {p.label}
                 </h4>
+
                 <p className="text-sm text-muted-foreground mt-1.5 leading-relaxed">
                   {p.desc}
                 </p>
@@ -1219,10 +1232,10 @@ export default function Home() {
             ))}
           </div>
 
-          <div className="text-center mt-8">
+          <div className="text-center mt-0">
             <Link
               to="/about"
-              className="inline-flex items-center gap-1.5 bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-2.5 rounded font-semibold text-sm focus-ring"
+              className="inline-flex items-center gap-1.5 bg-primary hover:bg-primary/90 text-primary-foreground px-2 py-1.5 rounded font-semibold text-sm focus-ring"
             >
               Learn more about ELEMENT <ArrowRight className="h-4 w-4" />
             </Link>
@@ -1233,109 +1246,109 @@ export default function Home() {
       {/* Two-column section: Project Highlights & Social Media — REMOVED from this position.
           Social Media block has been relocated into the middle column below What's New (above). */}
       {false && (
-      <section className="py-10 md:py-12 bg-surface border-t border-border">
-        <div className="gov-container">
-          <div className="text-center mb-8">
-            <span className="inline-block bg-accent/10 text-accent text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-3">
-              Highlights
-            </span>
-            <h2 className="text-2xl md:text-3xl font-bold text-primary">
-              Project Highlights &amp; Social Media
-            </h2>
-            <p className="text-sm text-muted-foreground mt-2 max-w-2xl mx-auto">
-              Key project initiatives and official social media updates from the
-              PROJECT ELEMENT.
-            </p>
-          </div>
-          <div className="grid lg:grid-cols-[58fr_42fr] gap-6 items-stretch lg:h-[520px]">
-            {/* Column 1: Project Highlights */}
-            <ProjectHighlightsColumn />
+        <section className="py-10 md:py-12 bg-surface border-t border-border">
+          <div className="gov-container">
+            <div className="text-center mb-8">
+              <span className="inline-block bg-accent/10 text-accent text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-3">
+                Highlights
+              </span>
+              <h2 className="text-2xl md:text-3xl font-bold text-primary">
+                Project Highlights &amp; Social Media
+              </h2>
+              <p className="text-sm text-muted-foreground mt-2 max-w-2xl mx-auto">
+                Key project initiatives and official social media updates from
+                the PROJECT ELEMENT.
+              </p>
+            </div>
+            <div className="grid lg:grid-cols-[58fr_42fr] gap-6 items-stretch lg:h-[520px]">
+              {/* Column 1: Project Highlights */}
+              <ProjectHighlightsColumn />
 
-            {/* Column 2: Social Media */}
-            <div className="bg-card border border-border rounded-md p-0 flex flex-col h-[520px] lg:h-full overflow-hidden shadow-sm">
-              <div className="flex items-center justify-between px-4 py-3 border-b-2 border-primary bg-primary/5">
-                <h2 className="text-[17px] font-bold text-primary flex items-center gap-2 uppercase tracking-wide">
-                  <Facebook className="h-4 w-4 text-accent" /> Social Media
-                </h2>
-                <Link
-                  to="/media/social"
-                  className="text-sm text-primary hover:text-accent font-semibold"
-                >
-                  View all <ArrowRight className="inline h-3.5 w-3.5" />
-                </Link>
-              </div>
-              <div className="flex-1 min-h-0 p-4 flex flex-col gap-2">
-                {/* Facebook link button */}
-                <a
-                  href={social.facebook_url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-3 px-3 py-2 rounded-md bg-[hsl(214_100%_95%)] hover:bg-[hsl(214_100%_92%)] border border-border transition-colors shrink-0"
-                >
-                  <div className="h-9 w-9 rounded-full bg-[hsl(221_44%_41%)] flex items-center justify-center shrink-0">
-                    <Facebook className="h-5 w-5 text-white" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="text-sm font-bold text-foreground truncate">
-                      {social.facebook_handle}
-                    </div>
-                    <div className="text-[11px] text-muted-foreground">
-                      Visit our Facebook Page
-                    </div>
-                  </div>
-                  <ArrowRight className="h-4 w-4 text-muted-foreground shrink-0" />
-                </a>
-
-                {/* Twitter link button */}
-                <a
-                  href={social.twitter_url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-3 px-3 py-2 rounded-md bg-[hsl(210_16%_93%)] hover:bg-[hsl(210_16%_90%)] border border-border transition-colors shrink-0"
-                >
-                  <div className="h-9 w-9 rounded-full bg-foreground flex items-center justify-center shrink-0">
-                    <Twitter className="h-5 w-5 text-background" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="text-sm font-bold text-foreground truncate">
-                      {social.twitter_handle}
-                    </div>
-                    <div className="text-[11px] text-muted-foreground">
-                      Visit our Twitter Feed
-                    </div>
-                  </div>
-                  <ArrowRight className="h-4 w-4 text-muted-foreground shrink-0" />
-                </a>
-
-                {/* YouTube embed */}
-                <div className="flex-1 min-h-0 flex flex-col gap-2 mt-1">
-                  <div className="flex items-center gap-2 shrink-0">
-                    <Youtube className="h-4 w-4 text-primary" />
-                    <span className="text-xs font-bold uppercase tracking-wide text-foreground">
-                      YouTube
-                    </span>
-                    <div className="flex-1 h-px bg-border" />
-                  </div>
-                  <div
-                    className="relative w-full max-w-full overflow-hidden rounded-lg bg-muted shrink-0"
-                    style={{ aspectRatio: "16 / 9" }}
+              {/* Column 2: Social Media */}
+              <div className="bg-card border border-border rounded-md p-0 flex flex-col h-[520px] lg:h-full overflow-hidden shadow-sm">
+                <div className="flex items-center justify-between px-4 py-3 border-b-2 border-primary bg-primary/5">
+                  <h2 className="text-[17px] font-bold text-primary flex items-center gap-2 uppercase tracking-wide">
+                    <Facebook className="h-4 w-4 text-accent" /> Social Media
+                  </h2>
+                  <Link
+                    to="/media/social"
+                    className="text-sm text-primary hover:text-accent font-semibold"
                   >
-                    {youtubeEmbed && (
-                      <iframe
-                        src={youtubeEmbed}
-                        title={social.youtube_video_title}
-                        className="absolute inset-0 w-full h-full rounded-lg"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                      />
-                    )}
+                    View all <ArrowRight className="inline h-3.5 w-3.5" />
+                  </Link>
+                </div>
+                <div className="flex-1 min-h-0 p-4 flex flex-col gap-2">
+                  {/* Facebook link button */}
+                  <a
+                    href={social.facebook_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-3 px-3 py-2 rounded-md bg-[hsl(214_100%_95%)] hover:bg-[hsl(214_100%_92%)] border border-border transition-colors shrink-0"
+                  >
+                    <div className="h-9 w-9 rounded-full bg-[hsl(221_44%_41%)] flex items-center justify-center shrink-0">
+                      <Facebook className="h-5 w-5 text-white" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="text-sm font-bold text-foreground truncate">
+                        {social.facebook_handle}
+                      </div>
+                      <div className="text-[11px] text-muted-foreground">
+                        Visit our Facebook Page
+                      </div>
+                    </div>
+                    <ArrowRight className="h-4 w-4 text-muted-foreground shrink-0" />
+                  </a>
+
+                  {/* Twitter link button */}
+                  <a
+                    href={social.twitter_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-3 px-3 py-2 rounded-md bg-[hsl(210_16%_93%)] hover:bg-[hsl(210_16%_90%)] border border-border transition-colors shrink-0"
+                  >
+                    <div className="h-9 w-9 rounded-full bg-foreground flex items-center justify-center shrink-0">
+                      <Twitter className="h-5 w-5 text-background" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="text-sm font-bold text-foreground truncate">
+                        {social.twitter_handle}
+                      </div>
+                      <div className="text-[11px] text-muted-foreground">
+                        Visit our Twitter Feed
+                      </div>
+                    </div>
+                    <ArrowRight className="h-4 w-4 text-muted-foreground shrink-0" />
+                  </a>
+
+                  {/* YouTube embed */}
+                  <div className="flex-1 min-h-0 flex flex-col gap-2 mt-1">
+                    <div className="flex items-center gap-2 shrink-0">
+                      <Youtube className="h-4 w-4 text-primary" />
+                      <span className="text-xs font-bold uppercase tracking-wide text-foreground">
+                        YouTube
+                      </span>
+                      <div className="flex-1 h-px bg-border" />
+                    </div>
+                    <div
+                      className="relative w-full max-w-full overflow-hidden rounded-lg bg-muted shrink-0"
+                      style={{ aspectRatio: "16 / 9" }}
+                    >
+                      {youtubeEmbed && (
+                        <iframe
+                          src={youtubeEmbed}
+                          title={social.youtube_video_title}
+                          className="absolute inset-0 w-full h-full rounded-lg"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen
+                        />
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
       )}
     </PageLayout>
   );
