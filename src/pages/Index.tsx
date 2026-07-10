@@ -1231,7 +1231,8 @@ export default function Home() {
       </section>
 
       {/* Two-column section: Project Highlights & Social Media — REMOVED from this position.
-          Social Media block has been relocated into the middle column below What's New (above).
+          Social Media block has been relocated into the middle column below What's New (above). */}
+      {false && (
       <section className="py-10 md:py-12 bg-surface border-t border-border">
         <div className="gov-container">
           <div className="text-center mb-8">
