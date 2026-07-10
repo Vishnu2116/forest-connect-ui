@@ -599,6 +599,18 @@ function CategoriesModal({
                 }}
                 className="w-20"
               />
+              <label className="flex items-center gap-1 text-xs whitespace-nowrap">
+                <input
+                  type="checkbox"
+                  checked={!!c.is_district_based}
+                  onChange={(e) => {
+                    const next = [...items];
+                    next[i] = { ...next[i], is_district_based: e.target.checked };
+                    setItems(next);
+                  }}
+                />
+                District-based
+              </label>
               <Button size="sm" variant="outline" onClick={() => update(c)}>Save</Button>
               <Button size="sm" variant="outline" className="text-destructive" onClick={() => remove(c)}>
                 <Trash2 className="h-3 w-3" />
