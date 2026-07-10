@@ -490,6 +490,7 @@ function CategoriesModal({
   const [items, setItems] = useState<Category[]>(categories);
   const [newName, setNewName] = useState("");
   const [newOrder, setNewOrder] = useState(0);
+  const [newDistrictBased, setNewDistrictBased] = useState(false);
   const [busy, setBusy] = useState(false);
 
   useEffect(() => setItems(categories), [categories]);
