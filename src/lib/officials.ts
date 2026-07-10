@@ -17,12 +17,20 @@ export interface ApiOfficial {
   show_in_whos_who?: boolean;
   show_in_directory?: boolean;
   display_order?: number;
+  district?: string | null;
+}
+
+export interface DistrictGroup {
+  district: string;
+  officials: ApiOfficial[];
 }
 
 export interface OfficialCategoryGroup {
   category_id: string;
   category_name: string;
+  is_district_based?: boolean;
   officials: ApiOfficial[];
+  districts?: DistrictGroup[];
 }
 
 export function resolvePhoto(photo_path?: string | null): string | null {
