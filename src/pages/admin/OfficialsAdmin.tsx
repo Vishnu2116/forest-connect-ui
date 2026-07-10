@@ -248,7 +248,16 @@ export default function OfficialsAdmin() {
                   </td>
                   <td className="py-2 px-3 font-semibold text-foreground">{o.name}</td>
                   <td className="py-2 px-3 text-muted-foreground">{o.designation}</td>
-                  <td className="py-2 px-3 text-muted-foreground">{cat?.name || o.category_name || "—"}</td>
+                  <td className="py-2 px-3 text-muted-foreground">
+                    <div className="flex items-center gap-1.5 flex-wrap">
+                      <span>{cat?.name || o.category_name || "—"}</span>
+                      {cat?.is_district_based && o.district && (
+                        <span className="inline-block text-[10px] font-semibold uppercase tracking-wide bg-accent/10 text-accent px-1.5 py-0.5 rounded">
+                          {o.district}
+                        </span>
+                      )}
+                    </div>
+                  </td>
                   <td className="py-2 px-3 text-xs text-muted-foreground">
                     {o.show_in_whos_who && <div>Who's Who</div>}
                     {o.show_in_directory && <div>Directory</div>}
