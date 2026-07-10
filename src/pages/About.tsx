@@ -1318,28 +1318,35 @@ export function OfficialDirectory() {
 
   const filtered = useMemo(() => {
     const q = search.trim().toLowerCase();
+    const matches = (o: any) =>
+      [o.name, o.designation, o.organisation, o.division_office, o.email, o.mobile, o.phone]
+        .filter(Boolean)
+        .some((v) => String(v).toLowerCase().includes(q));
+
     if (!q) return groups;
     return groups
       .map((cat) => {
         const catMatch = (cat.category_name || "").toLowerCase().includes(q);
-        const officials = catMatch
-          ? cat.officials
-          : cat.officials.filter((o) =>
-              [
-                o.name,
-                o.designation,
-                o.organisation,
-                o.division_office,
-                o.email,
-                o.mobile,
-                o.phone,
-              ]
-                .filter(Boolean)
-                .some((v) => String(v).toLowerCase().includes(q)),
-            );
+        if (cat.is_district_based && cat.districts) {
+          const districts = cat.districts
+            .map((d) => ({
+              ...d,
+              officials: catMatch ? d.officials : d.officials.filter(matches),
+            }))
+            .filter((d) => d.officials.length > 0);
+          const officials = catMatch
+            ? cat.officials
+            : cat.officials.filter(matches);
+          return { ...cat, districts, officials };
+        }
+        const officials = catMatch ? cat.officials : cat.officials.filter(matches);
         return { ...cat, officials };
       })
-      .filter((cat) => cat.officials.length > 0);
+      .filter((cat) =>
+        cat.is_district_based
+          ? (cat.districts?.length ?? 0) > 0
+          : cat.officials.length > 0,
+      );
   }, [groups, search]);
 
   return (
