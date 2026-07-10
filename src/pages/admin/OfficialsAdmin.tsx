@@ -533,7 +533,7 @@ function CategoriesModal({
       const r = await fetch(`${API_BASE_URL}/api/admin/official-categories/${c.id}`, {
         method: "PUT",
         headers: getAuthJsonHeaders(),
-        body: JSON.stringify({ name: c.name, display_order: c.display_order }),
+        body: JSON.stringify({ name: c.name, display_order: c.display_order, is_district_based: !!c.is_district_based }),
       });
       if (!r.ok) throw new Error();
       toast.success("Category updated");
