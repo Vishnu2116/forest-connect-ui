@@ -152,6 +152,10 @@ export default function OfficialsAdmin() {
       fd.append("email", editing.email);
       fd.append("bio", editing.bio);
       if (editing.category_id) fd.append("category_id", editing.category_id);
+      const selectedCat = categories.find((c) => c.id === editing.category_id);
+      if (selectedCat?.is_district_based && editing.district) {
+        fd.append("district", editing.district);
+      }
       fd.append("show_in_whos_who", editing.show_in_whos_who ? "true" : "false");
       fd.append("show_in_directory", editing.show_in_directory ? "true" : "false");
       fd.append("display_order", String(editing.display_order || 0));
