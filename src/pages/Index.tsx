@@ -172,7 +172,7 @@ function DignitaryCard({
 }) {
   return (
     <div className="bg-card border border-border rounded-md overflow-hidden hover:border-primary/40 transition h-full flex flex-col">
-      <div className="h-40 w-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center text-primary-foreground overflow-hidden border-b border-border">
+      <div className="h-64 w-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center text-primary-foreground overflow-hidden border-b border-border">
         {d.image ? (
           <img
             src={d.image}
@@ -1083,11 +1083,87 @@ export default function Home() {
               <DignitaryCard d={leadershipSlots[1]} />
             </div>
 
-            <UpdatesPanel
-              updatesTab={updatesTab}
-              setUpdatesTab={setUpdatesTab}
-              t={t}
-            />
+            <div className="flex flex-col gap-4">
+              <UpdatesPanel
+                updatesTab={updatesTab}
+                setUpdatesTab={setUpdatesTab}
+                t={t}
+              />
+
+              {/* Relocated Social Media block — fills gap below What's New.
+                  Uses same data (apiSocial from /api/home/social-media) as the
+                  original Social Media column that was removed below. */}
+              <div className="bg-card border border-border rounded-md overflow-hidden shadow-sm">
+                <div className="flex items-center justify-between px-4 py-2.5 border-b-2 border-primary bg-primary/5">
+                  <h2 className="text-xs sm:text-sm font-semibold text-primary flex items-center gap-1.5">
+                    <Facebook className="h-4 w-4" /> Social Media
+                  </h2>
+                  <Link
+                    to="/media/social"
+                    className="text-xs text-primary hover:text-accent font-semibold"
+                  >
+                    View all <ArrowRight className="inline h-3 w-3" />
+                  </Link>
+                </div>
+                <div className="p-3 grid grid-cols-2 gap-3">
+                  {/* Left: Facebook + Twitter stacked */}
+                  <div className="flex flex-col gap-2">
+                    <a
+                      href={social.facebook_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2.5 px-2.5 py-2 rounded-md bg-[hsl(214_100%_95%)] hover:bg-[hsl(214_100%_92%)] border border-border transition-colors"
+                    >
+                      <div className="h-8 w-8 rounded-full bg-[hsl(221_44%_41%)] flex items-center justify-center shrink-0">
+                        <Facebook className="h-4 w-4 text-white" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="text-xs font-bold text-foreground truncate">
+                          {social.facebook_handle}
+                        </div>
+                        <div className="text-[10px] text-muted-foreground">
+                          Visit our Facebook Page
+                        </div>
+                      </div>
+                    </a>
+                    <a
+                      href={social.twitter_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2.5 px-2.5 py-2 rounded-md bg-[hsl(210_16%_93%)] hover:bg-[hsl(210_16%_90%)] border border-border transition-colors"
+                    >
+                      <div className="h-8 w-8 rounded-full bg-foreground flex items-center justify-center shrink-0">
+                        <Twitter className="h-4 w-4 text-background" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="text-xs font-bold text-foreground truncate">
+                          {social.twitter_handle}
+                        </div>
+                        <div className="text-[10px] text-muted-foreground">
+                          Visit our Twitter Feed
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+
+                  {/* Right: YouTube embed */}
+                  <div
+                    className="relative w-full overflow-hidden rounded-md bg-muted"
+                    style={{ aspectRatio: "16 / 9" }}
+                  >
+                    {youtubeEmbed && (
+                      <iframe
+                        src={youtubeEmbed}
+                        title={social.youtube_video_title}
+                        className="absolute inset-0 w-full h-full"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                      />
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
 
             <div className="grid grid-cols-1 gap-4">
               <DignitaryCard d={leadershipSlots[2]} />
@@ -1154,7 +1230,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Two-column section: Project Highlights & Social Media */}
+      {/* Two-column section: Project Highlights & Social Media — REMOVED from this position.
+          Social Media block has been relocated into the middle column below What's New (above). */}
+      {false && (
       <section className="py-10 md:py-12 bg-surface border-t border-border">
         <div className="gov-container">
           <div className="text-center mb-8">
@@ -1258,6 +1336,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+      )}
     </PageLayout>
   );
 }
