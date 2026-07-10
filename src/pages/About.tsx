@@ -1342,10 +1342,7 @@ export function OfficialDirectory() {
               officials: catMatch ? d.officials : d.officials.filter(matches),
             }))
             .filter((d) => d.officials.length > 0);
-          const officials = catMatch
-            ? cat.officials
-            : cat.officials.filter(matches);
-          return { ...cat, districts, officials };
+          return { ...cat, districts };
         }
         const officials = catMatch
           ? cat.officials
