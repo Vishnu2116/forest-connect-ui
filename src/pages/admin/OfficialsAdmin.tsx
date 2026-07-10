@@ -219,72 +219,151 @@ export default function OfficialsAdmin() {
         </div>
       )}
 
-      <div className="overflow-x-auto rounded-md border border-border bg-card">
-        <table className="w-full text-sm">
-          <thead className="bg-surface">
-            <tr className="text-left text-xs uppercase text-muted-foreground">
-              <th className="py-2 px-3">Photo</th>
-              <th className="py-2 px-3">Name</th>
-              <th className="py-2 px-3">Designation</th>
-              <th className="py-2 px-3">Category</th>
-              <th className="py-2 px-3">Visibility</th>
-              <th className="py-2 px-3 w-32">Actions</th>
+      {(() => {
+        const renderRow = (o: ApiOfficial) => {
+          const img = resolvePhoto(o.photo_path);
+          const cat = categories.find((c) => c.id === o.category_id);
+          return (
+            <tr key={o.id} className="border-t border-border align-top">
+              <td className="py-2 px-3">
+                <div className="h-10 w-10 rounded-full bg-surface flex items-center justify-center overflow-hidden">
+                  {img ? (
+                    <img src={img} alt={o.name} className="h-full w-full object-cover" />
+                  ) : (
+                    <UserIcon className="h-4 w-4 text-muted-foreground" />
+                  )}
+                </div>
+              </td>
+              <td className="py-2 px-3 font-semibold text-foreground">{o.name}</td>
+              <td className="py-2 px-3 text-muted-foreground">{o.designation}</td>
+              <td className="py-2 px-3 text-muted-foreground">
+                <div className="flex items-center gap-1.5 flex-wrap">
+                  <span>{cat?.name || o.category_name || "—"}</span>
+                  {cat?.is_district_based && o.district && (
+                    <span className="inline-block text-[10px] font-semibold uppercase tracking-wide bg-accent/10 text-accent px-1.5 py-0.5 rounded">
+                      {o.district}
+                    </span>
+                  )}
+                </div>
+              </td>
+              <td className="py-2 px-3 text-xs text-muted-foreground">
+                {o.show_in_whos_who && <div>Who's Who</div>}
+                {o.show_in_directory && <div>Directory</div>}
+              </td>
+              <td className="py-2 px-3">
+                <div className="flex gap-1">
+                  <Button size="sm" variant="outline" onClick={() => startEdit(o)} className="gap-1">
+                    <Pencil className="h-3 w-3" />
+                  </Button>
+                  <Button size="sm" variant="outline" onClick={() => remove(o)} className="gap-1 text-destructive">
+                    <Trash2 className="h-3 w-3" />
+                  </Button>
+                </div>
+              </td>
             </tr>
-          </thead>
-          <tbody>
-            {officials.map((o) => {
-              const img = resolvePhoto(o.photo_path);
-              const cat = categories.find((c) => c.id === o.category_id);
-              return (
-                <tr key={o.id} className="border-t border-border align-top">
-                  <td className="py-2 px-3">
-                    <div className="h-10 w-10 rounded-full bg-surface flex items-center justify-center overflow-hidden">
-                      {img ? (
-                        <img src={img} alt={o.name} className="h-full w-full object-cover" />
-                      ) : (
-                        <UserIcon className="h-4 w-4 text-muted-foreground" />
-                      )}
-                    </div>
-                  </td>
-                  <td className="py-2 px-3 font-semibold text-foreground">{o.name}</td>
-                  <td className="py-2 px-3 text-muted-foreground">{o.designation}</td>
-                  <td className="py-2 px-3 text-muted-foreground">
-                    <div className="flex items-center gap-1.5 flex-wrap">
-                      <span>{cat?.name || o.category_name || "—"}</span>
-                      {cat?.is_district_based && o.district && (
-                        <span className="inline-block text-[10px] font-semibold uppercase tracking-wide bg-accent/10 text-accent px-1.5 py-0.5 rounded">
-                          {o.district}
-                        </span>
-                      )}
-                    </div>
-                  </td>
-                  <td className="py-2 px-3 text-xs text-muted-foreground">
-                    {o.show_in_whos_who && <div>Who's Who</div>}
-                    {o.show_in_directory && <div>Directory</div>}
-                  </td>
-                  <td className="py-2 px-3">
-                    <div className="flex gap-1">
-                      <Button size="sm" variant="outline" onClick={() => startEdit(o)} className="gap-1">
-                        <Pencil className="h-3 w-3" />
-                      </Button>
-                      <Button size="sm" variant="outline" onClick={() => remove(o)} className="gap-1 text-destructive">
-                        <Trash2 className="h-3 w-3" />
-                      </Button>
-                    </div>
-                  </td>
+          );
+        };
+
+        const renderTable = (rows: ApiOfficial[]) => (
+          <div className="overflow-x-auto rounded-md border border-border bg-card">
+            <table className="w-full text-sm">
+              <thead className="bg-surface">
+                <tr className="text-left text-xs uppercase text-muted-foreground">
+                  <th className="py-2 px-3">Photo</th>
+                  <th className="py-2 px-3">Name</th>
+                  <th className="py-2 px-3">Designation</th>
+                  <th className="py-2 px-3">Category</th>
+                  <th className="py-2 px-3">Visibility</th>
+                  <th className="py-2 px-3 w-32">Actions</th>
                 </tr>
-              );
-            })}
-            {!loading && officials.length === 0 && (
-              <tr>
-                <td colSpan={6} className="text-center text-muted-foreground py-6">
-                  No officials yet.
-                </td>
-              </tr>
+              </thead>
+              <tbody>{rows.map(renderRow)}</tbody>
+            </table>
+          </div>
+        );
+
+        const byOrder = (a: ApiOfficial, b: ApiOfficial) =>
+          (a.display_order ?? 0) - (b.display_order ?? 0);
+
+        const sortedCats = [...categories].sort(
+          (a, b) => (a.display_order ?? 0) - (b.display_order ?? 0),
+        );
+
+        const groups = sortedCats
+          .map((c) => ({
+            cat: c,
+            list: officials.filter((o) => o.category_id === c.id).sort(byOrder),
+          }))
+          .filter((g) => g.list.length > 0);
+
+        const catIds = new Set(categories.map((c) => c.id));
+        const uncategorized = officials
+          .filter((o) => !o.category_id || !catIds.has(o.category_id))
+          .sort(byOrder);
+
+        if (!loading && officials.length === 0) {
+          return (
+            <div className="rounded-md border border-border bg-card p-6 text-center text-muted-foreground text-sm">
+              No officials yet.
+            </div>
+          );
+        }
+
+        return (
+          <div className="space-y-6">
+            {groups.map(({ cat, list }) => (
+              <div key={cat.id}>
+                <h3 className="text-sm font-bold text-primary uppercase tracking-wide mb-2">
+                  {cat.name}{" "}
+                  <span className="text-muted-foreground font-normal">({list.length})</span>
+                </h3>
+                {cat.is_district_based ? (
+                  (() => {
+                    const districtOrder = new Map(DISTRICTS.map((d, i) => [d, i]));
+                    const byDistrict = new Map<string, ApiOfficial[]>();
+                    for (const o of list) {
+                      const key = o.district || "__unassigned";
+                      if (!byDistrict.has(key)) byDistrict.set(key, []);
+                      byDistrict.get(key)!.push(o);
+                    }
+                    const keys = [...byDistrict.keys()].sort((a, b) => {
+                      if (a === "__unassigned") return 1;
+                      if (b === "__unassigned") return -1;
+                      return (districtOrder.get(a) ?? 999) - (districtOrder.get(b) ?? 999);
+                    });
+                    return (
+                      <div className="space-y-4">
+                        {keys.map((k) => (
+                          <div key={k}>
+                            <h4 className="text-xs font-semibold text-foreground/80 uppercase tracking-wide mb-1.5 pl-1">
+                              {k === "__unassigned" ? "Unassigned" : k}{" "}
+                              <span className="text-muted-foreground font-normal">
+                                ({byDistrict.get(k)!.length})
+                              </span>
+                            </h4>
+                            {renderTable(byDistrict.get(k)!)}
+                          </div>
+                        ))}
+                      </div>
+                    );
+                  })()
+                ) : (
+                  renderTable(list)
+                )}
+              </div>
+            ))}
+            {uncategorized.length > 0 && (
+              <div>
+                <h3 className="text-sm font-bold text-primary uppercase tracking-wide mb-2">
+                  Uncategorized{" "}
+                  <span className="text-muted-foreground font-normal">({uncategorized.length})</span>
+                </h3>
+                {renderTable(uncategorized)}
+              </div>
             )}
-          </tbody>
-        </table>
-      </div>
+          </div>
+        );
+      })()}
 
       {editing && (
         <OfficialEditor
