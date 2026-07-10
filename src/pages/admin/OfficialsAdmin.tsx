@@ -418,6 +418,20 @@ function OfficialEditor({ form, setForm, categories, onCancel, onSave, saving, f
                 />
               </Field>
             </div>
+            {categories.find((c) => c.id === form.category_id)?.is_district_based && (
+              <Field label="District">
+                <select
+                  value={form.district}
+                  onChange={(e) => set("district", e.target.value)}
+                  className="w-full border border-input rounded h-10 px-2 text-sm bg-background"
+                >
+                  <option value="">— Select —</option>
+                  {DISTRICTS.map((d) => (
+                    <option key={d} value={d}>{d}</option>
+                  ))}
+                </select>
+              </Field>
+            )}
             <Field label="Bio">
               <Textarea rows={4} value={form.bio} onChange={(e) => set("bio", e.target.value)} />
             </Field>
