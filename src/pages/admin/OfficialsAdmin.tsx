@@ -12,7 +12,19 @@ interface Category {
   id: string;
   name: string;
   display_order: number;
+  is_district_based?: boolean;
 }
+
+const DISTRICTS = [
+  "West Tripura",
+  "Sepahijala",
+  "Khowai",
+  "Gomati",
+  "South Tripura",
+  "Dhalai",
+  "Unakoti",
+  "North Tripura",
+];
 
 interface FormState {
   id: string | null;
