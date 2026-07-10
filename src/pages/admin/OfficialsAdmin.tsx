@@ -12,7 +12,19 @@ interface Category {
   id: string;
   name: string;
   display_order: number;
+  is_district_based?: boolean;
 }
+
+const DISTRICTS = [
+  "West Tripura",
+  "Sepahijala",
+  "Khowai",
+  "Gomati",
+  "South Tripura",
+  "Dhalai",
+  "Unakoti",
+  "North Tripura",
+];
 
 interface FormState {
   id: string | null;
@@ -25,6 +37,7 @@ interface FormState {
   email: string;
   bio: string;
   category_id: string;
+  district: string;
   show_in_whos_who: boolean;
   show_in_directory: boolean;
   display_order: number;
@@ -45,6 +58,7 @@ function emptyForm(): FormState {
     email: "",
     bio: "",
     category_id: "",
+    district: "",
     show_in_whos_who: true,
     show_in_directory: true,
     display_order: 0,
@@ -101,6 +115,7 @@ export default function OfficialsAdmin() {
       email: o.email || "",
       bio: o.bio || "",
       category_id: o.category_id || "",
+      district: o.district || "",
       show_in_whos_who: o.show_in_whos_who ?? true,
       show_in_directory: o.show_in_directory ?? true,
       display_order: o.display_order ?? 0,
@@ -137,6 +152,10 @@ export default function OfficialsAdmin() {
       fd.append("email", editing.email);
       fd.append("bio", editing.bio);
       if (editing.category_id) fd.append("category_id", editing.category_id);
+      const selectedCat = categories.find((c) => c.id === editing.category_id);
+      if (selectedCat?.is_district_based && editing.district) {
+        fd.append("district", editing.district);
+      }
       fd.append("show_in_whos_who", editing.show_in_whos_who ? "true" : "false");
       fd.append("show_in_directory", editing.show_in_directory ? "true" : "false");
       fd.append("display_order", String(editing.display_order || 0));
@@ -229,7 +248,16 @@ export default function OfficialsAdmin() {
                   </td>
                   <td className="py-2 px-3 font-semibold text-foreground">{o.name}</td>
                   <td className="py-2 px-3 text-muted-foreground">{o.designation}</td>
-                  <td className="py-2 px-3 text-muted-foreground">{cat?.name || o.category_name || "—"}</td>
+                  <td className="py-2 px-3 text-muted-foreground">
+                    <div className="flex items-center gap-1.5 flex-wrap">
+                      <span>{cat?.name || o.category_name || "—"}</span>
+                      {cat?.is_district_based && o.district && (
+                        <span className="inline-block text-[10px] font-semibold uppercase tracking-wide bg-accent/10 text-accent px-1.5 py-0.5 rounded">
+                          {o.district}
+                        </span>
+                      )}
+                    </div>
+                  </td>
                   <td className="py-2 px-3 text-xs text-muted-foreground">
                     {o.show_in_whos_who && <div>Who's Who</div>}
                     {o.show_in_directory && <div>Directory</div>}
@@ -365,7 +393,15 @@ function OfficialEditor({ form, setForm, categories, onCancel, onSave, saving, f
               <Field label="Category">
                 <select
                   value={form.category_id}
-                  onChange={(e) => set("category_id", e.target.value)}
+                  onChange={(e) => {
+                    const nextId = e.target.value;
+                    const nextCat = categories.find((c) => c.id === nextId);
+                    setForm({
+                      ...form,
+                      category_id: nextId,
+                      district: nextCat?.is_district_based ? form.district : "",
+                    });
+                  }}
                   className="w-full border border-input rounded h-10 px-2 text-sm bg-background"
                 >
                   <option value="">— None —</option>
@@ -382,6 +418,20 @@ function OfficialEditor({ form, setForm, categories, onCancel, onSave, saving, f
                 />
               </Field>
             </div>
+            {categories.find((c) => c.id === form.category_id)?.is_district_based && (
+              <Field label="District">
+                <select
+                  value={form.district}
+                  onChange={(e) => set("district", e.target.value)}
+                  className="w-full border border-input rounded h-10 px-2 text-sm bg-background"
+                >
+                  <option value="">— Select —</option>
+                  {DISTRICTS.map((d) => (
+                    <option key={d} value={d}>{d}</option>
+                  ))}
+                </select>
+              </Field>
+            )}
             <Field label="Bio">
               <Textarea rows={4} value={form.bio} onChange={(e) => set("bio", e.target.value)} />
             </Field>
@@ -440,6 +490,7 @@ function CategoriesModal({
   const [items, setItems] = useState<Category[]>(categories);
   const [newName, setNewName] = useState("");
   const [newOrder, setNewOrder] = useState(0);
+  const [newDistrictBased, setNewDistrictBased] = useState(false);
   const [busy, setBusy] = useState(false);
 
   useEffect(() => setItems(categories), [categories]);
@@ -461,11 +512,12 @@ function CategoriesModal({
       const r = await fetch(`${API_BASE_URL}/api/admin/official-categories`, {
         method: "POST",
         headers: getAuthJsonHeaders(),
-        body: JSON.stringify({ name: newName.trim(), display_order: newOrder }),
+        body: JSON.stringify({ name: newName.trim(), display_order: newOrder, is_district_based: newDistrictBased }),
       });
       if (!r.ok) throw new Error();
       setNewName("");
       setNewOrder(0);
+      setNewDistrictBased(false);
       toast.success("Category created");
       await refresh();
     } catch {
@@ -481,7 +533,7 @@ function CategoriesModal({
       const r = await fetch(`${API_BASE_URL}/api/admin/official-categories/${c.id}`, {
         method: "PUT",
         headers: getAuthJsonHeaders(),
-        body: JSON.stringify({ name: c.name, display_order: c.display_order }),
+        body: JSON.stringify({ name: c.name, display_order: c.display_order, is_district_based: !!c.is_district_based }),
       });
       if (!r.ok) throw new Error();
       toast.success("Category updated");
@@ -547,6 +599,18 @@ function CategoriesModal({
                 }}
                 className="w-20"
               />
+              <label className="flex items-center gap-1 text-xs whitespace-nowrap">
+                <input
+                  type="checkbox"
+                  checked={!!c.is_district_based}
+                  onChange={(e) => {
+                    const next = [...items];
+                    next[i] = { ...next[i], is_district_based: e.target.checked };
+                    setItems(next);
+                  }}
+                />
+                District-based
+              </label>
               <Button size="sm" variant="outline" onClick={() => update(c)}>Save</Button>
               <Button size="sm" variant="outline" className="text-destructive" onClick={() => remove(c)}>
                 <Trash2 className="h-3 w-3" />
@@ -574,6 +638,14 @@ function CategoriesModal({
               onChange={(e) => setNewOrder(Number(e.target.value) || 0)}
               className="w-24"
             />
+            <label className="flex items-center gap-1 text-xs whitespace-nowrap">
+              <input
+                type="checkbox"
+                checked={newDistrictBased}
+                onChange={(e) => setNewDistrictBased(e.target.checked)}
+              />
+              District-based
+            </label>
             <Button onClick={create} disabled={busy} className="gap-1">
               <Plus className="h-4 w-4" /> Add
             </Button>
