@@ -1319,7 +1319,15 @@ export function OfficialDirectory() {
   const filtered = useMemo(() => {
     const q = search.trim().toLowerCase();
     const matches = (o: any) =>
-      [o.name, o.designation, o.organisation, o.division_office, o.email, o.mobile, o.phone]
+      [
+        o.name,
+        o.designation,
+        o.organisation,
+        o.division_office,
+        o.email,
+        o.mobile,
+        o.phone,
+      ]
         .filter(Boolean)
         .some((v) => String(v).toLowerCase().includes(q));
 
@@ -1339,7 +1347,9 @@ export function OfficialDirectory() {
             : cat.officials.filter(matches);
           return { ...cat, districts, officials };
         }
-        const officials = catMatch ? cat.officials : cat.officials.filter(matches);
+        const officials = catMatch
+          ? cat.officials
+          : cat.officials.filter(matches);
         return { ...cat, officials };
       })
       .filter((cat) =>
@@ -1392,139 +1402,189 @@ export function OfficialDirectory() {
         )}
 
         {filtered.map((cat) => {
-          const sections = cat.is_district_based && cat.districts
-            ? cat.districts.map((d) => ({ label: d.district, officials: d.officials }))
-            : [{ label: null as string | null, officials: cat.officials }];
+          const sections =
+            cat.is_district_based && cat.districts
+              ? cat.districts.map((d) => ({
+                  label: d.district,
+                  officials: d.officials,
+                }))
+              : [{ label: null as string | null, officials: cat.officials }];
           return (
-          <div key={cat.category_id || cat.category_name}>
-            <h3 className="text-base font-bold text-primary mb-3 flex items-center gap-2">
-              <Users className="h-4 w-4 text-accent" /> {cat.category_name}
-            </h3>
-            {sections.filter((s) => s.officials.length > 0).map((section, si) => (
-              <div key={section.label ?? `sec-${si}`} className="mb-5 last:mb-0">
-                {section.label && (
-                  <h4 className="text-sm font-semibold text-primary/90 mb-2 ml-1">
-                    {section.label}
-                  </h4>
-                )}
-                {/* Desktop table */}
-                <div className="hidden md:block rounded-xl border border-border bg-card shadow-sm overflow-x-auto">
-                  <table className="w-full text-md table-fixed">
-                    <colgroup>
-                      <col className="w-[30%]" />
-                      <col className="w-[15%]" />
-                      <col className="w-[15%]" />
-                      <col className="w-[12%]" />
-                      <col className="w-[12%]" />
-                      <col className="w-[16%]" />
-                    </colgroup>
-                    <thead>
-                      <tr className="bg-primary/5 border-b border-border">
-                        <th className="text-left py-3 px-3 font-semibold text-primary">Official</th>
-                        <th className="text-left py-3 px-3 font-semibold text-primary">Designation</th>
-                        <th className="text-left py-3 px-3 font-semibold text-primary">Division / Office</th>
-                        <th className="text-left py-3 px-3 font-semibold text-primary">Phone</th>
-                        <th className="text-left py-3 px-3 font-semibold text-primary">Mobile</th>
-                        <th className="text-left py-3 px-3 font-semibold text-primary">Email</th>
-                      </tr>
-                    </thead>
-                    <tbody>
+            <div key={cat.category_id || cat.category_name}>
+              <h1 className="text-lg font-bold text-primary mb-3 flex items-center gap-2">
+                <Users className="h-4 w-4 text-accent" /> {cat.category_name}
+              </h1>
+              {sections
+                .filter((s) => s.officials.length > 0)
+                .map((section, si) => (
+                  <div
+                    key={section.label ?? `sec-${si}`}
+                    className="mb-5 last:mb-0"
+                  >
+                    {section.label && (
+                      <h2 className="text-md font-semibold text-primary mb-2 ml-1">
+                        {section.label}
+                      </h2>
+                    )}
+                    {/* Desktop table */}
+                    <div className="hidden md:block rounded-xl border border-border bg-card shadow-sm overflow-x-auto">
+                      <table className="w-full text-md table-fixed">
+                        <colgroup>
+                          <col className="w-[30%]" />
+                          <col className="w-[15%]" />
+                          <col className="w-[15%]" />
+                          <col className="w-[12%]" />
+                          <col className="w-[12%]" />
+                          <col className="w-[16%]" />
+                        </colgroup>
+                        <thead>
+                          <tr className="bg-primary/5 border-b border-border">
+                            <th className="text-left py-3 px-3 font-semibold text-primary">
+                              Official
+                            </th>
+                            <th className="text-left py-3 px-3 font-semibold text-primary">
+                              Designation
+                            </th>
+                            <th className="text-left py-3 px-3 font-semibold text-primary">
+                              Division / Office
+                            </th>
+                            <th className="text-left py-3 px-3 font-semibold text-primary">
+                              Phone
+                            </th>
+                            <th className="text-left py-3 px-3 font-semibold text-primary">
+                              Mobile
+                            </th>
+                            <th className="text-left py-3 px-3 font-semibold text-primary">
+                              Email
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {section.officials.map((entry) => {
+                            const img = resolvePhoto(entry.photo_path);
+                            return (
+                              <tr
+                                key={entry.id}
+                                className="border-b border-border last:border-b-0 hover:bg-muted/30 transition align-middle"
+                              >
+                                <td className="py-3 px-3">
+                                  <div className="flex items-center gap-3">
+                                    <div className="h-24 w-24 rounded-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center text-primary-foreground shrink-0 overflow-hidden">
+                                      {img ? (
+                                        <img
+                                          src={img}
+                                          alt={entry.name}
+                                          className="h-full w-full object-cover"
+                                        />
+                                      ) : (
+                                        <User className="h-6 w-6" />
+                                      )}
+                                    </div>
+                                    <div className="flex flex-col justify-center">
+                                      <span className="font-semibold text-foreground leading-snug whitespace-normal break-normal">
+                                        {entry.name}
+                                      </span>
+                                    </div>
+                                  </div>
+                                </td>
+                                <td className="py-3 px-3 text-foreground break-words leading-snug">
+                                  {entry.designation}
+                                </td>
+                                <td className="py-3 px-3 text-muted-foreground break-words leading-snug">
+                                  {entry.division_office || "—"}
+                                </td>
+                                <td className="py-3 px-3 text-muted-foreground break-words">
+                                  {entry.phone || "—"}
+                                </td>
+                                <td className="py-3 px-3 text-muted-foreground break-words">
+                                  {entry.mobile || "—"}
+                                </td>
+                                <td className="py-3 px-3">
+                                  {entry.email ? (
+                                    <a
+                                      href={`mailto:${entry.email}`}
+                                      className="text-primary hover:underline break-all"
+                                    >
+                                      {entry.email}
+                                    </a>
+                                  ) : (
+                                    <span className="text-muted-foreground">
+                                      —
+                                    </span>
+                                  )}
+                                </td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+                    </div>
+
+                    {/* Mobile cards */}
+                    <div className="md:hidden space-y-3">
                       {section.officials.map((entry) => {
                         const img = resolvePhoto(entry.photo_path);
                         return (
-                          <tr
+                          <div
                             key={entry.id}
-                            className="border-b border-border last:border-b-0 hover:bg-muted/30 transition align-middle"
+                            className="bg-card border border-border rounded-xl p-4 shadow-sm"
                           >
-                            <td className="py-3 px-3">
-                              <div className="flex items-center gap-3">
-                                <div className="h-24 w-24 rounded-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center text-primary-foreground shrink-0 overflow-hidden">
-                                  {img ? (
-                                    <img src={img} alt={entry.name} className="h-full w-full object-cover" />
-                                  ) : (
-                                    <User className="h-6 w-6" />
-                                  )}
-                                </div>
-                                <div className="flex flex-col justify-center">
-                                  <span className="font-semibold text-foreground leading-snug whitespace-normal break-normal">
-                                    {entry.name}
-                                  </span>
-                                </div>
+                            <div className="flex items-center gap-3 mb-3">
+                              <div className="h-16 w-16 rounded-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center text-primary-foreground shrink-0 overflow-hidden">
+                                {img ? (
+                                  <img
+                                    src={img}
+                                    alt={entry.name}
+                                    className="h-full w-full object-cover"
+                                  />
+                                ) : (
+                                  <User className="h-6 w-6" />
+                                )}
                               </div>
-                            </td>
-                            <td className="py-3 px-3 text-foreground break-words leading-snug">{entry.designation}</td>
-                            <td className="py-3 px-3 text-muted-foreground break-words leading-snug">{entry.division_office || "—"}</td>
-                            <td className="py-3 px-3 text-muted-foreground break-words">{entry.phone || "—"}</td>
-                            <td className="py-3 px-3 text-muted-foreground break-words">{entry.mobile || "—"}</td>
-                            <td className="py-3 px-3">
-                              {entry.email ? (
-                                <a href={`mailto:${entry.email}`} className="text-primary hover:underline break-all">
-                                  {entry.email}
-                                </a>
-                              ) : (
-                                <span className="text-muted-foreground">—</span>
+                              <div className="flex flex-col justify-center">
+                                <span className="font-semibold text-sm text-foreground">
+                                  {entry.name}
+                                </span>
+                              </div>
+                            </div>
+                            <div className="space-y-1.5 text-xs text-muted-foreground">
+                              {entry.division_office && (
+                                <div className="flex items-start gap-2">
+                                  <MapPin className="h-3.5 w-3.5 shrink-0 mt-0.5" />
+                                  <span>{entry.division_office}</span>
+                                </div>
                               )}
-                            </td>
-                          </tr>
+                              {entry.phone && (
+                                <div className="flex items-center gap-2">
+                                  <Phone className="h-3.5 w-3.5 shrink-0" />
+                                  <span>{entry.phone}</span>
+                                </div>
+                              )}
+                              {entry.mobile && (
+                                <div className="flex items-center gap-2">
+                                  <Smartphone className="h-3.5 w-3.5 shrink-0" />
+                                  <span>{entry.mobile}</span>
+                                </div>
+                              )}
+                              {entry.email && (
+                                <div className="flex items-center gap-2">
+                                  <Mail className="h-3.5 w-3.5 shrink-0" />
+                                  <a
+                                    href={`mailto:${entry.email}`}
+                                    className="text-primary hover:underline"
+                                  >
+                                    {entry.email}
+                                  </a>
+                                </div>
+                              )}
+                            </div>
+                          </div>
                         );
                       })}
-                    </tbody>
-                  </table>
-                </div>
-
-                {/* Mobile cards */}
-                <div className="md:hidden space-y-3">
-                  {section.officials.map((entry) => {
-                    const img = resolvePhoto(entry.photo_path);
-                    return (
-                      <div key={entry.id} className="bg-card border border-border rounded-xl p-4 shadow-sm">
-                        <div className="flex items-center gap-3 mb-3">
-                          <div className="h-16 w-16 rounded-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center text-primary-foreground shrink-0 overflow-hidden">
-                            {img ? (
-                              <img src={img} alt={entry.name} className="h-full w-full object-cover" />
-                            ) : (
-                              <User className="h-6 w-6" />
-                            )}
-                          </div>
-                          <div className="flex flex-col justify-center">
-                            <span className="font-semibold text-sm text-foreground">{entry.name}</span>
-                          </div>
-                        </div>
-                        <div className="space-y-1.5 text-xs text-muted-foreground">
-                          {entry.division_office && (
-                            <div className="flex items-start gap-2">
-                              <MapPin className="h-3.5 w-3.5 shrink-0 mt-0.5" />
-                              <span>{entry.division_office}</span>
-                            </div>
-                          )}
-                          {entry.phone && (
-                            <div className="flex items-center gap-2">
-                              <Phone className="h-3.5 w-3.5 shrink-0" />
-                              <span>{entry.phone}</span>
-                            </div>
-                          )}
-                          {entry.mobile && (
-                            <div className="flex items-center gap-2">
-                              <Smartphone className="h-3.5 w-3.5 shrink-0" />
-                              <span>{entry.mobile}</span>
-                            </div>
-                          )}
-                          {entry.email && (
-                            <div className="flex items-center gap-2">
-                              <Mail className="h-3.5 w-3.5 shrink-0" />
-                              <a href={`mailto:${entry.email}`} className="text-primary hover:underline">
-                                {entry.email}
-                              </a>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            ))}
-          </div>
+                    </div>
+                  </div>
+                ))}
+            </div>
           );
         })}
       </div>
