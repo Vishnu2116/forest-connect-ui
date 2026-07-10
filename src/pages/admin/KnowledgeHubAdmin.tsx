@@ -153,40 +153,68 @@ export default function KnowledgeHubAdmin() {
         </div>
       )}
 
-      <div className="overflow-x-auto rounded-md border border-border bg-card">
-        <table className="w-full text-sm">
-          <thead className="bg-surface">
-            <tr className="text-left text-xs uppercase text-muted-foreground">
-              <th className="py-2 px-3">Title</th>
-              <th className="py-2 px-3">Type</th>
-              <th className="py-2 px-3">Date</th>
-              <th className="py-2 px-3">File</th>
-              <th className="py-2 px-3 w-28">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {items.map((i) => (
-              <tr key={i.id} className="border-t border-border align-top">
-                <td className="py-2 px-3 font-semibold">{i.title}</td>
-                <td className="py-2 px-3 text-muted-foreground">{typeLabel(i.type)}</td>
-                <td className="py-2 px-3 text-muted-foreground">{formatMonthYear(i.published_date)}</td>
-                <td className="py-2 px-3 text-muted-foreground">
-                  {i.file_type || "PDF"} · {formatSizeMB(i.file_size)}
-                </td>
-                <td className="py-2 px-3">
-                  <div className="flex gap-1">
-                    <Button size="sm" variant="outline" onClick={() => openEdit(i)}><Pencil className="h-3 w-3" /></Button>
-                    <Button size="sm" variant="outline" className="text-destructive" onClick={() => remove(i)}><Trash2 className="h-3 w-3" /></Button>
-                  </div>
-                </td>
-              </tr>
+      {(() => {
+        const orderedTypes = KH_TYPES.map((t) => t.value);
+        const groups = orderedTypes
+          .map((t) => ({ type: t, list: items.filter((i) => i.type === t) }))
+          .filter((g) => g.list.length > 0);
+        // Include unknown types not in KH_TYPES (safety)
+        const known = new Set(orderedTypes as string[]);
+        const extras = items.filter((i) => !known.has(i.type as string));
+        const extraTypes = Array.from(new Set(extras.map((i) => i.type as string))).sort();
+        for (const t of extraTypes) {
+          groups.push({ type: t as KHType, list: extras.filter((i) => i.type === t) });
+        }
+
+        if (!loading && items.length === 0) {
+          return (
+            <div className="rounded-md border border-border bg-card p-6 text-center text-muted-foreground text-sm">
+              No documents yet.
+            </div>
+          );
+        }
+
+        return (
+          <div className="space-y-6">
+            {groups.map((g) => (
+              <div key={g.type}>
+                <h3 className="text-sm font-bold text-primary uppercase tracking-wide mb-2">
+                  {typeLabel(g.type)} <span className="text-muted-foreground font-normal">({g.list.length})</span>
+                </h3>
+                <div className="overflow-x-auto rounded-md border border-border bg-card">
+                  <table className="w-full text-sm">
+                    <thead className="bg-surface">
+                      <tr className="text-left text-xs uppercase text-muted-foreground">
+                        <th className="py-2 px-3">Title</th>
+                        <th className="py-2 px-3">Date</th>
+                        <th className="py-2 px-3">File</th>
+                        <th className="py-2 px-3 w-28">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {g.list.map((i) => (
+                        <tr key={i.id} className="border-t border-border align-top">
+                          <td className="py-2 px-3 font-semibold">{i.title}</td>
+                          <td className="py-2 px-3 text-muted-foreground">{formatMonthYear(i.published_date)}</td>
+                          <td className="py-2 px-3 text-muted-foreground">
+                            {i.file_type || "PDF"} · {formatSizeMB(i.file_size)}
+                          </td>
+                          <td className="py-2 px-3">
+                            <div className="flex gap-1">
+                              <Button size="sm" variant="outline" onClick={() => openEdit(i)}><Pencil className="h-3 w-3" /></Button>
+                              <Button size="sm" variant="outline" className="text-destructive" onClick={() => remove(i)}><Trash2 className="h-3 w-3" /></Button>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             ))}
-            {!loading && items.length === 0 && (
-              <tr><td colSpan={5} className="text-center text-muted-foreground py-6">No documents yet.</td></tr>
-            )}
-          </tbody>
-        </table>
-      </div>
+          </div>
+        );
+      })()}
 
       {editing && (
         <Editor

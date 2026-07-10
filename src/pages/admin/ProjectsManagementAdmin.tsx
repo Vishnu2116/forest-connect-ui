@@ -187,43 +187,86 @@ export default function ProjectsAdmin() {
 
       {loading && <div className="flex items-center gap-2 text-sm text-muted-foreground mb-3"><Loader2 className="h-4 w-4 animate-spin" /> Loading…</div>}
 
-      <div className="overflow-x-auto rounded-md border border-border bg-card">
-        <table className="w-full text-sm">
-          <thead className="bg-surface">
-            <tr className="text-left text-xs uppercase text-muted-foreground">
-              <th className="py-2 px-3">Thumb</th>
-              <th className="py-2 px-3">Title</th>
-              <th className="py-2 px-3">Component</th>
-              <th className="py-2 px-3 w-28">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {items.map((p) => {
-              const img = resolveImage(p.thumbnail_image_path);
-              return (
-                <tr key={p.id} className="border-t border-border align-top">
-                  <td className="py-2 px-3">
-                    <div className="h-10 w-14 rounded bg-surface overflow-hidden flex items-center justify-center">
-                      {img ? <img src={img} alt={p.title} className="h-full w-full object-cover" /> : <Trees className="h-4 w-4 text-muted-foreground" />}
-                    </div>
-                  </td>
-                  <td className="py-2 px-3 font-semibold">{p.title}</td>
-                  <td className="py-2 px-3 text-muted-foreground">{p.component?.label || "—"}</td>
-                  <td className="py-2 px-3">
-                    <div className="flex gap-1">
-                      <Button size="sm" variant="outline" onClick={() => openEdit(p)}><Pencil className="h-3 w-3" /></Button>
-                      <Button size="sm" variant="outline" className="text-destructive" onClick={() => remove(p)}><Trash2 className="h-3 w-3" /></Button>
-                    </div>
-                  </td>
-                </tr>
-              );
-            })}
-            {!loading && items.length === 0 && (
-              <tr><td colSpan={4} className="text-center text-muted-foreground py-6">No projects yet.</td></tr>
-            )}
-          </tbody>
-        </table>
-      </div>
+      {(() => {
+        const compMap = new Map(components.map((c) => [c.id, c]));
+        const componentLabel = (p: ApiProjectCard) => {
+          const c = p.component_id ? compMap.get(p.component_id) : null;
+          if (c) return c.label || c.name || "";
+          return p.component?.label || p.component?.name || "";
+        };
+
+        const sortedComps = [...components].sort(
+          (a, b) => (a.display_order ?? 0) - (b.display_order ?? 0) || (a.component_number ?? 0) - (b.component_number ?? 0),
+        );
+
+        type Group = { key: string; heading: string; list: ApiProjectCard[] };
+        const groups: Group[] = [];
+        for (const c of sortedComps) {
+          const list = items.filter((p) => (p.component_id || p.component?.id) === c.id);
+          if (list.length) groups.push({ key: c.id, heading: c.label || c.name, list });
+        }
+        const unassigned = items.filter((p) => {
+          const cid = p.component_id || p.component?.id;
+          return !cid || !compMap.has(cid);
+        });
+        if (unassigned.length) groups.push({ key: "__unassigned", heading: "Unassigned", list: unassigned });
+
+        for (const g of groups) {
+          g.list.sort((a: any, b: any) => (a.display_order ?? 0) - (b.display_order ?? 0));
+        }
+
+        if (!loading && items.length === 0) {
+          return (
+            <div className="rounded-md border border-border bg-card p-6 text-center text-muted-foreground text-sm">
+              No projects yet.
+            </div>
+          );
+        }
+
+        return (
+          <div className="space-y-6">
+            {groups.map((g) => (
+              <div key={g.key}>
+                <h3 className="text-sm font-bold text-primary uppercase tracking-wide mb-2">
+                  {g.heading} <span className="text-muted-foreground font-normal">({g.list.length})</span>
+                </h3>
+                <div className="overflow-x-auto rounded-md border border-border bg-card">
+                  <table className="w-full text-sm">
+                    <thead className="bg-surface">
+                      <tr className="text-left text-xs uppercase text-muted-foreground">
+                        <th className="py-2 px-3">Thumb</th>
+                        <th className="py-2 px-3">Title</th>
+                        <th className="py-2 px-3 w-28">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {g.list.map((p) => {
+                        const img = resolveImage(p.thumbnail_image_path);
+                        return (
+                          <tr key={p.id} className="border-t border-border align-top">
+                            <td className="py-2 px-3">
+                              <div className="h-10 w-14 rounded bg-surface overflow-hidden flex items-center justify-center">
+                                {img ? <img src={img} alt={p.title} className="h-full w-full object-cover" /> : <Trees className="h-4 w-4 text-muted-foreground" />}
+                              </div>
+                            </td>
+                            <td className="py-2 px-3 font-semibold">{p.title}</td>
+                            <td className="py-2 px-3">
+                              <div className="flex gap-1">
+                                <Button size="sm" variant="outline" onClick={() => openEdit(p)}><Pencil className="h-3 w-3" /></Button>
+                                <Button size="sm" variant="outline" className="text-destructive" onClick={() => remove(p)}><Trash2 className="h-3 w-3" /></Button>
+                              </div>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            ))}
+          </div>
+        );
+      })()}
 
       {editing && (
         <Editor
