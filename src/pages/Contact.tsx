@@ -1,43 +1,55 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import PageLayout, { PageHeader } from "@/components/layout/PageLayout";
 // import MapPreview from "@/components/common/MapPreview"; // Replaced with real Google Map below
 import { MapPin, Phone, Mail, Clock, Send } from "lucide-react";
-import { fetchMapKey, loadGoogleMaps } from "@/lib/gis";
+import { fetchMapKey } from "@/lib/gis";
 
-const ARANYA_BHAWAN = { lat: 23.8554146, lng: 91.2800762 };
+// Previous Google Maps JS API implementation (commented out):
+// import { useEffect, useRef, useState } from "react";
+// import { fetchMapKey, loadGoogleMaps } from "@/lib/gis";
+// const ARANYA_BHAWAN = { lat: 23.8554146, lng: 91.2800762 };
 
 export default function Contact() {
-  const mapEl = useRef<HTMLDivElement | null>(null);
+  // const mapEl = useRef<HTMLDivElement | null>(null);
+  const [mapKey, setMapKey] = useState<string | null>(null);
   const [mapMsg, setMapMsg] = useState<string | null>(null);
 
   useEffect(() => {
-    let cancelled = false;
-    (async () => {
-      const key = await fetchMapKey();
-      if (cancelled) return;
-      if (!key) { setMapMsg("Map key unavailable."); return; }
-      if (!mapEl.current) return;
-      const g = await loadGoogleMaps(key);
-      if (cancelled || !g?.maps) { setMapMsg("Could not load Google Maps."); return; }
-      const map = new g.maps.Map(mapEl.current, {
-        center: ARANYA_BHAWAN,
-        zoom: 16,
-        mapTypeControl: true,
-        streetViewControl: false,
-      });
-      const marker = new g.maps.Marker({
-        position: ARANYA_BHAWAN,
-        map,
-        title: "Aranya Bhawan, Agartala",
-      });
-      const info = new g.maps.InfoWindow({
-        content: '<div style="font-size:12px;font-weight:600;">Aranya Bhawan, Agartala</div>',
-      });
-      info.open({ map, anchor: marker });
-      marker.addListener("click", () => info.open({ map, anchor: marker }));
-    })();
-    return () => { cancelled = true; };
+    fetchMapKey().then((key) => {
+      if (key) setMapKey(key);
+      else setMapMsg("Map key unavailable.");
+    });
   }, []);
+
+  // Previous Google Maps JS API implementation (commented out):
+  // useEffect(() => {
+  //   let cancelled = false;
+  //   (async () => {
+  //     const key = await fetchMapKey();
+  //     if (cancelled) return;
+  //     if (!key) { setMapMsg("Map key unavailable."); return; }
+  //     if (!mapEl.current) return;
+  //     const g = await loadGoogleMaps(key);
+  //     if (cancelled || !g?.maps) { setMapMsg("Could not load Google Maps."); return; }
+  //     const map = new g.maps.Map(mapEl.current, {
+  //       center: ARANYA_BHAWAN,
+  //       zoom: 16,
+  //       mapTypeControl: true,
+  //       streetViewControl: false,
+  //     });
+  //     const marker = new g.maps.Marker({
+  //       position: ARANYA_BHAWAN,
+  //       map,
+  //       title: "Aranya Bhawan, Agartala",
+  //     });
+  //     const info = new g.maps.InfoWindow({
+  //       content: '<div style="font-size:12px;font-weight:600;">Aranya Bhawan, Agartala</div>',
+  //     });
+  //     info.open({ map, anchor: marker });
+  //     marker.addListener("click", () => info.open({ map, anchor: marker }));
+  //   })();
+  //   return () => { cancelled = true; };
+  // }, []);
 
   const cards = [
     {
