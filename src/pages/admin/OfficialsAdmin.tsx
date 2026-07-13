@@ -247,8 +247,7 @@ export default function OfficialsAdmin() {
                 </div>
               </td>
               <td className="py-2 px-3 text-xs text-muted-foreground">
-                {o.show_in_whos_who && <div>Who's Who</div>}
-                {o.show_in_directory && <div>Directory</div>}
+                {o.show_in_directory ? <div>Directory</div> : <div>—</div>}
               </td>
               <td className="py-2 px-3">
                 <div className="flex gap-1">

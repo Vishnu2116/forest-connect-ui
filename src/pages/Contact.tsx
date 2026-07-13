@@ -1,8 +1,44 @@
+import { useEffect, useRef, useState } from "react";
 import PageLayout, { PageHeader } from "@/components/layout/PageLayout";
-import MapPreview from "@/components/common/MapPreview";
+// import MapPreview from "@/components/common/MapPreview"; // Replaced with real Google Map below
 import { MapPin, Phone, Mail, Clock, Send } from "lucide-react";
+import { fetchMapKey, loadGoogleMaps } from "@/lib/gis";
+
+const ARANYA_BHAWAN = { lat: 23.8554146, lng: 91.2800762 };
 
 export default function Contact() {
+  const mapEl = useRef<HTMLDivElement | null>(null);
+  const [mapMsg, setMapMsg] = useState<string | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      const key = await fetchMapKey();
+      if (cancelled) return;
+      if (!key) { setMapMsg("Map key unavailable."); return; }
+      if (!mapEl.current) return;
+      const g = await loadGoogleMaps(key);
+      if (cancelled || !g?.maps) { setMapMsg("Could not load Google Maps."); return; }
+      const map = new g.maps.Map(mapEl.current, {
+        center: ARANYA_BHAWAN,
+        zoom: 16,
+        mapTypeControl: true,
+        streetViewControl: false,
+      });
+      const marker = new g.maps.Marker({
+        position: ARANYA_BHAWAN,
+        map,
+        title: "Aranya Bhawan, Agartala",
+      });
+      const info = new g.maps.InfoWindow({
+        content: '<div style="font-size:12px;font-weight:600;">Aranya Bhawan, Agartala</div>',
+      });
+      info.open({ map, anchor: marker });
+      marker.addListener("click", () => info.open({ map, anchor: marker }));
+    })();
+    return () => { cancelled = true; };
+  }, []);
+
   const cards = [
     {
       icon: MapPin,
@@ -64,7 +100,17 @@ export default function Contact() {
 
             <div>
               <h2 className="section-title mb-4">Find us on the map</h2>
+              {/* Old placeholder demo map — kept commented for reference.
               <MapPreview title="Aranya Bhawan, Agartala" />
+              */}
+              <div className="relative w-full h-[420px] rounded-md overflow-hidden border border-border bg-surface shadow-card">
+                <div ref={mapEl} className="w-full h-full" />
+                {mapMsg && (
+                  <div className="absolute bottom-3 left-3 bg-card/95 backdrop-blur px-3 py-2 rounded shadow-card text-[11px] text-muted-foreground">
+                    {mapMsg}
+                  </div>
+                )}
+              </div>
               <div className="mt-3 text-xs text-muted-foreground flex items-center gap-2">
                 <Clock className="h-3.5 w-3.5" /> Office Hours: Mon–Fri, 10:00
                 AM – 5:00 PM
