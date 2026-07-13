@@ -327,9 +327,11 @@ export function MediaEvents() {
                   )}
                 </div>
                 <div className="p-5 flex-1 flex flex-col">
-                  <div className="flex items-center gap-2 text-[11px] text-accent font-semibold uppercase tracking-wide mb-2">
-                    <Calendar className="h-3 w-3" /> {ev.event_date?.includes("-") ? formatEventDate(ev.event_date) : ev.event_date}
-                  </div>
+                  {ev.event_date && (
+                    <div className="flex items-center gap-2 text-[11px] text-accent font-semibold uppercase tracking-wide mb-2">
+                      <Calendar className="h-3 w-3" /> {ev.event_date?.includes("-") ? formatEventDate(ev.event_date) : ev.event_date}
+                    </div>
+                  )}
                   <h3 className="text-base font-bold text-foreground leading-snug mb-2 group-hover:text-primary">{ev.title}</h3>
                   <p className="text-xs text-muted-foreground leading-relaxed line-clamp-3">{ev.description}</p>
                   <span className="mt-4 inline-flex items-center gap-1 text-xs font-semibold text-accent">

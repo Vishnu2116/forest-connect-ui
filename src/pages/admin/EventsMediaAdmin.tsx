@@ -40,7 +40,7 @@ export default function EventsMediaAdmin() {
 
   const save = async () => {
     if (!editing) return;
-    if (!editing.title.trim() || !editing.event_date) { toast.error("Title and date are required"); return; }
+    if (!editing.title.trim()) { toast.error("Title is required"); return; }
     setSaving(true);
     try {
       await adminSaveEvent({
@@ -85,7 +85,7 @@ export default function EventsMediaAdmin() {
                 className="w-full border border-input rounded px-2 py-1.5 text-sm bg-card mt-1" />
             </div>
             <div>
-              <label className="text-[11px] font-semibold text-muted-foreground uppercase">Event date *</label>
+              <label className="text-[11px] font-semibold text-muted-foreground uppercase">Event date</label>
               <input type="date" value={editing.event_date} onChange={(e) => setEditing({ ...editing, event_date: e.target.value })}
                 className="w-full border border-input rounded px-2 py-1.5 text-sm bg-card mt-1" />
             </div>
@@ -123,7 +123,9 @@ export default function EventsMediaAdmin() {
                   : <div className="w-full h-full flex items-center justify-center text-xs text-muted-foreground">No cover</div>}
               </div>
               <div className="p-3 space-y-2">
-                <div className="text-[11px] text-accent font-semibold uppercase">{formatEventDate(ev.event_date)}</div>
+                {ev.event_date && (
+                  <div className="text-[11px] text-accent font-semibold uppercase">{formatEventDate(ev.event_date)}</div>
+                )}
                 <h3 className="text-sm font-bold text-foreground line-clamp-2">{ev.title}</h3>
                 <div className="flex gap-1.5 pt-1">
                   <Button size="sm" variant="outline" onClick={() => setManagingId(ev.id)} className="text-xs gap-1"><Upload className="h-3 w-3" /> Images</Button>
