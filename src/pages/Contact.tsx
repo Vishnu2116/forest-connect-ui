@@ -116,7 +116,17 @@ export default function Contact() {
               <MapPreview title="Aranya Bhawan, Agartala" />
               */}
               <div className="relative w-full h-[420px] rounded-md overflow-hidden border border-border bg-surface shadow-card">
-                <div ref={mapEl} className="w-full h-full" />
+                {mapKey ? (
+                  <iframe
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0 }}
+                    loading="lazy"
+                    allowFullScreen
+                    referrerPolicy="no-referrer-when-downgrade"
+                    src={`https://www.google.com/maps/embed/v1/place?key=${mapKey}&q=Aranya+Bhawan,Agartala&center=23.8554146,91.2800762&zoom=16`}
+                  />
+                ) : null}
                 {mapMsg && (
                   <div className="absolute bottom-3 left-3 bg-card/95 backdrop-blur px-3 py-2 rounded shadow-card text-[11px] text-muted-foreground">
                     {mapMsg}
