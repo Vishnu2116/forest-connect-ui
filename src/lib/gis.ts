@@ -106,17 +106,18 @@ export async function fetchGisDistricts(): Promise<string[]> {
   } catch { return dummyDistricts(); }
 }
 
-export async function fetchGisSites(year: number, district?: string): Promise<GisSite[]> {
-  if (!USE_REAL_API) return dummySites(year, district);
+export async function fetchGisSites(district?: string): Promise<GisSite[]> {
+  if (!USE_REAL_API) return dummySites(district);
   try {
-    const qs = new URLSearchParams({ year: String(year) });
+    const qs = new URLSearchParams();
     if (district && district !== "All Districts") qs.set("district", district);
-    const r = await fetch(`${API_BASE_URL}/api/gis/sites?${qs.toString()}`);
-    if (!r.ok) return dummySites(year, district);
+    const url = `${API_BASE_URL}/api/gis/sites${qs.toString() ? `?${qs}` : ""}`;
+    const r = await fetch(url);
+    if (!r.ok) return dummySites(district);
     const j = await r.json();
     const arr = Array.isArray(j) ? j : [];
-    return arr.length ? arr : dummySites(year, district);
-  } catch { return dummySites(year, district); }
+    return arr.length ? arr : dummySites(district);
+  } catch { return dummySites(district); }
 }
 
 /* ---------- Admin ---------- */
@@ -129,13 +130,20 @@ export async function fetchGisSitesAdmin(): Promise<GisSite[]> {
 }
 
 export interface GisSitePayload {
-  name: string;
+  sl_no?: number | null;
   district: string;
-  year: number;
-  area_covered?: string;
-  species_products?: string;
-  description?: string;
+  sub_division?: string;
+  range?: string;
+  beat?: string;
+  jfmc_name: string;
+  area_sanction?: number | null;
+  area_kobo?: number | null;
+  remarks?: string;
+  overlapping_area?: string;
+  display_order?: number;
+  is_active?: boolean;
 }
+
 
 export async function createGisSite(payload: GisSitePayload): Promise<void> {
   const r = await fetch(`${API_BASE_URL}/api/admin/gis/sites`, {
