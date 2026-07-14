@@ -78,13 +78,16 @@ export default function PlantationMap() {
     setLoading(true);
     fetchGisSites(district).then((data) => {
       if (cancelled) return;
-      setSites(data);
+      setAllSites(data);
+      setSubDivision("All");
+      setRange("All");
       setSelected(null);
       setSelectedKml(null);
       setLoading(false);
     });
     return () => { cancelled = true; };
   }, [district]);
+
 
   // Recenter map when district changes and clear previous overlay
   useEffect(() => {
