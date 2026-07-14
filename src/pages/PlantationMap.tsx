@@ -143,6 +143,32 @@ export default function PlantationMap() {
     setSelectedKml(s.kml_files?.[0] || null);
   };
 
+  // Sub-Division options based on district's sites
+  const subDivisionOptions = useMemo(() => {
+    const set = new Set<string>();
+    allSites.forEach((s) => { if (s.sub_division) set.add(s.sub_division); });
+    return ["All", ...Array.from(set).sort()];
+  }, [allSites]);
+
+  // Range options based on selected sub-division
+  const rangeOptions = useMemo(() => {
+    const set = new Set<string>();
+    allSites.forEach((s) => {
+      if (subDivision !== "All" && s.sub_division !== subDivision) return;
+      if (s.range) set.add(s.range);
+    });
+    return ["All", ...Array.from(set).sort()];
+  }, [allSites, subDivision]);
+
+  // Filtered sites by sub-division/range
+  const sites = useMemo(() => {
+    return allSites.filter((s) => {
+      if (subDivision !== "All" && s.sub_division !== subDivision) return false;
+      if (range !== "All" && s.range !== range) return false;
+      return true;
+    });
+  }, [allSites, subDivision, range]);
+
   // Group filtered sites by Sub-Division -> Range
   const grouped = useMemo(() => {
     const map = new Map<string, Map<string, GisSite[]>>();
@@ -161,6 +187,7 @@ export default function PlantationMap() {
         Array.from(rangeMap.entries()).sort((a, b) => a[0].localeCompare(b[0])),
       ] as [string, [string, GisSite[]][]]);
   }, [sites]);
+
 
   return (
     <PageLayout>
