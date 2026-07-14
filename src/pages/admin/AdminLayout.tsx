@@ -116,6 +116,15 @@ export default function AdminLayout() {
               {adminName.slice(0, 1).toUpperCase()}
             </div>
             <button
+              onClick={() => setPwOpen(true)}
+              className="ml-1 inline-flex items-center gap-1.5 px-3 py-1.5 rounded border border-border text-xs font-semibold text-primary hover:bg-surface"
+              aria-label="Change Password"
+              title="Change Password"
+            >
+              <KeyRound className="h-3.5 w-3.5" />
+              <span className="hidden sm:inline">Change Password</span>
+            </button>
+            <button
               onClick={logout}
               className="ml-1 inline-flex items-center gap-1.5 px-3 py-1.5 rounded border border-border text-xs font-semibold text-primary hover:bg-surface"
               aria-label="Logout"
