@@ -36,6 +36,7 @@ export const adminMenu = [
 export default function AdminLayout() {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
+  const [pwOpen, setPwOpen] = useState(false);
 
   const token = localStorage.getItem("element_admin_token");
   if (!token) {
