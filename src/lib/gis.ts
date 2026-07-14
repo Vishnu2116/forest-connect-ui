@@ -1,22 +1,18 @@
 import { API_BASE_URL, USE_REAL_API, getAuthHeaders, getAuthJsonHeaders, handleApiResponse } from "@/config/api";
 import { plantations as dummyPlantations } from "@/data/content";
 
-function dummySites(year?: number, district?: string): GisSite[] {
+function dummySites(district?: string): GisSite[] {
   const all: GisSite[] = dummyPlantations.map((p) => ({
     id: `dummy-${p.id}`,
-    name: p.name,
+    jfmc_name: p.name,
     district: p.district,
-    year: p.year,
-    area_covered: `${p.area} hectares`,
-    species_products: p.species,
-    description: null,
     kml_files: [],
   }));
   return all.filter((s) =>
-    (year == null || s.year === year) &&
     (!district || district === "All Districts" || s.district === district)
   );
 }
+
 
 function dummyYears(): number[] {
   return Array.from(new Set(dummyPlantations.map((p) => p.year))).sort((a, b) => b - a);
