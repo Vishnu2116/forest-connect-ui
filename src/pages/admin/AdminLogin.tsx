@@ -155,6 +155,7 @@ export default function AdminLogin() {
       <footer className="bg-primary-dark text-primary-foreground text-xs py-3 text-center">
         © 2026 ELEMENT Project, Government of Tripura. All rights reserved.
       </footer>
+      <ForgotPasswordDialog open={forgotOpen} onOpenChange={setForgotOpen} />
     </main>
   );
 }

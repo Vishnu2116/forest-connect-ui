@@ -28,6 +28,7 @@ import ActivityReports from "./pages/ActivityReports";
 import ActivitiesOutputsAdmin from "./pages/admin/ActivitiesOutputsAdmin";
 import ActivitiesOutputsEditAdmin from "./pages/admin/ActivitiesOutputsEditAdmin";
 import AdminLogin from "./pages/admin/AdminLogin";
+import ResetPassword from "./pages/admin/ResetPassword";
 import AdminLayout from "./pages/admin/AdminLayout";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import {
