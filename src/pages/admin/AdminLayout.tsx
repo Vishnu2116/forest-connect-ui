@@ -138,6 +138,7 @@ export default function AdminLayout() {
           <Outlet />
         </main>
       </div>
+      <ChangePasswordDialog open={pwOpen} onOpenChange={setPwOpen} />
     </div>
   );
 }
