@@ -150,6 +150,53 @@ export default function GisAdmin() {
         <div className="text-sm text-muted-foreground bg-card border border-border rounded p-6 text-center">No sites yet.</div>
       )}
 
+      {!loading && sites.length > 0 && (
+        <div className="bg-card border border-border rounded-md p-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          <div>
+            <Label className="text-xs">District</Label>
+            <select
+              value={districtFilter}
+              onChange={(e) => setDistrictFilter(e.target.value)}
+              className="mt-1 w-full h-10 rounded-md border border-input bg-background px-3 text-sm"
+            >
+              <option value="All">All Districts</option>
+              {TRIPURA_DISTRICTS.map((d) => <option key={d} value={d}>{d}</option>)}
+            </select>
+          </div>
+          <div>
+            <Label className="text-xs">Sub-Division</Label>
+            <select
+              value={subDivisionFilter}
+              onChange={(e) => setSubDivisionFilter(e.target.value)}
+              className="mt-1 w-full h-10 rounded-md border border-input bg-background px-3 text-sm"
+            >
+              <option value="All">All Sub-Divisions</option>
+              {subDivisionOptions.map((sd) => <option key={sd} value={sd}>{sd}</option>)}
+            </select>
+          </div>
+          <div>
+            <Label className="text-xs">Range</Label>
+            <select
+              value={rangeFilter}
+              onChange={(e) => setRangeFilter(e.target.value)}
+              className="mt-1 w-full h-10 rounded-md border border-input bg-background px-3 text-sm"
+            >
+              <option value="All">All Ranges</option>
+              {rangeOptions.map((rg) => <option key={rg} value={rg}>{rg}</option>)}
+            </select>
+          </div>
+          <div>
+            <Label className="text-xs">Search</Label>
+            <Input
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="Search by JFMC Name or Beat"
+              className="mt-1"
+            />
+          </div>
+        </div>
+      )}
+
       <div className="space-y-6">
         {grouped.map(([district, subDivs]) => (
           <div key={district} className="bg-card border border-border rounded-md shadow-card">
