@@ -104,39 +104,87 @@ export default function PlantationMap() {
     }
   }, [district, mapReady]);
 
-  // Draw single selected KML layer when a specific site is chosen
+  // Draw single selected KML layer when a specific site is chosen — parse KML and render as
+  // styled polygons for custom stroke/fill (KmlLayer does not support custom styling).
   useEffect(() => {
     if (!mapReady || !mapRef.current) return;
     const g = (window as any).google;
-    if (layerRef.current) { layerRef.current.setMap(null); layerRef.current = null; }
+    if (layerRef.current) {
+      if (Array.isArray(layerRef.current)) layerRef.current.forEach((p: any) => p.setMap(null));
+      else layerRef.current.setMap?.(null);
+      layerRef.current = null;
+    }
     if (infoRef.current) infoRef.current.close();
-    if (!selectedKml || !selected || window.location.hostname === "localhost") return;
+    if (!selectedKml || !selected) return;
     const url = resolveGisUrl(selectedKml.file_path);
     if (!url) return;
-    const layer = new g.maps.KmlLayer({
-      url, map: mapRef.current, preserveViewport: false, suppressInfoWindows: true,
-    });
-    layer.addListener("click", (event: any) => {
-      const pos = event?.latLng;
-      if (!pos || !infoRef.current) return;
-      const s = selected;
-      const rows: string[] = [
-        `<div style="font-weight:600;color:#1b5e20;font-size:14px;margin-bottom:6px;">${escapeHtml(s.jfmc_name)}</div>`,
-        row("District", s.district),
-        row("Sub-Division", s.sub_division),
-        row("Range", s.range),
-        row("Beat", s.beat),
-        row("Area (Sanction)", s.area_sanction),
-        row("Area (KOBO)", s.area_kobo),
-      ];
-      if (s.remarks) rows.push(row("Remarks", s.remarks));
-      if (s.overlapping_area) rows.push(row("Overlapping Area", s.overlapping_area));
-      infoRef.current.setContent(`<div style="min-width:200px;font-family:inherit;font-size:12px;">${rows.join("")}</div>`);
-      infoRef.current.setPosition(pos);
-      infoRef.current.open(mapRef.current);
-    });
-    layerRef.current = layer;
+
+    let cancelled = false;
+    (async () => {
+      try {
+        const res = await fetch(url);
+        if (!res.ok) return;
+        const text = await res.text();
+        if (cancelled) return;
+        const doc = new DOMParser().parseFromString(text, "text/xml");
+        const coordNodes = Array.from(doc.getElementsByTagName("coordinates"));
+        const polygons: any[] = [];
+        const bounds = new g.maps.LatLngBounds();
+        coordNodes.forEach((node) => {
+          const path = (node.textContent || "")
+            .trim()
+            .split(/\s+/)
+            .map((tuple) => {
+              const [lng, lat] = tuple.split(",").map(Number);
+              if (!isFinite(lat) || !isFinite(lng)) return null;
+              return { lat, lng };
+            })
+            .filter(Boolean) as { lat: number; lng: number }[];
+          if (path.length < 3) return;
+          path.forEach((p) => bounds.extend(p));
+          const poly = new g.maps.Polygon({
+            paths: path,
+            map: mapRef.current,
+            strokeColor: "#FF6600",
+            strokeOpacity: 1,
+            strokeWeight: 5,
+            fillColor: "#FF6600",
+            fillOpacity: 0.15,
+            clickable: true,
+          });
+          poly.addListener("click", (event: any) => {
+            const pos = event?.latLng;
+            if (!pos || !infoRef.current) return;
+            const s = selected;
+            const rows: string[] = [
+              `<div style="font-weight:600;color:#1b5e20;font-size:14px;margin-bottom:6px;">${escapeHtml(s.jfmc_name)}</div>`,
+              row("District", s.district),
+              row("Sub-Division", s.sub_division),
+              row("Range", s.range),
+              row("Beat", s.beat),
+              row("Area (Sanction)", s.area_sanction),
+              row("Area (KOBO)", s.area_kobo),
+            ];
+            if (s.remarks) rows.push(row("Remarks", s.remarks));
+            if (s.overlapping_area) rows.push(row("Overlapping Area", s.overlapping_area));
+            infoRef.current.setContent(`<div style="min-width:200px;font-family:inherit;font-size:12px;">${rows.join("")}</div>`);
+            infoRef.current.setPosition(pos);
+            infoRef.current.open(mapRef.current);
+          });
+          polygons.push(poly);
+        });
+        if (polygons.length && !bounds.isEmpty()) {
+          mapRef.current.fitBounds(bounds);
+        }
+        layerRef.current = polygons;
+      } catch {
+        /* ignore */
+      }
+    })();
+
+    return () => { cancelled = true; };
   }, [selectedKml, selected, mapReady]);
+
 
   const handleSelectSite = (s: GisSite) => {
     setSelected(s);
