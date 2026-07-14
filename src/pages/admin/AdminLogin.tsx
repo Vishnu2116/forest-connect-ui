@@ -8,6 +8,7 @@ import logoTripura from "@/assets/logo-tripura.png";
 import logoTripuraForest from "@/assets/logo-tripuraforestdept.png";
 import logoWorldBank from "@/assets/logo-theworldbank.jpg";
 import { API_BASE_URL, resetSessionExpiredFlag } from "@/config/api";
+import ForgotPasswordDialog from "@/components/admin/ForgotPasswordDialog";
 
 export default function AdminLogin() {
   const navigate = useNavigate();
@@ -15,6 +16,7 @@ export default function AdminLogin() {
   const [pass, setPass] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [forgotOpen, setForgotOpen] = useState(false);
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -123,9 +125,13 @@ export default function AdminLogin() {
               <label className="flex items-center gap-2">
                 <input type="checkbox" /> Remember me
               </label>
-              <a href="#" className="text-primary hover:underline">
+              <button
+                type="button"
+                onClick={() => setForgotOpen(true)}
+                className="text-primary hover:underline"
+              >
                 Forgot password?
-              </a>
+              </button>
             </div>
             {error && (
               <p className="text-xs text-destructive bg-destructive/10 border border-destructive/30 rounded px-3 py-2">
@@ -149,6 +155,7 @@ export default function AdminLogin() {
       <footer className="bg-primary-dark text-primary-foreground text-xs py-3 text-center">
         © 2026 ELEMENT Project, Government of Tripura. All rights reserved.
       </footer>
+      <ForgotPasswordDialog open={forgotOpen} onOpenChange={setForgotOpen} />
     </main>
   );
 }
