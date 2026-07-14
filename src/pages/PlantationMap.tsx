@@ -59,10 +59,8 @@ export default function PlantationMap() {
           });
           infoRef.current = new g.maps.InfoWindow();
           setMapReady(true);
-          if (window.location.hostname === "localhost") {
-            setMapMsg("KML overlay requires a public URL — will render on deployed server.");
-          }
         } else {
+
           setMapMsg("Could not load Google Maps.");
         }
       } else if (!key) {
