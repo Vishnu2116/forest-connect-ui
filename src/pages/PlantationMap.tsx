@@ -28,12 +28,15 @@ function cleanKmlName(name: string): string {
 export default function PlantationMap() {
   const [districts, setDistricts] = useState<string[]>(["All Districts", ...TRIPURA_DISTRICTS]);
   const [district, setDistrict] = useState("All Districts");
-  const [sites, setSites] = useState<GisSite[]>([]);
+  const [subDivision, setSubDivision] = useState("All");
+  const [range, setRange] = useState("All");
+  const [allSites, setAllSites] = useState<GisSite[]>([]);
   const [selected, setSelected] = useState<GisSite | null>(null);
   const [selectedKml, setSelectedKml] = useState<GisKmlFile | null>(null);
   const [loading, setLoading] = useState(false);
   const [mapReady, setMapReady] = useState(false);
   const [mapMsg, setMapMsg] = useState<string | null>(null);
+
 
   const mapEl = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<any>(null);
