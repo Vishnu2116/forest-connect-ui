@@ -48,6 +48,34 @@ export default function GisAdmin() {
 
   useEffect(() => { load(); }, []);
 
+  useEffect(() => { setSubDivisionFilter("All"); setRangeFilter("All"); }, [districtFilter]);
+  useEffect(() => { setRangeFilter("All"); }, [subDivisionFilter]);
+
+  const filteredSites = useMemo(() => {
+    const term = searchTerm.trim().toLowerCase();
+    return sites.filter((s) => {
+      const districtMatch = districtFilter === "All" || s.district === districtFilter;
+      const subMatch = subDivisionFilter === "All" || s.sub_division === subDivisionFilter;
+      const rangeMatch = rangeFilter === "All" || s.range === rangeFilter;
+      const searchMatch = !term ||
+        (s.jfmc_name || "").toLowerCase().includes(term) ||
+        (s.beat || "").toLowerCase().includes(term);
+      return districtMatch && subMatch && rangeMatch && searchMatch;
+    });
+  }, [sites, districtFilter, subDivisionFilter, rangeFilter, searchTerm]);
+
+  const subDivisionOptions = useMemo(() => {
+    const source = districtFilter === "All" ? sites : sites.filter((s) => s.district === districtFilter);
+    return Array.from(new Set(source.map((s) => s.sub_division).filter(Boolean))).sort() as string[];
+  }, [sites, districtFilter]);
+
+  const rangeOptions = useMemo(() => {
+    let source = sites;
+    if (districtFilter !== "All") source = source.filter((s) => s.district === districtFilter);
+    if (subDivisionFilter !== "All") source = source.filter((s) => s.sub_division === subDivisionFilter);
+    return Array.from(new Set(source.map((s) => s.range).filter(Boolean))).sort() as string[];
+  }, [sites, districtFilter, subDivisionFilter]);
+
   // Group by District -> Sub-Division -> Range
   const grouped = useMemo(() => {
     const districtMap = new Map<string, Map<string, Map<string, GisSite[]>>>();
