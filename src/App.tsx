@@ -39,6 +39,7 @@ import ProjectsManagementAdmin from "./pages/admin/ProjectsManagementAdmin";
 import ProjectComponentsAdmin from "./pages/admin/ProjectComponentsAdmin";
 import PlantationAdmin from "./pages/admin/PlantationAdmin";
 import { GrievanceAdmin } from "./pages/admin/StatusModules";
+import { ContactMessagesAdmin, FeedbackMessagesAdmin } from "./pages/admin/MessagesAdmin";
 import RTIAdmin from "./pages/admin/RTIAdmin";
 import { UsersAdmin } from "./pages/admin/UsersAdmin";
 import SettingsAdmin from "./pages/admin/SettingsAdmin";
@@ -161,6 +162,8 @@ const App = () => (
             <Route path="knowledge-hub" element={<KnowledgeHubAdmin />} />
             
             
+            <Route path="contact-messages" element={<ContactMessagesAdmin />} />
+            <Route path="feedback-messages" element={<FeedbackMessagesAdmin />} />
             <Route path="grievance" element={<GrievanceAdmin />} />
             <Route path="rti" element={<RTIAdmin />} />
             <Route path="users" element={<UsersAdmin />} />
