@@ -31,6 +31,11 @@ export default function GisAdmin() {
   const [editing, setEditing] = useState<(GisSitePayload & { id?: string }) | null>(null);
   const fileInputs = useRef<Record<string, HTMLInputElement | null>>({});
 
+  const [districtFilter, setDistrictFilter] = useState<string>("All");
+  const [subDivisionFilter, setSubDivisionFilter] = useState<string>("All");
+  const [rangeFilter, setRangeFilter] = useState<string>("All");
+  const [searchTerm, setSearchTerm] = useState<string>("");
+
   const load = async () => {
     setLoading(true);
     try {
