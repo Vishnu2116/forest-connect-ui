@@ -3,9 +3,10 @@ import { Link, NavLink, useNavigate, Outlet, Navigate } from "react-router-dom";
 import {
   LayoutDashboard, Bell, Calendar, FileText, Users, Award, BookOpen, FolderKanban,
   Image as ImageIcon, Activity, Briefcase, TreePine, MessageSquare, FileQuestion,
-  UserCog, Settings, LogOut, Menu, X, Home as HomeIcon, Layers, SlidersHorizontal
+  UserCog, Settings, LogOut, Menu, X, Home as HomeIcon, Layers, SlidersHorizontal, KeyRound
 } from "lucide-react";
 import logoTripura from "@/assets/logo-tripura.png";
+import ChangePasswordDialog from "@/components/admin/ChangePasswordDialog";
 
 export const adminMenu = [
   { to: "/admin", label: "Dashboard", icon: LayoutDashboard, end: true },
@@ -35,6 +36,7 @@ export const adminMenu = [
 export default function AdminLayout() {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
+  const [pwOpen, setPwOpen] = useState(false);
 
   const token = localStorage.getItem("element_admin_token");
   if (!token) {
@@ -114,6 +116,15 @@ export default function AdminLayout() {
               {adminName.slice(0, 1).toUpperCase()}
             </div>
             <button
+              onClick={() => setPwOpen(true)}
+              className="ml-1 inline-flex items-center gap-1.5 px-3 py-1.5 rounded border border-border text-xs font-semibold text-primary hover:bg-surface"
+              aria-label="Change Password"
+              title="Change Password"
+            >
+              <KeyRound className="h-3.5 w-3.5" />
+              <span className="hidden sm:inline">Change Password</span>
+            </button>
+            <button
               onClick={logout}
               className="ml-1 inline-flex items-center gap-1.5 px-3 py-1.5 rounded border border-border text-xs font-semibold text-primary hover:bg-surface"
               aria-label="Logout"
@@ -127,6 +138,7 @@ export default function AdminLayout() {
           <Outlet />
         </main>
       </div>
+      <ChangePasswordDialog open={pwOpen} onOpenChange={setPwOpen} />
     </div>
   );
 }
