@@ -36,14 +36,29 @@ export interface GisKmlFile {
 
 export interface GisSite {
   id: string;
-  name: string;
+  // --- Legacy fields (commented out — replaced by new schema)
+  // name?: string;
+  // year?: number;
+  // area_covered?: string | null;
+  // species_products?: string | null;
+  // description?: string | null;
+  sl_no?: number | null;
   district: string;
-  year: number;
-  area_covered?: string | null;
-  species_products?: string | null;
-  description?: string | null;
+  sub_division?: string | null;
+  range?: string | null;
+  beat?: string | null;
+  jfmc_name: string;
+  area_sanction?: number | null;
+  area_kobo?: number | null;
+  remarks?: string | null;
+  overlapping_area?: string | null;
+  display_order?: number | null;
+  is_active?: boolean;
+  created_at?: string;
+  updated_at?: string;
   kml_files?: GisKmlFile[];
 }
+
 
 export const TRIPURA_DISTRICTS = [
   "West Tripura", "Sepahijala", "Khowai", "Gomati",
