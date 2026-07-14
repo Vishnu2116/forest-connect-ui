@@ -28,12 +28,15 @@ function cleanKmlName(name: string): string {
 export default function PlantationMap() {
   const [districts, setDistricts] = useState<string[]>(["All Districts", ...TRIPURA_DISTRICTS]);
   const [district, setDistrict] = useState("All Districts");
-  const [sites, setSites] = useState<GisSite[]>([]);
+  const [subDivision, setSubDivision] = useState("All");
+  const [range, setRange] = useState("All");
+  const [allSites, setAllSites] = useState<GisSite[]>([]);
   const [selected, setSelected] = useState<GisSite | null>(null);
   const [selectedKml, setSelectedKml] = useState<GisKmlFile | null>(null);
   const [loading, setLoading] = useState(false);
   const [mapReady, setMapReady] = useState(false);
   const [mapMsg, setMapMsg] = useState<string | null>(null);
+
 
   const mapEl = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<any>(null);
@@ -56,10 +59,8 @@ export default function PlantationMap() {
           });
           infoRef.current = new g.maps.InfoWindow();
           setMapReady(true);
-          if (window.location.hostname === "localhost") {
-            setMapMsg("KML overlay requires a public URL — will render on deployed server.");
-          }
         } else {
+
           setMapMsg("Could not load Google Maps.");
         }
       } else if (!key) {
@@ -75,13 +76,16 @@ export default function PlantationMap() {
     setLoading(true);
     fetchGisSites(district).then((data) => {
       if (cancelled) return;
-      setSites(data);
+      setAllSites(data);
+      setSubDivision("All");
+      setRange("All");
       setSelected(null);
       setSelectedKml(null);
       setLoading(false);
     });
     return () => { cancelled = true; };
   }, [district]);
+
 
   // Recenter map when district changes and clear previous overlay
   useEffect(() => {
@@ -98,44 +102,118 @@ export default function PlantationMap() {
     }
   }, [district, mapReady]);
 
-  // Draw single selected KML layer when a specific site is chosen
+  // Draw single selected KML layer when a specific site is chosen — parse KML and render as
+  // styled polygons for custom stroke/fill (KmlLayer does not support custom styling).
   useEffect(() => {
     if (!mapReady || !mapRef.current) return;
     const g = (window as any).google;
-    if (layerRef.current) { layerRef.current.setMap(null); layerRef.current = null; }
+    if (layerRef.current) {
+      if (Array.isArray(layerRef.current)) layerRef.current.forEach((p: any) => p.setMap(null));
+      else layerRef.current.setMap?.(null);
+      layerRef.current = null;
+    }
     if (infoRef.current) infoRef.current.close();
-    if (!selectedKml || !selected || window.location.hostname === "localhost") return;
+    if (!selectedKml || !selected) return;
     const url = resolveGisUrl(selectedKml.file_path);
     if (!url) return;
-    const layer = new g.maps.KmlLayer({
-      url, map: mapRef.current, preserveViewport: false, suppressInfoWindows: true,
-    });
-    layer.addListener("click", (event: any) => {
-      const pos = event?.latLng;
-      if (!pos || !infoRef.current) return;
-      const s = selected;
-      const rows: string[] = [
-        `<div style="font-weight:600;color:#1b5e20;font-size:14px;margin-bottom:6px;">${escapeHtml(s.jfmc_name)}</div>`,
-        row("District", s.district),
-        row("Sub-Division", s.sub_division),
-        row("Range", s.range),
-        row("Beat", s.beat),
-        row("Area (Sanction)", s.area_sanction),
-        row("Area (KOBO)", s.area_kobo),
-      ];
-      if (s.remarks) rows.push(row("Remarks", s.remarks));
-      if (s.overlapping_area) rows.push(row("Overlapping Area", s.overlapping_area));
-      infoRef.current.setContent(`<div style="min-width:200px;font-family:inherit;font-size:12px;">${rows.join("")}</div>`);
-      infoRef.current.setPosition(pos);
-      infoRef.current.open(mapRef.current);
-    });
-    layerRef.current = layer;
+
+    let cancelled = false;
+    (async () => {
+      try {
+        const res = await fetch(url);
+        if (!res.ok) return;
+        const text = await res.text();
+        if (cancelled) return;
+        const doc = new DOMParser().parseFromString(text, "text/xml");
+        const coordNodes = Array.from(doc.getElementsByTagName("coordinates"));
+        const polygons: any[] = [];
+        const bounds = new g.maps.LatLngBounds();
+        coordNodes.forEach((node) => {
+          const path = (node.textContent || "")
+            .trim()
+            .split(/\s+/)
+            .map((tuple) => {
+              const [lng, lat] = tuple.split(",").map(Number);
+              if (!isFinite(lat) || !isFinite(lng)) return null;
+              return { lat, lng };
+            })
+            .filter(Boolean) as { lat: number; lng: number }[];
+          if (path.length < 3) return;
+          path.forEach((p) => bounds.extend(p));
+          const poly = new g.maps.Polygon({
+            paths: path,
+            map: mapRef.current,
+            strokeColor: "#FF6600",
+            strokeOpacity: 1,
+            strokeWeight: 5,
+            fillColor: "#FF6600",
+            fillOpacity: 0.15,
+            clickable: true,
+          });
+          poly.addListener("click", (event: any) => {
+            const pos = event?.latLng;
+            if (!pos || !infoRef.current) return;
+            const s = selected;
+            const rows: string[] = [
+              `<div style="font-weight:600;color:#1b5e20;font-size:14px;margin-bottom:6px;">${escapeHtml(s.jfmc_name)}</div>`,
+              row("District", s.district),
+              row("Sub-Division", s.sub_division),
+              row("Range", s.range),
+              row("Beat", s.beat),
+              row("Area (Sanction)", s.area_sanction),
+              row("Area (KOBO)", s.area_kobo),
+            ];
+            if (s.remarks) rows.push(row("Remarks", s.remarks));
+            if (s.overlapping_area) rows.push(row("Overlapping Area", s.overlapping_area));
+            infoRef.current.setContent(`<div style="min-width:200px;font-family:inherit;font-size:12px;">${rows.join("")}</div>`);
+            infoRef.current.setPosition(pos);
+            infoRef.current.open(mapRef.current);
+          });
+          polygons.push(poly);
+        });
+        if (polygons.length && !bounds.isEmpty()) {
+          mapRef.current.fitBounds(bounds);
+        }
+        layerRef.current = polygons;
+      } catch {
+        /* ignore */
+      }
+    })();
+
+    return () => { cancelled = true; };
   }, [selectedKml, selected, mapReady]);
+
 
   const handleSelectSite = (s: GisSite) => {
     setSelected(s);
     setSelectedKml(s.kml_files?.[0] || null);
   };
+
+  // Sub-Division options based on district's sites
+  const subDivisionOptions = useMemo(() => {
+    const set = new Set<string>();
+    allSites.forEach((s) => { if (s.sub_division) set.add(s.sub_division); });
+    return ["All", ...Array.from(set).sort()];
+  }, [allSites]);
+
+  // Range options based on selected sub-division
+  const rangeOptions = useMemo(() => {
+    const set = new Set<string>();
+    allSites.forEach((s) => {
+      if (subDivision !== "All" && s.sub_division !== subDivision) return;
+      if (s.range) set.add(s.range);
+    });
+    return ["All", ...Array.from(set).sort()];
+  }, [allSites, subDivision]);
+
+  // Filtered sites by sub-division/range
+  const sites = useMemo(() => {
+    return allSites.filter((s) => {
+      if (subDivision !== "All" && s.sub_division !== subDivision) return false;
+      if (range !== "All" && s.range !== range) return false;
+      return true;
+    });
+  }, [allSites, subDivision, range]);
 
   // Group filtered sites by Sub-Division -> Range
   const grouped = useMemo(() => {
@@ -156,6 +234,7 @@ export default function PlantationMap() {
       ] as [string, [string, GisSite[]][]]);
   }, [sites]);
 
+
   return (
     <PageLayout>
       <PageHeader title="MIS / GIS — Plantation Sites" subtitle="Interactive map of plantation sites across Tripura" breadcrumb={["Home", "MIS / GIS"]} />
@@ -168,13 +247,36 @@ export default function PlantationMap() {
             </div>
             */}
 
-            <div className="bg-card border border-border rounded-md p-4 shadow-card">
-              <h3 className="font-semibold text-primary flex items-center gap-2 mb-3"><Filter className="h-4 w-4" /> District</h3>
-              <select value={district} onChange={(e) => setDistrict(e.target.value)} className="w-full border border-input rounded px-3 py-2 text-sm bg-background focus-ring">
-                {districts.map((d) => <option key={d}>{d}</option>)}
-              </select>
-              <div className="mt-3 text-xs text-muted-foreground">{sites.length} site{sites.length === 1 ? "" : "s"}</div>
+            <div className="bg-card border border-border rounded-md p-4 shadow-card space-y-3">
+              <div>
+                <h3 className="font-semibold text-primary flex items-center gap-2 mb-2"><Filter className="h-4 w-4" /> District</h3>
+                <select value={district} onChange={(e) => setDistrict(e.target.value)} className="w-full border border-input rounded px-3 py-2 text-sm bg-background focus-ring">
+                  {districts.map((d) => <option key={d}>{d}</option>)}
+                </select>
+              </div>
+              <div>
+                <h3 className="font-semibold text-primary text-sm mb-2">Sub-Division</h3>
+                <select
+                  value={subDivision}
+                  onChange={(e) => { setSubDivision(e.target.value); setRange("All"); }}
+                  className="w-full border border-input rounded px-3 py-2 text-sm bg-background focus-ring"
+                >
+                  {subDivisionOptions.map((d) => <option key={d}>{d}</option>)}
+                </select>
+              </div>
+              <div>
+                <h3 className="font-semibold text-primary text-sm mb-2">Range</h3>
+                <select
+                  value={range}
+                  onChange={(e) => setRange(e.target.value)}
+                  className="w-full border border-input rounded px-3 py-2 text-sm bg-background focus-ring"
+                >
+                  {rangeOptions.map((d) => <option key={d}>{d}</option>)}
+                </select>
+              </div>
+              <div className="text-xs text-muted-foreground">{sites.length} site{sites.length === 1 ? "" : "s"}</div>
             </div>
+
 
             <div className="bg-card border border-border rounded-md p-4 shadow-card max-h-[32rem] overflow-y-auto">
               <h3 className="font-semibold text-primary mb-3">Sites</h3>
@@ -200,10 +302,11 @@ export default function PlantationMap() {
                                     className={`w-full text-left px-2 py-2 rounded text-sm hover:bg-surface flex items-start gap-2 ${isOpen ? "bg-primary/10 text-primary" : ""}`}>
                                     <MapPin className="h-4 w-4 mt-0.5 text-accent shrink-0" />
                                     <span className="flex-1">
-                                      <span className="block font-medium">{s.jfmc_name}</span>
+                                      <span className="block font-medium">{s.beat || "—"}</span>
                                       <span className="block text-[11px] text-muted-foreground">
-                                        Beat: {s.beat || "—"} · {files.length} KML file{files.length === 1 ? "" : "s"}
+                                        {files.length} KML file{files.length === 1 ? "" : "s"}
                                       </span>
+
                                     </span>
                                   </button>
                                   {isOpen && files.length > 1 && (
