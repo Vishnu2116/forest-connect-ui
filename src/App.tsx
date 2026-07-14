@@ -135,6 +135,7 @@ const App = () => (
           <Route path="/copyright-policy" element={<CopyrightPolicy />} />
           {/* Admin */}
           <Route path="/admin/login" element={<AdminLogin />} />
+          <Route path="/admin/reset-password" element={<ResetPassword />} />
           <Route path="/admin" element={<AdminLayout />}>
             <Route index element={<AdminDashboard />} />
             <Route path="notifications" element={<Navigate to="/admin/knowledge-hub?type=notification" replace />} />
