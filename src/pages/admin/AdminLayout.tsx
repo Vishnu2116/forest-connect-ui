@@ -3,9 +3,10 @@ import { Link, NavLink, useNavigate, Outlet, Navigate } from "react-router-dom";
 import {
   LayoutDashboard, Bell, Calendar, FileText, Users, Award, BookOpen, FolderKanban,
   Image as ImageIcon, Activity, Briefcase, TreePine, MessageSquare, FileQuestion,
-  UserCog, Settings, LogOut, Menu, X, Home as HomeIcon, Layers, SlidersHorizontal
+  UserCog, Settings, LogOut, Menu, X, Home as HomeIcon, Layers, SlidersHorizontal, KeyRound
 } from "lucide-react";
 import logoTripura from "@/assets/logo-tripura.png";
+import ChangePasswordDialog from "@/components/admin/ChangePasswordDialog";
 
 export const adminMenu = [
   { to: "/admin", label: "Dashboard", icon: LayoutDashboard, end: true },
