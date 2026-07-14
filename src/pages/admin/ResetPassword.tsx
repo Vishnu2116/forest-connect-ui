@@ -9,6 +9,36 @@ import logoTripuraForest from "@/assets/logo-tripuraforestdept.png";
 import logoWorldBank from "@/assets/logo-theworldbank.jpg";
 import { API_BASE_URL } from "@/config/api";
 
+const Frame = ({ children }: { children: React.ReactNode }) => (
+  <main className="min-h-screen bg-surface flex flex-col">
+    <div className="bg-primary text-primary-foreground py-3">
+      <div className="gov-container flex items-center justify-between">
+        <Link to="/admin/login" className="text-sm flex items-center gap-2 hover:underline">
+          <ArrowLeft className="h-4 w-4" /> Back to Login
+        </Link>
+        <span className="text-xs opacity-90">Government of Tripura | The World Bank</span>
+      </div>
+    </div>
+    <div className="flex-1 flex items-center justify-center px-4 py-12">
+      <div className="w-full max-w-md bg-card rounded-lg shadow-elevated border border-border overflow-hidden">
+        <div className="bg-primary text-primary-foreground px-6 py-5 text-center">
+          <div className="flex items-center justify-center gap-3 mb-2">
+            <img src={logoTripura} alt="Tripura" className="h-10 w-10 bg-white rounded p-1" />
+            <img src={logoTripuraForest} alt="Tripura Forest Department" className="h-10 w-auto bg-white rounded p-1" />
+            <img src={logoWorldBank} alt="World Bank" className="h-10 w-auto bg-white rounded p-1" />
+          </div>
+          <h1 className="text-2xl font-extrabold tracking-tight">ELEMENT</h1>
+          <p className="text-xs opacity-90">Reset Password</p>
+        </div>
+        {children}
+      </div>
+    </div>
+    <footer className="bg-primary-dark text-primary-foreground text-xs py-3 text-center">
+      © 2026 ELEMENT Project, Government of Tripura. All rights reserved.
+    </footer>
+  </main>
+);
+
 export default function ResetPassword() {
   const [params] = useSearchParams();
   const navigate = useNavigate();
@@ -68,35 +98,8 @@ export default function ResetPassword() {
     }
   };
 
-  const Frame = ({ children }: { children: React.ReactNode }) => (
-    <main className="min-h-screen bg-surface flex flex-col">
-      <div className="bg-primary text-primary-foreground py-3">
-        <div className="gov-container flex items-center justify-between">
-          <Link to="/admin/login" className="text-sm flex items-center gap-2 hover:underline">
-            <ArrowLeft className="h-4 w-4" /> Back to Login
-          </Link>
-          <span className="text-xs opacity-90">Government of Tripura | The World Bank</span>
-        </div>
-      </div>
-      <div className="flex-1 flex items-center justify-center px-4 py-12">
-        <div className="w-full max-w-md bg-card rounded-lg shadow-elevated border border-border overflow-hidden">
-          <div className="bg-primary text-primary-foreground px-6 py-5 text-center">
-            <div className="flex items-center justify-center gap-3 mb-2">
-              <img src={logoTripura} alt="Tripura" className="h-10 w-10 bg-white rounded p-1" />
-              <img src={logoTripuraForest} alt="Tripura Forest Department" className="h-10 w-auto bg-white rounded p-1" />
-              <img src={logoWorldBank} alt="World Bank" className="h-10 w-auto bg-white rounded p-1" />
-            </div>
-            <h1 className="text-2xl font-extrabold tracking-tight">ELEMENT</h1>
-            <p className="text-xs opacity-90">Reset Password</p>
-          </div>
-          {children}
-        </div>
-      </div>
-      <footer className="bg-primary-dark text-primary-foreground text-xs py-3 text-center">
-        © 2026 ELEMENT Project, Government of Tripura. All rights reserved.
-      </footer>
-    </main>
-  );
+
+
 
   if (!token) {
     return (
