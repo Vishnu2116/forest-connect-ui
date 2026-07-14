@@ -25,6 +25,8 @@ export const adminMenu = [
   { to: "/admin/home-leadership", label: "Home Leadership", icon: Users },
   { to: "/admin/home-social-media", label: "Home Social Media", icon: MessageSquare },
   { to: "/admin/gis", label: "GIS / MIS", icon: TreePine },
+  { to: "/admin/contact-messages", label: "Contact Messages", icon: MessageSquare },
+  { to: "/admin/feedback-messages", label: "Feedback Messages", icon: MessageSquare },
   { to: "/admin/grievance", label: "Grievance Mgmt", icon: MessageSquare },
   { to: "/admin/rti", label: "RTI Mgmt", icon: FileQuestion },
   { to: "/admin/settings", label: "Settings", icon: Settings },
