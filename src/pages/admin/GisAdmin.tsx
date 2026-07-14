@@ -79,7 +79,7 @@ export default function GisAdmin() {
   // Group by District -> Sub-Division -> Range
   const grouped = useMemo(() => {
     const districtMap = new Map<string, Map<string, Map<string, GisSite[]>>>();
-    sites.forEach((s) => {
+    filteredSites.forEach((s) => {
       const d = s.district || "Unspecified";
       const sd = s.sub_division || "—";
       const rg = s.range || "—";
@@ -101,7 +101,7 @@ export default function GisAdmin() {
             Array.from(rangeMap.entries()).sort((a, b) => a[0].localeCompare(b[0])),
           ] as [string, [string, GisSite[]][]]),
       ] as [string, [string, [string, GisSite[]][]][]]);
-  }, [sites]);
+  }, [filteredSites]);
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
