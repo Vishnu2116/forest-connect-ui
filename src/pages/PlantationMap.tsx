@@ -302,10 +302,11 @@ export default function PlantationMap() {
                                     className={`w-full text-left px-2 py-2 rounded text-sm hover:bg-surface flex items-start gap-2 ${isOpen ? "bg-primary/10 text-primary" : ""}`}>
                                     <MapPin className="h-4 w-4 mt-0.5 text-accent shrink-0" />
                                     <span className="flex-1">
-                                      <span className="block font-medium">{s.jfmc_name}</span>
+                                      <span className="block font-medium">{s.beat || "—"}</span>
                                       <span className="block text-[11px] text-muted-foreground">
-                                        Beat: {s.beat || "—"} · {files.length} KML file{files.length === 1 ? "" : "s"}
+                                        {files.length} KML file{files.length === 1 ? "" : "s"}
                                       </span>
+
                                     </span>
                                   </button>
                                   {isOpen && files.length > 1 && (
