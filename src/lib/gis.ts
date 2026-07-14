@@ -1,22 +1,18 @@
 import { API_BASE_URL, USE_REAL_API, getAuthHeaders, getAuthJsonHeaders, handleApiResponse } from "@/config/api";
 import { plantations as dummyPlantations } from "@/data/content";
 
-function dummySites(year?: number, district?: string): GisSite[] {
+function dummySites(district?: string): GisSite[] {
   const all: GisSite[] = dummyPlantations.map((p) => ({
     id: `dummy-${p.id}`,
-    name: p.name,
+    jfmc_name: p.name,
     district: p.district,
-    year: p.year,
-    area_covered: `${p.area} hectares`,
-    species_products: p.species,
-    description: null,
     kml_files: [],
   }));
   return all.filter((s) =>
-    (year == null || s.year === year) &&
     (!district || district === "All Districts" || s.district === district)
   );
 }
+
 
 function dummyYears(): number[] {
   return Array.from(new Set(dummyPlantations.map((p) => p.year))).sort((a, b) => b - a);
@@ -36,14 +32,29 @@ export interface GisKmlFile {
 
 export interface GisSite {
   id: string;
-  name: string;
+  // --- Legacy fields (commented out — replaced by new schema)
+  // name?: string;
+  // year?: number;
+  // area_covered?: string | null;
+  // species_products?: string | null;
+  // description?: string | null;
+  sl_no?: number | null;
   district: string;
-  year: number;
-  area_covered?: string | null;
-  species_products?: string | null;
-  description?: string | null;
+  sub_division?: string | null;
+  range?: string | null;
+  beat?: string | null;
+  jfmc_name: string;
+  area_sanction?: number | null;
+  area_kobo?: number | null;
+  remarks?: string | null;
+  overlapping_area?: string | null;
+  display_order?: number | null;
+  is_active?: boolean;
+  created_at?: string;
+  updated_at?: string;
   kml_files?: GisKmlFile[];
 }
+
 
 export const TRIPURA_DISTRICTS = [
   "West Tripura", "Sepahijala", "Khowai", "Gomati",
@@ -95,17 +106,18 @@ export async function fetchGisDistricts(): Promise<string[]> {
   } catch { return dummyDistricts(); }
 }
 
-export async function fetchGisSites(year: number, district?: string): Promise<GisSite[]> {
-  if (!USE_REAL_API) return dummySites(year, district);
+export async function fetchGisSites(district?: string): Promise<GisSite[]> {
+  if (!USE_REAL_API) return dummySites(district);
   try {
-    const qs = new URLSearchParams({ year: String(year) });
+    const qs = new URLSearchParams();
     if (district && district !== "All Districts") qs.set("district", district);
-    const r = await fetch(`${API_BASE_URL}/api/gis/sites?${qs.toString()}`);
-    if (!r.ok) return dummySites(year, district);
+    const url = `${API_BASE_URL}/api/gis/sites${qs.toString() ? `?${qs}` : ""}`;
+    const r = await fetch(url);
+    if (!r.ok) return dummySites(district);
     const j = await r.json();
     const arr = Array.isArray(j) ? j : [];
-    return arr.length ? arr : dummySites(year, district);
-  } catch { return dummySites(year, district); }
+    return arr.length ? arr : dummySites(district);
+  } catch { return dummySites(district); }
 }
 
 /* ---------- Admin ---------- */
@@ -118,13 +130,20 @@ export async function fetchGisSitesAdmin(): Promise<GisSite[]> {
 }
 
 export interface GisSitePayload {
-  name: string;
+  sl_no?: number | null;
   district: string;
-  year: number;
-  area_covered?: string;
-  species_products?: string;
-  description?: string;
+  sub_division?: string;
+  range?: string;
+  beat?: string;
+  jfmc_name: string;
+  area_sanction?: number | null;
+  area_kobo?: number | null;
+  remarks?: string;
+  overlapping_area?: string;
+  display_order?: number;
+  is_active?: boolean;
 }
+
 
 export async function createGisSite(payload: GisSitePayload): Promise<void> {
   const r = await fetch(`${API_BASE_URL}/api/admin/gis/sites`, {
