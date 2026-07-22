@@ -1,11 +1,15 @@
-import { useEffect, useState } from "react";
 import PageLayout, { PageHeader } from "@/components/layout/PageLayout";
-import { MapPin, Phone, Mail, Clock, Send } from "lucide-react";
+import { MapPin, Phone, Mail, Clock } from "lucide-react";
+/*
+import { useEffect, useState } from "react";
 import { fetchMapKey } from "@/lib/gis";
 import { useToast } from "@/hooks/use-toast";
+import { Send } from "lucide-react";
 import { fetchCaptcha, submitPublicForm, honeypotStyle, Captcha } from "@/lib/publicForms";
+*/
 
 export default function Contact() {
+  /*
   const { toast } = useToast();
   const [mapKey, setMapKey] = useState<string | null>(null);
   const [mapMsg, setMapMsg] = useState<string | null>(null);
@@ -88,6 +92,7 @@ export default function Contact() {
       setSubmitting(false);
     }
   };
+  */
 
   const cards = [
     { icon: MapPin, title: "Address", body: "Aranya Bhawan, Gurkhabasti\nAgartala, Tripura — 799006" },
@@ -106,7 +111,20 @@ export default function Contact() {
         <div className="gov-container space-y-8">
           <div className="grid lg:grid-cols-2 gap-6">
             <div className="bg-card border border-border rounded-md p-6 shadow-card">
-              <h2 className="section-title mb-6">Send us a message</h2>
+              <h2 className="section-title mb-6">Get in Touch</h2>
+              <div className="space-y-4">
+                <p className="text-foreground">
+                  For any queries, please reach out to us at:
+                </p>
+                <a
+                  href="mailto:elementtripuraforest@gmail.com"
+                  className="inline-block text-lg sm:text-xl font-semibold text-primary hover:text-primary/80 underline underline-offset-4 break-all"
+                >
+                  elementtripuraforest@gmail.com
+                </a>
+              </div>
+              {/*
+              Previous contact form implementation:
               <form className="grid md:grid-cols-2 gap-4" onSubmit={onSubmit}>
                 <input
                   className="border border-input rounded px-3 py-2 text-sm bg-background focus-ring"
@@ -142,7 +160,6 @@ export default function Contact() {
                   maxLength={2000}
                 />
 
-                {/* Honeypot — hidden from users */}
                 <div style={honeypotStyle} aria-hidden="true">
                   <label>
                     Website
@@ -187,11 +204,33 @@ export default function Contact() {
                   <Send className="h-4 w-4" /> {submitting ? "Sending…" : "Send Message"}
                 </button>
               </form>
+              */}
             </div>
 
             <div>
               <h2 className="section-title mb-4">Find us on the map</h2>
               <div className="relative w-full h-[420px] rounded-md overflow-hidden border border-border bg-surface shadow-card">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3648.9639287640216!2d91.2800762!3d23.855414599999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3753f6a83bf72e67%3A0xe9d268c4fbbfd3d5!2sAranya%20Bhawan!5e0!3m2!1sen!2sin!4v1784638274309!5m2!1sen!2sin"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                />
+                {/*
+                Previous Google Maps JavaScript API / Embed API with key implementation:
+                const [mapKey, setMapKey] = useState<string | null>(null);
+                const [mapMsg, setMapMsg] = useState<string | null>(null);
+
+                useEffect(() => {
+                  fetchMapKey().then((key) => {
+                    if (key) setMapKey(key);
+                    else setMapMsg("Map key unavailable.");
+                  });
+                }, []);
+
                 {mapKey ? (
                   <iframe
                     width="100%"
@@ -208,6 +247,7 @@ export default function Contact() {
                     {mapMsg}
                   </div>
                 )}
+                */}
               </div>
               <div className="mt-3 text-xs text-muted-foreground flex items-center gap-2">
                 <Clock className="h-3.5 w-3.5" /> Office Hours: Mon–Fri, 10:00 AM – 5:00 PM
