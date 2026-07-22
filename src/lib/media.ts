@@ -14,12 +14,18 @@ export const youtubeEmbed = (url: string) => {
   if (!url) return "";
   try {
     const u = new URL(url);
-    if (u.hostname.includes("youtu.be")) return `https://www.youtube.com/embed${u.pathname}`;
-    if (u.pathname.includes("/embed/")) return url;
-    const v = u.searchParams.get("v");
-    if (v) return `https://www.youtube.com/embed/${v}`;
+    const host = u.hostname.replace(/^www\./, "").replace(/^m\./, "");
+    if (host === "youtu.be") {
+      const id = u.pathname.slice(1);
+      if (/^[\w-]{11}$/.test(id)) return `https://www.youtube.com/embed/${id}`;
+    } else if (host === "youtube.com") {
+      const embedMatch = u.pathname.match(/^\/embed\/([\w-]{11})$/);
+      if (embedMatch) return `https://www.youtube.com/embed/${embedMatch[1]}`;
+      const v = u.searchParams.get("v");
+      if (v && /^[\w-]{11}$/.test(v)) return `https://www.youtube.com/embed/${v}`;
+    }
   } catch {}
-  return url;
+  return "";
 };
 
 // -------- Public --------
