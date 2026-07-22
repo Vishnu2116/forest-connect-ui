@@ -271,6 +271,8 @@ export default function Contact() {
             </div>
           </div>
 
+          {/*
+          Previous separate info cards row (Address / Phone / Email) — merged into the "Get in Touch" card above.
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {cards.map((c) => (
               <div key={c.title} className="bg-card border border-border rounded-md p-5 shadow-card flex items-start gap-4">
@@ -284,6 +286,7 @@ export default function Contact() {
               </div>
             ))}
           </div>
+          */}
         </div>
       </section>
     </PageLayout>
