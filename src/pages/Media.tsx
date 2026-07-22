@@ -27,8 +27,9 @@ export function SocialMedia() {
         ADD_TAGS: ["iframe"],
         ADD_ATTR: [
           "allow", "allowfullscreen", "frameborder", "scrolling",
-          "style", "width", "height", "src", "class", "href", "target",
+          "width", "height", "src", "class", "href", "target",
         ],
+        ALLOWED_URI_REGEXP: /^https:\/\/(www\.)?facebook\.com\//,
       })
     : "";
   const safeTw = tw
