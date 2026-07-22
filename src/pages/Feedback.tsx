@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
 import PageLayout, { PageHeader } from "@/components/layout/PageLayout";
+/*
+import { useEffect, useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { fetchCaptcha, submitPublicForm, honeypotStyle, Captcha } from "@/lib/publicForms";
 
@@ -11,8 +12,10 @@ const categories: { label: string; value: string }[] = [
   { label: "Project Information", value: "project_information" },
   { label: "Other", value: "other" },
 ];
+*/
 
 export default function Feedback() {
+  /*
   const { toast } = useToast();
   const [submitting, setSubmitting] = useState(false);
 
@@ -92,6 +95,7 @@ export default function Feedback() {
       setSubmitting(false);
     }
   };
+  */
 
   return (
     <PageLayout>
@@ -102,6 +106,19 @@ export default function Feedback() {
       />
       <section className="py-10">
         <div className="gov-container max-w-3xl">
+          <div className="bg-card border border-border rounded-md p-6 md:p-8 shadow-card space-y-4">
+            <p className="text-foreground">
+              For any feedback, please reach out to us at:
+            </p>
+            <a
+              href="mailto:elementtripuraforest@gmail.com"
+              className="inline-block text-lg sm:text-xl font-semibold text-primary hover:text-primary/80 underline underline-offset-4 break-all"
+            >
+              elementtripuraforest@gmail.com
+            </a>
+          </div>
+          {/*
+          Previous feedback form implementation:
           <form onSubmit={onSubmit} className="bg-card border border-border rounded-md p-6 md:p-8 space-y-5">
             <div className="grid sm:grid-cols-2 gap-5">
               <div>
@@ -180,7 +197,6 @@ export default function Feedback() {
               <p className="text-xs text-muted-foreground mt-1">Maximum 1000 characters.</p>
             </div>
 
-            {/* Honeypot */}
             <div style={honeypotStyle} aria-hidden="true">
               <label>
                 Website
@@ -230,6 +246,7 @@ export default function Feedback() {
               </button>
             </div>
           </form>
+          */}
         </div>
       </section>
     </PageLayout>
