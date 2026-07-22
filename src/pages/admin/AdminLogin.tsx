@@ -125,6 +125,7 @@ export default function AdminLogin() {
               <label className="flex items-center gap-2">
                 <input type="checkbox" /> Remember me
               </label>
+              {/*
               <button
                 type="button"
                 onClick={() => setForgotOpen(true)}
@@ -132,6 +133,7 @@ export default function AdminLogin() {
               >
                 Forgot password?
               </button>
+              */}
             </div>
             {error && (
               <p className="text-xs text-destructive bg-destructive/10 border border-destructive/30 rounded px-3 py-2">

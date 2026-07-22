@@ -112,16 +112,32 @@ export default function Contact() {
           <div className="grid lg:grid-cols-2 gap-6">
             <div className="bg-card border border-border rounded-md p-6 shadow-card">
               <h2 className="section-title mb-6">Get in Touch</h2>
-              <div className="space-y-4">
-                <p className="text-foreground">
-                  For any queries, please reach out to us at:
-                </p>
-                <a
-                  href="mailto:elementtripuraforest@gmail.com"
-                  className="inline-block text-lg sm:text-xl font-semibold text-primary hover:text-primary/80 underline underline-offset-4 break-all"
-                >
-                  elementtripuraforest@gmail.com
-                </a>
+              <div className="space-y-6">
+                <div className="space-y-3">
+                  <p className="text-foreground">
+                    For any queries, please reach out to us at:
+                  </p>
+                  <a
+                    href="mailto:elementtripuraforest@gmail.com"
+                    className="inline-block text-lg sm:text-xl font-semibold text-primary hover:text-primary/80 underline underline-offset-4 break-all"
+                  >
+                    elementtripuraforest@gmail.com
+                  </a>
+                </div>
+
+                <div className="border-t border-border pt-5 space-y-5">
+                  {cards.map((c) => (
+                    <div key={c.title} className="flex items-start gap-4">
+                      <div className="p-2.5 bg-primary/10 text-primary rounded shrink-0">
+                        <c.icon className="h-5 w-5" />
+                      </div>
+                      <div className="min-w-0">
+                        <h3 className="font-semibold text-primary">{c.title}</h3>
+                        <p className="text-sm text-muted-foreground mt-1 whitespace-pre-line">{c.body}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
               {/*
               Previous contact form implementation:
@@ -255,6 +271,8 @@ export default function Contact() {
             </div>
           </div>
 
+          {/*
+          Previous separate info cards row (Address / Phone / Email) — merged into the "Get in Touch" card above.
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {cards.map((c) => (
               <div key={c.title} className="bg-card border border-border rounded-md p-5 shadow-card flex items-start gap-4">
@@ -268,6 +286,7 @@ export default function Contact() {
               </div>
             ))}
           </div>
+          */}
         </div>
       </section>
     </PageLayout>

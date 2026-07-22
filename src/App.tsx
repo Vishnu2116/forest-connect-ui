@@ -164,9 +164,9 @@ const App = () => (
             <Route path="knowledge-hub" element={<KnowledgeHubAdmin />} />
             
             
-            <Route path="contact-messages" element={<ContactMessagesAdmin />} />
-            <Route path="feedback-messages" element={<FeedbackMessagesAdmin />} />
-            <Route path="grievance" element={<GrievanceAdmin />} />
+            {/* <Route path="contact-messages" element={<ContactMessagesAdmin />} /> */}
+            {/* <Route path="feedback-messages" element={<FeedbackMessagesAdmin />} /> */}
+            {/* <Route path="grievance" element={<GrievanceAdmin />} /> */}
             <Route path="rti" element={<RTIAdmin />} />
             <Route path="users" element={<UsersAdmin />} />
             <Route path="settings" element={<SettingsAdmin />} />
