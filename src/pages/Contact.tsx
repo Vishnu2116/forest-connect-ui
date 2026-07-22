@@ -95,9 +95,17 @@ export default function Contact() {
   */
 
   const cards = [
-    { icon: MapPin, title: "Address", body: "Aranya Bhawan, Gurkhabasti\nAgartala, Tripura — 799006" },
-    { icon: Phone, title: "Phone", body: "+91 381 2416403\nHelpline: 1800-345-3666" },
-    { icon: Mail, title: "Email", body: "info-forest@tripura.gov.in\npio-forest@tripura.gov.in" },
+    {
+      icon: MapPin,
+      title: "Address",
+      body: "Aranya Bhawan, Gurkhabasti\nAgartala, Tripura — 799006",
+    },
+    {
+      icon: Phone,
+      title: "Phone",
+      body: "+91 381 2416403\nHelpline: 1800-345-3666",
+    },
+    { icon: Mail, title: "Email", body: "elementtripuraforest@gmail.com" },
   ];
 
   return (
@@ -132,8 +140,12 @@ export default function Contact() {
                         <c.icon className="h-5 w-5" />
                       </div>
                       <div className="min-w-0">
-                        <h3 className="font-semibold text-primary">{c.title}</h3>
-                        <p className="text-sm text-muted-foreground mt-1 whitespace-pre-line">{c.body}</p>
+                        <h3 className="font-semibold text-primary">
+                          {c.title}
+                        </h3>
+                        <p className="text-sm text-muted-foreground mt-1 whitespace-pre-line">
+                          {c.body}
+                        </p>
                       </div>
                     </div>
                   ))}
@@ -266,7 +278,8 @@ export default function Contact() {
                 */}
               </div>
               <div className="mt-3 text-xs text-muted-foreground flex items-center gap-2">
-                <Clock className="h-3.5 w-3.5" /> Office Hours: Mon–Fri, 10:00 AM – 5:00 PM
+                <Clock className="h-3.5 w-3.5" /> Office Hours: Mon–Fri, 10:00
+                AM – 5:00 PM
               </div>
             </div>
           </div>

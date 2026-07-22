@@ -222,7 +222,7 @@ export default function Navbar() {
               <Lock className="h-3 w-3" /> {t("common.adminLogin")}
             </Link>
             <span className="hidden sm:inline opacity-50">|</span>
-            <div className="relative">
+            {/* <div className="relative">
               <button
                 onClick={() => setLangOpen((v) => !v)}
                 onBlur={() => setTimeout(() => setLangOpen(false), 150)}
@@ -255,7 +255,7 @@ export default function Navbar() {
                   ))}
                 </ul>
               )}
-            </div>
+            </div> */}
           </div>
         </div>
 
