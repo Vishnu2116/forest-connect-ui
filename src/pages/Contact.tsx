@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import PageLayout, { PageHeader } from "@/components/layout/PageLayout";
-import { MapPin, Phone, Mail, Clock, Send } from "lucide-react";
+import { MapPin, Phone, Mail, Clock } from "lucide-react";
 import { fetchMapKey } from "@/lib/gis";
 import { useToast } from "@/hooks/use-toast";
 import { fetchCaptcha, submitPublicForm, honeypotStyle, Captcha } from "@/lib/publicForms";
+/*
+Previously used: Send icon removed from the contact form section below.
+*/
 
 export default function Contact() {
   const { toast } = useToast();
