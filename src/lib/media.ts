@@ -88,7 +88,7 @@ export async function adminSaveEvent(data: { id?: string; title: string; event_d
   const fd = new FormData();
   fd.append("title", data.title);
   fd.append("event_date", data.event_date);
-  if (data.description) fd.append("description", data.description);
+  if (data.description !== undefined) fd.append("description", data.description);
   if (data.cover) fd.append("cover", data.cover, data.cover.name);
   const url = data.id ? `${API_BASE_URL}/api/admin/events/${data.id}` : `${API_BASE_URL}/api/admin/events`;
   const r = await fetch(url, { method: data.id ? "PUT" : "POST", headers: getAuthHeaders(), body: fd });
