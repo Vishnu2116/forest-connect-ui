@@ -527,7 +527,16 @@ export function MediaEventDetail() {
     <PageLayout>
       <PageHeader
         title={display.title}
-        subtitle={`${display.event_date?.includes("-") ? formatEventDate(display.event_date) : display.event_date}${display.venue ? ` · ${display.venue}` : ""}`}
+        subtitle={[
+          display.event_date
+            ? display.event_date.includes("-")
+              ? formatEventDate(display.event_date)
+              : display.event_date
+            : null,
+          display.venue,
+        ]
+          .filter(Boolean)
+          .join(" · ")}
         breadcrumb={["Home", "Media", "Events", display.title]}
       />
       <section className="py-10">
@@ -553,12 +562,14 @@ export function MediaEventDetail() {
               )}
             </div>
             {/* Duplicate title & description removed — already shown in PageHeader.
-            <h1 className="text-2xl md:text-3xl font-bold text-primary mb-4">{display.title}</h1>
+            <h1 className="text-2xl md:text-3xl font-bold text-primary mb-4">
+              {display.title}
+            </h1>
             {display.description && (
-              <p className="text-sm md:text-base text-muted-foreground leading-relaxed">{display.description}</p>
-            )}
-            */}
-
+              <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
+                {display.description}
+              </p>
+            )} */}
             {display.images?.length > 0 && (
               <>
                 <h2 className="text-base font-bold text-primary mt-2 mb-4">
