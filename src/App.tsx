@@ -32,8 +32,12 @@ import ResetPassword from "./pages/admin/ResetPassword";
 import AdminLayout from "./pages/admin/AdminLayout";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import {
-  NotificationsAdmin, EventsAdmin, TendersAdmin, WhosWhoAdmin, SuccessStoriesAdmin,
-  NewslettersAdmin, ThematicAdmin, ReportsAdmin, IECAdmin, ActivitiesAdmin,
+  NotificationsAdmin, EventsAdmin, TendersAdmin, SuccessStoriesAdmin,
+  NewslettersAdmin, ThematicAdmin, ReportsAdmin, IECAdmin,
+  // Disabled: mock/dead module, route commented out above.
+  // WhosWhoAdmin,
+  // Disabled: mock/dead module, route commented out above.
+  // ActivitiesAdmin,
 } from "./pages/admin/modules";
 import ProcurementsAdmin from "./pages/admin/ProcurementsAdmin";
 import ProjectsManagementAdmin from "./pages/admin/ProjectsManagementAdmin";
@@ -42,7 +46,8 @@ import PlantationAdmin from "./pages/admin/PlantationAdmin";
 import { GrievanceAdmin } from "./pages/admin/StatusModules";
 import { ContactMessagesAdmin, FeedbackMessagesAdmin } from "./pages/admin/MessagesAdmin";
 import RTIAdmin from "./pages/admin/RTIAdmin";
-import { UsersAdmin } from "./pages/admin/UsersAdmin";
+// Disabled: mock/dead module, route commented out above.
+// import { UsersAdmin } from "./pages/admin/UsersAdmin";
 import SettingsAdmin from "./pages/admin/SettingsAdmin";
 import HeroManagementAdmin from "./pages/admin/HeroManagementAdmin";
 import HomeLeadershipAdmin from "./pages/admin/HomeLeadershipAdmin";
@@ -144,13 +149,15 @@ const App = () => (
             <Route path="social-media" element={<SocialMediaAdmin />} />
             <Route path="tenders" element={<ProcurementsAdmin />} />
             <Route path="procurements" element={<ProcurementsAdmin />} />
-            <Route path="whoswho" element={<WhosWhoAdmin />} />
+            {/* Disabled: mock/dead module, superseded by OfficialsAdmin. Sidebar link removed. */}
+            {/* <Route path="whoswho" element={<WhosWhoAdmin />} /> */}
             <Route path="success-stories" element={<Navigate to="/admin/knowledge-hub?type=success_story" replace />} />
             <Route path="newsletters" element={<Navigate to="/admin/knowledge-hub?type=newsletter" replace />} />
             <Route path="thematic" element={<Navigate to="/admin/knowledge-hub?type=thematic_study" replace />} />
             <Route path="reports" element={<Navigate to="/admin/knowledge-hub?type=report" replace />} />
             <Route path="iec" element={<Navigate to="/admin/knowledge-hub?type=iec_material" replace />} />
-            <Route path="activities" element={<ActivitiesAdmin />} />
+            {/* Disabled: mock/dead module, superseded by ActivitiesOutputsAdmin. Sidebar link removed. */}
+            {/* <Route path="activities" element={<ActivitiesAdmin />} /> */}
             <Route path="activities-outputs" element={<ActivitiesOutputsAdmin />} />
             <Route path="activities-outputs/:projectId" element={<ActivitiesOutputsEditAdmin />} />
             <Route path="projects" element={<ProjectsManagementAdmin />} />
@@ -168,7 +175,8 @@ const App = () => (
             {/* <Route path="feedback-messages" element={<FeedbackMessagesAdmin />} /> */}
             {/* <Route path="grievance" element={<GrievanceAdmin />} /> */}
             <Route path="rti" element={<RTIAdmin />} />
-            <Route path="users" element={<UsersAdmin />} />
+            {/* Disabled: mock/dead module, real Users feature TBD. Sidebar link removed. */}
+            {/* <Route path="users" element={<UsersAdmin />} /> */}
             <Route path="settings" element={<SettingsAdmin />} />
           </Route>
           <Route path="*" element={<NotFound />} />

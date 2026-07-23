@@ -17,7 +17,8 @@ export const adminMenu = [
   
   
   { to: "/admin/officials", label: "Officials & Directory", icon: Users },
-  { to: "/admin/activities", label: "Activities & Outputs", icon: Activity },
+  // Disabled: pointed to the mock ActivitiesAdmin module, duplicating the real "Activities Content" entry below.
+  // { to: "/admin/activities", label: "Activities & Outputs", icon: Activity },
   { to: "/admin/activities-outputs", label: "Activities Content", icon: Activity },
   { to: "/admin/knowledge-hub", label: "Knowledge Hub", icon: BookOpen },
   { to: "/admin/project-components", label: "Project Components", icon: Layers },
