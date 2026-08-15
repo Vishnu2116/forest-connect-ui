@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { Lock, User, ArrowLeft } from "lucide-react";
+import { Lock, User, ArrowLeft, ShieldCheck } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -17,6 +18,10 @@ export default function AdminLogin() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [forgotOpen, setForgotOpen] = useState(false);
+  const [tempToken, setTempToken] = useState<string | null>(null);
+  const [code, setCode] = useState("");
+  const [codeError, setCodeError] = useState("");
+  const [verifying, setVerifying] = useState(false);
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -31,6 +36,12 @@ export default function AdminLogin() {
       });
       if (res.status === 200) {
         const data = await res.json();
+        if (data?.mfa_required && data?.temp_token) {
+          setTempToken(data.temp_token);
+          setCode("");
+          setCodeError("");
+          return;
+        }
         localStorage.setItem("element_admin_token", data.token);
         resetSessionExpiredFlag();
         navigate("/admin");
@@ -45,6 +56,44 @@ export default function AdminLogin() {
       setLoading(false);
     }
   };
+
+  const onVerify = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (code.length !== 6) {
+      setCodeError("Enter the 6-digit code from your authenticator app");
+      return;
+    }
+    setCodeError("");
+    setVerifying(true);
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/auth/mfa/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ temp_token: tempToken, code }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (res.status === 200 && data?.token) {
+        localStorage.setItem("element_admin_token", data.token);
+        resetSessionExpiredFlag();
+        navigate("/admin");
+        return;
+      }
+      setCodeError(data?.error || data?.message || "Invalid code");
+      setCode("");
+    } catch {
+      setCodeError("Unable to connect to server");
+    } finally {
+      setVerifying(false);
+    }
+  };
+
+  const backToLogin = () => {
+    setTempToken(null);
+    setCode("");
+    setCodeError("");
+    setPass("");
+  };
+
 
   return (
     <main className="min-h-screen bg-surface flex flex-col">
