@@ -22,8 +22,6 @@ export default function AdminLogin() {
     e.preventDefault();
     setError("");
 
-
-
     setLoading(true);
     try {
       const res = await fetch(`${API_BASE_URL}/api/auth/login`, {
@@ -100,7 +98,7 @@ export default function AdminLogin() {
                   id="user"
                   value={user}
                   onChange={(e) => setUser(e.target.value)}
-                  placeholder="admin@element.tripura.gov.in"
+                  placeholder=""
                   className="pl-9"
                   required
                 />
@@ -117,6 +115,7 @@ export default function AdminLogin() {
                   onChange={(e) => setPass(e.target.value)}
                   placeholder="••••••••"
                   className="pl-9"
+                  autoComplete="new-password"
                   required
                 />
               </div>

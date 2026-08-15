@@ -153,7 +153,7 @@ export function AboutElement() {
     <AboutLayout
       title="About PROJECT ELEMENT"
       subtitle="A joint initiative for landscape development, livelihood generation and economic transformation"
-      backgroundImage="/AboutBg.jpg"
+      backgroundImage={`${import.meta.env.BASE_URL}AboutBg.jpg`}
     >
       <div className="space-y-10">
         {/* What is PROJECT ELEMENT? */}
@@ -483,7 +483,7 @@ export function Organization() {
     <AboutLayout
       title="Organization Structure"
       subtitle="Governance and implementation framework of the PROJECT ELEMENT"
-      backgroundImage="/orgbg.jpg"
+      backgroundImage={`${import.meta.env.BASE_URL}orgbg.jpg`}
     >
       <div className="space-y-8">
         {/* Header intro */}
@@ -605,7 +605,7 @@ export function Organization() {
         <div className="flex flex-col items-center w-full">
           <div className="w-full max-w-6xl rounded-xl border border-border bg-card p-4 shadow-sm">
             <img
-              src="/FLowchart.png"
+              src={`${import.meta.env.BASE_URL}FLowchart.png`}
               alt="Institutional Structure Flowchart"
               className="w-full h-auto rounded-lg object-contain"
             />
@@ -1081,7 +1081,7 @@ export function LoanAgreement() {
 
               <div className="flex flex-wrap gap-3 mt-4">
                 <a
-                  href="/LoanAgreement.pdf"
+                  href={`${import.meta.env.BASE_URL}LoanAgreement.pdf`}
                   download
                   className="inline-flex items-center gap-1.5 bg-primary hover:bg-primary/90 text-primary-foreground px-4 py-2 rounded text-sm font-semibold transition"
                 >
@@ -1090,7 +1090,7 @@ export function LoanAgreement() {
                 </a>
 
                 <a
-                  href="/LoanAgreement.pdf"
+                  href={`${import.meta.env.BASE_URL}LoanAgreement.pdf`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1.5 border border-primary text-primary hover:bg-primary/5 px-4 py-2 rounded text-sm font-semibold transition"
