@@ -138,7 +138,52 @@ export default function AdminLogin() {
             <p className="text-[11px] opacity-80 mt-1">Admin Portal</p>
           </div>
 
+          {tempToken ? (
+            <form onSubmit={onVerify} className="p-6 space-y-4">
+              <div className="flex items-center gap-2 text-primary">
+                <ShieldCheck className="h-5 w-5" />
+                <h2 className="font-semibold">Enter verification code</h2>
+              </div>
+              <p className="text-xs text-muted-foreground">
+                Enter the 6-digit code from your authenticator app to finish signing in.
+              </p>
+              <div>
+                <Label htmlFor="mfa_code">Verification Code</Label>
+                <Input
+                  id="mfa_code"
+                  value={code}
+                  onChange={(e) => setCode(e.target.value.replace(/\D/g, "").slice(0, 6))}
+                  inputMode="numeric"
+                  autoComplete="one-time-code"
+                  maxLength={6}
+                  placeholder="000000"
+                  className="mt-1 font-mono tracking-widest text-center"
+                  autoFocus
+                />
+              </div>
+              {codeError && (
+                <p className="text-xs text-destructive bg-destructive/10 border border-destructive/30 rounded px-3 py-2">
+                  {codeError}
+                </p>
+              )}
+              <Button
+                type="submit"
+                disabled={verifying || code.length !== 6}
+                className="w-full bg-accent hover:bg-accent/90 text-accent-foreground h-11 text-base font-semibold"
+              >
+                {verifying ? "Verifying..." : "Verify"}
+              </Button>
+              <button
+                type="button"
+                onClick={backToLogin}
+                className="w-full text-xs text-primary hover:underline inline-flex items-center justify-center gap-1"
+              >
+                <ArrowLeft className="h-3.5 w-3.5" /> Back to login
+              </button>
+            </form>
+          ) : (
           <form onSubmit={onSubmit} className="p-6 space-y-4">
+
             <div>
               <Label htmlFor="user">Username / Email</Label>
               <div className="relative mt-1">
