@@ -3,7 +3,7 @@ import { Link, NavLink, useNavigate, Outlet, Navigate } from "react-router-dom";
 import {
   LayoutDashboard, Bell, Calendar, FileText, Users, Award, BookOpen, FolderKanban,
   Image as ImageIcon, Activity, Briefcase, TreePine, MessageSquare, FileQuestion,
-  UserCog, Settings, LogOut, Menu, X, Home as HomeIcon, Layers, SlidersHorizontal, KeyRound
+  UserCog, Settings, LogOut, Menu, X, Home as HomeIcon, Layers, SlidersHorizontal, KeyRound, ShieldCheck
 } from "lucide-react";
 import logoTripura from "@/assets/logo-tripura.png";
 import ChangePasswordDialog from "@/components/admin/ChangePasswordDialog";
@@ -31,6 +31,7 @@ export const adminMenu = [
   // { to: "/admin/feedback-messages", label: "Feedback Messages", icon: MessageSquare },
   // { to: "/admin/grievance", label: "Grievance Mgmt", icon: MessageSquare },
   { to: "/admin/rti", label: "RTI Mgmt", icon: FileQuestion },
+  { to: "/admin/mfa-setup", label: "Security / MFA Setup", icon: ShieldCheck },
   { to: "/admin/settings", label: "Settings", icon: Settings },
 ];
 
