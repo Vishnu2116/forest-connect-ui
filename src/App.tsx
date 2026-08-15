@@ -77,6 +77,7 @@ import RTIAdmin from "./pages/admin/RTIAdmin";
 // Disabled: mock/dead module, route commented out above.
 // import { UsersAdmin } from "./pages/admin/UsersAdmin";
 import SettingsAdmin from "./pages/admin/SettingsAdmin";
+import MfaSetupAdmin from "./pages/admin/MfaSetupAdmin";
 import HeroManagementAdmin from "./pages/admin/HeroManagementAdmin";
 import HomeLeadershipAdmin from "./pages/admin/HomeLeadershipAdmin";
 import HomeSocialMediaAdmin from "./pages/admin/HomeSocialMediaAdmin";
@@ -328,6 +329,7 @@ const App = () => (
                   <Route path="rti" element={<RTIAdmin />} />
                   {/* Disabled: mock/dead module, real Users feature TBD. Sidebar link removed. */}
                   {/* <Route path="users" element={<UsersAdmin />} /> */}
+                  <Route path="mfa-setup" element={<MfaSetupAdmin />} />
                   <Route path="settings" element={<SettingsAdmin />} />
                 </Route>
                 <Route path="*" element={<NotFound />} />
