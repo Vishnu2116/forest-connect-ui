@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { Lock, User, ArrowLeft, ShieldCheck } from "lucide-react";
+import { Lock, User, ArrowLeft, ShieldCheck, AlertTriangle } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -22,6 +22,9 @@ export default function AdminLogin() {
   const [code, setCode] = useState("");
   const [codeError, setCodeError] = useState("");
   const [verifying, setVerifying] = useState(false);
+  const [activeToken, setActiveToken] = useState<string | null>(null);
+  const [activeError, setActiveError] = useState("");
+  const [confirming, setConfirming] = useState(false);
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -36,6 +39,11 @@ export default function AdminLogin() {
       });
       if (res.status === 200) {
         const data = await res.json();
+        if (data?.already_active && data?.temp_token) {
+          setActiveToken(data.temp_token);
+          setActiveError("");
+          return;
+        }
         if (data?.mfa_required && data?.temp_token) {
           setTempToken(data.temp_token);
           setCode("");
