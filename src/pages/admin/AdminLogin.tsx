@@ -80,6 +80,13 @@ export default function AdminLogin() {
         body: JSON.stringify({ temp_token: tempToken, code }),
       });
       const data = await res.json().catch(() => ({}));
+      if (res.status === 200 && data?.already_active && data?.temp_token) {
+        setActiveToken(data.temp_token);
+        setActiveError("");
+        setTempToken(null);
+        setCode("");
+        return;
+      }
       if (res.status === 200 && data?.token) {
         localStorage.setItem("element_admin_token", data.token);
         resetSessionExpiredFlag();
@@ -95,8 +102,34 @@ export default function AdminLogin() {
     }
   };
 
+  const onConfirmLogin = async () => {
+    setActiveError("");
+    setConfirming(true);
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/auth/confirm-login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ temp_token: activeToken }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (res.status === 200 && data?.token) {
+        localStorage.setItem("element_admin_token", data.token);
+        resetSessionExpiredFlag();
+        navigate("/admin");
+        return;
+      }
+      setActiveError(data?.error || data?.message || "Unable to continue. Please try again.");
+    } catch {
+      setActiveError("Unable to connect to server");
+    } finally {
+      setConfirming(false);
+    }
+  };
+
   const backToLogin = () => {
     setTempToken(null);
+    setActiveToken(null);
+    setActiveError("");
     setCode("");
     setCodeError("");
     setPass("");
