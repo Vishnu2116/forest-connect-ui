@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { Lock, User, ArrowLeft, ShieldCheck } from "lucide-react";
+import { Lock, User, ArrowLeft, ShieldCheck, AlertTriangle } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -22,6 +22,9 @@ export default function AdminLogin() {
   const [code, setCode] = useState("");
   const [codeError, setCodeError] = useState("");
   const [verifying, setVerifying] = useState(false);
+  const [activeToken, setActiveToken] = useState<string | null>(null);
+  const [activeError, setActiveError] = useState("");
+  const [confirming, setConfirming] = useState(false);
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -36,6 +39,11 @@ export default function AdminLogin() {
       });
       if (res.status === 200) {
         const data = await res.json();
+        if (data?.already_active && data?.temp_token) {
+          setActiveToken(data.temp_token);
+          setActiveError("");
+          return;
+        }
         if (data?.mfa_required && data?.temp_token) {
           setTempToken(data.temp_token);
           setCode("");
@@ -72,6 +80,13 @@ export default function AdminLogin() {
         body: JSON.stringify({ temp_token: tempToken, code }),
       });
       const data = await res.json().catch(() => ({}));
+      if (res.status === 200 && data?.already_active && data?.temp_token) {
+        setActiveToken(data.temp_token);
+        setActiveError("");
+        setTempToken(null);
+        setCode("");
+        return;
+      }
       if (res.status === 200 && data?.token) {
         localStorage.setItem("element_admin_token", data.token);
         resetSessionExpiredFlag();
@@ -87,8 +102,34 @@ export default function AdminLogin() {
     }
   };
 
+  const onConfirmLogin = async () => {
+    setActiveError("");
+    setConfirming(true);
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/auth/confirm-login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ temp_token: activeToken }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (res.status === 200 && data?.token) {
+        localStorage.setItem("element_admin_token", data.token);
+        resetSessionExpiredFlag();
+        navigate("/admin");
+        return;
+      }
+      setActiveError(data?.error || data?.message || "Unable to continue. Please try again.");
+    } catch {
+      setActiveError("Unable to connect to server");
+    } finally {
+      setConfirming(false);
+    }
+  };
+
   const backToLogin = () => {
     setTempToken(null);
+    setActiveToken(null);
+    setActiveError("");
     setCode("");
     setCodeError("");
     setPass("");
@@ -138,7 +179,42 @@ export default function AdminLogin() {
             <p className="text-[11px] opacity-80 mt-1">Admin Portal</p>
           </div>
 
-          {tempToken ? (
+          {activeToken ? (
+            <div className="p-6 space-y-4">
+              <div className="flex items-center gap-2 text-destructive">
+                <AlertTriangle className="h-5 w-5" />
+                <h2 className="font-semibold">Already logged in</h2>
+              </div>
+              <p className="text-sm text-muted-foreground">
+                This account is already logged in elsewhere. Do you want to end
+                that session and continue here?
+              </p>
+              {activeError && (
+                <p className="text-xs text-destructive bg-destructive/10 border border-destructive/30 rounded px-3 py-2">
+                  {activeError}
+                </p>
+              )}
+              <div className="flex gap-3">
+                <Button
+                  type="button"
+                  onClick={onConfirmLogin}
+                  disabled={confirming}
+                  className="flex-1 bg-accent hover:bg-accent/90 text-accent-foreground h-11 text-base font-semibold"
+                >
+                  {confirming ? "Continuing..." : "Continue"}
+                </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={backToLogin}
+                  disabled={confirming}
+                  className="flex-1 h-11 text-base font-semibold"
+                >
+                  Cancel
+                </Button>
+              </div>
+            </div>
+          ) : tempToken ? (
             <form onSubmit={onVerify} className="p-6 space-y-4">
               <div className="flex items-center gap-2 text-primary">
                 <ShieldCheck className="h-5 w-5" />
