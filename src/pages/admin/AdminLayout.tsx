@@ -1,4 +1,4 @@
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { Link, NavLink, useNavigate, Outlet, Navigate } from "react-router-dom";
 import {
   LayoutDashboard, Bell, Calendar, FileText, Users, Award, BookOpen, FolderKanban,
@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 import logoTripura from "@/assets/logo-tripura.png";
 import ChangePasswordDialog from "@/components/admin/ChangePasswordDialog";
+import { startSessionPolling } from "@/config/api";
 
 export const adminMenu = [
   { to: "/admin", label: "Dashboard", icon: LayoutDashboard, end: true },
@@ -60,6 +61,11 @@ export default function AdminLayout() {
     localStorage.removeItem("element_admin");
     navigate("/admin/login");
   };
+
+  useEffect(() => {
+    const stop = startSessionPolling();
+    return stop;
+  }, []);
 
   return (
     <div className="min-h-screen flex bg-surface">

@@ -43,6 +43,23 @@ export const handleApiResponse = async (response) => {
   return response;
 };
 
+export const startSessionPolling = () => {
+  const interval = setInterval(async () => {
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/auth/session-check`, {
+        headers: getAuthHeaders(),
+      });
+      if (res.status === 401) {
+        await handleApiResponse(res);
+      }
+    } catch (e) {
+      // network errors are ignored here — don't log the user out
+      // just because of a transient connectivity blip
+    }
+  }, 15000);
+  return () => clearInterval(interval);
+};
+
 // Global safety net: any fetch to an /api/admin/* endpoint that returns 401
 // triggers the session-expired flow. This ensures coverage even if a call
 // site forgets to invoke handleApiResponse explicitly.
@@ -61,9 +78,12 @@ if (typeof window !== "undefined" && !window.__elementAdminFetchPatched) {
         typeof window !== "undefined" &&
         window.location &&
         window.location.pathname.includes("/admin");
+      const isExemptEndpoint =
+        url.includes("/change-password") || url.includes("/mfa/verify-setup");
       if (
         response.status === 401 &&
-        (url.includes("/api/admin/") || onAdminRoute)
+        (url.includes("/api/admin/") || onAdminRoute) &&
+        !isExemptEndpoint
       ) {
         handleApiResponse(response.clone()).catch(() => {});
       }
