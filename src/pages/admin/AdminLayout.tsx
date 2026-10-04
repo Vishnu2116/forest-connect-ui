@@ -7,7 +7,7 @@ import {
 } from "lucide-react";
 import logoTripura from "@/assets/logo-tripura.png";
 import ChangePasswordDialog from "@/components/admin/ChangePasswordDialog";
-import { startSessionPolling } from "@/config/api";
+import { startSessionPolling, API_BASE_URL, getAuthHeaders } from "@/config/api";
 
 export const adminMenu = [
   { to: "/admin", label: "Dashboard", icon: LayoutDashboard, end: true },
@@ -55,7 +55,16 @@ export default function AdminLayout() {
   }
 
 
-  const logout = () => {
+  const logout = async () => {
+    try {
+      await fetch(`${API_BASE_URL}/api/auth/logout`, {
+        method: "POST",
+        headers: getAuthHeaders(),
+      });
+    } catch (e) {
+      // If the request fails (e.g. network issue), still proceed to
+      // clear local state below — don't block logout on this call.
+    }
     sessionStorage.removeItem("element_admin");
     localStorage.removeItem("element_admin_token");
     localStorage.removeItem("element_admin");

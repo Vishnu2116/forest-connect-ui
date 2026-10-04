@@ -108,7 +108,7 @@ const App = () => (
         <TooltipProvider>
           <Toaster />
           <Sonner />
-          <BrowserRouter basename="/element">
+          <BrowserRouter basename={import.meta.env.BASE_URL}>
             <SettingsProvider>
               <ScrollToTop />
 

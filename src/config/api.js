@@ -56,7 +56,7 @@ export const startSessionPolling = () => {
       // network errors are ignored here — don't log the user out
       // just because of a transient connectivity blip
     }
-  }, 15000);
+  }, 5000);
   return () => clearInterval(interval);
 };
 
