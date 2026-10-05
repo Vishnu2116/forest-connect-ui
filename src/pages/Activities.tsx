@@ -9,6 +9,9 @@ import {
   Briefcase,
   BarChart3,
   ArrowRight,
+  TreePine,
+  Cloud,
+  ShieldCheck,
 } from "lucide-react";
 import {
   fetchActivityProjects,
@@ -16,34 +19,75 @@ import {
 } from "@/lib/activities";
 import { resolveImage } from "@/lib/projects";
 
+// const outputs = [
+//   {
+//     icon: TrendingUp,
+//     label: "Livelihood Activities",
+//     value: "620+",
+//     note: "Across all 8 districts",
+//     color: "bg-primary/10 text-primary",
+//   },
+//   {
+//     icon: Users,
+//     label: "Households Benefited",
+//     value: "25,000+",
+//     note: "Community participation",
+//     color: "bg-accent/10 text-accent",
+//   },
+//   {
+//     icon: Briefcase,
+//     label: "SHG Members Engaged",
+//     value: "12,000+",
+//     note: "Value chain activities",
+//     color: "bg-primary/10 text-primary",
+//   },
+//   {
+//     icon: BarChart3,
+//     label: "Area Under Management",
+//     value: "18,500 Ha",
+//     note: "Landscape restoration",
+//     color: "bg-accent/10 text-accent",
+//   },
+// ];
+
 const outputs = [
   {
-    icon: TrendingUp,
-    label: "Livelihood Activities",
-    value: "620+",
-    note: "Across all 8 districts",
+    icon: TreePine,
+    label:
+      "Terrestrial and aquatic areas under enhanced conservation and management (CRI)",
+    value: "41,700 Ha",
+    note: "PDO1",
     color: "bg-primary/10 text-primary",
+  },
+  {
+    icon: Cloud,
+    label:
+      "Net GHG emissions (CRI) — measured in tCO₂e (tonnes of carbon dioxide equivalent)",
+    value: "13,65,538",
+    note: "PDO2",
+    color: "bg-accent/10 text-accent",
   },
   {
     icon: Users,
-    label: "Households Benefited",
-    value: "25,000+",
-    note: "Community participation",
-    color: "bg-accent/10 text-accent",
-  },
-  {
-    icon: Briefcase,
-    label: "SHG Members Engaged",
-    value: "12,000+",
-    note: "Value chain activities",
+    label:
+      "People with increased benefits from landscape-based value chains (disaggregated by gender)",
+    value: "75,000",
+    note: "PDO3",
     color: "bg-primary/10 text-primary",
   },
   {
-    icon: BarChart3,
-    label: "Area Under Management",
-    value: "18,500 Ha",
-    note: "Landscape restoration",
+    icon: Briefcase,
+    label: "New or better jobs (disaggregated by gender, youth) (CRI)",
+    value: "37,500",
+    note: "PDO4",
     color: "bg-accent/10 text-accent",
+  },
+  {
+    icon: ShieldCheck,
+    label: "People with enhanced resilience to climate risks (CRI)",
+    value: "4,50,000",
+    note: "PDO5",
+    color: "bg-primary/10 text-primary",
   },
 ];
 

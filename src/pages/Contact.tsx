@@ -239,7 +239,7 @@ export default function Contact() {
               <h2 className="section-title mb-4">Find us on the map</h2>
               <div className="relative w-full h-[420px] rounded-md overflow-hidden border border-border bg-surface shadow-card">
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3648.9639287640216!2d91.2800762!3d23.855414599999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3753f6a83bf72e67%3A0xe9d268c4fbbfd3d5!2sAranya%20Bhawan!5e0!3m2!1sen!2sin!4v1784638274309!5m2!1sen!2sin"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3648.041199735116!2d91.2859744!3d23.888157699999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3753f6cd8fc8f755%3A0x5790a427fbfc44f!2sJICA%20Project%20Building%20(Prakriti%20Bhaban)!5e0!3m2!1sen!2sin!4v1791203966605!5m2!1sen!2sin"
                   width="100%"
                   height="100%"
                   style={{ border: 0 }}
