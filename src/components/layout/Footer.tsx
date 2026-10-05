@@ -6,6 +6,7 @@ import { useSettings } from "@/contexts/SettingsContext";
 export default function Footer() {
   const { t } = useLang();
   const { settings, visitorCount } = useSettings();
+  const email = settings.contact_email?.trim();
   return (
     <footer className="bg-primary-dark text-primary-foreground mt-16">
       <div className="gov-container py-12 md:py-6 grid gap-10 md:gap-12 sm:grid-cols-2 lg:grid-cols-4">
@@ -180,7 +181,14 @@ export default function Footer() {
           <div className="space-y-3 text-md opacity-90">
             <div className="flex items-start gap-2">
               <MapPin className="h-4 w-4 mt-0.5 shrink-0 text-accent" />{" "}
-              {settings.office_address}
+              <a
+                href="https://maps.app.goo.gl/1nVm2mq2E5enWH4Y6?g_st=aw"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:underline"
+              >
+                {settings.office_address}
+              </a>
             </div>
             <div className="flex items-center gap-2">
               <Phone className="h-4 w-4 shrink-0 text-accent" />{" "}
@@ -188,7 +196,13 @@ export default function Footer() {
             </div>
             <div className="flex items-center gap-2">
               <Mail className="h-4 w-4 shrink-0 text-accent" />{" "}
-              {settings.contact_email}
+              {email ? (
+                <a href={`mailto:${email}`} className="hover:underline">
+                  {email}
+                </a>
+              ) : (
+                settings.contact_email
+              )}
             </div>
           </div>
           <div className="flex gap-3 mt-4">
