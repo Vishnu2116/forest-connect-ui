@@ -444,7 +444,7 @@ export const Tenders = () => (
 );
 // Removed per request — kept for future use
 // export const RFPs = () => (
-//   <ProcurementApiListing type="rfp" title="RFPs" subtitle="Active Requests for Proposals under the PROJECT ELEMENT" breadcrumb={["Home", "Procurements", "RFPs"]} />
+//   <ProcurementApiListing type="rfp" title="RFPs" subtitle="Active Requests for Proposals under the ELEMENT Project" breadcrumb={["Home", "Procurements", "RFPs"]} />
 // );
 export const RFPs = () => null;
 

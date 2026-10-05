@@ -26,7 +26,7 @@ import {
 import Lightbox, { LightboxImage } from "@/components/common/Lightbox";
 
 const dummyVideos = [
-  { id: "1", title: "PROJECT ELEMENT Overview" },
+  { id: "1", title: "ELEMENT Project Overview" },
   { id: "2", title: "Community Plantation Drive" },
   { id: "3", title: "Bamboo Value Chain Stories" },
   { id: "4", title: "Eco-Tourism in Jampui Hills" },
@@ -87,7 +87,7 @@ export function SocialMedia() {
     <PageLayout>
       <PageHeader
         title="Social Media"
-        subtitle="Stay connected with the PROJECT ELEMENT on social media."
+        subtitle="Stay connected with the ELEMENT Project on social media."
         breadcrumb={["Home", "Media", "Social Media"]}
       />
       <section className="py-10">
@@ -163,7 +163,7 @@ export function SocialMedia() {
                       {v.title}
                     </h3>
                     <p className="text-xs text-muted-foreground mt-1.5 mb-0">
-                      PROJECT ELEMENT · Tripura
+                      ELEMENT Project · Tripura
                     </p>
                   </div>
                 </div>
@@ -184,7 +184,7 @@ export const mediaEvents = [
     title: "World Bank Mission Visit — Agartala",
     venue: "Agartala, Tripura",
     description:
-      "A high-level World Bank mission visited Agartala to review the progress of the PROJECT ELEMENT.",
+      "A high-level World Bank mission visited Agartala to review the progress of the ELEMENT Project.",
     images: [
       { aspect: "aspect-[4/3]", label: "Mission opening session" },
       { aspect: "aspect-square", label: "Field briefing" },
@@ -228,7 +228,7 @@ export function Gallery() {
     <PageLayout>
       <PageHeader
         title="Gallery"
-        subtitle="Photographs from PROJECT ELEMENT field activities, events and community engagements."
+        subtitle="Photographs from ELEMENT Project field activities, events and community engagements."
         breadcrumb={["Home", "Media", "Gallery"]}
       />
       <section className="py-10">
@@ -394,7 +394,7 @@ export function MediaEvents() {
     <PageLayout>
       <PageHeader
         title="Events"
-        subtitle="Upcoming and past events of the PROJECT ELEMENT."
+        subtitle="Upcoming and past events of the ELEMENT Project."
         breadcrumb={["Home", "Media", "Events"]}
       />
       <section className="py-10">

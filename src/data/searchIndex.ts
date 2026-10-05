@@ -12,7 +12,7 @@ export const searchIndex: SearchEntry[] = [
   { title: "Home", to: "/", group: "Main" },
 
   // About
-  { title: "About PROJECT ELEMENT", to: "/about", group: "About", keywords: "about element overview" },
+  { title: "About ELEMENT Project", to: "/about", group: "About", keywords: "about element overview" },
   { title: "Organization Structure", to: "/about/organization", group: "About" },
   // { title: "Who's Who", to: "/about/whos-who", group: "About", keywords: "whos who team leadership" }, // Removed per request — kept for future use
   { title: "Loan Agreement", to: "/about/loan-agreement", group: "About" },

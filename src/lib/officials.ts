@@ -48,7 +48,7 @@ export function dummyGrouped(): OfficialCategoryGroup[] {
   return [
     {
       category_id: "dummy-element",
-      category_name: "PROJECT ELEMENT Leadership",
+      category_name: "ELEMENT Project Leadership",
       officials: elementLeadership.map((o, i) => ({
         id: `dummy-${i}`,
         name: o.name,

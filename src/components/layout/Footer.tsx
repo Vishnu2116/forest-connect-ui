@@ -17,8 +17,8 @@ export default function Footer() {
           </h3>
           <ul className="space-y-1.5 text-md">
             {[
-              ["About PROJECT ELEMENT", "/about"],
-              ["Project Components", "/project-components"],
+              ["About ELEMENT Project", "/about"],
+              // ["Project Components", "/project-components"],
               ["Reports", "/reports"],
               ["MIS / GIS", "/mis-gis"],
               ["Activities & Outputs", "/activities"],

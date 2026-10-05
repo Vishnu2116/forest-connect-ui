@@ -107,7 +107,7 @@ export default function Activities() {
       </section>
 
       {/* Projects — replaces old Recent Activities section */}
-      <section className="py-10">
+      {/* <section className="py-10">
         <div className="gov-container">
           <h2 className="section-title mt-2 mb-8">Activities</h2>
           {loading ? (
@@ -151,7 +151,7 @@ export default function Activities() {
             </div>
           )}
         </div>
-      </section>
+      </section> */}
 
       {/* Implementation Areas — unchanged */}
       <section className="py-12 bg-surface border-t border-border">
@@ -161,7 +161,7 @@ export default function Activities() {
               Implementation Areas
             </h3>
             <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
-              PROJECT ELEMENT is being implemented across all 8 districts of
+              ELEMENT Project is being implemented across all 8 districts of
               Tripura, with interventions tailored to the ecological,
               socio-economic and livelihood profile of each landscape.
             </p>

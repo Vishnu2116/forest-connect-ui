@@ -44,7 +44,7 @@ export default function ActivityReports() {
                     </th>
                     <th className="border border-black font-bold text-center px-3 py-2 w-[20%]">
                       End Target <br />
-                      January 2029
+                      June 2030
                     </th>
                   </tr>
                 </thead>
@@ -116,7 +116,7 @@ export default function ActivityReports() {
                     </th>
                     <th className="border border-black font-bold text-center px-3 py-2 w-[17%]">
                       End Target <br />
-                      January 2029
+                      June 2030
                     </th>
                   </tr>
                 </thead>

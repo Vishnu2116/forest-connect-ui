@@ -98,7 +98,7 @@ export default function Contact() {
     {
       icon: MapPin,
       title: "Address",
-      body: "Aranya Bhawan, Gurkhabasti\nAgartala, Tripura — 799006",
+      body: "Prakriti Bhaban 3rd Floor ELEMENT Project, Gandhigram,\nAgartala, Tripura (West)",
     },
     {
       icon: Phone,

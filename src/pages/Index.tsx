@@ -51,7 +51,7 @@ const AUTO_SCROLL_SPEED_PROJECTS = 24;
 const MANUAL_STEP_PX = 96;
 
 const announcementDescriptions: Record<string, string> = {
-  Recruitment: "Applications invited for PROJECT ELEMENT positions.",
+  Recruitment: "Applications invited for ELEMENT Project positions.",
   Tender: "Sealed e-tenders for livelihood infrastructure and civil works.",
   Event: "Community engagement and stakeholder events.",
   Notification: "Project guidelines and circulars issued.",
@@ -160,7 +160,7 @@ const dummyLeadershipSlots = [
     slot_number: 4,
     name: "Shri Chaitanya Murti, IFS",
     designation: "PCCF CEO / PD",
-    organisation: "PROJECT ELEMENT",
+    organisation: "ELEMENT Project",
     image: "",
   },
 ];
@@ -436,7 +436,7 @@ function UpdatesPanel({
                   </a>
                   <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
                     {announcementDescriptions[a.tag] ??
-                      "Latest update from the PROJECT ELEMENT."}
+                      "Latest update from the ELEMENT Project."}
                   </p>
                 </div>
               </article>
@@ -476,7 +476,7 @@ function UpdatesPanel({
                     </a>
                     <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
                       {announcementDescriptions[a.tag] ??
-                        "Official notification issued by the PROJECT ELEMENT."}
+                        "Official notification issued by the ELEMENT Project."}
                     </p>
                   </div>
                 </article>
@@ -973,7 +973,7 @@ export default function Home() {
     twitter_handle: "@ElementTripura",
     twitter_url: "https://twitter.com",
     youtube_video_url: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-    youtube_video_title: "PROJECT ELEMENT Overview — Community Livelihoods",
+    youtube_video_title: "ELEMENT Project Overview — Community Livelihoods",
   };
   const social = {
     facebook_handle: apiSocial?.facebook_handle ?? dummySocial.facebook_handle,
@@ -1038,7 +1038,7 @@ export default function Home() {
     <PageLayout>
       <HeroSlider />
 
-      {/* Welcome to Tripura PROJECT ELEMENT — left/right dignitaries + center tabs */}
+      {/* Welcome to Tripura ELEMENT Project — left/right dignitaries + center tabs */}
       <section className="py-12 md:py-8 bg-surface border-b border-border">
         <div className="gov-container">
           <div className="text-center mb-8">
@@ -1047,12 +1047,12 @@ export default function Home() {
             </span>
 
             <h2 className="text-2xl md:text-3xl font-bold text-primary">
-              Welcome to Project ELEMENT, Tripura
+              Welcome to ELEMENT Project, Tripura
             </h2>
 
             <p className="text-sm md:text-base text-muted-foreground mt-1 max-w-xl mx-auto">
               Project leadership, official updates, notifications, and e-tenders
-              from the PROJECT ELEMENT.
+              from the ELEMENT Project.
             </p>
           </div>
 
@@ -1329,7 +1329,7 @@ export default function Home() {
               </h2>
               <p className="text-sm text-muted-foreground mt-2 max-w-2xl mx-auto">
                 Key project initiatives and official social media updates from
-                the PROJECT ELEMENT.
+                the ELEMENT Project.
               </p>
             </div>
             <div className="grid lg:grid-cols-[58fr_42fr] gap-6 items-stretch lg:h-[520px]">

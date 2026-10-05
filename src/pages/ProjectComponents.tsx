@@ -51,7 +51,7 @@ export default function ProjectComponents() {
     <PageLayout>
       <PageHeader
         title="Project Components"
-        subtitle="Explore the four core components of the Tripura PROJECT ELEMENT."
+        subtitle="Explore the four core components of the Tripura ELEMENT Project."
         breadcrumb={["Home", "Project Components"]}
       />
       <section className="py-10 md:py-14">

@@ -7,7 +7,7 @@ const tree: { title: string; links: { label: string; to: string }[] }[] = [
   {
     title: "About",
     links: [
-      { label: "About PROJECT ELEMENT", to: "/about" },
+      { label: "About ELEMENT Project", to: "/about" },
       { label: "Loan Agreement", to: "/about/loan-agreement" },
       { label: "Official Directory", to: "/about/directory" },
     ],

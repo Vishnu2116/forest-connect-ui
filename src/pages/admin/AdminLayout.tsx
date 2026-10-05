@@ -1,13 +1,38 @@
 import { ReactNode, useEffect, useState } from "react";
 import { Link, NavLink, useNavigate, Outlet, Navigate } from "react-router-dom";
 import {
-  LayoutDashboard, Bell, Calendar, FileText, Users, Award, BookOpen, FolderKanban,
-  Image as ImageIcon, Activity, Briefcase, TreePine, MessageSquare, FileQuestion,
-  UserCog, Settings, LogOut, Menu, X, Home as HomeIcon, Layers, SlidersHorizontal, KeyRound, ShieldCheck
+  LayoutDashboard,
+  Bell,
+  Calendar,
+  FileText,
+  Users,
+  Award,
+  BookOpen,
+  FolderKanban,
+  Image as ImageIcon,
+  Activity,
+  Briefcase,
+  TreePine,
+  MessageSquare,
+  FileQuestion,
+  UserCog,
+  Settings,
+  LogOut,
+  Menu,
+  X,
+  Home as HomeIcon,
+  Layers,
+  SlidersHorizontal,
+  KeyRound,
+  ShieldCheck,
 } from "lucide-react";
 import logoTripura from "@/assets/logo-tripura.png";
 import ChangePasswordDialog from "@/components/admin/ChangePasswordDialog";
-import { startSessionPolling, API_BASE_URL, getAuthHeaders } from "@/config/api";
+import {
+  startSessionPolling,
+  API_BASE_URL,
+  getAuthHeaders,
+} from "@/config/api";
 
 export const adminMenu = [
   { to: "/admin", label: "Dashboard", icon: LayoutDashboard, end: true },
@@ -15,18 +40,29 @@ export const adminMenu = [
   { to: "/admin/gallery", label: "Gallery", icon: ImageIcon },
   { to: "/admin/social-media", label: "Social Media", icon: MessageSquare },
   { to: "/admin/tenders", label: "e-Tenders / Procurements", icon: FileText },
-  
-  
+
   { to: "/admin/officials", label: "Officials & Directory", icon: Users },
   // Disabled: pointed to the mock ActivitiesAdmin module, duplicating the real "Activities Content" entry below.
   // { to: "/admin/activities", label: "Activities & Outputs", icon: Activity },
-  { to: "/admin/activities-outputs", label: "Activities Content", icon: Activity },
+  {
+    to: "/admin/activities-outputs",
+    label: "Activities Content",
+    icon: Activity,
+  },
   { to: "/admin/knowledge-hub", label: "Knowledge Hub", icon: BookOpen },
-  { to: "/admin/project-components", label: "Project Components", icon: Layers },
+  {
+    to: "/admin/project-components",
+    label: "Project Components",
+    icon: Layers,
+  },
   { to: "/admin/projects", label: "Projects", icon: Briefcase },
   { to: "/admin/hero", label: "Hero Slides", icon: SlidersHorizontal },
   { to: "/admin/home-leadership", label: "Home Leadership", icon: Users },
-  { to: "/admin/home-social-media", label: "Home Social Media", icon: MessageSquare },
+  {
+    to: "/admin/home-social-media",
+    label: "Home Social Media",
+    icon: MessageSquare,
+  },
   { to: "/admin/gis", label: "GIS / MIS", icon: TreePine },
   // { to: "/admin/contact-messages", label: "Contact Messages", icon: MessageSquare },
   // { to: "/admin/feedback-messages", label: "Feedback Messages", icon: MessageSquare },
@@ -40,7 +76,15 @@ export default function AdminLayout() {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [pwOpen, setPwOpen] = useState(false);
-
+  useEffect(() => {
+    const m = document.createElement("meta");
+    m.name = "robots";
+    m.content = "noindex, nofollow";
+    document.head.appendChild(m);
+    return () => {
+      document.head.removeChild(m);
+    };
+  }, []);
   const token = localStorage.getItem("element_admin_token");
   if (!token) {
     return <Navigate to="/admin/login" replace />;
@@ -53,7 +97,6 @@ export default function AdminLayout() {
   } catch {
     // ignore — non-JWT token (e.g. legacy), fall back to default
   }
-
 
   const logout = async () => {
     try {
@@ -79,11 +122,19 @@ export default function AdminLayout() {
   return (
     <div className="min-h-screen flex bg-surface">
       {/* Sidebar */}
-      <aside className={`${open ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0 fixed lg:static z-40 inset-y-0 left-0 w-64 bg-primary-dark text-primary-foreground flex flex-col transition-transform`}>
+      <aside
+        className={`${open ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0 fixed lg:static z-40 inset-y-0 left-0 w-64 bg-primary-dark text-primary-foreground flex flex-col transition-transform`}
+      >
         <div className="px-4 py-4 border-b border-primary/40 flex items-center gap-2">
-          <img src={logoTripura} alt="" className="h-9 w-9 bg-white rounded p-1" />
+          <img
+            src={logoTripura}
+            alt=""
+            className="h-9 w-9 bg-white rounded p-1"
+          />
           <div>
-            <div className="font-extrabold text-accent leading-none">ELEMENT</div>
+            <div className="font-extrabold text-accent leading-none">
+              ELEMENT
+            </div>
             <div className="text-[10px] opacity-80">Admin Console</div>
           </div>
         </div>
@@ -96,7 +147,9 @@ export default function AdminLayout() {
               onClick={() => setOpen(false)}
               className={({ isActive }) =>
                 `flex items-center gap-2 px-4 py-2 text-sm border-l-4 transition-colors ${
-                  isActive ? "bg-primary border-accent text-white" : "border-transparent hover:bg-primary/60"
+                  isActive
+                    ? "bg-primary border-accent text-white"
+                    : "border-transparent hover:bg-primary/60"
                 }`
               }
             >
@@ -106,28 +159,45 @@ export default function AdminLayout() {
           ))}
         </nav>
         <div className="border-t border-primary/40 p-3 space-y-1">
-          <Link to="/" className="flex items-center gap-2 text-xs hover:bg-primary/60 px-3 py-2 rounded">
+          <Link
+            to="/"
+            className="flex items-center gap-2 text-xs hover:bg-primary/60 px-3 py-2 rounded"
+          >
             <HomeIcon className="h-4 w-4" /> View Public Website
           </Link>
-          <button onClick={logout} className="w-full flex items-center gap-2 text-xs hover:bg-primary/60 px-3 py-2 rounded">
+          <button
+            onClick={logout}
+            className="w-full flex items-center gap-2 text-xs hover:bg-primary/60 px-3 py-2 rounded"
+          >
             <LogOut className="h-4 w-4" /> Logout
           </button>
         </div>
       </aside>
 
-      {open && <div className="fixed inset-0 bg-black/40 z-30 lg:hidden" onClick={() => setOpen(false)} />}
+      {open && (
+        <div
+          className="fixed inset-0 bg-black/40 z-30 lg:hidden"
+          onClick={() => setOpen(false)}
+        />
+      )}
 
       {/* Main */}
       <div className="flex-1 flex flex-col min-w-0">
         <header className="bg-card border-b border-border h-14 flex items-center justify-between px-4 sticky top-0 z-20">
           <div className="flex items-center gap-3">
-            <button className="lg:hidden p-2 rounded border border-border" onClick={() => setOpen(true)} aria-label="Open menu">
+            <button
+              className="lg:hidden p-2 rounded border border-border"
+              onClick={() => setOpen(true)}
+              aria-label="Open menu"
+            >
               <Menu className="h-4 w-4" />
             </button>
             <h1 className="font-semibold text-primary">ELEMENT Admin</h1>
           </div>
           <div className="flex items-center gap-3 text-sm">
-            <span className="hidden sm:inline text-muted-foreground">Welcome,</span>
+            <span className="hidden sm:inline text-muted-foreground">
+              Welcome,
+            </span>
             <span className="font-semibold text-primary">{adminName}</span>
             <div className="h-8 w-8 rounded-full bg-accent text-accent-foreground flex items-center justify-center text-xs font-bold">
               {adminName.slice(0, 1).toUpperCase()}
@@ -160,12 +230,22 @@ export default function AdminLayout() {
   );
 }
 
-export function AdminPageHeader({ title, subtitle, action }: { title: string; subtitle?: string; action?: ReactNode }) {
+export function AdminPageHeader({
+  title,
+  subtitle,
+  action,
+}: {
+  title: string;
+  subtitle?: string;
+  action?: ReactNode;
+}) {
   return (
     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
       <div>
         <h2 className="text-2xl font-bold text-primary">{title}</h2>
-        {subtitle && <p className="text-sm text-muted-foreground mt-1">{subtitle}</p>}
+        {subtitle && (
+          <p className="text-sm text-muted-foreground mt-1">{subtitle}</p>
+        )}
       </div>
       {action}
     </div>

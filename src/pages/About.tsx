@@ -99,7 +99,7 @@ function AboutLayout({
   );
 }
 
-/* ---- About PROJECT ELEMENT (main intro page) ---- */
+/* ---- About ELEMENT Project (main intro page) ---- */
 export function AboutElement() {
   const stakeholders = [
     {
@@ -146,17 +146,17 @@ export function AboutElement() {
 
   return (
     // <AboutLayout
-    //   title="About PROJECT ELEMENT"
+    //   title="About ELEMENT Project"
     //   subtitle="A joint initiative for landscape development, livelihood generation and economic transformation"
     //   backgroundImage={heroWaterShedBg}
     // >
     <AboutLayout
-      title="About PROJECT ELEMENT"
+      title="About ELEMENT Project"
       subtitle="A joint initiative for landscape development, livelihood generation and economic transformation"
       backgroundImage={`${import.meta.env.BASE_URL}AboutBg.jpg`}
     >
       <div className="space-y-10">
-        {/* What is PROJECT ELEMENT? */}
+        {/* What is ELEMENT Project? */}
         <div className="bg-card border border-border rounded-xl p-6 md:p-8 shadow-card">
           <div className="flex flex-col items-center text-center">
             <span className="inline-block bg-accent/10 text-accent text-[11px] font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-4">
@@ -164,7 +164,7 @@ export function AboutElement() {
             </span>
 
             <h3 className="text-2xl md:text-4xl font-bold text-primary mb-5">
-              What is PROJECT ELEMENT?
+              What is ELEMENT Project?
             </h3>
           </div>
 
@@ -276,10 +276,10 @@ export function AboutElement() {
         {/* Stakeholders */}
         {/* <div className="bg-card border border-border rounded-xl p-6 md:p-8 shadow-card">
           <h3 className="text-xl md:text-2xl font-bold text-primary mb-3 text-center">
-            Stakeholders of PROJECT ELEMENT
+            Stakeholders of ELEMENT Project
           </h3>
           <p className="text-sm md:text-[15px] text-muted-foreground mb-5 leading-relaxed">
-            PROJECT ELEMENT is implemented through a strong partnership of
+            ELEMENT Project is implemented through a strong partnership of
             government, development partners, technical institutions and
             community organisations — each playing a defined role in landscape
             restoration, livelihood transformation and inclusive growth.
@@ -386,7 +386,7 @@ export function AboutElement() {
               Objectives
             </span>
             <h3 className="text-2xl md:text-3xl font-bold text-primary mb-2">
-              Key Objectives of PROJECT ELEMENT
+              Key Objectives of ELEMENT Project
             </h3>
             <p className="text-md text-muted-foreground max-w-2xl mx-auto">
               The project objectives are to “Improve landscape management and
@@ -482,7 +482,7 @@ export function Organization() {
   return (
     <AboutLayout
       title="Organization Structure"
-      subtitle="Governance and implementation framework of the PROJECT ELEMENT"
+      subtitle="Governance and implementation framework of the ELEMENT Project"
       backgroundImage={`${import.meta.env.BASE_URL}orgbg.jpg`}
     >
       <div className="space-y-8">
@@ -532,9 +532,8 @@ export function Organization() {
             </p>
 
             <p>
-              Further, a Project Management Consultant (PMC) will be hired from
-              the market to provide necessary technical and management support
-              to the PMU,
+              Further, A PMC has been onboarded to provide technical and
+              management support to PMU.
             </p>
 
             <p>
@@ -712,7 +711,7 @@ export function WhosWhoSection() {
   return (
     <AboutLayout
       title="Who's Who"
-      subtitle="Leadership team driving the PROJECT ELEMENT"
+      subtitle="Leadership team driving the ELEMENT Project"
     >
       <div className="space-y-8">
         <div className="bg-gradient-to-br from-primary/5 to-accent/5 border border-border rounded-xl p-6 text-center">
@@ -899,7 +898,7 @@ export function VisionMission() {
   return (
     <AboutLayout
       title="Objectives"
-      subtitle="Key objectives driving PROJECT ELEMENT implementation across Tripura"
+      subtitle="Key objectives driving ELEMENT Project implementation across Tripura"
     >
       <div className="space-y-8">
         <div className="bg-gradient-to-br from-primary/5 to-accent/5 border border-border rounded-xl p-6 text-center">
@@ -907,7 +906,7 @@ export function VisionMission() {
             Objectives
           </span>
           <h3 className="text-xl font-bold text-primary mb-2">
-            Key Objectives of PROJECT ELEMENT
+            Key Objectives of ELEMENT Project
           </h3>
           <p className="text-sm text-muted-foreground max-w-2xl mx-auto">
             The action-oriented commitments guiding landscape restoration,
@@ -950,7 +949,7 @@ export function VisionMission() {
 //           </h3>
 //           <p className="text-sm text-muted-foreground max-w-lg mx-auto">
 //             The founding document establishing the governance, objectives, and
-//             operational framework of the PROJECT ELEMENT.
+//             operational framework of the ELEMENT Project.
 //           </p>
 //         </div>
 
@@ -962,7 +961,7 @@ export function VisionMission() {
 //             </div>
 //             <div className="flex-1">
 //               <h4 className="text-base font-bold text-foreground">
-//                 PROJECT ELEMENT — Loan Agreement
+//                 ELEMENT Project — Loan Agreement
 //               </h4>
 //               <p className="text-xs text-muted-foreground mt-1">
 //                 Government of Tripura · Registered under Societies Registration
@@ -970,7 +969,7 @@ export function VisionMission() {
 //               </p>
 //               <p className="text-sm text-muted-foreground mt-3 leading-relaxed">
 //                 This document outlines the constitution, governance structure,
-//                 and operational mandate of the PROJECT ELEMENT under the aegis
+//                 and operational mandate of the ELEMENT Project under the aegis
 //                 of the Government of Tripura in partnership with the World Bank.
 //               </p>
 //               <div className="flex gap-3 mt-4">
@@ -1052,7 +1051,7 @@ export function LoanAgreement() {
           </h3>
           <p className="text-md text-muted-foreground max-w-lg mx-auto">
             The founding document establishing the governance, objectives, and
-            operational framework of the PROJECT ELEMENT.
+            operational framework of the ELEMENT Project.
           </p>
         </div>
 
@@ -1065,7 +1064,7 @@ export function LoanAgreement() {
 
             <div className="flex-1">
               <h4 className="text-lg font-bold text-foreground">
-                PROJECT ELEMENT — Loan Agreement
+                ELEMENT Project — Loan Agreement
               </h4>
 
               <p className="text-md text-muted-foreground mt-1">
@@ -1075,7 +1074,7 @@ export function LoanAgreement() {
 
               <p className="text-md text-muted-foreground mt-3 leading-relaxed">
                 This document outlines the constitution, governance structure,
-                and operational mandate of the PROJECT ELEMENT under the aegis
+                and operational mandate of the ELEMENT Project under the aegis
                 of the Government of Tripura in partnership with the World Bank.
               </p>
 
@@ -1119,7 +1118,7 @@ const govLeaderImages: Record<string, string> = {
 
 const directoryCategories = [
   {
-    title: "PROJECT ELEMENT Leadership",
+    title: "ELEMENT Project Leadership",
     entries: [
       {
         name: "PCCF HOFF",
@@ -1131,7 +1130,7 @@ const directoryCategories = [
       },
       {
         name: "PCCF CEO / PD",
-        designation: "CEO & Project Director, PROJECT ELEMENT",
+        designation: "CEO & Project Director, ELEMENT Project",
         division: "Aranya Bhawan, Pt. Nehru Complex, Agartala",
         phone: "",
         email: "",
@@ -1139,7 +1138,7 @@ const directoryCategories = [
       },
       {
         name: "Shri Chaitanya Murti, IFS",
-        designation: "CEO & Project Director, PROJECT ELEMENT",
+        designation: "CEO & Project Director, ELEMENT Project",
         division: "Aranya Bhawan, Pt. Nehru Complex, Agartala",
         phone: "0381-2326874",
         email: "cwlw.tfd-tr@gov.in",
@@ -1147,7 +1146,7 @@ const directoryCategories = [
       },
       {
         name: "Dr. Honnareddy N, IFS",
-        designation: "Addl. CEO (PROJECT ELEMENT)",
+        designation: "Addl. CEO (ELEMENT Project)",
         division: "Aranya Bhawan, Pt. Nehru Complex, Agartala",
         phone: "",
         email: "honnareddy.n@gov.in",
@@ -1155,7 +1154,7 @@ const directoryCategories = [
       },
       {
         name: "Shri Sanjib Das, IFS",
-        designation: "Director (Project ELEMENT)",
+        designation: "Director (ELEMENT Project)",
         division: "Aranya Bhawan, Pt. Nehru Complex, Agartala",
         phone: "",
         email: "ccfttripura@gmail.com",
@@ -1169,7 +1168,7 @@ const directoryCategories = [
       {
         name: "Shri Krishna Gopal Roy, IFS",
         designation: "Director (Community Institution, Capacity Building, KM)",
-        division: "PROJECT ELEMENT FHQ, Aranya Bhawan, Agartala",
+        division: "ELEMENT Project FHQ, Aranya Bhawan, Agartala",
         phone: "",
         email: "krishnagopalr78@gmail.com",
         mobile: "7005447409",
@@ -1177,7 +1176,7 @@ const directoryCategories = [
       {
         name: "Shri Amalendu Debnath, IFS",
         designation: "Director (Value Chain Innovation & Eco Tourism)",
-        division: "PROJECT ELEMENT FHQ, Aranya Bhawan, Agartala",
+        division: "ELEMENT Project FHQ, Aranya Bhawan, Agartala",
         phone: "",
         email: "elementtripuraforest@gmail.com",
         mobile: "8415924070",
@@ -1185,7 +1184,7 @@ const directoryCategories = [
       {
         name: "Shri Jaya Krishnan V, IFS",
         designation: "Director (Administration, Procurement & Finance)",
-        division: "PROJECT ELEMENT",
+        division: "ELEMENT Project",
         phone: "",
         email: "",
         mobile: "",
@@ -1359,7 +1358,7 @@ export function OfficialDirectory() {
   return (
     <AboutLayout
       title="Official Directory"
-      subtitle="Contact details of PROJECT ELEMENT officials"
+      subtitle="Contact details of ELEMENT Project officials"
     >
       <div className="space-y-6">
         <div className="bg-gradient-to-br from-primary/5 to-accent/5 border border-border rounded-xl p-6 text-center">
@@ -1370,7 +1369,7 @@ export function OfficialDirectory() {
             Official Directory
           </h3>
           <p className="text-md text-muted-foreground max-w-lg mx-auto">
-            Contact information for key PROJECT ELEMENT officials across
+            Contact information for key ELEMENT Project officials across
             departments.
           </p>
         </div>

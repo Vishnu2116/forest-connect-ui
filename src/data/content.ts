@@ -18,7 +18,7 @@ export const announcements = [
   // {
   //   date: "28 Apr 2026",
   //   title:
-  //     "Recruitment: District Coordinators for PROJECT ELEMENT — Apply Online",
+  //     "Recruitment: District Coordinators for ELEMENT Project — Apply Online",
   //   tag: "Recruitment",
   // },
   // {
@@ -370,23 +370,23 @@ export const elementLeadership: Official[] = [
   //   mobile: "",
   //   email: "",
   //   image: PCCF,
-  //   category: "PROJECT ELEMENT Leadership",
+  //   category: "ELEMENT Project Leadership",
   // },
   // {
   //   name: "PCCF CEO / PD",
   //   designation: "CEO & Project Director",
-  //   department: "PROJECT ELEMENT, Tripura Forest Department",
+  //   department: "ELEMENT Project, Tripura Forest Department",
   //   additionalRoles: "PCCF, CEO & Project Director, ELEMENT",
   //   office: "Aranya Bhawan, Pt. Nehru Complex, Agartala, Tripura (West)",
   //   phone: "",
   //   mobile: "",
   //   email: "",
   //   image: "",
-  //   category: "PROJECT ELEMENT Leadership",
+  //   category: "ELEMENT Project Leadership",
   // },
   // {
   //   name: "Shri Chaitanya Murti, IFS",
-  //   designation: "CEO & Project Director, PROJECT ELEMENT",
+  //   designation: "CEO & Project Director, ELEMENT Project",
   //   department:
   //     "PCCF (Administration & Personal Relations, Protection), CWLW & MS, TBB",
   //   additionalRoles:
@@ -402,11 +402,11 @@ export const elementLeadership: Official[] = [
   //     "apccft@gmail.com",
   //   ],
   //   image: "",
-  //   category: "PROJECT ELEMENT Leadership",
+  //   category: "ELEMENT Project Leadership",
   // },
   // {
   //   name: "Dr. Honnareddy N, IFS",
-  //   designation: "Addl. CEO (PROJECT ELEMENT)",
+  //   designation: "Addl. CEO (ELEMENT Project)",
   //   department: "CCF(P&D) I/C, CF (Establishment & HRD)",
   //   additionalRoles: "CCF(P&D) I/C, CF (Establishment & HRD)",
   //   office: "Aranya Bhawan, Pt. Nehru Complex, Agartala, Tripura (West)",
@@ -414,11 +414,11 @@ export const elementLeadership: Official[] = [
   //   mobile: "99971518296",
   //   email: "honnareddy.n@gov.in",
   //   image: Honnareddy,
-  //   category: "PROJECT ELEMENT Leadership",
+  //   category: "ELEMENT Project Leadership",
   // },
   // {
   //   name: "Shri Sanjib Das, IFS",
-  //   designation: "Director (Project ELEMENT)",
+  //   designation: "Director (ELEMENT Project)",
   //   department: "CF (Territorial & Coordination)",
   //   additionalRoles: "CF (Territorial & Coordination)",
   //   office: "Aranya Bhawan, Pt. Nehru Complex, Agartala, Tripura (West)",
@@ -426,39 +426,39 @@ export const elementLeadership: Official[] = [
   //   mobile: "7630049150",
   //   email: "ccfttripura@gmail.com",
   //   image: SanjibDas,
-  //   category: "PROJECT ELEMENT Leadership",
+  //   category: "ELEMENT Project Leadership",
   // },
   // {
   //   name: "Shri Krishna Gopal Roy, IFS",
   //   designation:
   //     "Director (Community Institution, Capacity Building, Knowledge Management)",
-  //   department: "PROJECT ELEMENT FHQ",
-  //   office: "PROJECT ELEMENT FHQ, Aranya Bhawan, Agartala, Tripura (West)",
+  //   department: "ELEMENT Project FHQ",
+  //   office: "ELEMENT Project FHQ, Aranya Bhawan, Agartala, Tripura (West)",
   //   phone: "",
   //   mobile: "7005447409",
   //   email: "krishnagopalr78@gmail.com",
   //   image: "",
-  //   category: "PROJECT ELEMENT Leadership",
+  //   category: "ELEMENT Project Leadership",
   // },
   // {
   //   name: "Shri Amalendu Debnath, IFS",
   //   designation: "Director (Value Chain Innovation & Eco Tourism)",
-  //   department: "PROJECT ELEMENT FHQ",
-  //   office: "PROJECT ELEMENT FHQ, Aranya Bhawan, Agartala, Tripura (West)",
+  //   department: "ELEMENT Project FHQ",
+  //   office: "ELEMENT Project FHQ, Aranya Bhawan, Agartala, Tripura (West)",
   //   phone: "",
   //   mobile: "8415924070",
   //   email: "elementtripuraforest@gmail.com",
   //   image: "",
-  //   category: "PROJECT ELEMENT Leadership",
+  //   category: "ELEMENT Project Leadership",
   // },
   // {
   //   name: "Shri Jaya Krishnan V, IFS",
   //   designation: "Director (Administration, Procurement & Finance)",
-  //   department: "PROJECT ELEMENT",
+  //   department: "ELEMENT Project",
   //   phone: "",
   //   email: "",
   //   image: "",
-  //   category: "PROJECT ELEMENT Leadership",
+  //   category: "ELEMENT Project Leadership",
   // },
   // {
   //   name: "Shri Naresh Jamatia, IFS",
@@ -470,7 +470,7 @@ export const elementLeadership: Official[] = [
   //   mobile: "8131843631",
   //   email: "dcfwildlife2025@gmail.com",
   //   image: "",
-  //   category: "PROJECT ELEMENT Leadership",
+  //   category: "ELEMENT Project Leadership",
   // },
 ];
 
@@ -482,7 +482,7 @@ export const officials: Official[] = [
 export const knowledgeHubItems = [
   // {
   //   category: "IEC Materials",
-  //   title: "PROJECT ELEMENT — Awareness Brochure",
+  //   title: "ELEMENT Project — Awareness Brochure",
   //   date: "Apr 2026",
   // },
   // {

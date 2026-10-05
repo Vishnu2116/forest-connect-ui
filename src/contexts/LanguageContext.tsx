@@ -1,4 +1,10 @@
-import { createContext, useContext, useEffect, useState, ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  ReactNode,
+} from "react";
 
 export type Lang = "en" | "kok" | "bn";
 
@@ -10,7 +16,8 @@ const translations: Record<Lang, Dict> = {
     "site.full": "Enhancing Landscape and Ecosystem Management",
     "site.partners": "Government of Tripura  |  The World Bank",
     "site.implementer": "Implemented by Government of Tripura",
-    "site.joint": "A Joint Initiative of Government of Tripura and The World Bank",
+    "site.joint":
+      "A Joint Initiative of Government of Tripura and The World Bank",
     "site.worldbank": "THE WORLD BANK",
     "site.worldbankSub": "IBRD · IDA  |  WORLD BANK GROUP",
     "nav.home": "Home",
@@ -29,7 +36,7 @@ const translations: Record<Lang, Dict> = {
     "nav.rti": "RTI",
     "nav.contact": "Contact Us",
     "common.helpline": "Helpline",
-    "common.helplineHours": "Toll-free, 9:00 AM – 6:00 PM (Mon–Sat)",
+    "common.helplineHours": "Toll-free, 9:00 AM – 6:00 PM (Mon–Fri)",
     "common.skipMain": "Skip to Main",
     "common.search": "Search",
     "common.language": "Language",
@@ -45,21 +52,24 @@ const translations: Record<Lang, Dict> = {
     "home.events": "Events",
     "home.tenders": "e-Tenders",
     "home.plantation.title": "Plantation Across Tripura",
-    "home.plantation.desc": "ELEMENT supports landscape-scale plantation, restoration and community livelihood across all 8 districts of Tripura.",
+    "home.plantation.desc":
+      "ELEMENT supports landscape-scale plantation, restoration and community livelihood across all 8 districts of Tripura.",
     "home.plantation.cta": "Explore Plantation Locations",
     "home.stats.districts": "Districts Covered",
     "home.stats.activities": "Plantation Activities",
     "home.stats.community": "Community Members",
     "home.stats.restoration": "Hectares Restored",
     "projects.title": "Projects",
-    "projects.subtitle": "Initiatives under the PROJECT ELEMENT — a joint effort of the Government of Tripura and The World Bank.",
+    "projects.subtitle":
+      "Initiatives under the ELEMENT Project — a joint effort of the Government of Tripura and The World Bank.",
     "projects.objective": "Objective",
     "projects.activities": "Key Activities",
     "projects.beneficiaries": "Target Beneficiaries",
     "projects.status": "Status",
     "projects.location": "Location / Coverage",
     "projects.component": "Component",
-    "footer.about": "ELEMENT — Enhancing Landscape and Ecosystem Management. A joint initiative of the Government of Tripura and The World Bank, for livelihood transformation and economic development.",
+    "footer.about":
+      "ELEMENT — Enhancing Landscape and Ecosystem Management. A joint initiative of the Government of Tripura and The World Bank, for livelihood transformation and economic development.",
     "footer.quicklinks": "Quick Links",
     "footer.policies": "Policies",
     "footer.connect": "Connect",
@@ -67,7 +77,8 @@ const translations: Record<Lang, Dict> = {
     "footer.visitor": "Visitor Count",
     "footer.lastUpdated": "Last updated",
     "footer.designed": "Designed and Developed by Polygon Geospatial",
-    "footer.copy": "© 2026 ELEMENT Project, Government of Tripura. All rights reserved.",
+    "footer.copy":
+      "© 2026 ELEMENT Project, Government of Tripura. All rights reserved.",
   },
   kok: {
     "site.brand": "ELEMENT",
@@ -107,21 +118,24 @@ const translations: Record<Lang, Dict> = {
     "home.events": "অনুষ্ঠান",
     "home.tenders": "ই-টেন্ডার",
     "home.plantation.title": "ত্রিপুরা-নি চারা বাগান",
-    "home.plantation.desc": "ELEMENT-নো ত্রিপুরা-নি ৮ জেলা-নো চারা-বাগান, পুনঃস্থাপন বু সমাজ-জীবিকানি কাম।",
+    "home.plantation.desc":
+      "ELEMENT-নো ত্রিপুরা-নি ৮ জেলা-নো চারা-বাগান, পুনঃস্থাপন বু সমাজ-জীবিকানি কাম।",
     "home.plantation.cta": "চারা-বাগান সাইট চিনা",
     "home.stats.districts": "জেলা",
     "home.stats.activities": "বাগান কাম",
     "home.stats.community": "সমাজ সদস্য",
     "home.stats.restoration": "হেক্টর পুনঃস্থাপন",
     "projects.title": "পরিযোজনা",
-    "projects.subtitle": "ELEMENT-নি অধীনে পরিযোজনা — ত্রিপুরা সরকার বু বিশ্ব ব্যাংক-নি যৌথ উদ্যোগ।",
+    "projects.subtitle":
+      "ELEMENT-নি অধীনে পরিযোজনা — ত্রিপুরা সরকার বু বিশ্ব ব্যাংক-নি যৌথ উদ্যোগ।",
     "projects.objective": "লক্ষ্য",
     "projects.activities": "মুখ্য কাম",
     "projects.beneficiaries": "সুবিধাভোগী",
     "projects.status": "অবস্থা",
     "projects.location": "এলাকা",
     "projects.component": "কম্পোনেন্ট",
-    "footer.about": "ELEMENT — ত্রিপুরা সরকার বু বিশ্ব ব্যাংক-নি যৌথ পরিযোজনা, ত্রিপুরা বন বিভাগ-নো লামা।",
+    "footer.about":
+      "ELEMENT — ত্রিপুরা সরকার বু বিশ্ব ব্যাংক-নি যৌথ পরিযোজনা, ত্রিপুরা বন বিভাগ-নো লামা।",
     "footer.quicklinks": "দ্রুত লিংক",
     "footer.policies": "নীতি",
     "footer.connect": "যোগাযোগ",
@@ -132,7 +146,8 @@ const translations: Record<Lang, Dict> = {
     "nav.components": "প্রকল্প কম্পোনেন্ট",
     "nav.media": "মিডিয়া",
     "nav.misgis": "MIS/GIS",
-    "footer.copy": "© ২০২৬ ELEMENT পরিযোজনা, ত্রিপুরা সরকার। সর্বস্বত্ব সংরক্ষিত।",
+    "footer.copy":
+      "© ২০২৬ ELEMENT পরিযোজনা, ত্রিপুরা সরকার। সর্বস্বত্ব সংরক্ষিত।",
   },
   bn: {
     "site.brand": "ELEMENT",
@@ -172,21 +187,24 @@ const translations: Record<Lang, Dict> = {
     "home.events": "অনুষ্ঠান",
     "home.tenders": "ই-টেন্ডার",
     "home.plantation.title": "ত্রিপুরা জুড়ে বৃক্ষরোপণ",
-    "home.plantation.desc": "ELEMENT ত্রিপুরার ৮টি জেলায় ভূদৃশ্য-ভিত্তিক বৃক্ষরোপণ, পুনরুদ্ধার ও সম্প্রদায়ের জীবিকা সমর্থন করে।",
+    "home.plantation.desc":
+      "ELEMENT ত্রিপুরার ৮টি জেলায় ভূদৃশ্য-ভিত্তিক বৃক্ষরোপণ, পুনরুদ্ধার ও সম্প্রদায়ের জীবিকা সমর্থন করে।",
     "home.plantation.cta": "বৃক্ষরোপণ স্থান দেখুন",
     "home.stats.districts": "জেলা",
     "home.stats.activities": "বৃক্ষরোপণ কার্যক্রম",
     "home.stats.community": "সম্প্রদায়ের সদস্য",
     "home.stats.restoration": "হেক্টর পুনরুদ্ধার",
     "projects.title": "প্রকল্পসমূহ",
-    "projects.subtitle": "ELEMENT কর্মসূচির অধীনে উদ্যোগ — ত্রিপুরা সরকার ও বিশ্ব ব্যাংকের যৌথ প্রয়াস।",
+    "projects.subtitle":
+      "ELEMENT কর্মসূচির অধীনে উদ্যোগ — ত্রিপুরা সরকার ও বিশ্ব ব্যাংকের যৌথ প্রয়াস।",
     "projects.objective": "উদ্দেশ্য",
     "projects.activities": "প্রধান কার্যক্রম",
     "projects.beneficiaries": "লক্ষ্য উপকারভোগী",
     "projects.status": "অবস্থা",
     "projects.location": "এলাকা",
     "projects.component": "কম্পোনেন্ট",
-    "footer.about": "ELEMENT — ত্রিপুরা সরকার ও বিশ্ব ব্যাংকের যৌথ উদ্যোগ, ত্রিপুরা বন বিভাগ কর্তৃক বাস্তবায়িত।",
+    "footer.about":
+      "ELEMENT — ত্রিপুরা সরকার ও বিশ্ব ব্যাংকের যৌথ উদ্যোগ, ত্রিপুরা বন বিভাগ কর্তৃক বাস্তবায়িত।",
     "footer.quicklinks": "দ্রুত লিংক",
     "footer.policies": "নীতি",
     "footer.connect": "যোগাযোগ",
@@ -197,24 +215,38 @@ const translations: Record<Lang, Dict> = {
     "nav.components": "প্রকল্প কম্পোনেন্টসমূহ",
     "nav.media": "মিডিয়া",
     "nav.misgis": "MIS/GIS",
-    "footer.copy": "© ২০২৬ ELEMENT প্রকল্প, ত্রিপুরা সরকার। সর্বস্বত্ব সংরক্ষিত।",
+    "footer.copy":
+      "© ২০২৬ ELEMENT প্রকল্প, ত্রিপুরা সরকার। সর্বস্বত্ব সংরক্ষিত।",
   },
 };
 
-type Ctx = { lang: Lang; setLang: (l: Lang) => void; t: (key: string) => string };
+type Ctx = {
+  lang: Lang;
+  setLang: (l: Lang) => void;
+  t: (key: string) => string;
+};
 const LanguageContext = createContext<Ctx | undefined>(undefined);
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [lang, setLangState] = useState<Lang>(() => {
-    const saved = typeof window !== "undefined" ? (localStorage.getItem("lang") as Lang | null) : null;
+    const saved =
+      typeof window !== "undefined"
+        ? (localStorage.getItem("lang") as Lang | null)
+        : null;
     return saved && ["en", "kok", "bn"].includes(saved) ? saved : "en";
   });
   useEffect(() => {
     localStorage.setItem("lang", lang);
-    document.documentElement.lang = lang === "bn" ? "bn" : lang === "kok" ? "kok" : "en";
+    document.documentElement.lang =
+      lang === "bn" ? "bn" : lang === "kok" ? "kok" : "en";
   }, [lang]);
-  const t = (key: string) => translations[lang][key] ?? translations.en[key] ?? key;
-  return <LanguageContext.Provider value={{ lang, setLang: setLangState, t }}>{children}</LanguageContext.Provider>;
+  const t = (key: string) =>
+    translations[lang][key] ?? translations.en[key] ?? key;
+  return (
+    <LanguageContext.Provider value={{ lang, setLang: setLangState, t }}>
+      {children}
+    </LanguageContext.Provider>
+  );
 }
 
 export const useLang = () => {

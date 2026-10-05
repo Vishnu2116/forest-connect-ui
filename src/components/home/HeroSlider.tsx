@@ -23,7 +23,7 @@ const dummySlides: Slide[] = [
     title: "Enhancing Landscape and Ecosystem Management",
     subtitle:
       "ELEMENT — a joint initiative of the Government of Tripura and The World Bank for livelihood transformation and economic growth.",
-    badge: "PROJECT ELEMENT",
+    badge: "ELEMENT Project",
     cta1: { label: "Explore Projects", to: "/projects" },
     cta2: { label: "View Plantation Map", to: "/plantation-map" },
   },
@@ -50,7 +50,7 @@ const dummySlides: Slide[] = [
     title: "Watershed Management",
     subtitle:
       "Strengthening water conservation, irrigation support, and sustainable rural landscapes through integrated watershed management.",
-    badge: "PROJECT ELEMENT",
+    badge: "ELEMENT Project",
     cta1: { label: "Learn More", to: "/about" },
     cta2: { label: "View Plantation Map", to: "/plantation-map" },
   },
