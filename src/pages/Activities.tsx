@@ -52,42 +52,64 @@ import { resolveImage } from "@/lib/projects";
 
 const outputs = [
   {
+    code: "PDO1",
     icon: TreePine,
+    value: "41,700",
+    unit: "hectares (Ha)",
     label:
       "Terrestrial and aquatic areas under enhanced conservation and management (CRI)",
-    value: "41,700 Ha",
-    note: "PDO1",
     color: "bg-primary/10 text-primary",
+    bar: "border-t-primary",
   },
   {
+    code: "PDO2",
     icon: Cloud,
-    label:
-      "Net GHG emissions (CRI) — measured in tCO₂e (tonnes of carbon dioxide equivalent)",
     value: "13,65,538",
-    note: "PDO2",
+    unit: "tCO₂e (tonnes of carbon dioxide equivalent)",
+    label: "Net GHG emissions (CRI)",
     color: "bg-accent/10 text-accent",
+    bar: "border-t-accent",
   },
   {
+    code: "PDO3",
     icon: Users,
+    value: "75,000",
+    unit: "number of people",
     label:
       "People with increased benefits from landscape-based value chains (disaggregated by gender)",
-    value: "75,000",
-    note: "PDO3",
     color: "bg-primary/10 text-primary",
+    bar: "border-t-primary",
+    breakdown: [
+      { label: "Women", value: "37,500" },
+      { label: "Men", value: "37,500" },
+    ],
   },
   {
+    code: "PDO4",
     icon: Briefcase,
-    label: "New or better jobs (disaggregated by gender, youth) (CRI)",
     value: "37,500",
-    note: "PDO4",
+    unit: "number of jobs",
+    label: "New or better jobs (disaggregated by gender, youth) (CRI)",
     color: "bg-accent/10 text-accent",
+    bar: "border-t-accent",
+    breakdown: [
+      { label: "Women", value: "12,750" },
+      { label: "Men", value: "12,375" },
+      { label: "Youth", value: "12,375" },
+    ],
   },
   {
+    code: "PDO5",
     icon: ShieldCheck,
-    label: "People with enhanced resilience to climate risks (CRI)",
     value: "4,50,000",
-    note: "PDO5",
+    unit: "number of people",
+    label: "People with enhanced resilience to climate risks (CRI)",
     color: "bg-primary/10 text-primary",
+    bar: "border-t-primary",
+    breakdown: [
+      { label: "Direct beneficiaries", value: "65,000" },
+      { label: "Indirect beneficiaries", value: "3,85,000" },
+    ],
   },
 ];
 
@@ -123,7 +145,7 @@ export default function Activities() {
         breadcrumb={["Home", "Activities & Outputs"]}
       />
 
-      {/* Stats section — unchanged */}
+      {/* Stats section — unchanged
       <section className="bg-surface py-8 border-b border-border">
         <div className="gov-container">
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
@@ -143,6 +165,91 @@ export default function Activities() {
                 </div>
                 <div className="text-sm text-muted-foreground mt-1">
                   {o.note}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section> */}
+      {/* Project targets */}
+      <section className="relative overflow-hidden bg-surface py-10 border-b border-border">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 z-0"
+        >
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundImage:
+                "radial-gradient(circle, hsl(var(--primary) / 0.1) 1.5px, transparent 1.5px)",
+              backgroundSize: "20px 20px",
+            }}
+          />
+          <div className="absolute -right-24 -top-24 h-72 w-72 rounded-full bg-accent/[0.08] blur-3xl" />
+        </div>
+        <div className="gov-container relative z-10">
+          <h2 className="section-title mb-2">Project Targets</h2>
+          <p className="text-sm text-muted-foreground mb-6">
+            Target values to be achieved by the end of the project for the
+            Project Development Objective (PDO) indicators.
+          </p>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-6 gap-5">
+            {outputs.map((o, i) => (
+              <div
+                key={o.code}
+                className={`relative overflow-hidden bg-card border border-border border-t-4 ${o.bar} rounded-md p-5 shadow-card hover:shadow-md hover:-translate-y-0.5 transition ${
+                  i < 3 ? "lg:col-span-2" : "lg:col-span-3"
+                }`}
+              >
+                <div
+                  aria-hidden="true"
+                  className={`pointer-events-none absolute -right-10 -top-10 h-36 w-36 rounded-full ${
+                    o.bar === "border-t-primary"
+                      ? "bg-primary/[0.08]"
+                      : "bg-accent/[0.08]"
+                  }`}
+                />
+                <div
+                  aria-hidden="true"
+                  className={`pointer-events-none absolute -bottom-6 -left-6 h-20 w-20 rounded-full ${
+                    o.bar === "border-t-primary"
+                      ? "bg-primary/[0.05]"
+                      : "bg-accent/[0.05]"
+                  }`}
+                />
+                <div className="relative z-10">
+                  <div className="flex items-start justify-between">
+                    <div className={`p-2.5 rounded-lg w-fit ${o.color}`}>
+                      <o.icon className="h-5 w-5" />
+                    </div>
+                    <span
+                      className={`text-xs font-semibold px-2.5 py-1 rounded-full ${o.color}`}
+                    >
+                      {o.code}
+                    </span>
+                  </div>
+                  <div className="mt-4 text-4xl font-bold text-primary leading-none">
+                    {o.value}
+                  </div>
+                  <div className="mt-1 text-xs uppercase tracking-wide text-muted-foreground">
+                    {o.unit}
+                  </div>
+                  <div className="mt-3 text-sm font-medium text-foreground">
+                    {o.label}
+                  </div>
+                  {o.breakdown?.length ? (
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      {o.breakdown.map((b) => (
+                        <span
+                          key={b.label}
+                          className="text-xs px-2.5 py-1 rounded-full bg-surface border border-border text-foreground"
+                        >
+                          {b.label}:{" "}
+                          <span className="font-semibold">{b.value}</span>
+                        </span>
+                      ))}
+                    </div>
+                  ) : null}
                 </div>
               </div>
             ))}
@@ -239,17 +346,6 @@ export default function Activities() {
               <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
-
-          {/*
-          Removed per request — commented out, do not delete:
-
-          - Community Participation card
-          - Capacity Building card
-          - Ecosystem Restoration card
-          - Livelihood Enhancement card
-          - Expected Outputs & Outcomes section
-          - Monitoring & Impact section
-          */}
         </div>
       </section>
     </PageLayout>

@@ -1067,10 +1067,10 @@ export function LoanAgreement() {
                 ELEMENT Project — Loan Agreement
               </h4>
 
-              <p className="text-md text-muted-foreground mt-1">
+              {/* <p className="text-md text-muted-foreground mt-1">
                 Government of Tripura · Registered under Societies Registration
                 Act
-              </p>
+              </p> */}
 
               <p className="text-md text-muted-foreground mt-3 leading-relaxed">
                 This document outlines the constitution, governance structure,
