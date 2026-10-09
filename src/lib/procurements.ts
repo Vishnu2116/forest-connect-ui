@@ -13,6 +13,7 @@ export interface ApiProcurement {
   status?: ProcStatus | string | null;
   file_path?: string | null;
   file_size?: number | null;
+  file_type?: string | null;
   is_active?: boolean;
   created_at?: string;
 }
@@ -110,10 +111,15 @@ export interface FetchProcParams {
   year?: string;
   page?: number;
   limit?: number;
+  noFallback?: boolean;
 }
 
 export async function fetchProcurements(params: FetchProcParams): Promise<PaginatedProc> {
-  const { type, search, year, page = 1, limit = 10 } = params;
+  const { type, search, year, page = 1, limit = 10, noFallback = false } = params;
+  const empty = (): PaginatedProc => ({
+    data: [],
+    pagination: { total: 0, page, limit, totalPages: 1 },
+  });
   const fallback = (): PaginatedProc => {
     let data = dummyFor(type);
     if (search) data = data.filter((d) => d.title.toLowerCase().includes(search.toLowerCase()));
@@ -122,7 +128,7 @@ export async function fetchProcurements(params: FetchProcParams): Promise<Pagina
     const totalPages = Math.max(1, Math.ceil(total / limit));
     return { data: data.slice((page - 1) * limit, page * limit), pagination: { total, page, limit, totalPages } };
   };
-  if (!USE_REAL_API) return fallback();
+  if (!USE_REAL_API) return noFallback ? empty() : fallback();
   try {
     const qs = new URLSearchParams();
     if (search) qs.set("search", search);
@@ -134,10 +140,10 @@ export async function fetchProcurements(params: FetchProcParams): Promise<Pagina
     if (!r.ok) throw new Error();
     const json = await r.json();
     const data: ApiProcurement[] = Array.isArray(json?.data) ? json.data : Array.isArray(json) ? json : [];
-    if (!data.length) return fallback();
+    if (!data.length) return noFallback ? empty() : fallback();
     return { data, pagination: json?.pagination || { total: data.length, page, limit, totalPages: 1 } };
   } catch {
-    return fallback();
+    return noFallback ? empty() : fallback();
   }
 }
 

@@ -1,67 +1,225 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import PageLayout, { PageHeader } from "@/components/layout/PageLayout";
 import { Archive as ArchiveIcon, Eye, Download } from "lucide-react";
+import {
+  fetchProcurements,
+  formatDate,
+  formatSize,
+  resolveUrl as resolveProcurementUrl,
+} from "@/lib/procurements";
+import {
+  fetchKnowledgeHub,
+  formatSizeMB,
+  resolveUrl as resolveKnowledgeHubUrl,
+} from "@/lib/knowledgeHub";
 
-type Item = { title: string; category: "Notice" | "Event" | "E-Tender" | "Report"; year: number; date: string; size: string; type: string };
+type Category = "Notice" | "E-Tender" | "Report";
 
-const items: Item[] = [
-  { title: "Annual Plantation Drive 2023 — Notification", category: "Notice", year: 2023, date: "12 Jul 2023", size: "320 KB", type: "PDF" },
-  { title: "World Environment Day 2024 — Event Report", category: "Event", year: 2024, date: "10 Jun 2024", size: "1.2 MB", type: "PDF" },
-  { title: "RFP — Watershed Mapping (Closed)", category: "E-Tender", year: 2024, date: "28 Mar 2024", size: "540 KB", type: "PDF" },
-  { title: "Annual Report 2022-23", category: "Report", year: 2023, date: "30 Sep 2023", size: "4.8 MB", type: "PDF" },
-  { title: "Bamboo Cluster Workshop — Proceedings", category: "Event", year: 2023, date: "18 Nov 2023", size: "2.1 MB", type: "PDF" },
-  { title: "E-Tender — Eco-tourism Infrastructure (Expired)", category: "E-Tender", year: 2022, date: "05 Aug 2022", size: "780 KB", type: "PDF" },
-  { title: "Quarterly Bulletin Q4 2022", category: "Notice", year: 2022, date: "31 Dec 2022", size: "920 KB", type: "PDF" },
-  { title: "Mid-term Project Review 2024", category: "Report", year: 2024, date: "15 Aug 2024", size: "5.3 MB", type: "PDF" },
-];
+type ArchiveItem = {
+  id: string;
+  title: string;
+  category: Category;
+  year: number | null;
+  date: string;
+  publishedAt: number;
+  size: string;
+  type: string;
+  fileUrl: string | null;
+};
 
-const categories = ["All", "Notice", "Event", "E-Tender", "Report"] as const;
+const categories = ["All", "Notice", "E-Tender", "Report"] as const;
+
+function dateDetails(date?: string | null) {
+  if (!date) return { year: null, publishedAt: Number.NEGATIVE_INFINITY };
+  const parsed = new Date(date);
+  if (Number.isNaN(parsed.getTime())) {
+    return { year: null, publishedAt: Number.NEGATIVE_INFINITY };
+  }
+  return { year: parsed.getFullYear(), publishedAt: parsed.getTime() };
+}
 
 export default function Archive() {
+  const [items, setItems] = useState<ArchiveItem[]>([]);
+  const [loading, setLoading] = useState(true);
   const [year, setYear] = useState<string>("All");
   const [cat, setCat] = useState<(typeof categories)[number]>("All");
-  const years = useMemo(() => ["All", ...Array.from(new Set(items.map(i => i.year))).sort((a, b) => b - a).map(String)], []);
-  const filtered = items.filter(i => (year === "All" || String(i.year) === year) && (cat === "All" || i.category === cat));
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function loadArchive() {
+      const [tenderResult, reportResult, notificationResult] =
+        await Promise.allSettled([
+          fetchProcurements({
+            type: "tender",
+            limit: 100,
+            noFallback: true,
+          }),
+          fetchKnowledgeHub({
+            type: "report",
+            limit: 100,
+            noFallback: true,
+          }),
+          fetchKnowledgeHub({
+            type: "notification",
+            limit: 100,
+            noFallback: true,
+          }),
+        ]);
+
+      const tenders =
+        tenderResult.status === "fulfilled" ? tenderResult.value.data : [];
+      const reports =
+        reportResult.status === "fulfilled" ? reportResult.value.data : [];
+      const notifications =
+        notificationResult.status === "fulfilled"
+          ? notificationResult.value.data
+          : [];
+      const archiveCutoff = new Date();
+      archiveCutoff.setFullYear(archiveCutoff.getFullYear() - 1);
+
+      const tenderItems: ArchiveItem[] = tenders
+        .filter((item) =>
+          ["closed", "cancelled"].includes(
+            String(item.status ?? "").toLowerCase(),
+          ),
+        )
+        .map((item) => {
+          const { year: itemYear, publishedAt } = dateDetails(
+            item.published_date,
+          );
+          return {
+            id: `tender-${item.id}`,
+            title: item.title,
+            category: "E-Tender",
+            year: itemYear,
+            date: formatDate(item.published_date),
+            publishedAt,
+            size: formatSize(item.file_size),
+            type: item.file_type || "PDF",
+            fileUrl: resolveProcurementUrl(item.file_path),
+          };
+        });
+
+      const mapKnowledgeItems = (
+        source: typeof reports,
+        category: "Report" | "Notice",
+      ): ArchiveItem[] =>
+        source
+          .filter((item) => {
+            const { publishedAt } = dateDetails(item.published_date);
+            return (
+              Number.isFinite(publishedAt) &&
+              publishedAt < archiveCutoff.getTime()
+            );
+          })
+          .map((item) => {
+            const { year: itemYear, publishedAt } = dateDetails(
+              item.published_date,
+            );
+            return {
+              id: `${category.toLowerCase()}-${item.id}`,
+              title: item.title,
+              category,
+              year: itemYear,
+              date: formatDate(item.published_date),
+              publishedAt,
+              size: formatSizeMB(item.file_size),
+              type: item.file_type || "PDF",
+              fileUrl: resolveKnowledgeHubUrl(item.file_path),
+            };
+          });
+
+      const loadedItems = [
+        ...tenderItems,
+        ...mapKnowledgeItems(reports, "Report"),
+        ...mapKnowledgeItems(notifications, "Notice"),
+      ].sort((a, b) => b.publishedAt - a.publishedAt);
+
+      if (!cancelled) {
+        setItems(loadedItems);
+        setLoading(false);
+      }
+    }
+
+    loadArchive();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const years = useMemo(
+    () => [
+      "All",
+      ...Array.from(
+        new Set(items.flatMap((item) => (item.year ? [item.year] : []))),
+      )
+        .sort((a, b) => b - a)
+        .map(String),
+    ],
+    [items],
+  );
+  const filtered = items.filter(
+    (item) =>
+      (year === "All" || String(item.year) === year) &&
+      (cat === "All" || item.category === cat),
+  );
 
   return (
     <PageLayout>
-      <PageHeader title="Archive" subtitle="Archived notices, past events, expired e-tenders and historical reports." breadcrumb={["Home", "Archive"]} />
+      <PageHeader title="Archive" subtitle="Archived notices, expired e-tenders and historical reports." breadcrumb={["Home", "Archive"]} />
       <section className="py-10">
         <div className="gov-container">
-          <div className="flex flex-wrap items-end gap-3 mb-5">
-            <div>
-              <label className="block text-xs font-semibold text-muted-foreground mb-1">Year</label>
-              <select value={year} onChange={e => setYear(e.target.value)} className="border border-input rounded px-3 py-2 text-sm bg-card focus-ring">
-                {years.map(y => <option key={y} value={y}>{y}</option>)}
-              </select>
+          {!loading && items.length > 0 && (
+            <div className="flex flex-wrap items-end gap-3 mb-5">
+              <div>
+                <label className="block text-xs font-semibold text-muted-foreground mb-1">Year</label>
+                <select value={year} onChange={e => setYear(e.target.value)} className="border border-input rounded px-3 py-2 text-sm bg-card focus-ring">
+                  {years.map(y => <option key={y} value={y}>{y}</option>)}
+                </select>
+              </div>
+              <div>
+                <label className="block text-xs font-semibold text-muted-foreground mb-1">Category</label>
+                <select value={cat} onChange={e => setCat(e.target.value as typeof cat)} className="border border-input rounded px-3 py-2 text-sm bg-card focus-ring">
+                  {categories.map(c => <option key={c} value={c}>{c}</option>)}
+                </select>
+              </div>
+              <p className="text-xs text-muted-foreground ml-auto">{filtered.length} archived item{filtered.length !== 1 ? "s" : ""}</p>
             </div>
-            <div>
-              <label className="block text-xs font-semibold text-muted-foreground mb-1">Category</label>
-              <select value={cat} onChange={e => setCat(e.target.value as typeof cat)} className="border border-input rounded px-3 py-2 text-sm bg-card focus-ring">
-                {categories.map(c => <option key={c} value={c}>{c}</option>)}
-              </select>
-            </div>
-            <p className="text-xs text-muted-foreground ml-auto">{filtered.length} archived item{filtered.length !== 1 ? "s" : ""}</p>
-          </div>
+          )}
 
           <div className="overflow-x-auto border border-border rounded-md">
             <table className="data-table">
               <thead><tr><th>#</th><th>Title</th><th>Category</th><th>Date</th><th>File</th><th>Actions</th></tr></thead>
               <tbody>
-                {filtered.length === 0 && (
+                {loading && (
+                  <tr><td colSpan={6} className="text-center py-8 text-muted-foreground">Loading archived items…</td></tr>
+                )}
+                {!loading && items.length === 0 && (
+                  <tr><td colSpan={6} className="text-center py-8 text-muted-foreground">No archived items are available at this time.</td></tr>
+                )}
+                {!loading && items.length > 0 && filtered.length === 0 && (
                   <tr><td colSpan={6} className="text-center py-8 text-muted-foreground">No archived items match the selected filters.</td></tr>
                 )}
                 {filtered.map((i, idx) => (
-                  <tr key={i.title}>
+                  <tr key={i.id}>
                     <td>{idx + 1}</td>
                     <td className="font-medium flex items-center gap-2"><ArchiveIcon className="h-4 w-4 text-muted-foreground shrink-0" /> {i.title}</td>
                     <td><span className="text-[10px] font-semibold px-2 py-0.5 rounded bg-primary/10 text-primary">{i.category}</span></td>
                     <td>{i.date}</td>
-                    <td className="text-xs text-muted-foreground">{i.type} · {i.size} · English</td>
+                    <td className="text-xs text-muted-foreground">{[i.type, i.size].filter(Boolean).join(" · ")}</td>
                     <td>
                       <div className="flex gap-2">
-                        <button className="p-1.5 text-primary hover:bg-primary/10 rounded" aria-label="View"><Eye className="h-4 w-4" /></button>
-                        <button className="p-1.5 text-accent hover:bg-accent/10 rounded" aria-label="Download"><Download className="h-4 w-4" /></button>
+                        {i.fileUrl ? (
+                          <a href={i.fileUrl} target="_blank" rel="noopener noreferrer" className="p-1.5 text-primary hover:bg-primary/10 rounded" aria-label="View"><Eye className="h-4 w-4" /></a>
+                        ) : (
+                          <button disabled className="p-1.5 text-primary rounded opacity-40 cursor-not-allowed" aria-label="View"><Eye className="h-4 w-4" /></button>
+                        )}
+                        {i.fileUrl ? (
+                          <a href={i.fileUrl} download className="p-1.5 text-accent hover:bg-accent/10 rounded" aria-label="Download"><Download className="h-4 w-4" /></a>
+                        ) : (
+                          <button disabled className="p-1.5 text-accent rounded opacity-40 cursor-not-allowed" aria-label="Download"><Download className="h-4 w-4" /></button>
+                        )}
                       </div>
                     </td>
                   </tr>

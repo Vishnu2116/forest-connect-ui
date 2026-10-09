@@ -128,10 +128,15 @@ export interface FetchKHParams {
   year?: string;
   page?: number;
   limit?: number;
+  noFallback?: boolean;
 }
 
 export async function fetchKnowledgeHub(params: FetchKHParams): Promise<PaginatedKH> {
-  const { type, search, year, page = 1, limit = 10 } = params;
+  const { type, search, year, page = 1, limit = 10, noFallback = false } = params;
+  const empty = (): PaginatedKH => ({
+    data: [],
+    pagination: { total: 0, page, limit, totalPages: 1 },
+  });
   const fallback = (): PaginatedKH => {
     let data = dummyFor(type);
     if (search) data = data.filter((d) => d.title.toLowerCase().includes(search.toLowerCase()));
@@ -141,7 +146,7 @@ export async function fetchKnowledgeHub(params: FetchKHParams): Promise<Paginate
     const paged = data.slice((page - 1) * limit, page * limit);
     return { data: paged, pagination: { total, page, limit, totalPages } };
   };
-  if (!USE_REAL_API) return fallback();
+  if (!USE_REAL_API) return noFallback ? empty() : fallback();
   try {
     const qs = new URLSearchParams();
     if (search) qs.set("search", search);
@@ -152,13 +157,13 @@ export async function fetchKnowledgeHub(params: FetchKHParams): Promise<Paginate
     if (!r.ok) throw new Error();
     const json = await r.json();
     const data: ApiKHItem[] = Array.isArray(json?.data) ? json.data : Array.isArray(json) ? json : [];
-    if (!data.length) return fallback();
+    if (!data.length) return noFallback ? empty() : fallback();
     return {
       data,
       pagination: json?.pagination || { total: data.length, page, limit, totalPages: 1 },
     };
   } catch {
-    return fallback();
+    return noFallback ? empty() : fallback();
   }
 }
 

@@ -282,6 +282,16 @@ function UpdatesPanel({
         : `${API_BASE_URL ?? ""}${it.file_path}`
       : null;
 
+    const khPathByType: Record<string, string> = {
+      notification: "notifications",
+      iec_material: "iec",
+      newsletter: "newsletters",
+      success_story: "success-stories",
+      documentation: "documentation",
+      case_study: "case-studies",
+      lessons_learned: "lessons",
+    };
+
     const handleClick = (e: React.MouseEvent) => {
       e.preventDefault();
       if (mode === "notifications") {
@@ -311,7 +321,8 @@ function UpdatesPanel({
       } else if (itemType === "project") {
         navigate(`/projects/${it.slug || it.id}`);
       } else {
-        navigate(`/knowledge-hub/${itemType}`);
+        const slug = khPathByType[itemType];
+        navigate(slug ? `/knowledge-hub/${slug}` : `/knowledge-hub/${itemType}`);
       }
     };
 
