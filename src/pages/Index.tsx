@@ -225,10 +225,12 @@ function UpdatesPanel({
   updatesTab,
   setUpdatesTab,
   t,
+  fillHeight = false,
 }: {
   updatesTab: "whatsnew" | "notifications" | "tenders";
   setUpdatesTab: (k: "whatsnew" | "notifications" | "tenders") => void;
   t: (k: string) => string;
+  fillHeight?: boolean;
 }) {
   const navigate = useNavigate();
   const [apiWhatsNew, setApiWhatsNew] = useState<any[]>([]);
@@ -639,8 +641,10 @@ function UpdatesPanel({
   );
 
   return (
-    <div className="bg-card border border-border rounded-md overflow-hidden flex flex-col">
-      <div className="px-4 py-3 border-b-2 border-primary bg-primary/5">
+    <div
+      className={`bg-card border border-border rounded-md overflow-hidden flex flex-col${fillHeight ? " h-full" : ""}`}
+    >
+      <div className="px-4 py-3 border-b-2 border-primary bg-primary/5 shrink-0">
         <h2 className="text-xs sm:text-sm font-semibold text-primary flex items-center justify-center gap-1.5">
           <Bell className="h-4 w-4" />
           What's New
@@ -654,14 +658,14 @@ function UpdatesPanel({
         onPointerLeave={(e) => {
           if (e.pointerType === "mouse") setPaused(false);
         }}
-        className="overflow-y-auto no-scrollbar"
-        style={{ height: listHeight ?? 252 }}
+        className={`overflow-y-auto no-scrollbar${fillHeight ? " flex-1 min-h-0" : ""}`}
+        style={fillHeight ? undefined : { height: listHeight ?? 252 }}
       >
         {Array.from({ length: shouldScroll ? 2 : 1 }).map((_, i) =>
           renderItems(i),
         )}
       </div>
-      <div className="px-3 py-2 border-t border-border bg-surface flex items-center justify-end">
+      <div className="px-3 py-2 border-t border-border bg-surface flex items-center justify-end shrink-0">
         <ScrollArrows
           onUp={() => scrollByAmount(-MANUAL_STEP_PX)}
           onDown={() => scrollByAmount(MANUAL_STEP_PX)}
@@ -1176,6 +1180,7 @@ export default function Home() {
                   updatesTab={updatesTab}
                   setUpdatesTab={setUpdatesTab}
                   t={t}
+                  fillHeight
                 />
               </div>
 
