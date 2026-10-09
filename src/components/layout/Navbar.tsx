@@ -438,8 +438,8 @@ export default function Navbar() {
 
       {/* ── DESKTOP LOGO HEADER — lg and above (≥ 1024px) ──
           ELEMENT stays absolutely centered to the viewport. Logos scale up
-          progressively at lg / xl / 2xl. Forest Dept logo hides below xl
-          to keep alignment clean on tighter laptop widths.
+          progressively at lg / xl / 2xl. Forest Dept logo is shown at all
+          widths and scales up at xl / 2xl.
       */}
       <div className="hidden lg:block relative w-full py-4 xl:py-6 px-4 xl:px-10 min-h-[112px] xl:min-h-[148px]">
         {/* Left edge — Tripura Govt emblem */}
@@ -476,7 +476,7 @@ export default function Navbar() {
           <img
             src={logoTripuraForestDept}
             alt="Tripura Forest Department"
-            className="hidden xl:block xl:h-[125px] xl:w-[125px] 2xl:h-[136px] 2xl:w-[136px] object-contain"
+            className="h-[90px] w-[90px] xl:h-[125px] xl:w-[125px] 2xl:h-[136px] 2xl:w-[136px] object-contain shrink-0"
           />
         </div>
       </div>
