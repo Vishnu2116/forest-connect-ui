@@ -401,38 +401,45 @@ export default function Navbar() {
             <img
               src={logoTripura}
               alt="Government of Tripura emblem"
-              className="h-12 w-12 object-contain"
+              className="h-10 w-10 sm:h-12 sm:w-12 object-contain"
             />
           </Link>
 
           {/* ELEMENT Title */}
-          <div className="flex-1 text-center px-2">
-            <h1 className="text-xl font-extrabold text-primary tracking-wide leading-none">
+          <div className="flex-1 min-w-0 text-center px-1">
+            <h1 className="text-lg sm:text-xl font-extrabold text-primary tracking-wide leading-none">
               ELEMENT
             </h1>
           </div>
 
-          {/* Right Logo — World Bank (kept on smaller widths, hidden on the smallest) */}
-          <img
-            src={logoTheWorldBank}
-            alt="The World Bank"
-            className="hidden sm:block h-10 w-auto object-contain shrink-0 mr-2"
-          />
+          <div className="flex items-center gap-2 shrink-0">
+            {/* Right Logo — World Bank (kept on smaller widths, hidden on the smallest) */}
+            <img
+              src={logoTheWorldBank}
+              alt="The World Bank"
+              className="h-10 sm:h-12 w-auto object-contain shrink-0"
+            />
+            <img
+              src={logoTripuraForestDept}
+              alt="Tripura Forest Department"
+              className="h-10 w-10 sm:h-12 sm:w-12 object-contain shrink-0"
+            />
 
-          {/* Hamburger */}
-          <button
-            className="p-2 rounded-md border border-border focus-ring shrink-0"
-            onClick={() => setMobileOpen((v) => !v)}
-            aria-label={mobileOpen ? "Close main menu" : "Open main menu"}
-            aria-expanded={mobileOpen}
-            aria-controls="mobile-primary-nav"
-          >
-            {mobileOpen ? (
-              <X className="h-5 w-5" aria-hidden="true" />
-            ) : (
-              <Menu className="h-5 w-5" aria-hidden="true" />
-            )}
-          </button>
+            {/* Hamburger */}
+            <button
+              className="p-1.5 rounded-md border border-border focus-ring shrink-0"
+              onClick={() => setMobileOpen((v) => !v)}
+              aria-label={mobileOpen ? "Close main menu" : "Open main menu"}
+              aria-expanded={mobileOpen}
+              aria-controls="mobile-primary-nav"
+            >
+              {mobileOpen ? (
+                <X className="h-5 w-5" aria-hidden="true" />
+              ) : (
+                <Menu className="h-5 w-5" aria-hidden="true" />
+              )}
+            </button>
+          </div>
         </div>
       </div>
 
