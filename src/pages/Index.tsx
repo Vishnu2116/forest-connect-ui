@@ -989,8 +989,8 @@ export default function Home() {
     facebook_url: "https://facebook.com",
     twitter_handle: "@ElementTripura",
     twitter_url: "https://twitter.com",
-    youtube_video_url: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-    youtube_video_title: "ELEMENT Project Overview — Community Livelihoods",
+    youtube_video_url: "",
+    youtube_video_title: "",
   };
   const social = {
     facebook_handle: apiSocial?.facebook_handle ?? dummySocial.facebook_handle,
