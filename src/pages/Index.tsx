@@ -309,7 +309,9 @@ function UpdatesPanel({
       if (source === "event") {
         navigate(`/media/events/${it.slug}`);
       } else if (source === "knowledge_hub") {
-        navigate(`/knowledge-hub/${it.item_type || itemType}`);
+        const khType = it.item_type || itemType;
+        const khSlug = khPathByType[khType];
+        navigate(khSlug ? `/knowledge-hub/${khSlug}` : `/knowledge-hub/${khType}`);
       } else if (source === "procurement") {
         navigate("/procurements/tenders");
       } else if (source === "project") {
@@ -1088,6 +1090,7 @@ export default function Home() {
                 updatesTab={updatesTab}
                 setUpdatesTab={setUpdatesTab}
                 t={t}
+                fillHeight
               />
             </div>
 
